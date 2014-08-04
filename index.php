@@ -61,7 +61,7 @@
             </fieldset>
         </form>
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/lib/user.php';
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/lib/user.php';
             
     $login = $_POST['login'];
     $senha = $_POST['senha'];
