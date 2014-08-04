@@ -8,4 +8,5 @@
 <meta charset="utf-8" />
 <?php
     echo $_SESSION['usuario']['nome'];
+    echo $_SESSION['usuario']['login'];
 ?>
