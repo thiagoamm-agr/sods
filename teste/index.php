@@ -9,4 +9,5 @@
 <?php
     echo $_SESSION['usuario']['nome'];
     echo $_SESSION['usuario']['login'];
+    echo $_SESSION['usuario']['password'];
 ?>
