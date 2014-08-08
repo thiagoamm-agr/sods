@@ -22,44 +22,60 @@ validar_acesso ();
     <body>
     <?php
 		include '../admin/index.php';
+		
+		require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/lib/db.php';
+		get_db_connection();
+		
+		$query= "select * from secao";
+		$result = mysql_query($query);
+
+		
 	?>
-	<!-- formulário para contas de usuário (upd) -->
-		<form role="form">
+	<form role="form">
 		  <div class="col-xs-6">
 		  <div class="form-group">
 		    <label for="nome">Nome</label>
-		    <input type="text" class="form-control" id="nome" value='<?php echo $_SESSION['usuario']['nome_sol'];?>'>
+		    <input type="text" class="form-control" id="nome">
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="lotacao">Lotação</label>
-		    <input type="text" class="form-control" id="lotacao" value='<?php echo $_SESSION['usuario']['nome_sec'];?>'>
+		    <label for="lotacao" class="col-sm-2 control label">Lotação</label>
+		    <div class="col-sm-10">
+			  		<select class="form-control" name=lotacao>
+			  			<?php 
+			  				while($resultFim = mysql_fetch_assoc($result)){
+							?>
+							<option value="<?=$resultFim["id"]?>"> <?=$resultFim["nome"]?></option>
+						<?php 
+			  				}
+							?>
+					</select>			  		  	
+			  	</div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="cargo">Cargo</label>
-		    <input type="text" class="form-control" id="cargo" value='<?php echo $_SESSION['usuario']['cargo'];?>'>
+		    <input type="text" class="form-control" id="cargo">
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="telefone_ramal">Telefone/Ramal</label>
-		    <input type="text" class="form-control" id="telefone_ramal" value='<?php echo $_SESSION['usuario']['fone_ramal'];?>'>
+		    <input type="text" class="form-control" id="telefone_ramal">
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="email">e-mail</label>
-		    <input type="email" class="form-control" id="email" value='<?php echo $_SESSION['usuario']['email'];?>'>
+		    <input type="email" class="form-control" id="email">
 		  </div>
 		  
-		  <div class="checkbox-disabled">
+		  <div class="checkbox">
 		    <label>
-		      <input type="checkbox" id="tipo_usr" <?php if ($_SESSION['usuario']['tipo_usuario'] == 'A') { echo 'checked' ;}?> disabled="disabled"> Administrador
+		      <input type="checkbox" id="tipo_usr"> Administrador
 		    </label>
 		  
 		  </div>
-		  <button type="submit" class="btn btn-primary">Atualizar Dados</button>
+		  <button type="submit" class="btn btn-primary">Salvar Usuário</button>
 		</div>
-		</form>
-	
+		</form>	
     </body>
 </html>

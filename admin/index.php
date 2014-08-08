@@ -54,8 +54,8 @@ validar_acesso ();
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuários<span class="caret"></span></a>
 			                			<ul class="dropdown-menu" role="menu">
 											<li><a href="../admin/account.php">Atualizar Dados</a></li>
-			                  				<li><a href="#">Adicionar Usuários</a></li>
-			                  				<li><a href="#">Listar Usuários</a></li>
+			                  				<li><a href="../admin/addUser.php">Adicionar Usuários</a></li>
+			                  				<li><a href="../admin/listUsers.php">Listar Usuários</a></li>
 			                			</ul>
 		              			  </li>';
 						}else{
@@ -67,7 +67,7 @@ validar_acesso ();
 		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Solicitação <span class="caret"></span></a>
 			                <ul class="dropdown-menu" role="menu">
 			                  <li><a href="../admin/addRequest.php">Adicionar Solicitação</a></li>
-			                  <li><a href="#">Listar Solicitações</a></li>
+			                  <li><a href="../admin/listRequests">Listar Solicitações</a></li>
 			                </ul>
 		              </li>
 					          

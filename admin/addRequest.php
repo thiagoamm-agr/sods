@@ -26,6 +26,12 @@ $data = date("d/m/y " . " H:i");
     <body>
     <?php
 		include '../admin/index.php';
+		
+		require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/lib/db.php';
+		get_db_connection();
+		
+		$query= "select * from tipo_solicitacao";
+		$result = mysql_query($query);
 	?>
 		<form class="form-horizontal" role="form">
 		  
@@ -69,13 +75,15 @@ $data = date("d/m/y " . " H:i");
 			  <div class="form-group">
 			  	<label for="tipo_sol" class="col-sm-2 control label">Tipo de Solicitação</label>
 			  	<div class="col-sm-10">
-			  		<select class="form-control">
-			  		  <option id=" "> </option>
-					  <option id="desenvolvimento">Desenvolvimento</option>
-					  <option id="adaptativa">Correção Adaptativa</option>
-					  <option id="evolutiva">Correção Evolutiva</option>
-					  <option id="preventiva">Correção Preventiva</option>
-					</select>
+			  		<select class="form-control" name=tipo_sol>
+			  			<?php 
+			  				while($resultFim = mysql_fetch_assoc($result)){
+							?>
+							<option value="<?=$resultFim["id"]?>"> <?=$resultFim["nome"]?></option>
+						<?php 
+			  				}
+							?>
+					</select>			  		
 			  	</div>
 			  
 			  </div>
@@ -93,7 +101,7 @@ $data = date("d/m/y " . " H:i");
 			      <input type="text" class="form-control" id="ult_ateracao" placeholder="00/00/00 00:00" readonly>
 			    </div>
 			  </div>
-		  <button type="submit" class="btn btn-primary" >Enviar Solicitação</button>
+			  <button type="submit" class="btn btn-primary" >Enviar Solicitação</button>
 		</form>
 	
     </body>
