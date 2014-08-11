@@ -39,18 +39,15 @@ validar_acesso ();
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="lotacao" class="col-sm-2 control label">Lotação</label>
-		    <div class="col-sm-10">
-			  		<select class="form-control" name=lotacao>
-			  			<?php 
-			  				while($resultFim = mysql_fetch_assoc($result)){
-							?>
-							<option value="<?=$resultFim["id"]?>"> <?=$resultFim["nome"]?></option>
-						<?php 
-			  				}
-							?>
-					</select>			  		  	
-			  	</div>
+		  		<select class="form-control" name=lotacao>
+		  			<?php 
+		  				while($resultFim = mysql_fetch_assoc($result)){
+						?>
+						<option value="<?=$resultFim["id"]?>"> <?=$resultFim["nome"]?></option>
+					<?php 
+		  				}
+						?>
+				</select>			  		  	
 		  </div>
 		  
 		  <div class="form-group">
