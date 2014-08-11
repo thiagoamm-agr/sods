@@ -67,7 +67,7 @@ validar_acesso ();
 		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Solicitação <span class="caret"></span></a>
 			                <ul class="dropdown-menu" role="menu">
 			                  <li><a href="../admin/addRequest.php">Adicionar Solicitação</a></li>
-			                  <li><a href="../admin/listRequests">Listar Solicitações</a></li>
+			                  <li><a href="../admin/listRequests.php">Listar Solicitações</a></li>
 			                </ul>
 		              </li>
 					          
