@@ -10,12 +10,12 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	    
 	    <!-- Estilo para esse template -->
-	    <link href="css/bootstrap/signin.css" rel="stylesheet">
+	    <link href="css/bootstrap/signin.css" rel="stylesheet" />
 	    
 	    <title>Login</title>
     </head>
     	<body>
-        	<center><h2>SODS - Sistema de Solicitação de Desenvolvimento de Software</h2></center>
+        	<center><h2><b>SODS</b> - Sistema de Solicitação de Desenvolvimento de Software</h2></center>
         		<div class="container">
 			      <form class="form-signin" role="form" method="post" id="formlogin" name="formlogin">
 			        <h3 class="form-signin-heading">Login</h3>
