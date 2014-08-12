@@ -7,9 +7,14 @@
         if ($login !== '' && $senha !== '') {
             $conexao = get_db_connection("10.243.1.14", "sods", "dev123");
             //$query = "select * from solicitante where login = '$login' and senha = md5('$senha')";
-            $query = "select sol.id, sol.nome as nome_sol, sol.secao_id, sol.cargo, sol.fone_ramal, sol.email, sol.login, sol.tipo_usuario, sol.status,
-						sol.data_criacao, sol.data_alteracao, sec.nome as nome_sec, sec.sigla from solicitante as sol 
-						inner join secao as sec on sol.secao_id = sec.id and login = '$login' and senha = md5('$senha')";
+            $query = "select sol.id, sol.nome as nome_sol, sol.secao_id, " .
+            			"sol.cargo, sol.fone_ramal, sol.email, sol.login, " . 
+            			"sol.tipo_usuario, sol.status, sol.data_criacao, " . 
+            			"sol.data_alteracao, sec.nome as nome_sec, sec.sigla ". 
+            		"from solicitante as sol " .
+					"inner join secao as sec " .
+            			"on sol.secao_id = sec.id and ".
+            			"login = '$login' and senha = md5('$senha')";
             $result = mysql_query($query);            
             if (mysql_num_rows($result) > 0) {
                 $_SESSION['usuario'] = mysql_fetch_array($result);
