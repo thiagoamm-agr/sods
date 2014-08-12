@@ -73,7 +73,7 @@
 		                	</ul>
 	              		</li>					          
 	            	</ul>
-	            	<span width="100px" />		            
+	            	<span width="100px" />
 	            	<ul class="nav navbar-nav navbar-right">
 						<li>
 							<a href="#">Usuário: <b><?php echo $_SESSION['usuario']['nome_sol'];?></b></a>
