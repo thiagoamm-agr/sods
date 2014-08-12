@@ -57,7 +57,7 @@ validar_acesso ();
 		    </label>
 		  
 		  </div>
-		  <button type="submit" class="btn btn-primary">Atualizar Dados</button>
+		  <button type="submit" class="btn btn-primary pull-right">Atualizar Dados</button>
 		</div>
 		</form>
 	

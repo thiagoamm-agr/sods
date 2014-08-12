@@ -71,7 +71,7 @@ validar_acesso ();
 		    </label>
 		  
 		  </div>
-		  <button type="submit" class="btn btn-primary">Salvar Usuário</button>
+		  <button type="submit" class="btn btn-primary pull-right">Salvar Usuário</button>
 		</div>
 		</form>	
     </body>
