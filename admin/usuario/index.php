@@ -52,5 +52,6 @@
 		  <button type="submit" class="btn btn-primary pull-right">Salvar Usuário</button>
 		</div>
 		</form>	
-    </body>
-</html>
+<?php 
+	include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
+?>
