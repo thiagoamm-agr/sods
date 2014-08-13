@@ -53,7 +53,7 @@
 		                              	Cadastro <span class="caret"></span>
 		                          	</a>
 		                		  	<ul class="dropdown-menu" role="menu">
-                                      	<li><a href="./usuario/">Usuário</a></li>
+                                      	<li><a href="../admin/listUsers.php">Usuário</a></li>
                                       	<li><a href="#">Solicitação</a></li>
                                   	</ul>
 		              	      	 </li>';
@@ -83,7 +83,7 @@
 						    </a>
 						</li>
               			<li>
-              				<form class="navbar-form navbar-right" role="form" action="../lib/logout.php">
+              				<form class="navbar-form navbar-right" role="form" action="../../lib/logout.php">
 								<button type="submit" class="btn btn-success" href="#">Sair</button>
 							</form>
 						</li>
