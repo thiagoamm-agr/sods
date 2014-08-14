@@ -41,7 +41,7 @@
 						<span class="icon-bar"></span>
             		</button>
 					<a class="navbar-brand" style="font-size: 40px; color: white;" 
-				   	   href="#" title="Sistema para Solicitação de Desenvolvimento de Software">SODS</a>
+				   	   href="index.php" title="Sistema para Solicitação de Desenvolvimento de Software">SODS</a>
           		</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">						
@@ -53,8 +53,8 @@
 		                              	Cadastro <span class="caret"></span>
 		                          	</a>
 		                		  	<ul class="dropdown-menu" role="menu">
-                                      	<li><a href="../admin/listUsers.php">Usuário</a></li>
-                                      	<li><a href="#">Solicitação</a></li>
+                                      	<li><a href="../admin/listUsers.php">Usuários</a></li>
+                                      	<li><a href="../admin/usuario/addUser.php">Novo usuário</a></li>
                                   	</ul>
 		              	      	 </li>';
 							echo '<li class="dropdown">
@@ -83,7 +83,7 @@
 						    </a>
 						</li>
               			<li>
-              				<form class="navbar-form navbar-right" role="form" action="../../lib/logout.php">
+              				<form class="navbar-form navbar-right" role="form" action="../../sods/lib/logout.php">
 								<button type="submit" class="btn btn-success" href="#">Sair</button>
 							</form>
 						</li>
