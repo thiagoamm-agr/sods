@@ -83,7 +83,7 @@
 						    </a>
 						</li>
               			<li>
-              				<form class="navbar-form navbar-right" role="form" action="../sods/lib/logout.php">
+              				<form class="navbar-form navbar-right" role="form" action="/sods/lib/logout.php">
 								<button type="submit" class="btn btn-success" href="#">Sair</button>
 							</form>
 						</li>
