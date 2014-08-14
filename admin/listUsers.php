@@ -65,7 +65,7 @@
 	            			<th>Tipo de Usuário</th>
 	            			<th>Status</th>
 	            			<th>Login</th>
-	            			<th>Ação </th>
+	            			<th>Ação</th>
 	            		</tr>
             		</thead>
             		<tbody>
