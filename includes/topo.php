@@ -53,8 +53,8 @@
 		                              	Cadastro <span class="caret"></span>
 		                          	</a>
 		                		  	<ul class="dropdown-menu" role="menu">
-                                      	<li><a href="../admin/listUsers.php">Usuários</a></li>
-                                      	<li><a href="../admin/usuario/addUser.php">Novo usuário</a></li>
+                                      	<li><a href="../admin/listUsers.php">Usuário</a></li>
+                                      	<li><a href="#">Solicitação</a></li>
                                   	</ul>
 		              	      	 </li>';
 							echo '<li class="dropdown">
@@ -83,7 +83,7 @@
 						    </a>
 						</li>
               			<li>
-              				<form class="navbar-form navbar-right" role="form" action="../../sods/lib/logout.php">
+              				<form class="navbar-form navbar-right" role="form" action="../sods/lib/logout.php">
 								<button type="submit" class="btn btn-success" href="#">Sair</button>
 							</form>
 						</li>
