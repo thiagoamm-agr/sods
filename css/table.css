@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+
+.table {
+	margin: auto 0;
+}
+
+.table th {
+    text-align: center;
+    font-size: 14px;                
+}
+
+#detalhamento {
+    text-align: justify;
+    text-justify: inter-word;
+    font-size: 14px;
+}
+
+.table td {
+    text-align: center;
+    font-size: 14px;
+}
