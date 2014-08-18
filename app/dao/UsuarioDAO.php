@@ -1,6 +1,7 @@
 <?php
-	@require $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';			
-	@require $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';	
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
+		
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';	
 	
 	class UsuarioDAO {
 		
