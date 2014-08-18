@@ -1,5 +1,5 @@
 <?php
-	@require $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/dao/UsuarioDAO.php';
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/UsuarioDAO.php';
 	
 	class UsuariosController {
 		
