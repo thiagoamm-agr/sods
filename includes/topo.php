@@ -68,7 +68,7 @@
 							</a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="/sods/admin/usuarios/">Cadastro de Usuários</a></li>
-								<li><a href="#">Cadastro de Solicitações</a></li>
+								<li><a href="/sods/admin/listRequests.php">Cadastro de Solicitações</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
