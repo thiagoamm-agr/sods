@@ -32,7 +32,7 @@
 			      </form>
     			</div> 
 <?php
-    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/user.php';     
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/auth.php';     
             
     @$login = $_POST['login'];
     @$senha = $_POST['senha'];
