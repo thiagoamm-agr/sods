@@ -1,4 +1,6 @@
 <?php
+	/* CADASTRO DE USUÁRIOS */	
+
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';	
 
 	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
