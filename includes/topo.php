@@ -1,7 +1,7 @@
 <?php
 	@session_start();
 
-	require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/lib/session.php';
+	@require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/lib/session.php';
 
 	validar_acesso();
 	
@@ -32,7 +32,10 @@
 		<![endif]-->
 		
 		<link rel="stylesheet" href="/sods/css/table.css" />
-				
+		
+        <script src="/sods/js/jquery.min.js"></script>
+        <script src="/sods/js/bootstrap/bootstrap.min.js"></script>
+        				
 		<title>SODS</title>
     </head>
 	<body>
@@ -90,7 +93,7 @@
             		<span style="width: 100px"></span>
             		<ul class="nav navbar-nav navbar-right">
 						<li>
-							<a href="#">
+							<a href="/sods/admin/account.php">
 							    Bem-vindo(a), 
 							    <font color="white">
 							        <b><?php echo $_SESSION['usuario']['nome_sol'];?></b>
@@ -98,7 +101,7 @@
 						    </a>
 						</li>
               			<li>
-              				<form class="navbar-form navbar-right" role="form" action="/sods/lib/logout.php">
+              				<form class="navbar-form navbar-right" role="form" action="/sods/app/lib/logout.php">
 								<button type="submit" class="btn btn-success">
 									<strong>Sair</strong>
 								</button>
@@ -108,4 +111,3 @@
 				</div> <!--/.nav-collapse -->		        
 			</div> <!--/.container-fluid -->
 		</div>
-		<div class="container">
