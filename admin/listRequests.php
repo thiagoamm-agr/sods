@@ -38,7 +38,7 @@
 	<body>
 		<div class="container">    
 <?php
-			include '../admin/index.php';
+			include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 				
 			require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/lib/db.php';
 				
@@ -94,9 +94,12 @@
 				     	echo "</tr>";
 					}
 ?>
+
+
 					</tbody>
 	    		</table>
     		</div>
     	</div>
 	</body>
 </html>
+<?php include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; ?>
