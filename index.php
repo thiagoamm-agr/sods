@@ -19,8 +19,10 @@
         		<div class="container">
 			      <form class="form-signin" role="form" method="post" id="formlogin" name="formlogin">
 			        <h3 class="form-signin-heading">Login</h3>
-			        <input type="login" class="form-control" placeholder="Login" name="login" id="login" required autofocus>
-			        <input type="password" class="form-control" placeholder="Senha" name="senha" id="senha" required>
+			        <input type="login" id="login" name="login" class="form-control" placeholder="Login" 
+			            required autofocus />
+			        <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" 
+			            required />
 			        <div class="checkbox">
 			          <label>
 			            <input type="checkbox" value="remember-me"> Lembre-me
@@ -30,7 +32,7 @@
 			      </form>
     			</div> 
 <?php
-    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/lib/user.php';
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/user.php';     
             
     @$login = $_POST['login'];
     @$senha = $_POST['senha'];
