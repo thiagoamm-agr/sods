@@ -1,102 +1,166 @@
 <?php
-	@session_start ();
+	/* CADASTRO DE SOLICITAÇÕES */
 	
-	@require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/lib/session.php';
-
-	validar_acesso ();
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 	
-	date_default_timezone_set("Brazil/East");
-	$data = date("d/m/y " . " H:i");
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/SolicitacoesController.php';
 ?>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN">
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<style>
-			.table th {
-				text-align: center;
-				font-size: 14px;				
-			}
-			
-			#detalhamento {
-				text-align: justify;
-				text-justify: inter-word;
-				font-size: 14px;
-			}
-			
-			.table td {
-				text-align: center;
-				font-size: 14px;
-			}
-		</style>				
-		
-		<title>SODS</title>
-	</head>
-	<body>
-		<div class="container">    
-<?php
-			include '/sods/admin/index.php';
-				
-			@require_once $_SERVER ['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
-				
-			get_db_connection();
-				
-			$user= $_SESSION['usuario']['login'];
-				
-			if ($_SESSION['usuario']['tipo_usuario'] == 'A') {
-				$query= "select " . 
-							"s.nome, so.detalhamento, so.status, " .
-							"t.nome as nome_sol, so.data_abertura, so.data_alteracao " .
-						"from " . 
-						    "solicitante as s " . 
-						"inner join solicitacao as so " .
-						    "on s.id = so.solicitante_id " . 
-				        "inner join tipo_solicitacao as t " .
-	    		            "on t.id = so.tipo_solicitacao_id";
-				$result = mysql_query($query);
-			} else {
-				$query= "select " . 
-				            "s.nome, so.detalhamento, so.status, " . 
-				            "t.nome as nome_sol, so.data_abertura, so.data_alteracao " . 
-				        "from solicitante as s " . 
-				        "inner join solicitacao as so " . 
-				            "on s.id = so.solicitante_id and s.login = '$user' " . 
-				        "inner join tipo_solicitacao as t " . 
-				            "on t.id = so.tipo_solicitacao_id;";
-				$result = mysql_query($query);
-			}
-?>
+		<div class="container">
+			<h2>Solicitações</h2>
+			<div class="container" >
+					<button class='btn btn-warning btn-sm pull-right' data-toggle='modal' data-target='#modalAdd'><b>Adicionar Solicitação</b></button>
+					<br><br>
+			</div>
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-condensed" style="width: 95%; margin: 0 auto;">
+				<table class="table table-striped table-bordered table-condensed">
 					<thead>
 						<tr>
+							<th>ID</th>
 	            			<th>Solicitante</th>
 	            			<th>Solicitação</th>
 	            			<th>Status</th>
 	            			<th>Tipo</th>
 	            			<th>Data Abertura</th>
 	            			<th>Data Alteração</th>
+	            			<th>Ação</th>
 	            		</tr>
             		</thead>
             		<tbody>
-<?php		
-					while ($esc = mysql_fetch_array($result)) {
-			        	echo "<tr>";
-						echo   "<td>{$esc['nome']}</td>
-	                        	<td id=\"detalhamento\">{$esc['detalhamento']}</td>
-					        	<td>{$esc['status']}</td>
-						    	<td>{$esc['nome_sol']}</td>";
-						echo   "<td>". date('d/m/Y H:m:s', strtotime($esc['data_abertura'])) . "</td>";
-						echo   "<td>" . @$esc['data_modificacao'] . "</td>";
-				     	echo "</tr>";
+<?php
+					$controller = new SolicitacoesController();
+					
+					// Obtém a lista de todas as solicitações.
+					$solicitacoes = $controller->allAdmin();
+					
+					while ($solicitacao = mysql_fetch_assoc($solicitacoes)) {
+
+?>
+			        	<tr>
+			        		<td><?php echo $solicitacao['id'] ?></td>
+			        		<td><?php echo $solicitacao['nome'] ?></td>
+			        		<td width="350px"><?php echo $solicitacao['titulo'] ?></td>
+							<td><?php echo $solicitacao['status'] ?></td>
+							<td><?php echo $solicitacao['nome_sol'] ?></td>
+							<td><?php echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) ?></td>
+							<td><?php echo @$solicitacao['data_alteracao'] ?></td>
+							<td colspan="2">							
+								<button class='btn btn-primary btn-sm' 
+								    data-toggle='modal' data-target='#modalEdit'>
+									<strong>Editar</strong>
+								</button>
+								<button class='btn btn-danger btn-sm' 
+								    data-toggle='modal' data-target='#modalDel'>
+								    <strong>Excluir</strong>
+							    </button>							
+							</td>
+				     	</tr>
+<?php
 					}
 ?>
 					</tbody>
 	    		</table>
     		</div>
-    	</div>
-	</body>
-</html>
+    		
+    		<!--  Modais -->
+			<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" 
+			    aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							    &times;
+							</button>
+							<h3 class="modal-title" id="modalEdit">Editar Solicitação</h3>
+						</div>
+						<div class="modal-body">
+							<form role="form">								
+		  						<div class="form-group">
+		    						<label for="descricao" class="col-sm-2 control-label">Descrição</label>
+		    						<textarea class="form-control" id="desc" name="desc" rows="6" style="width: 80%;"></textarea>
+		  						</div>
+		  						<div class="form-group">
+		    						<label for="info_adc" class="col-sm-2 control-label">Inf. Adicionais</label>
+		    						<textarea class="form-control" id="info_adc" name="desc" rows="4" style="width: 80%;"></textarea>
+		  						</div>
+		  						<div class="form-group">
+		    						<label for="obs" class="col-sm-2 control-label">Observações</label>
+		    						<textarea class="form-control" id="obs" name="obs" rows="2" style="width: 80%;"></textarea>
+		  						</div>
+		  						<div class="form-group">
+		  							<div class="row">
+		  								<div class="col-sm-4">
+											<label for="tp_sol">Tipo de Solicitação</label>
+		  									<select id="tp_sol" name="tp_sol" class="form-control">
+<?php 
+												$sql = "select * from tipo_solicitacao";
+																
+												$secoes = mysql_query($sql);
+						
+		  										while ($secao = mysql_fetch_assoc($secoes)) {
+?>
+												<option value="<?php echo $secao['id'] ?>">
+													<?php echo $secao['nome']?>
+												</option>
+<?php
+												} 
+?>
+											</select>
+										</div>
+									
+										<div class="col-sm-4">
+											<label for="data">Data de Criação</label>
+											<input type="text" class="form-control" name="data" id="data" readonly>
+										</div>
+										
+										<div class="col-sm-4">
+											<label for="ult_alteracao">Ultima Alteração</label>
+											<input type="text" class="form-control" name="ult_alteracao" id="ult_alteracao" readonly>
+										</div>
+									
+									
+									</div>
+  								</div>
+							</form>
+						</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary">Salvar</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+							</div>
+					</div>
+				</div>
+			</div>			
+
+			<div class="modal fade .bs-example-modal-sm" id="modalDel" tabindex="-1" role="dialog" 
+			    aria-labelledby="modalDel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							    &times;
+							</button>
+							<h4 class="modal-title" id="modalDel">Exclusão de Solicitação</h4>
+						</div>
+						<div class="modal-body">
+    						<h5>Confirma exclusão de solicitação?</h5>
+    					</div>
+						<form action="#">
+	    					<div class="modal-footer">
+	    						<button type="submit" class="btn btn-danger">Sim</button>
+	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
+	    					</div>
+    					</form>
+    				</div>
+    			</div>
+    		</div> <!--  modais -->
+    		
+    	</div> <!-- container -->
+    	
+    	<script type="text/javascript">
+			$('#modalDel').on('show.bs.modal', function(e){
+				var bookId = $(e.relatedTarget).data('book-id');
+				$(e.currentTarget).find('input[name="bookId"]').val(bookId);
+			});
+ 		</script>
+<?php 	
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
+?>
