@@ -31,7 +31,7 @@
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		
-		<link rel="stylesheet" href="/sods/css/table.css" />
+		<link rel="stylesheet" href="/sods/css/sods.css" />
 		
         <script src="/sods/js/jquery.min.js"></script>
         <script src="/sods/js/bootstrap/bootstrap.min.js"></script>
@@ -102,7 +102,7 @@
 						</li>
               			<li>
               				<form class="navbar-form navbar-right" role="form" action="/sods/app/lib/logout.php">
-								<button type="submit" class="btn btn-success">
+								<button id="btnSair" type="submit" class="btn btn-success btn-sm pull-right">
 									<strong>Sair</strong>
 								</button>
 							</form>
