@@ -7,9 +7,16 @@
 ?>
 		<div class="container">		
 			<h2>Usuários</h2>
-			<div class="container" >
-					<button class='btn btn-warning btn-sm pull-right' data-toggle='modal' data-target='#modalAdd'><b>Adicionar Usuário</b></button>
-					<br><br>
+			<div class="row">
+                <div class="col-md-12">
+                	<button class="btn btn-warning btn-sm pull-right" 
+                    data-toggle="modal" data-target="#modalAdd">
+                    <b>Adicionar</b>
+                </button>
+                </div>                
+			</div>
+			<div class="row">
+				<div class="col-md-12">&nbsp;</div>
 			</div>
 			<div class="table-responsive">				
 				<table class="table table-striped table-bordered table-condensed">
@@ -120,7 +127,7 @@
 							</form>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-primary">Salvar</button>
+							<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
 						</div>
 					</div>
@@ -222,10 +229,9 @@
 		</div> <!-- container -->
 		
 		<script type="text/javascript">
-			$('#modalDel').on('show.bs.modal', function(e){
-				var bookId = $(e.relatedTarget).data('book-id');
-				$(e.currentTarget).find('input[name="bookId"]').val(bookId);
-			});
+		    function salvar() {
+			    alert($('#nome').val());
+		    }
  		</script>
 <?php
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
