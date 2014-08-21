@@ -7,9 +7,13 @@
 ?>
 		<div class="container">
 			<h2>Solicitações</h2>
-			<div class="container" >
-					<button class='btn btn-warning btn-sm pull-right' data-toggle='modal' data-target='#modalAdd'><b>Adicionar Solicitação</b></button>
-					<br><br>
+			<div class="row">
+                <div class="col-md-12">
+					<button class="btn btn-warning btn-sm pull-right" 
+					    data-toggle="modal" data-target="#modalAdd">
+						<b>Adicionar</b>
+					</button>
+				</div>
 			</div>
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed">
