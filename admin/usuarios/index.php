@@ -12,9 +12,9 @@
 			<div class="row">
                 <div class="col-md-12">
                 	<button class="btn btn-warning btn-sm pull-right" 
-                    data-toggle="modal" data-target="#modalAdd">
-                    <b>Adicionar</b>
-                </button>
+                    	data-toggle="modal" data-target="#modalAdd">
+                    	<b>Adicionar</b>
+                	</button>
                 </div>                
 			</div>
 			<div class="row">
