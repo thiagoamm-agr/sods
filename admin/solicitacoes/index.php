@@ -30,7 +30,13 @@
 					$controller = new SolicitacoesController();
 					
 					// Obtém a lista de todas as solicitações.
-					$solicitacoes = $controller->allAdmin();
+					
+					if($_SESSION['usuario']['tipo_usuario'] == 'A'){
+						$solicitacoes = $controller->allAdmin();
+					}else{
+						$solicitacoes = $controller->allUser($_SESSION['usuario']['login']);
+					}
+					
 					
 					while ($solicitacao = mysql_fetch_assoc($solicitacoes)) {
 
