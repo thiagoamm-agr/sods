@@ -27,7 +27,7 @@
 		public function insert($usuario) {
 			if (isset($usuario)) {
 				
-			}			
+			}
 		}
 		
 		public function update($usuario) {
