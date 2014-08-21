@@ -1,7 +1,7 @@
 <?php
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 		
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';	
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';	
 	
 	class UsuarioDAO {
 		
@@ -26,8 +26,7 @@
 		
 		public function insert($usuario) {
 			if (isset($usuario)) {
-				echo "Inserir usuário";
-				var_dump($usuario);
+				
 			}			
 		}
 		
