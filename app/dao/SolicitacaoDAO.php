@@ -54,13 +54,13 @@
 			return $result_set;
 		}
 		
-		public function allUser(){
+		public function allUser($login){
 			$query= "select " .
 					"so.id, s.nome, so.titulo, so.status, " .
 					"t.nome as nome_sol, so.data_abertura, so.data_alteracao " .
 					"from solicitante as s " .
 					"inner join solicitacao as so " .
-					"on s.id = so.solicitante_id and s.login = '$user' " .
+					"on s.id = so.solicitante_id and s.login = '$login' " .
 					"inner join tipo_solicitacao as t " .
 							"on t.id = so.tipo_solicitacao_id;";
 			$result_set = mysql_query($query, $this->connection);
