@@ -36,11 +36,10 @@
 <?php
 					$controller = new SolicitacoesController();
 					
-					// Obtém a lista de todas as solicitações.
-					
-					if($_SESSION['usuario']['tipo_usuario'] == 'A'){
+					// Obtém a lista de todas as solicitações.					
+					if($_SESSION['usuario']['tipo_usuario'] == 'A') {
 						$solicitacoes = $controller->allAdmin();
-					}else{
+					} else {
 						$solicitacoes = $controller->allUser($_SESSION['usuario']['login']);
 					}
 					
@@ -75,8 +74,8 @@
     		</div>
     		
     		<!--  Modais -->
-			<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" 
-			    aria-hidden="true">
+			<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
+			    aria-labelledby="modalEdit" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -89,15 +88,18 @@
 							<form role="form">								
 		  						<div class="form-group">
 		    						<label for="descricao" class="col-sm-2 control-label">Descrição</label>
-		    						<textarea class="form-control" id="desc" name="desc" rows="6" style="width: 80%;"></textarea>
+		    						<textarea class="form-control" id="desc" name="desc" 
+		    						    rows="6" style="width: 80%;"></textarea>
 		  						</div>
 		  						<div class="form-group">
 		    						<label for="info_adc" class="col-sm-2 control-label">Inf. Adicionais</label>
-		    						<textarea class="form-control" id="info_adc" name="desc" rows="4" style="width: 80%;"></textarea>
+		    						<textarea class="form-control" id="info_adc" name="desc" 
+		    						    rows="4" style="width: 80%;"></textarea>
 		  						</div>
 		  						<div class="form-group">
 		    						<label for="obs" class="col-sm-2 control-label">Observações</label>
-		    						<textarea class="form-control" id="obs" name="obs" rows="2" style="width: 80%;"></textarea>
+		    						<textarea class="form-control" id="obs" name="obs" 
+		    						    rows="2" style="width: 80%;"></textarea>
 		  						</div>
 		  						<div class="form-group">
 		  							<div class="row">
@@ -106,28 +108,29 @@
 		  									<select id="tp_sol" name="tp_sol" class="form-control">
 <?php 
 												$sql = "select * from tipo_solicitacao";
-																
 												$secoes = mysql_query($sql);
-						
+																		
 		  										while ($secao = mysql_fetch_assoc($secoes)) {
 ?>
 												<option value="<?php echo $secao['id'] ?>">
 													<?php echo $secao['nome']?>
 												</option>
 <?php
-												} 
+												}
 ?>
 											</select>
 										</div>
 									
 										<div class="col-sm-4">
 											<label for="data">Data de Criação</label>
-											<input type="text" class="form-control" name="data" id="data" readonly>
+											<input type="text" class="form-control" name="data" 
+											    id="data" readonly>
 										</div>
 										
 										<div class="col-sm-4">
 											<label for="ult_alteracao">Ultima Alteração</label>
-											<input type="text" class="form-control" name="ult_alteracao" id="ult_alteracao" readonly>
+											<input type="text" class="form-control" name="ult_alteracao" 
+											    id="ult_alteracao" readonly>
 										</div>
 									
 									
@@ -137,7 +140,9 @@
 						</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary">Salvar</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+								    Fechar
+								</button>
 							</div>
 					</div>
 				</div>
@@ -164,16 +169,8 @@
     					</form>
     				</div>
     			</div>
-    		</div> <!--  modais -->
-    		
+    		</div> <!--  modais -->    		
     	</div> <!-- container -->
-    	
-    	<script type="text/javascript">
-			$('#modalDel').on('show.bs.modal', function(e){
-				var bookId = $(e.relatedTarget).data('book-id');
-				$(e.currentTarget).find('input[name="bookId"]').val(bookId);
-			});
- 		</script>
 <?php 	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
