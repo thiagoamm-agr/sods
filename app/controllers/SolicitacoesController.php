@@ -5,29 +5,28 @@
 		
 		private $dao;
 		
-		public function __construct(){
+		public function __construct() {
 			$this->dao = new SolicitacaoDAO();
 		}
 		
-		public function __destruct(){
+		public function __destruct() {
 			unset($this->dao);
 		}
 		
-		public function __get($field){
+		public function __get($field) {
 			return $this->$field;
 		}
 		
-		public function __set($field, $value){
+		public function __set($field, $value) {
 			$this->$field = $value;
 		}
 		
-		public function allAdmin(){
+		public function allAdmin() {
 			return $this->dao->allAdmin();
 		}
 		
-		public function allUser($login){
+		public function allUser($login) {
 			return $this->dao->allUser($login);
 		}
 	}
-
 ?>
