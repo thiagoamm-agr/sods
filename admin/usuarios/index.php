@@ -15,7 +15,7 @@
                     	data-toggle="modal" data-target="#modalAdd">
                     	<b>Adicionar</b>
                 	</button>
-                </div>                
+                </div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">&nbsp;</div>
