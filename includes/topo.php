@@ -85,6 +85,7 @@
 						// Menu do Usuário do Sistema.
 ?>
 						<li><a href="/sods/admin/account.php">Conta</a></li>
+						<li><a href="/sods/admin/solicitacoes/">Cadastro</a></li>
 <?php 
 					}
 ?>
