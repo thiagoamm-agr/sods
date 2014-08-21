@@ -1,11 +1,13 @@
 <?php
 	/* CADASTRO DE USUÁRIOS */	
 
-	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';	
-
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
+	
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
+	
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
 ?>
-		<div class="container">		
+		<div class="container">
 			<h2>Usuários</h2>
 			<div class="row">
                 <div class="col-md-12">
@@ -124,11 +126,12 @@
 									<input type="checkbox" id="tipo_usuario" name="tipo_usuario" />
 									<label for="tipo_usuario"> Administrador</label>									                				
 								</div>
+								<input type="hidden" id="acao" name="acao" value="editar" />
 							</form>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+						<div class="modal-footer">							
+							<button type="button" class="btn btn-primary" onclick="editar()">Salvar</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
 						</div>
 					</div>
 				</div>
@@ -214,25 +217,48 @@
     								<input type="checkbox" id="tipo_usr" name="tipo_usr" value="A"> Administrador
     							</div>
     						</form>
-    					</div>
-						<form action="#">
-	    					<div class="modal-footer">
-	    						<button type="submit" class="btn btn-success">Salvar</button>
-	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
-	    					</div>
-    					</form>
+    					</div>						
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-success">Salvar</button>
+    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
+						</div>
     				</div>
     			</div>
-    		</div>
-    		<!-- Fim  modais -->
-		
+    		</div> <!-- modais -->		
 		</div> <!-- container -->
+
+		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
-		<script type="text/javascript">
-		    function salvar() {
-			    alert($('#nome').val());
+		<script type="text/javascript">		
+		    function editar() {
+			    // 1 - JSON do usuário.
+			    var usuario = new Usuario();
+			    usuario.nome = $('#nome').val();
+			    usuario.cargo = $('#cargo').val();
+			    usuario.telefoneRamal = $('#telefone_ramal').val();
+			    usuario.email = $('#email').val();			    		    
+			    // 2 - Requisição Ajax
+			    $.ajax({
+				    type: 'POST',
+				    url: '',
+				    data: 'acao=' + $('#acao').val() + '&json=' + usuario.toJSON(),
+				    success: function(data) {
+					    					    
+				    }
+                });
 		    }
- 		</script>
+ 		</script>	
 <?php
+	if (isset($_POST['acao']) && isset($_POST['json'])) {
+		$json = $_POST['json'];
+		$obj = json_decode($json);				
+		$usuario = new Usuario();
+		$usuario->nome = $obj->nome;
+		$usuario->cargo = $obj->cargo;
+		$usuario->telefone_ramal = $obj->telefoneRamal;
+		$usuario->email = $obj->email;
+		$controller->insert($usuario);
+	}
+		
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
