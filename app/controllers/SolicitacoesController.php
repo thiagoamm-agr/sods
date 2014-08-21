@@ -25,8 +25,8 @@
 			return $this->dao->allAdmin();
 		}
 		
-		public function allUser(){
-			return $this->dao->allUser();
+		public function allUser($login){
+			return $this->dao->allUser($login);
 		}
 	}
 
