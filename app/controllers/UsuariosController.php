@@ -1,5 +1,5 @@
 <?php
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/UsuarioDAO.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/UsuarioDAO.php';
 	
 	class UsuariosController {
 		
@@ -23,6 +23,10 @@
 		
 		public function all() {
 			return $this->dao->all();
+		}
+		
+		public function insert($usuario) {
+			$this->dao->insert($usuario);
 		}
 	}
 ?>
