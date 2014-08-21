@@ -48,13 +48,29 @@
 
 ?>
 			        	<tr>
-			        		<td><?php echo $solicitacao['id'] ?></td>
-			        		<td><?php echo $solicitacao['nome'] ?></td>
-			        		<td width="350px"><?php echo $solicitacao['titulo'] ?></td>
-							<td><?php echo $solicitacao['status'] ?></td>
-							<td><?php echo $solicitacao['nome_sol'] ?></td>
-							<td><?php echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) ?></td>
-							<td><?php echo @$solicitacao['data_alteracao'] ?></td>
+			        		<td>
+			        			<?php echo $solicitacao['id'] ?>
+		        			</td>
+			        		<td>
+			        			<?php echo $solicitacao['nome'] ?>
+		        			</td>
+			        		<td width="350px">
+			        			<?php echo $solicitacao['titulo'] ?>
+		        			</td>
+							<td>
+								<?php echo $solicitacao['status'] ?>
+							</td>
+							<td>
+								<?php echo $solicitacao['nome_sol'] ?>
+							</td>
+							<td>
+								<?php 
+									echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) 
+								?>
+							</td>
+							<td>
+								<?php echo @$solicitacao['data_alteracao'] ?>
+							</td>
 							<td colspan="2">							
 								<button class='btn btn-primary btn-sm' 
 								    data-toggle='modal' data-target='#modalEdit'>
