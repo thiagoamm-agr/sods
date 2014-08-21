@@ -3,7 +3,7 @@
 	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 	
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/SolicitacoesController.php';
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/SolicitacoesController.php';
 ?>
 		<div class="container">
 			<h2>Solicitações</h2>
