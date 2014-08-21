@@ -1,6 +1,6 @@
 <?php
-
-	class Solicitacao{
+	class Solicitacao {
+		
 		private $id;
 		private $solicitante_id;
 		private $detalhamento;
@@ -20,5 +20,4 @@
 			$this->$field = $value;
 		}
 	}
-
 ?>
