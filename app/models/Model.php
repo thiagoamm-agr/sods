@@ -1,10 +1,16 @@
 <?php
 	class Model {
 		// Atributos.
-		protected $id;
+		protected $id = 0;
 
+		// Construtor
 		public function __construct() {
-			$this->id = 0;
+
+		}
+
+		// Destrutor
+		public function __destruct() {
+
 		}
 		
 		// Getters
