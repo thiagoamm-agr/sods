@@ -17,7 +17,7 @@ Usuario.prototype.toJSON = function() {
 	return '{' +
 		'"id": ' + '"' + this.id + '", ' +
     	'"nome": ' + '"' + this.nome + '", ' +
-    	'"secaoId": ' + '"' + this.secaoId + '", ' +
+    	'"secaoId": ' + this.secaoId + ', ' +
     	'"cargo": ' + '"' + this.cargo + '", ' +
     	'"telefoneRamal": ' + '"' + this.telefoneRamal + '", ' +
     	'"email": ' + '"' + this.email + '", ' +
