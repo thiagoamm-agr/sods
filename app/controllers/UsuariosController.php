@@ -21,12 +21,16 @@
 			$this->$field = $value;
 		}
 		
-		public function all() {
-			return $this->dao->all();
-		}
-		
 		public function insert($usuario) {
 			$this->dao->insert($usuario);
+		}
+		
+		public function getUsuarios() {
+			return $this->dao->getAll();
+		}
+		
+		public function getUsuario($id) {
+			return $this->dao->get($id);
 		}
 	}
 ?>
