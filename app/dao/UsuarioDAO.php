@@ -83,12 +83,12 @@
 		
 		public function getAll() {
 			$query = "select " .
-					     "s.id, s.nome, sec.nome as secao, s.cargo, " .
+					     "s.id, s.nome, l.nome as lotacao, s.cargo, " .
 					     "s.fone_ramal, s.login, s.tipo_usuario, s.status " .
 					 "from " .
 					     "solicitante as s " .
-					 "inner join secao as sec " .
-					     "on s.secao_id = sec.id;";			
+					 "inner join lotacao as l " .
+					     "on s.lotacao_id = l.id;";			
 			$result = mysql_query($query, $this->connection);
 			$all = array();
 			while ($row = mysql_fetch_assoc($result)) {
