@@ -44,9 +44,9 @@
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
 							<td><?php echo $usuario['nome'] ?></td>
-							<td><?php echo $usuario['secao'] ?></td>
+							<td><?php echo $usuario['lotacao'] ?></td>
 							<td><?php echo $usuario['cargo'] ?></td>
-							<td><?php echo $usuario['fone_ramal'] ?></td>
+							<td><?php echo $usuario['telefone'] ?></td>
 							<td><?php echo $usuario['tipo_usuario'] ?></td>
 							<td><?php echo $usuario['status'] ?></td>
 							<td><?php echo $usuario['login'] ?></td>
@@ -82,9 +82,8 @@
 							</button>
 							<h3 class="modal-title" id="modalEdit">Editar Usuário</h3>
 						</div>
-						<div class="modal-body">
-							<h5>Digite os dados do usuário</h5>
-							<form role="form">								
+						<div class="modal-body">							
+							<form role="form">
 		  						<div class="form-group">
 		    						<label for="nome">Nome</label>
 		    						<input id="nome" name="nome" type="text" class="form-control" />
