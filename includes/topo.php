@@ -70,6 +70,7 @@
 								<li><a href="/sods/admin/lotacoes/">Cadastro de Lotações</a></li>
 								<li><a href="/sods/admin/usuarios/">Cadastro de Usuários</a></li>
 								<li><a href="/sods/admin/solicitacoes/">Cadastro de Solicitações</a></li>
+								<li><a href="/sods/admin/TiposSolicitacao/">Cadastro de Tipos de Solicitação</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
