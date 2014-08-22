@@ -1,9 +1,10 @@
 <?php
-	class Secao {
+	class Lotacao {
+		
 		private $id;
 		private $nome;
 		private $sigla;
-		private $lotacao_id;
+		private $gerencia_id;
 		
 		public function __get($field) {
 			return $this->$field;
