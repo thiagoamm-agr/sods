@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="col-md-12">&nbsp;</div>
 			</div>
-			<div class="table-responsive">				
+			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed">
 					<thead>
 						<tr>
@@ -37,12 +37,9 @@
 					</thead>
 					<tbody>
 <?php
-					$controller = new UsuariosController();
-					
-					// Obtém a lista de todos os usuários.
-					$usuarios = $controller->all();
+					$controller = new UsuariosController(); 
 
-					while ($usuario = mysql_fetch_assoc($usuarios)) {
+					foreach ($controller->getUsuarios() as $usuario) {
 ?>
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
@@ -54,12 +51,13 @@
 							<td><?php echo $usuario['status'] ?></td>
 							<td><?php echo $usuario['login'] ?></td>
 							<td colspan="2">							
-								<button class='btn btn-primary btn-sm' 
-								    data-toggle='modal' data-target='#modalEdit' data-book-id="<?php echo $usuario['id']?>">
+								<button class="btn btn-primary btn-sm" 
+								    data-toggle="modal" data-target="#modalEdit" 
+								    onclick="editar(<?php echo $usuario['id'] ?>)">
 									<strong>Editar</strong>
 								</button>
-								<button class='btn btn-danger btn-sm' 
-								    data-toggle='modal' data-target='#modalDel' data-book-id="<?php echo $usuario['id']?>">
+								<button class="btn btn-danger btn-sm" 
+								    data-toggle="modal" data-target="#modalDel">
 								    <strong>Excluir</strong>
 							    </button>							
 							</td>
@@ -91,6 +89,10 @@
 		    						<label for="nome">Nome</label>
 		    						<input id="nome" name="nome" type="text" class="form-control" />
 		  						</div>
+		  						<div class="form-group">
+		  							<label for="login">Login</label>
+		  							<input id="login" name="login" type="text" class="form-control" />
+		  						</div>
 								<div class="form-group">
 									<label for="lotacao">Lotação</label>
 		  							<select id="lotacao" name="lotacao" class="form-control">
@@ -102,7 +104,7 @@
 		  								while ($secao = mysql_fetch_assoc($secoes)) {
 ?>
 											<option value="<?php echo $secao['id'] ?>">
-												<?php echo $secao['nome']?>
+												<?php echo trim($secao['nome']) ?>
 											</option>
 <?php
 										} 
@@ -126,11 +128,10 @@
 									<input type="checkbox" id="tipo_usuario" name="tipo_usuario" />
 									<label for="tipo_usuario"> Administrador</label>									                				
 								</div>
-								<input type="hidden" id="acao" name="acao" value="editar" />
 							</form>
 						</div>
 						<div class="modal-footer">							
-							<button type="button" class="btn btn-primary" onclick="editar()">Salvar</button>
+							<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
 						</div>
 					</div>
@@ -170,11 +171,10 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h4 class="modal-title" id="modalDel">Adicionar Novo Usuário</h4>
+							<h3 class="modal-title" id="modalEdit">Adicionar Usuário</h3>
 						</div>
-						<div class="modal-body">
-    						<h5>Preencha o Formulário</h5>
-    						 <form role="form" action="#" method="post">
+						<div class="modal-body">    						
+    						 <form id="form-adicionar" role="form" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome</label>
     								<input type="text" class="form-control" name="nome" id="nome"/>    								
@@ -202,15 +202,15 @@
     								<input type="text" class="form-control" name="cargo" id="cargo"/>
     							</div>
     							<div class="form-group">
-    								<label for="fone_ramal">Telefone/Ramal</label>
+    								<label for="fone_ramal">Telefone / Ramal</label>
     								<input type="text" class="form-control" name="fone-ramal" id="fone-ramal"/>
     							</div>
     							<div class="form-group">
-    								<label for="email">Email</label>
+    								<label for="email">E-mail</label>
     								<input type="text" class="form-control" name="email" id="email"/>
     							</div>
     							<div class="form-group">
-    								<label for="login">login</label>
+    								<label for="login">Login</label>
     								<input type="text" class="form-control" name="login" id="login"/>
     							</div>
     							<div class="form-group">
@@ -219,7 +219,7 @@
     						</form>
     					</div>						
 						<div class="modal-footer">
-							<button type="submit" class="btn btn-success">Salvar</button>
+							<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
     						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 						</div>
     				</div>
@@ -229,11 +229,23 @@
 
 		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
-		<script type="text/javascript">		
-		    function editar() {
+		<script type="text/javascript">
+			function editar(id) {
+				$.ajax({
+				    type: 'POST',
+				    url: '',
+				    data: 'acao=editar&id=' + id,
+				    success: function(data) {
+					    					    
+				    }
+                });
+			}
+			
+		    function salvar() {
 			    // 1 - JSON do usuário.
 			    var usuario = new Usuario();
 			    usuario.nome = $('#nome').val();
+			    usuario.secaoId = $('#lotacao').val();
 			    usuario.cargo = $('#cargo').val();
 			    usuario.telefoneRamal = $('#telefone_ramal').val();
 			    usuario.email = $('#email').val();			    		    
@@ -241,24 +253,35 @@
 			    $.ajax({
 				    type: 'POST',
 				    url: '',
-				    data: 'acao=' + $('#acao').val() + '&json=' + usuario.toJSON(),
+				    data: 'acao=' + $('#acao').val() + '&' + 
+				          'json=' + usuario.toJSON(),
 				    success: function(data) {
 					    					    
 				    }
                 });
 		    }
- 		</script>	
-<?php
-	if (isset($_POST['acao']) && isset($_POST['json'])) {
-		$json = $_POST['json'];
-		$obj = json_decode($json);				
-		$usuario = new Usuario();
-		$usuario->nome = $obj->nome;
-		$usuario->cargo = $obj->cargo;
-		$usuario->telefone_ramal = $obj->telefoneRamal;
-		$usuario->email = $obj->email;
-		$controller->insert($usuario);
+ 		</script>
+<?php	
+	if (isset($_POST['acao'])) {
+		$acao = $_POST['acao'];
+		if ($acao == 'salvar') {
+			if (isset($_POST['json'])) {
+				$json = $_POST['json'];
+			}
+// 		$obj = json_decode($json);
+// 		$usuario = new Usuario();
+// 		$usuario->nome = $obj->nome;
+// 		$usuario->secao_id = $obj->secaoId;
+// 		$usuario->cargo = $obj->cargo;
+// 		$usuario->fone_ramal = $obj->telefoneRamal;
+// 		$usuario->email = $obj->email;
+// 		$controller->insert($usuario);	
+		} else if ($acao == 'editar') {
+			$usuario = $controller->getUsuario($_POST['id']);
+		} else if ($acao == 'excluir') {
+			
+		}
 	}
-		
+			
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
