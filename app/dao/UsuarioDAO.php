@@ -1,9 +1,11 @@
 <?php
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
-		
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';	
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';		
+
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
+
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/IDAO.php';
 	
-	class UsuarioDAO {
+	class UsuarioDAO implements IDAO {
 		
 		private $connection;
 		
@@ -26,31 +28,73 @@
 		
 		public function insert($usuario) {
 			if (isset($usuario)) {
-				
+				$cls = new ReflectionClass('Usuario');
+				$properties = $cls->getProperties();
+				$columns = "";
+				$values = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$value = $property->getValue($usuario);
+					$value = trim($value);
+					if (!empty($value)) {
+						$columns .= "{$property->getName()}, ";
+						if (gettype($value) == "string") {
+							$values .= "'{$property->getValue($usuario)}', ";
+						} else {
+							$values .= "{$property->getValue($usuario)}, ";
+						}
+					}
+				}
+				$columns = substr($columns, 0, strrpos($columns, ", "));
+				$values = substr($values, 0, strrpos($values, ", "));
+				$query = "insert into solicitante ($columns) values ($values)";
+				mysql_query($query, $this->connection);
 			}
 		}
 		
 		public function update($usuario) {
-			echo "Atualizar usuário";
-			var_dump($usuario);			
+			if (isset($usuario)) {
+				
+			}
+		}
+		
+		public function save($usuario) {
+			if (isset($usuario)) {
+				
+			}
 		}
 		
 		public function delete($id) {
-			
+			if (isset($id)) {
+				
+			}
 		}
 		
-		public function all() {
+		public function get($field, $value) {
+			if (isset($field) && isset($value)) {
+				if (gettype($value) == 'string') {
+					$value = "'$value'";
+				} 
+				$query = "select * from solicitante where $field = $value";
+				$result = mysql_query($query, $this->connection);
+				return mysql_fetch_object($result);
+			}
+		}
+		
+		public function getAll() {
 			$query = "select " .
 					     "s.id, s.nome, sec.nome as secao, s.cargo, " .
 					     "s.fone_ramal, s.login, s.tipo_usuario, s.status " .
 					 "from " .
 					     "solicitante as s " .
 					 "inner join secao as sec " .
-					     "on s.secao_id = sec.id;";
-			
-			$result_set = mysql_query($query, $this->connection);
-			
-			return $result_set;
+					     "on s.secao_id = sec.id;";			
+			$result = mysql_query($query, $this->connection);
+			$all = array();
+			while ($row = mysql_fetch_assoc($result)) {
+				array_push($all, $row);
+			}
+			return $all;
 		}
 	}
 ?>
