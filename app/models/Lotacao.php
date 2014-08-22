@@ -1,17 +1,15 @@
 <?php
-	class Lotacao {
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Model.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
+
+	class Lotacao extends Model {		
+		protected $nome;
+		protected $sigla;
+		protected $gerencia_id;
+		protected $usuario;
 		
-		private $id;
-		private $nome;
-		private $sigla;
-		private $gerencia_id;
-		
-		public function __get($field) {
-			return $this->$field;
-		}
-		
-		public function __set($field, $value) {
-			$this->$field = $value;
+		public function __construct() {
+			$this->usuario = new Usuario();
 		}
 	}
 ?>
