@@ -67,6 +67,7 @@
 								Cadastros <span class="caret"></span>
 							</a>
 							<ul class="dropdown-menu" role="menu">
+								<li><a href="/sods/admin/lotacoes/">Cadastro de Lotações</a></li>
 								<li><a href="/sods/admin/usuarios/">Cadastro de Usuários</a></li>
 								<li><a href="/sods/admin/solicitacoes/">Cadastro de Solicitações</a></li>
 							</ul>
@@ -97,7 +98,7 @@
 							<a href="/sods/admin/account.php">
 							    Bem-vindo(a), 
 							    <font color="white">
-							        <b><?php echo $_SESSION['usuario']['nome_sol'];?></b>
+							        <b><?php echo $_SESSION['usuario']['nome'];?></b>
 							    </font>.
 						    </a>
 						</li>
