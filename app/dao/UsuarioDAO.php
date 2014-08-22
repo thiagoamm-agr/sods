@@ -84,7 +84,7 @@
 		public function getAll() {
 			$query = "select " .
 					     "s.id, s.nome, l.nome as lotacao, s.cargo, " .
-					     "s.fone_ramal, s.login, s.tipo_usuario, s.status " .
+					     "s.telefone, s.login, s.tipo_usuario, s.status " .
 					 "from " .
 					     "solicitante as s " .
 					 "inner join lotacao as l " .
