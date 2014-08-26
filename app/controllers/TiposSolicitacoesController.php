@@ -1,5 +1,5 @@
 <?php
-	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/TipoSolicitacaoDAO.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/TipoSolicitacaoDAO.php';
 	
 	class TiposSolicitacoesController {
 		
