@@ -86,6 +86,14 @@
     							<div class="form-group">
     								<label for="lotacao">Lotação</label>
     								<select id="lotacao" name="lotacao" class="form-control">
+<?php 
+									foreach ($controller->getLotacoes() as $lotacao) { 
+?>
+										<option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome'] . 
+										' - ' . $lotacao['sigla'] ?></option>	
+<?php 
+									}
+?>
 									</select>
 								</div>
 							</form>
