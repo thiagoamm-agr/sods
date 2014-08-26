@@ -1,7 +1,7 @@
 <?php
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 	
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/TipoSolicitacao.php';
+	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/TipoSolicitacao.php';
 	
 	class TipoSolicitacaoDAO {
 		
@@ -24,16 +24,8 @@
 			$this->$field = $value;
 		}
 		
-		public function getAll() {
-			$query = "select * from lotacao";
-				
-			$result = mysql_query($query, $this->connection);
-			$all = array();
-			while ($row = mysql_fetch_assoc($result)){
-				array_push($all, $row);
-			}
-				
-			return $all;
+		public function all() {
+			
 		}
 		
 		public function insert() {
