@@ -88,14 +88,12 @@
 		}
 		
 		public function getAll() {
-			$query = "select * from lotacao";			
+			$query = "select * from lotacao";
 			$result = mysql_query($query, $this->connection);
 			$all = array();
 			while ($row = mysql_fetch_assoc($result)) {
-				if (isset($row['gerencia_id'])) {
-					$row['gerencia'] = $this->get('id', $row['gerencia_id']);
-				}
-				array_push($all, $row);				
+				$row['gerencia'] = $this->get('id', $row['gerencia_id']);
+				array_push($all, $row);
 			}			
 			return $all;
 		}
