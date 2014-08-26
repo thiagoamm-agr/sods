@@ -41,7 +41,7 @@
 							<td><?php echo $lotacao['id'] ?></td>
 							<td><?php echo $lotacao['nome'] ?></td>
 							<td><?php echo $lotacao['sigla'] ?></td>
-							<td><?php echo $lotacao['gerencia']->sigla ?></td>
+							<td><?php echo isset($lotacao['gerencia']) ? $lotacao['gerencia']->sigla : ''?></td>
 							<td colspan="2">							
 								<button class="btn btn-primary btn-sm" 
 								    data-toggle="modal" data-target="#modalEdit" 
