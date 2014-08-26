@@ -31,11 +31,10 @@
 					</thead>
 					<tbody>
 <?php 
-							$controller = new TiposSolicitacoesController();
+					$controller = new TiposSolicitacoesController();
 
-							//Obtém a lista de todos os tipos de solicitação
-							
-							foreach ($tipos = $controller->getTipos() as $tipo){
+					//Obtém a lista de todos os tipos de solicitação
+					foreach ($tipos = $controller->getTipos() as $tipo){
 ?>
 							<tr>
 								<td><?php echo $tipo['id']?></td>
@@ -86,7 +85,7 @@
     			</div>
     		</div>
 			
-			<!-- Editar Tipo de Solicitação -->
+			<!-- Editar Tipo de Solicitação-->
 			<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
 			    aria-labelledby="modalEdit" aria-hidden="true">
 				<div class="modal-dialog">
@@ -112,7 +111,7 @@
     				</div>
     			</div>
     		</div>
-			
+    		
 			<!-- Excluir Tipo de Solicitação -->
 			<div class="modal fade" id="modalDel" tabindex="-1" role="dialog" 
 			    aria-labelledby="modalDel" aria-hidden="true">
@@ -135,9 +134,7 @@
     					</form>
     				</div>
     			</div>
-    		</div> 
-			
-			
+    		</div>			
 			
 		</div><!-- container -->
 <?php
