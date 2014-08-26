@@ -1,9 +1,9 @@
 <?php
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';		
-
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/IDAO.php';
+	
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
 	
 	class UsuarioDAO implements IDAO {
 		
