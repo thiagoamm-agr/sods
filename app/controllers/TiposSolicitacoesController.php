@@ -1,7 +1,7 @@
 <?php
 	@require $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/TipoSolicitacaoDAO.php';
 	
-	class TipoSolicitacoesController {
+	class TiposSolicitacoesController {
 		
 		private $dao;
 		
@@ -19,6 +19,10 @@
 		
 		public function __set($field, $value) {
 			$this->$field = $value;
+		}
+		
+		public function getTipos(){
+			return $this->dao->getAll();
 		}
 		
 		public function all() {
