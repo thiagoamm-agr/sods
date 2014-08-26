@@ -50,14 +50,9 @@
 				    "inner join tipo_solicitacao as t " .
 	    		        "on t.id = so.tipo_solicitacao_id";
 			
-			$result = mysql_query($query, $this->connection);
-			$all = array();
-			
-			while($row = mysql_fetch_assoc($result)){
-				array_push($all, $row);
-			}
+			$result_set = mysql_query($query, $this->connection);
 						
-			return $all;
+			return $result_set;
 		}
 		
 		public function allUser($login) {
@@ -70,14 +65,9 @@
 					"inner join tipo_solicitacao as t " .
                         "on t.id = so.tipo_solicitacao_id";
 			
-			$result = mysql_query($query, $this->connection);
-			$all = array();
+			$result_set = mysql_query($query, $this->connection);
 			
-			while ($row = mysql_fetch_assoc($result)){
-				array_push($all, $row);
-			}
-			
-			return $all;
+			return $result_set;
 		}
 	}
 ?>
