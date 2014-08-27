@@ -14,8 +14,8 @@
 		}
 		
 		public function __destruct() {
-			mysql_close($this->connection);
-			unset($connection);
+			@mysql_close($this->connection); //VERIFICAR ERRO
+			unset($this->connection);
 		}
 		
 		public function __get($field) {
@@ -24,7 +24,7 @@
 		
 		public function __set($field, $value) {
 			$this->$field = $value;
-		}
+		}		
 		
 		public function insert($usuario) {
 			if (isset($usuario)) {
