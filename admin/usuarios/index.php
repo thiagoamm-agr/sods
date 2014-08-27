@@ -39,9 +39,9 @@
 					</thead>
 					<tbody>
 <?php
-					$controller = new UsuariosController(); 
+					$usuariosController = new UsuariosController(); 
 
-					foreach ($controller->getUsuarios() as $usuario) {
+					foreach ($usuariosController->getUsuarios() as $usuario) {
 ?>
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
@@ -98,8 +98,9 @@
 									<label for="lotacao">Lotação</label>
 		  							<select id="lotacao" name="lotacao" class="form-control">
 <?php 
-										$controllerLotacao = new LotacoesController();
-										$lotacoes = $controllerLotacao->getLotacoes();
+										$lotacoesController = new LotacoesController();
+										
+										$lotacoes = $lotacoesController->getLotacoes();
 										
 										foreach ($lotacoes as $lotacao){
 ?>
@@ -273,7 +274,7 @@
 // 		$usuario->email = $obj->email;
 // 		$controller->insert($usuario);	
 		} else if ($acao == 'editar') {
-			$usuario = $controller->getUsuario($_POST['id']);
+			$usuario = $usuariosController->getUsuario($_POST['id']);
 		} else if ($acao == 'excluir') {
 			
 		}		
