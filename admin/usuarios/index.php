@@ -3,8 +3,10 @@
 
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 	
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
 	
+	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
 ?>
 		<div class="container">
@@ -50,7 +52,7 @@
 							<td><?php echo $usuario['tipo_usuario'] ?></td>
 							<td><?php echo $usuario['status'] ?></td>
 							<td><?php echo $usuario['login'] ?></td>
-							<td colspan="2">							
+							<td colspan="2">
 								<button class="btn btn-primary btn-sm" 
 								    data-toggle="modal" data-target="#modalEdit" 
 								    onclick="editar(<?php echo $usuario['id'] ?>)">
@@ -96,14 +98,13 @@
 									<label for="lotacao">Lotação</label>
 		  							<select id="lotacao" name="lotacao" class="form-control">
 <?php 
-										$sql = "select * from secao";
-																
-										$secoes = mysql_query($sql);
-						
-		  								while ($secao = mysql_fetch_assoc($secoes)) {
+										$controllerLotacao = new LotacoesController();
+										$lotacoes = $controllerLotacao->getLotacoes();
+										
+										foreach ($lotacoes as $lotacao){
 ?>
-											<option value="<?php echo $secao['id'] ?>">
-												<?php echo trim($secao['nome']) ?>
+											<option value="<?php echo $lotacao['id'] ?>">
+												<?php echo trim($lotacao['nome']) ?>
 											</option>
 <?php
 										} 
@@ -181,15 +182,11 @@
     							<div class="form-group">
     								<label for="lotacao">Lotação</label>
     								<select id="lotacao" name="lotacao" class="form-control">
-<?php 
-										$sql = "select * from secao";
-																
-										$secoes = mysql_query($sql);
-						
-		  								while ($secao = mysql_fetch_assoc($secoes)) {
+<?php
+										foreach ($lotacoes as $lotacao){
 ?>
-											<option value="<?php echo $secao['id'] ?>">
-												<?php echo $secao['nome']?>
+											<option value="<?php echo $lotacao['id'] ?>">
+												<?php echo $lotacao['nome']?>
 											</option>
 <?php
 										} 
@@ -279,8 +276,7 @@
 			$usuario = $controller->getUsuario($_POST['id']);
 		} else if ($acao == 'excluir') {
 			
-		}
+		}		
 	}
-			
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
