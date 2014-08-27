@@ -14,7 +14,7 @@
 		}
 		
 		public function __destruct() {
-			@mysql_close($this->connection); //VERIFICAR ERRO
+			mysql_close($this->connection);
 			unset($this->connection);
 		}
 		
