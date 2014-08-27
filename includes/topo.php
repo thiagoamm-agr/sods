@@ -25,6 +25,9 @@
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="/sods/css/navbar-fixed-top.css" />
         
+        <!-- Boostrap Validator -->
+        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrapValidator/bootstrapValidator.min.css"/>
+        
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!--[if lt IE 9]>
       		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -35,6 +38,9 @@
 		
         <script src="/sods/js/jquery.min.js"></script>
         <script src="/sods/js/bootstrap/bootstrap.min.js"></script>
+        
+        <script src="/sods/js/bootstrapValidator/bootstrapValidator.js"></script>
+        
         				
 		<title>SODS</title>
     </head>
