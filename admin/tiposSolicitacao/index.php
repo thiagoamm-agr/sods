@@ -34,24 +34,24 @@
 					$controller = new TiposSolicitacoesController();
 
 					//Obtém a lista de todos os tipos de solicitação
-					foreach ($tipos = $controller->getTipos() as $tipo){
+					foreach ($tipos = $controller->getTipos() as $tipo) {
 ?>
 							<tr>
-								<td><?php echo $tipo['id']?></td>
-								<td><?php echo $tipo['nome']?></td>
+								<td><?php echo $tipo['id'] ?></td>
+								<td><?php echo $tipo['nome'] ?></td>
 								<td colspan="2">
-									<button class="btn btn-primary btn-sm" 
-								    	data-toggle="modal" data-target="#modalEdit">
+									<button class="btn btn-primary btn-sm" data-toggle="modal" 
+									    data-target="#modalEdit">
 										<strong>Editar</strong>
 									</button>
-									<button class="btn btn-danger btn-sm" 
-								    	data-toggle="modal" data-target="#modalDel">
+									<button class="btn btn-danger btn-sm" data-toggle="modal" 
+									    data-target="#modalDel">
 								    <strong>Excluir</strong>
 							    </button>						
 								</td>
 							</tr>
 <?php 
-								}
+					}
 ?>				
 					</tbody>
 				</table>
@@ -67,7 +67,7 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h3 class="modal-title" id="modalEdit">Adicionar novo tipo</h3>
+							<h3 class="modal-title" id="modalAdd">Adicionar novo tipo</h3>
 						</div>
 						<div class="modal-body">    						
     						 <form id="form-adicionar" role="form" action="#" method="post">
@@ -97,7 +97,7 @@
 							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-editar" role="form" action="#" method="post">
+    						 <form role="form">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
     								<input type="text" class="form-control" name="nome" id="nome"/>    								
