@@ -73,7 +73,7 @@
     						 <form id="form-adicionar" role="form" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
-    								<input type="text" class="form-control" name="nome" id="nome"/>    								
+    								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div> 
     						</form>
     					</div>						
