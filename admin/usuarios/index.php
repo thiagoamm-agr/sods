@@ -3,9 +3,11 @@
 
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 	
+	// Models
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
 	
+	// Controllers
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
 ?>
