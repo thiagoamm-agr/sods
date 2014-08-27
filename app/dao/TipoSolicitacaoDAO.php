@@ -25,7 +25,7 @@
 		}
 		
 		public function getAll() {
-			$query = "select * from lotacao";
+			$query = "select * from tipo_solicitacao";
 		
 			$result = mysql_query($query, $this->connection);
 			$all = array();
