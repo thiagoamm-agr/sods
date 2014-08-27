@@ -3,7 +3,7 @@
         $conexao = null;
         if (isset($host) && isset($user) && isset($password)) {
             # Criando a conexão
-            $conexao = mysql_connect($host, $user, $password);
+            $conexao = mysql_connect($host, $user, $password, true);
             if (!isset($conexao)) {
                 die("Não foi possível conectar ao servidor de banco de dados:" . mysql_error());
             }
