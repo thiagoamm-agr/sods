@@ -33,9 +33,11 @@
 					</thead>
 					<tbody>
 <?php
-					$controller = new LotacoesController(); 
+					$controller = new LotacoesController();
+					
+					$lotacoes = $controller->getLotacoes(); 
 
-					foreach ($controller->getLotacoes() as $lotacao) {
+					foreach ($lotacoes as $lotacao) {
 ?>
 						<tr>
 							<td><?php echo $lotacao['id'] ?></td>
@@ -87,7 +89,7 @@
     								<label for="lotacao">Lotação</label>
     								<select id="lotacao" name="lotacao" class="form-control">
 <?php 
-									foreach ($controller->getLotacoes() as $lotacao) { 
+									foreach ($lotacoes as $lotacao) { 
 ?>
 										<option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome'] . 
 										' - ' . $lotacao['sigla'] ?></option>	
