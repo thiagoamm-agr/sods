@@ -96,5 +96,11 @@
 			}
 			return $all;
 		}
+		
+		public function filter($criteria) {
+			if (isset($criteria)) {
+				
+			}
+		}
 	}
 ?>
