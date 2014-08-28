@@ -34,10 +34,8 @@
 					<tbody>
 <?php
 					$controller = new LotacoesController();
-					
-					$lotacoes = $controller->getLotacoes(); 
 
-					foreach ($lotacoes as $lotacao) {
+					foreach ($controller->getLotacoes() as $lotacao) {
 ?>
 						<tr>
 							<td><?php echo $lotacao['id'] ?></td>
@@ -86,13 +84,13 @@
     								<input type="text" class="form-control" id="sigla" name="sigla" />    								
     							</div>
     							<div class="form-group">
-    								<label for="lotacao">Lotação</label>
-    								<select id="lotacao" name="lotacao" class="form-control">
+    								<label for="gerencia">Gerência</label>
+    								<select id="gerencia" name="gerencia" class="form-control">
 <?php 
-									foreach ($lotacoes as $lotacao) { 
+									foreach ($controller->getGerencias() as $gerencia) { 
 ?>
-										<option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome'] . 
-										' - ' . $lotacao['sigla'] ?></option>	
+										<option value="<?php echo $gerencia['id'] ?>"><?php echo $gerencia['nome'] . 
+										' - ' . $gerencia['sigla'] ?></option>
 <?php 
 									}
 ?>
@@ -103,6 +101,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 <?php
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
