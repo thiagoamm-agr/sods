@@ -99,16 +99,16 @@
 		}
 		
 		public function filter($criteria) {
+			$rows = array();
 			if (isset($criteria)) {
 				$query = "select * from lotacao where $criteria";
-				$result = mysql_query($query, $this->connection);
-				$rows = array();
+				$result = mysql_query($query, $this->connection);				
 				while ($row = mysql_fetch_assoc($result)) {
 					$row['gerencia'] = $this->get('id', $row['gerencia_id']);
 					array_push($rows, $row);
 				}
-				return $rows;
 			}
+			return $rows;
 		}
 	}
 ?>
