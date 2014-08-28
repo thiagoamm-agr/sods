@@ -88,9 +88,9 @@
 		}
 		
 		public function getAll() {
-			$query = "select * from lotacao";
-			$result = mysql_query($query, $this->connection);
 			$all = array();
+			$query = "select * from lotacao";
+			$result = mysql_query($query, $this->connection);			
 			while ($row = mysql_fetch_assoc($result)) {
 				$row['gerencia'] = $this->get('id', $row['gerencia_id']);
 				array_push($all, $row);
