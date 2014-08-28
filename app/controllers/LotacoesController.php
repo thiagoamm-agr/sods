@@ -32,5 +32,9 @@
 		public function getLotacao($id) {
 			return $this->dao->get("id", (int) $id);
 		}
+		
+		public function getGerencias() {
+			return $this->dao->filter('gerencia_id is null');
+		}
 	}
 ?>
