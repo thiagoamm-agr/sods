@@ -97,5 +97,18 @@
 			}			
 			return $all;
 		}
+		
+		public function filter($criteria) {
+			if (isset($criteria)) {
+				$query = "select * from lotacao where $criteria";
+				$result = mysql_query($query, $this->connection);
+				$rows = array();
+				while ($row = mysql_fetch_assoc($result)) {
+					$row['gerencia'] = $this->get('id', $row['gerencia_id']);
+					array_push($rows, $row);
+				}
+				return $rows;
+			}
+		}
 	}
 ?>
