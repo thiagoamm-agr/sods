@@ -177,7 +177,7 @@
 							<h3 class="modal-title" id="modalEdit">Adicionar Usuário</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-adicionar" role="form" action="#" method="post">
+    						 <form id="form-add" role="form" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome</label>
     								<input type="text" class="form-control" name="nome" id="nome"/>    								
@@ -229,6 +229,28 @@
 		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
 		<script type="text/javascript">
+
+			$(document).ready(function() {
+			    $('#form-add').bootstrapValidator({
+			        feedbackIcons: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+			        },
+			        fields: {
+			            email: {
+			                validators: {
+			                    emailAddress: {
+			                        message: 'Digite um endereço de e-mail válido'
+			                    }
+			                }
+			            }
+			        }
+			    });
+			});
+
+
+
 			function editar(id) {
 				$.ajax({
 				    type: 'POST',
@@ -239,8 +261,8 @@
 				    }
                 });
 			}
-			
-		    function salvar() {
+
+			function salvar() {
 			    // 1 - JSON do usuário.
 			    var usuario = new Usuario();
 			    usuario.nome = $('#nome').val();
