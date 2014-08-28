@@ -6,5 +6,6 @@
 		public function delete($id);
  		public function get($field, $value);
 		public function getAll();
+		public function filter($criteria);
 	}
 ?>
