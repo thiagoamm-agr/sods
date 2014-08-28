@@ -87,7 +87,7 @@
 							<h3 class="modal-title" id="modalEdit">Editar Usuário</h3>
 						</div>
 						<div class="modal-body">							
-							<form role="form">
+							<form role="form" id="form-edit">
 		  						<div class="form-group">
 		    						<label for="nome">Nome</label>
 		    						<input id="nome" name="nome" type="text" class="form-control" />
@@ -131,11 +131,11 @@
 									<input type="checkbox" id="tipo_usuario" name="tipo_usuario" />
 									<label for="tipo_usuario"> Administrador</label>									                				
 								</div>
+								<div class="modal-footer">							
+									<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
+								</div>
 							</form>
-						</div>
-						<div class="modal-footer">							
-							<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
 						</div>
 					</div>
 				</div>
@@ -202,7 +202,7 @@
     							</div>
     							<div class="form-group">
     								<label for="fone_ramal">Telefone / Ramal</label>
-    								<input type="text" class="form-control" name="fone-ramal" id="fone-ramal"/>
+    								<input type="text" class="form-control" name="fone" id="fone"/>
     							</div>
     							<div class="form-group">
     								<label for="email">E-mail</label>
@@ -214,12 +214,12 @@
     							</div>
     							<div class="form-group">
     								<input type="checkbox" id="tipo_usr" name="tipo_usr" value="A"> Administrador
-    							</div>
-    						</form>
-    					</div>						
-						<div class="modal-footer">
-							<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
-    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
+    							</div>					
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
+		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
+								</div>
+							</form>
 						</div>
     				</div>
     			</div>
@@ -232,6 +232,60 @@
 
 			$(document).ready(function() {
 			    $('#form-add').bootstrapValidator({
+			        feedbackIcons: {
+			            valid: 'glyphicon glyphicon-ok',
+			            invalid: 'glyphicon glyphicon-remove',
+			            validating: 'glyphicon glyphicon-refresh'
+			        },
+			        fields: {
+			            email: {
+			                validators: {
+			                    emailAddress: {
+			                        message: 'Digite um endereço de e-mail válido'
+			                    }
+			                }
+			            },
+			            login: {
+				            validators: {
+					            noEmpty: {
+						            message: 'Este campo precisa ser preenchido'
+					            }
+				            }
+			            },
+			            email: {
+				            validators: {
+					            notEmpty: {
+						            message: 'Este campo precisa ser preenchido'
+					            }
+				            }
+			            },
+			            nome: {
+				            validators: {
+					            notEmpty: {
+						            message: 'Este campo precisa ser preenchido'
+					            }
+				            }
+			            },
+			            cargo: {
+				            validators: {
+					            notEmpty: {
+						            message: 'Este campo precisa ser preenchido'
+					            }
+				            }
+			            },
+			            fone: {
+				            validators: {
+					            notEmpty: {
+						            message: 'Este campo precisa ser preenchido'
+					            }
+				            }
+			            }
+			        }
+			    });
+			});
+
+			$(document).ready(function() {
+			    $('#form-edit').bootstrapValidator({
 			        feedbackIcons: {
 			            valid: 'glyphicon glyphicon-ok',
 			            invalid: 'glyphicon glyphicon-remove',
