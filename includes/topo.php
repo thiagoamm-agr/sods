@@ -21,12 +21,12 @@
  
         <!--  Bootstrap core CSS -->
         <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrap.css" />
+        
+        <!-- Boostrap Validator -->
+        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrapValidator.css"/>
 
         <!-- Custom styles for this template -->
         <link rel="stylesheet" href="/sods/css/navbar-fixed-top.css" />
-        
-        <!-- Boostrap Validator -->
-        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrapValidator/bootstrapValidator.min.css"/>
         
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!--[if lt IE 9]>
@@ -39,7 +39,7 @@
         <script src="/sods/js/jquery.min.js"></script>
         <script src="/sods/js/bootstrap/bootstrap.min.js"></script>
         
-        <script src="/sods/js/bootstrapValidator/bootstrapValidator.js"></script>
+        <script src="/sods/js/bootstrap/bootstrapValidator.js"></script>
         
         				
 		<title>SODS</title>
