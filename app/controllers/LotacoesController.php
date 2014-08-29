@@ -1,4 +1,6 @@
 <?php
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/LotacaoDAO.php';
 	
 	class LotacoesController {
@@ -35,6 +37,10 @@
 		
 		public function getGerencias() {
 			return $this->dao->filter('gerencia_id is null');
+		}
+		
+		public function add($lotacao) {
+			$this->dao->insert($lotacao);
 		}
 	}
 ?>
