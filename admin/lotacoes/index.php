@@ -1,17 +1,20 @@
 <?php
 	/* Cadastro de Lotações */
 
+	// Topo
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 	
+	// Models
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';
 	
+	// Controllers
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';
 ?>
 		<div class="container">
 			<h2>Lotações</h2>
 			<div class="row">
                 <div class="col-md-12">
-                	<button class="btn btn-warning btn-sm pull-right" 
+                	<button class="btn btn-primary btn-sm pull-right" 
                     	data-toggle="modal" data-target="#modalAdd">
                     	<b>Adicionar</b>
                 	</button>
@@ -43,7 +46,7 @@
 							<td><?php echo $lotacao['sigla'] ?></td>
 							<td><?php echo isset($lotacao['gerencia']) ? $lotacao['gerencia']->sigla : ''?></td>
 							<td colspan="2">							
-								<button class="btn btn-primary btn-sm" 
+								<button class="btn btn-warning btn-sm" 
 								    data-toggle="modal" data-target="#modalEdit" 
 								    onclick="editar(<?php echo $lotacao['id'] ?>)">
 									<strong>Editar</strong>
@@ -96,12 +99,20 @@
 ?>
 									</select>
 								</div>
+								<div class="modal-footer">							
+									<button type="button" class="btn btn-success">Salvar</button>
+									<button type="reset" class="btn btn-default">Limpar</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">
+										Fechar
+									</button>							
+								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>		
 <?php
+	// Rodapé
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
