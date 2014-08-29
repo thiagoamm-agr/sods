@@ -6,10 +6,10 @@ function Lotacao() {
 }
 
 Lotacao.prototype.toJSON = function() {
-	return "{" +
+	return '{' +
 		'"id": ' + this.id + ', ' +
-		'"nome": "' + this.nome + '", ' +
+		'"nome": ' + '"' + this.nome + '", ' +
 		'"sigla": "' + this.sigla + '", ' +
 		'"gerencia_id": ' + this.gerencia_id +
-	"}";
+	'}';
 };
