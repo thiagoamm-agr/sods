@@ -15,7 +15,7 @@
 			<div class="row">
                 <div class="col-md-12">
                 	<button class="btn btn-primary btn-sm pull-right" 
-                    	data-toggle="modal" data-target="#modalAdd">
+                    	data-toggle="modal" data-target="#modalAdd" onclick="add()">
                     	<b>Adicionar</b>
                 	</button>
                 </div>
@@ -65,7 +65,8 @@
     		</div>
     		
 			<!--  Modais -->
-			<!-- Adicionar Usuário -->
+			
+			<!-- Adicionar lotação -->
     		<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" 
 			    aria-labelledby="modalAdd" aria-hidden="true">
 				<div class="modal-dialog">
@@ -100,7 +101,7 @@
 									</select>
 								</div>
 								<div class="modal-footer">							
-									<button type="button" class="btn btn-success">Salvar</button>
+									<button type="button" class="btn btn-success" onclick="save()">Salvar</button>
 									<button type="reset" class="btn btn-default">Limpar</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">
 										Fechar
@@ -111,8 +112,61 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+		
+		<!--  Javascript -->
+		<script type="text/javascript" src="/sods/js/models/Lotacao.js"></script>
+		
+		<script type="text/javascript">
+			var lotacao = null;
+			
+			function add() {
+				lotacao = new Lotacao();
+			}
+
+			function save() {
+				if (lotacao != null) {
+					var action = "add";
+					if (lotacao.id != null) {						
+						action = "edit";
+						lotacao.id = $('#id').val();
+					}
+					lotacao.nome = $('#nome').val();
+					lotacao.sigla = $('#sigla').val();
+					lotacao.gerencia_id = $('#gerencia').val();
+					
+					// Requisição AJAX.
+					$.ajax({
+						type: 'POST',
+					    url: '',
+					    data: 'action=' + action + '&' + 'lotacao=' + lotacao.toJSON(),
+						success: function(data) {
+							
+						}
+	                });
+				}
+			}
+		</script>
 <?php
+	// Identificação e atendimento das ações do usuário pelo controller.
+	if (isset($_POST['action']) && isset($_POST['lotacao'])) {
+		// Recuperando os parâmetros da requisição.
+		$action = $_POST['action'];		
+		$json = $_POST['lotacao'];
+		
+		$lotacao = new Lotacao();		
+		$lotacao->loadJSON($json);
+		
+		// Identificando a ação desempenhada pelo usuário.
+		switch ($action) {
+			case 'add':				
+				$controller->add($lotacao);
+				break;			
+			case 'edit':
+				break;
+		}
+	}
+
 	// Rodapé
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
