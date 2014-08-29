@@ -28,22 +28,25 @@
 		
 		public function insert($lotacao) {
 			if (isset($lotacao)) {
-				$cls = new ReflectionClass('Lotacao');
-				$properties = $cls->getProperties();
+				$class = new ReflectionClass('Lotacao');
+				$properties = $class->getProperties();
 				$columns = "";
 				$values = "";
 				foreach ($properties as $property) {
 					$property->setAccessible(true);
+					$column = $property->getName();
 					$value = $property->getValue($lotacao);
-					$value = trim($value);
-					if ($property->getName() != 'id') {
-						$columns .= "{$property->getName()}, ";
-					}
+					if ($column != 'id') {
+						$columns .= "{$column}, ";
+					}					
 					if (!empty($value)) {						
 						if (gettype($value) == "string") {
-							$values .= "'{$property->getValue($lotacao)}', ";
+							$values .= "'{$value}', ";
 						} else {
-							$values .= "{$property->getValue($lotacao)}, ";
+							if (endsWith($value, '_id')) {
+								$value = (int) $value;
+							}
+							$values .= "{$value}, ";
 						}
 					}
 				}
