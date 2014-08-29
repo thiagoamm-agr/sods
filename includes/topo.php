@@ -19,29 +19,20 @@
  
         <link rel="icon" href="/sods/favicon.ico" />
  
-        <!--  Bootstrap core CSS -->
-        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrap.css" />
-        
-        <!-- Boostrap Validator -->
-        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrapValidator.css"/>
-
-        <!-- Custom styles for this template -->
-        <link rel="stylesheet" href="/sods/css/navbar-fixed-top.css" />
-        
+		<link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrapValidator.css" />
+		<link rel="stylesheet" type="text/css" href="/sods/css/sods.css" />		
+		        
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     	<!--[if lt IE 9]>
       		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
-		<link rel="stylesheet" href="/sods/css/sods.css" />
-		
-        <script src="/sods/js/jquery.min.js"></script>
-        <script src="/sods/js/bootstrap/bootstrap.min.js"></script>
-        
+
+		<script src="/sods/js/jquery.min.js"></script>        
+        <script src="/sods/js/bootstrap/bootstrap.min.js"></script>        
         <script src="/sods/js/bootstrap/bootstrapValidator.js"></script>
         
-        				
 		<title>SODS</title>
     </head>
 	<body>
