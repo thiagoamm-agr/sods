@@ -1,8 +1,8 @@
 function Lotacao() {
-	this.id = "";
+	this.id = null;
 	this.nome = "";
 	this.sigla = "";
-	this.gerencia_id = "";
+	this.gerencia_id = null;
 }
 
 Lotacao.prototype.toJSON = function() {
