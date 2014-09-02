@@ -83,7 +83,7 @@
 		
 		public function getAll() {
 			$query = "select " .
-					     "s.id, s.nome, l.nome as lotacao, s.cargo, " .
+					     "s.id, s.nome as nome_sol, l.nome as lotacao, s.cargo, " .
 					     "s.telefone, s.login, s.tipo_usuario, s.status " .
 					 "from " .
 					     "solicitante as s " .
