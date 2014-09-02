@@ -47,7 +47,7 @@
 ?>
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
-							<td><?php echo $usuario['nome'] ?></td>
+							<td><?php echo $usuario['nome_sol'] ?></td>
 							<td><?php echo $usuario['lotacao'] ?></td>
 							<td><?php echo $usuario['cargo'] ?></td>
 							<td><?php echo $usuario['telefone'] ?></td>
@@ -120,7 +120,7 @@
 		  						</div>		  
 								<div class="form-group">
 		    						<label for="telefone_ramal">Telefone / Ramal</label>
-		    						<input id="telefone_ramal" name="telefone_ramal"
+		    						<input id="telefone_ramal" name="fone"
 		    						    type="text" class="form-control" />
 		  						</div>
 								<div class="form-group">
@@ -132,8 +132,9 @@
 									<label for="tipo_usuario"> Administrador</label>									                				
 								</div>
 								<div class="modal-footer">							
-									<button type="button" class="btn btn-primary" onclick="salvar()">Salvar</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
+									<button type="submit" class="btn btn-success" onclick="usuario('#form-edit')">Salvar</button>
+									<button type="reset" class="btn btn-default">Limpar</button>
+		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
 						</div>
@@ -216,7 +217,8 @@
     								<input type="checkbox" id="tipo_usr" name="tipo_usr" value="A"> Administrador
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="usuario('#form-add')">Salvar</button>
+									<button type="reset" class="btn btn-default">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -228,83 +230,9 @@
 
 		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
+		<script type="text/javascript" src="/sods/js/validators/validator.js"></script>
+		
 		<script type="text/javascript">
-
-			$(document).ready(function() {
-			    $('#form-add').bootstrapValidator({
-			        feedbackIcons: {
-			            valid: 'glyphicon glyphicon-ok',
-			            invalid: 'glyphicon glyphicon-remove',
-			            validating: 'glyphicon glyphicon-refresh'
-			        },
-			        fields: {
-			            email: {
-			                validators: {
-			                    emailAddress: {
-			                        message: 'Digite um endereço de e-mail válido'
-			                    }
-			                }
-			            },
-			            login: {
-				            validators: {
-					            noEmpty: {
-						            message: 'Este campo precisa ser preenchido'
-					            }
-				            }
-			            },
-			            email: {
-				            validators: {
-					            notEmpty: {
-						            message: 'Este campo precisa ser preenchido'
-					            }
-				            }
-			            },
-			            nome: {
-				            validators: {
-					            notEmpty: {
-						            message: 'Este campo precisa ser preenchido'
-					            }
-				            }
-			            },
-			            cargo: {
-				            validators: {
-					            notEmpty: {
-						            message: 'Este campo precisa ser preenchido'
-					            }
-				            }
-			            },
-			            fone: {
-				            validators: {
-					            notEmpty: {
-						            message: 'Este campo precisa ser preenchido'
-					            }
-				            }
-			            }
-			        }
-			    });
-			});
-
-			$(document).ready(function() {
-			    $('#form-edit').bootstrapValidator({
-			        feedbackIcons: {
-			            valid: 'glyphicon glyphicon-ok',
-			            invalid: 'glyphicon glyphicon-remove',
-			            validating: 'glyphicon glyphicon-refresh'
-			        },
-			        fields: {
-			            email: {
-			                validators: {
-			                    emailAddress: {
-			                        message: 'Digite um endereço de e-mail válido'
-			                    }
-			                }
-			            }
-			        }
-			    });
-			});
-
-
-
 			function editar(id) {
 				$.ajax({
 				    type: 'POST',
