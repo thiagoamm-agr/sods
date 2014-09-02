@@ -70,13 +70,13 @@
 							<h3 class="modal-title" id="modalAdd">Adicionar novo tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-add" method="post">
+    						 <form id="form-add" role="from" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="tipo_sol('#form-add')">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 						    </form>
@@ -103,7 +103,7 @@
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div> 				
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="salvar()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="tipo_sol('#form-edit')">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -138,39 +138,8 @@
 			
 		</div><!-- container -->
 		
-		<script type="text/javascript">
-		$(document).ready(function() {
-		    $('#form-add').bootstrapValidator({
-		        message: 'This value is not valid',
-		        fields: {
-		            nome: {
-		                validators: {
-		                    notEmpty: {
-		                        message: 'Digite um nome'
-		                    }
-		                }
-		            }
-		        }
-		    });
-		});
-
-		$(document).ready(function() {
-		    $('#form-edit').bootstrapValidator({
-		        message: 'This value is not valid',
-		        fields: {
-		            nome: {
-		                validators: {
-		                    notEmpty: {
-		                        message: 'Digite um nome'
-		                    }
-		                }
-		            }
-		        }
-		    });
-		});
-
+		<script type="text/javascript" src="/sods/js/validators/validator.js"></script>
 		
-		</script>
 <?php
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
