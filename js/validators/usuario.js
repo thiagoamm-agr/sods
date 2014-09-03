@@ -51,22 +51,3 @@ function usuario($form) {
         }
     });
 }
-
-function tipo_sol($form) {
-	$($form).bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            nome: {
-	            validators: {
-		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
-		            }
-	            }
-            }
-        }
-    });
-}
