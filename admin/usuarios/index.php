@@ -230,7 +230,7 @@
 
 		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
-		<script type="text/javascript" src="/sods/js/validators/validator.js"></script>
+		<script type="text/javascript" src="/sods/js/validators/usuario.js"></script>
 		
 		<script type="text/javascript">
 			function editar(id) {
