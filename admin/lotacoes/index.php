@@ -15,7 +15,7 @@
 			<div class="row">
                 <div class="col-md-12">
                 	<button class="btn btn-primary btn-sm pull-right" 
-                    	data-toggle="modal" data-target="#modalAdd" onclick="add()">
+                    	data-toggle="modal" data-target="#modalAdd">
                     	<b>Adicionar</b>
                 	</button>
                 </div>
@@ -47,8 +47,7 @@
 							<td><?php echo isset($lotacao['gerencia']) ? $lotacao['gerencia']->sigla : ''?></td>
 							<td colspan="2">							
 								<button class="btn btn-warning btn-sm" 
-								    data-toggle="modal" data-target="#modalEdit" 
-								    onclick="editar(<?php echo $lotacao['id'] ?>)">
+								    data-toggle="modal" data-target="#modalEdit">
 									<strong>Editar</strong>
 								</button>
 								<button class="btn btn-danger btn-sm" 
@@ -75,10 +74,10 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h3 class="modal-title" id="modalEdit">Adicionar Lotação</h3>
+							<h3 class="modal-title" id="modalAdd">Adicionar Lotação</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-adicionar" role="form" action="#" method="post">
+    						 <form id="form-add" role="form" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome</label>
     								<input type="text" class="form-control" id="nome" name="nome" />    								
@@ -101,20 +100,89 @@
 									</select>
 								</div>
 								<div class="modal-footer">							
-									<button type="button" class="btn btn-success" onclick="save()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="lotacao('#form-add')">Salvar</button>
 									<button type="reset" class="btn btn-default">Limpar</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">
-										Fechar
-									</button>							
+									<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			
+			<!-- Editar lotação -->
+    		<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
+			    aria-labelledby="modalEdit" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							    &times;
+							</button>
+							<h3 class="modal-title" id="modalEdit">Editar Lotação</h3>
+						</div>
+						<div class="modal-body">    						
+    						 <form id="form-edit" action="#" method="post">
+    							<div class="form-group">
+    								<label for="nome">Nome</label>
+    								<input type="text" class="form-control" id="nome" name="nome" />    								
+    							</div>
+    							<div class="form-group">
+    								<label for="sigla">Sigla</label>
+    								<input type="text" class="form-control" id="sigla" name="sigla" />    								
+    							</div>
+    							<div class="form-group">
+    								<label for="gerencia">Gerência</label>
+    								<select id="gerencia" name="gerencia" class="form-control">
+<?php 
+									foreach ($controller->getGerencias() as $gerencia) { 
+?>
+										<option value="<?php echo $gerencia['id'] ?>"><?php echo $gerencia['nome'] . 
+										' - ' . $gerencia['sigla'] ?></option>
+<?php 
+									}
+?>
+									</select>
+								</div>
+								<div class="modal-footer">							
+									<button type="submit" class="btn btn-success" onclick="lotacao('#form-edit')">Salvar</button>
+									<button type="reset" class="btn btn-default">Limpar</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>							
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Excluir Lotação -->
+			<div class="modal fade" id="modalDel" tabindex="-1" role="dialog" 
+			    aria-labelledby="modalDel" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							    &times;
+							</button>
+							<h4 class="modal-title" id="modalDel">Exclusão de Lotação</h4>
+						</div>
+						<div class="modal-body">
+    						<h5>Confirma exclusão de lotação?</h5>
+    					</div>
+						<form action="#" method="post">
+	    					<div class="modal-footer">
+	    						<button type="submit" class="btn btn-danger">Sim</button>
+	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
+	    					</div>
+    					</form>
+    				</div>
+    			</div>
+    		</div><!-- Modais -->
+		</div><!-- Container -->
 		
 		<!--  Javascript -->
+		<script type="text/javascript" src="/sods/js/validators/lotacao.js"></script>
+				
 		<script type="text/javascript" src="/sods/js/models/Lotacao.js"></script>
 		
 		<script type="text/javascript">
@@ -149,7 +217,7 @@
 		</script>
 <?php
 	// Identificação e atendimento das ações do usuário pelo controller.
-	if (isset($_POST['action']) && isset($_POST['lotacao'])) {
+	/*if (isset($_POST['action']) && isset($_POST['lotacao'])) {
 		// Recuperando os parâmetros da requisição.
 		$action = $_POST['action'];		
 		$json = $_POST['lotacao'];
@@ -165,7 +233,7 @@
 			case 'edit':
 				break;
 		}
-	}
+	}*/
 
 	// Rodapé
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
