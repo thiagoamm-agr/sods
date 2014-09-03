@@ -103,24 +103,35 @@
 							<h3 class="modal-title" id="modalEdit">Editar Solicitação</h3>
 						</div>
 						<div class="modal-body">
-							<form role="form">								
+							<form id="form-edit" role="form" action="#" method="post">								
 		  						<div class="form-group">
-		    						<label for="descricao" class="col-sm-2 control-label">Descrição</label>
-		    						<textarea class="form-control" id="desc" name="desc" 
-		    						    rows="6" style="width: 80%;"></textarea>
+		  							<label for="nome">Nome</label>
+		  							<input type="text" class="form-control" id="nome" name="nome">
 		  						</div>
+		  						
 		  						<div class="form-group">
-		    						<label for="info_adc" class="col-sm-2 control-label">Inf. Adicionais</label>
-		    						<textarea class="form-control" id="info_adc" name="desc" 
-		    						    rows="4" style="width: 80%;"></textarea>
-		  						</div>
-		  						<div class="form-group">
-		    						<label for="obs" class="col-sm-2 control-label">Observações</label>
-		    						<textarea class="form-control" id="obs" name="obs" 
-		    						    rows="2" style="width: 80%;"></textarea>
-		  						</div>
+	    							<label for="desc">Descrição do Sistema</label>
+	    							<textarea class="form-control" id="desc" name="desc" 
+		    						    rows="6" style="width: 100%;"></textarea>
+	    						
+	    						</div>
+	    						
+			    				<div class="form-group">
+	    							<label for="desc">Inf. Adicionais</label>
+	    							<textarea class="form-control" id="infoAdc" name="infoAdc" 
+		    						    rows="4" style="width: 100%;"></textarea>
+	    						</div>
+	    						
+		  						
 		  						<div class="form-group">
 		  							<div class="row">
+		  							
+		  								<div class="col-sm-6">
+	    									<label for="obs">Observações</label>
+	    									<textarea class="form-control" id="obs" name="obs"
+	    										rows="6" style="width: 100%"></textarea>
+	    								</div>
+		  							
 		  								<div class="col-sm-4">
 											<label for="tp_sol">Tipo de Solicitação</label>
 		  									<select id="tp_sol" name="tp_sol" class="form-control">
@@ -146,22 +157,24 @@
 										</div>
 										
 										<div class="col-sm-4">
-											<label for="ult_alteracao">Ultima Alteração</label>
-											<input type="text" class="form-control" name="ult_alteracao" 
+											<label for="ultAlter">Ultima Alteração</label>
+											<input type="text" class="form-control" name="ultAlter" 
 											    id="ult_alteracao" readonly>
 										</div>
 									
 									
 									</div>
   								</div>
+								
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-primary" onclick="solicitacao('#form-edit')">Salvar</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">
+									    Fechar
+									</button>
+								</div>
+								
 							</form>
 						</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary">Salvar</button>
-								<button type="button" class="btn btn-default" data-dismiss="modal">
-								    Fechar
-								</button>
-							</div>
 					</div>
 				</div>
 			</div>
@@ -189,7 +202,7 @@
 				    						<label for="lotacao">Lotação</label>
 	    									<select id="lotacao" name="lotacao" class="form-control">
 <?php 
-											$sql = "select * from secao";
+											$sql = "select * from lotacao";
 																	
 											$secoes = mysql_query($sql);
 							
@@ -217,7 +230,7 @@
 	    						</div>
 	    						<div class="form-group">
 	    							<label for="desc">Inf. Adicionais</label>
-	    							<textarea class="form-control" id="info_adc" name=info_adc" 
+	    							<textarea class="form-control" id="infoAdc" name="infoAdc" 
 		    						    rows="4" style="width: 100%;"></textarea>
 	    						</div>
 	    						
@@ -255,7 +268,7 @@
 	    							</div>
 	    						</div>
 	    						<div class="modal-footer">
-									<button type="button" class="btn btn-primary">Salvar</button>
+									<button type="submit" class="btn btn-primary" onclick="solicitacao('#form-adicionar')">Salvar</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">
 								    	Fechar
 									</button>
@@ -290,6 +303,8 @@
     			</div>
     		</div> <!--  modais -->    		
     	</div> <!-- container -->
+    	
+    	<script type="text/javascript" src="/sods/js/validators/solicitacao.js"></script>
 <?php 	
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
