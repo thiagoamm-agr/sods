@@ -134,11 +134,11 @@
     					</form>
     				</div>
     			</div>
-    		</div>			
+    		</div><!-- Modais -->	
 			
 		</div><!-- container -->
 		
-		<script type="text/javascript" src="/sods/js/validators/validator.js"></script>
+		<script type="text/javascript" src="/sods/js/validators/tipoSolicitacao.js"></script>
 		
 <?php
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
