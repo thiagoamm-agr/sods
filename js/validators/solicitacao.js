@@ -9,35 +9,35 @@ function solicitacao($form) {
 			nome: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			},
 			titulo: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			},
 			desc: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			},
 			infoAdc: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			},
 			obs: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			}

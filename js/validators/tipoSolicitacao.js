@@ -14,7 +14,7 @@ function tipo_sol($form) {
             nome: {
 	            validators: {
 		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
+			            message: ' '
 		            }
 	            }
             }

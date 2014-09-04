@@ -16,38 +16,39 @@ function usuario($form) {
                         message: 'Digite um endereço de e-mail válido'
                     },
                     notEmpty: {
-                    	message: 'Este campo precisa ser preenchido'
+                    	message: ' '
                     }
                 }
             },
             login: {
 	            validators: {
 		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
+			            message: ' '
 		            }
 	            }
             },
             nome: {
 	            validators: {
 		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
+			            message: ' '
 		            }
 	            }
             },
             cargo: {
 	            validators: {
 		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
+			            message: ' '
 		            }
 	            }
             },
             fone: {
 	            validators: {
 		            notEmpty: {
-			            message: 'Este campo precisa ser preenchido'
+			            message: ' '
 		            }
 	            }
             }
-        }
+        },
     });
+	
 }

@@ -8,14 +8,14 @@ function lotacao($form) {
 			nome: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			},
 			sigla: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo precisa ser preenchido'
+						message: ' '
 					}
 				}
 			}
