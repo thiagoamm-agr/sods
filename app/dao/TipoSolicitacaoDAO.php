@@ -44,12 +44,18 @@
 			
 		}
 		
-		public function delete() {
+		public function delete($id) {
+			$query = "delete from tipo_solicitacao where id = '$id'";
 			
+			$result = mysql_query($query, $this->connection);
+			return;
 		}
 		
-		public function update() {
+		public function update($id, $nome) {
+			$query = "update tipo_solicitacao set nome = '$nome' where id = '$id'";
 			
+			$result = mysql_query($query, $this->connection);
+			return;
 		}
 		
 	}
