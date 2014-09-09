@@ -4,11 +4,6 @@
 
 function usuario($form) {
 	$($form).bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
         fields: {
             email: {
                 validators: {
