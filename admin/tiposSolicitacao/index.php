@@ -40,12 +40,12 @@
 								<td><?php echo $tipo['id'] ?></td>
 								<td><?php echo $tipo['nome'] ?></td>
 								<td colspan="2">
-									<button class="btn btn-primary btn-sm" data-toggle="modal" 
-									    data-target="#modalEdit">
+									<button class="edit-type btn btn-primary btn-sm" data-toggle="modal" 
+									    data-target="#modalEdit" data-id=<?php echo $tipo['nome']?>>
 										<strong>Editar</strong>
 									</button>
-									<button class="btn btn-danger btn-sm" data-toggle="modal" 
-									    data-target="#modalDel">
+									<button class="delete-type btn btn-danger btn-sm" data-toggle="modal" 
+									    data-target="#modalDel" data-id=<?php echo $tipo['id']?>>
 								    <strong>Excluir</strong>
 							    </button>						
 								</td>
@@ -76,7 +76,8 @@
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="tipo_sol('#form-add')">Salvar</button>
+									<button type="submit" class="btn btn-success" 
+										onclick="tipo_sol('#form-add')">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 						    </form>
@@ -100,10 +101,12 @@
     						 <form id="form-edit" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
-    								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
+    								<input type="text" class="form-control" name="bookName" id="bookName" value="" 
+    									maxlength="50"/>    								
     							</div> 				
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="tipo_sol('#form-edit')">Salvar</button>
+									<button type="submit" class="btn btn-success" 
+										onclick="tipo_sol('#form-edit')">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -125,6 +128,7 @@
 						</div>
 						<div class="modal-body">
     						<h5>Confirma exclusão do tipo de solicitação?</h5>
+    						<input type="text" name="bookId" id="bookId" value=""/>
     					</div>
 						<form action="#">
 	    					<div class="modal-footer">
@@ -139,6 +143,18 @@
 		</div><!-- container -->
 		
 		<script type="text/javascript" src="/sods/js/validators/tipoSolicitacao.js"></script>
+		
+		<script type="text/javascript">
+			$(document).on("click", ".delete-type", function () {
+			     var myBookId = $(this).data('id');
+			     $(".modal-body #bookId").val( myBookId );
+			});
+
+			$(document).on("click", ".edit-type", function () {
+			     var myBookId = $(this).data('id');
+			     $(".modal-body #bookName").val( myBookId );
+			});
+		</script>
 		
 <?php
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
