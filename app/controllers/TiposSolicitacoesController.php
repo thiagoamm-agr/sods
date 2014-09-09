@@ -33,12 +33,12 @@
 			
 		}
 		
-		public function delete() {
-			
+		public function delete($id) {
+			return $this->dao->delete($id);
 		}
 		
-		public function update() {
-			
+		public function update($id, $nome) {
+			return $this->dao->update($id, $nome);
 		}
 	}
 
