@@ -132,7 +132,8 @@
 									<label for="tipo_usuario"> Administrador</label>									                				
 								</div>
 								<div class="modal-footer">							
-									<button type="submit" class="btn btn-success" onclick="usuario('#form-edit')">Salvar</button>
+									<button type="submit" class="btn btn-success" 
+										onclick="usuario('#form-edit')">Salvar</button>
 									<button type="reset" class="btn btn-default">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
