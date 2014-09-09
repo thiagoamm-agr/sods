@@ -41,7 +41,7 @@
 								<td><?php echo $tipo['nome'] ?></td>
 								<td colspan="2">
 									<button class="edit-type btn btn-primary btn-sm" data-toggle="modal" 
-									    data-target="#modalEdit" data-id=<?php echo $tipo['nome']?>>
+									    data-target="#modalEdit" data-id=<?php echo $tipo['id']?>>
 										<strong>Editar</strong>
 									</button>
 									<button class="delete-type btn btn-danger btn-sm" data-toggle="modal" 
@@ -98,11 +98,11 @@
 							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-edit" method="post">
+    						 <form id="form-edit" action="editarTipo.php" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
-    								<input type="text" class="form-control" name="bookName" id="bookName" value="" 
-    									maxlength="50"/>    								
+    								<input type="hidden" class="form-control" name="bookName" id="bookName" value=""/>
+    								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div> 				
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-success" 
@@ -126,11 +126,11 @@
 							</button>
 							<h4 class="modal-title" id="modalDel">Exclusão de Tipo</h4>
 						</div>
-						<div class="modal-body">
-    						<h5>Confirma exclusão do tipo de solicitação?</h5>
-    						<input type="text" name="bookId" id="bookId" value=""/>
-    					</div>
-						<form action="#">
+						<form action="deletarTipo.php" method="post">
+							<div class="modal-body">
+	    						<h5>Confirma exclusão do tipo de solicitação?</h5>
+	    						<input type="hidden" name="bookId" id="bookId" value=""/>
+	    					</div>
 	    					<div class="modal-footer">
 	    						<button type="submit" class="btn btn-danger">Sim</button>
 	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
