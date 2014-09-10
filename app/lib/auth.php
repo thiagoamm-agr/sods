@@ -11,10 +11,10 @@
                         "sol.cargo, sol.telefone, sol.email, sol.login, " . 
                         "sol.tipo_usuario, sol.status, sol.data_criacao, " . 
                         "sol.data_alteracao, lot.nome as lotacao, lot.sigla ". 
-                    "from solicitante as sol " .
-                    "inner join lotacao as lot " .
-                        "on sol.lotacao_id = lot.id and ".
-                        "login = '$login' and senha = md5('$senha')";
+                     "from solicitante as sol " .
+                     "inner join lotacao as lot " .
+                         "on sol.lotacao_id = lot.id and ".
+                         "login = '$login' and senha = md5('$senha')";
             $result = mysql_query($query);
             if (mysql_num_rows($result) > 0) {
                 $_SESSION['usuario'] = mysql_fetch_array($result);
