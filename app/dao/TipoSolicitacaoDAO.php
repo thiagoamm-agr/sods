@@ -40,8 +40,38 @@
 			
 		}
 		
-		public function insert() {
-			
+		public function insert($tipoSolicitacao) {
+			if (isset($tipoSolicitacao)){
+				$class = new ReflectionClass('TipoSolicitacao');
+				$properties = $class->getProperties();
+				$columns = "";
+				$values = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$column = $property->getName();
+					$value = $property->getValue($tipoSolicitacao);
+					if ($column != 'id') {
+						$columns .= "{$column}, ";
+					}
+					if (!empty($value)) {
+						if (gettype($value) == "string") {
+							$values .= "'{$value}', ";
+						} else {
+							if (endsWith($value, '_id')) {
+								$value = (int) $value;
+							}
+							$values .= "{$value}, ";
+						}
+					}
+				}
+				$columns = substr($columns, 0, strrpos($columns, ", "));
+				$values = substr($values, 0, strrpos($values, ", "));
+				if (!empty($columns) && !empty($values)) {
+					$query = "insert into tipo_solicitacao ($columns) values ($values)";
+					mysql_query($query, $this->connection);
+				}
+			}
+			return;			
 		}
 		
 		public function delete($id) {
