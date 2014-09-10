@@ -47,7 +47,8 @@
                             <td><?php echo $lotacao['id'] ?></td>
                             <td><?php echo $lotacao['nome'] ?></td>
                             <td><?php echo $lotacao['sigla'] ?></td>
-                            <td><?php echo isset($lotacao['gerencia']) ? $lotacao['gerencia']->sigla : ''?></td>
+                            <td><?php echo isset($lotacao['gerencia']) ? 
+                                $lotacao['gerencia']->sigla : ''?></td>
                             <td colspan="2">
                                 <button class="btn btn-warning btn-sm" 
                                     data-toggle="modal" data-target="#modalEdit">
@@ -194,9 +195,9 @@
         </div><!-- Container -->
 
         <!--  Javascript -->
-        <script type="text/javascript" src="/sods/js/models/Lotacao.js"></script>
+        <script type="text/javascript" src="/sods/static/js/models/Lotacao.js"></script>
         
-        <script type="text/javascript" src="/sods/js/validators/LotacaoValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/LotacaoValidator.js"></script>
 
         <script type="text/javascript">
             var lotacao = null;
