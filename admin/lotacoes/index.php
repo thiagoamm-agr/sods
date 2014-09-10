@@ -50,8 +50,11 @@
                             <td><?php echo isset($lotacao['gerencia']) ? 
                                 $lotacao['gerencia']->sigla : ''?></td>
                             <td colspan="2">
-                                <button class="btn btn-warning btn-sm" 
-                                    data-toggle="modal" data-target="#modalEdit">
+                                <button 
+                                    class="btn btn-warning btn-sm" 
+                                    data-toggle="modal" 
+                                    data-target="#modalEdit"
+                                    onclick="edit(<?php echo $lotacao['id'] ?>)">
                                     <strong>Editar</strong>
                                 </button>
                                 <button class="btn btn-danger btn-sm" 
@@ -206,18 +209,33 @@
                 lotacao = new Lotacao();
             }
 
+            function edit(id) {
+                try {
+                    id = id == null ? "" : id;
+                    if (id !== "") {
+                        lotacao = new Lotacao();
+                        lotacao.id = id;
+                    } else {
+                        throw "Não é possível editar uma lotação sem id.";
+                    }
+                } catch(e) {
+                    alert(e);
+                }
+            }
+
             function save() {
-                LotacaoValidator.validate($('#form-add'));
                 if (lotacao != null) {
                     var action = "add";
-                    if (lotacao.id != null) {
+                    var id = lotacao.id == null ? "" : lotacao.id;
+                    if (id !== "") {
                         action = "edit";
-                        lotacao.id = $('#id').val();
+                        lotacao.id = id;
                     }
                     lotacao.nome = $('#nome').val();
                     lotacao.sigla = $('#sigla').val();
                     lotacao.gerencia_id = $('#gerencia').val();
-
+                    // Validação dos dados do formulário de cadastro.
+                    LotacaoValidator.validate($('#form-' + action));
                     // Requisição AJAX.
                     $.ajax({
                         type: 'POST',
@@ -244,6 +262,7 @@
                 $controller->add($lotacao);
                 break;
             case 'edit':
+                $controller->edit($lotacao);
                 break;
         }
     }
