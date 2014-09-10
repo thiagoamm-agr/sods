@@ -11,8 +11,11 @@
 			<h2>Tipos de Solicitação</h2>
 			<div class="row" style="width: 50%; margin: 0 auto";>
                 <div class="col-md-12">
-                	<button class="btn btn-warning btn-sm pull-right" 
-                    	data-toggle="modal" data-target="#modalAdd">
+                	<button 
+                		class="btn btn-warning btn-sm pull-right" 
+                    	data-toggle="modal" 
+                    	data-target="#modalAdd"
+                    	onclick="add()">
                     	<b>Adicionar</b>
                 	</button>
                 </div>
@@ -77,7 +80,7 @@
     							</div>					
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-success" 
-										onclick="tipo_sol('#form-add')">Salvar</button>
+										onclick="save()">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 						    </form>
@@ -98,7 +101,7 @@
 							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-edit" action="editarTipo.php" method="post">
+    						 <form id="form-edit" action="index.php" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
     								<input type="hidden" class="form-control" name="bookName" id="bookName" value=""/>
@@ -106,7 +109,7 @@
     							</div> 				
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-success" 
-										onclick="tipo_sol('#form-edit')">Salvar</button>
+										onclick="save()">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -142,20 +145,65 @@
 			
 		</div><!-- container -->
 		
-		<script type="text/javascript" src="/sods/js/validators/tipoSolicitacao.js"></script>
+     	<!--  Javascript -->
+        <script type="text/javascript" src="/sods/static/js/models/TipoSolicitacao.js"></script>
+        
+        <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoValidator.js"></script>
 		
 		<script type="text/javascript">
-			$(document).on("click", ".delete-type", function () {
-			     var myBookId = $(this).data('id');
-			     $(".modal-body #bookId").val( myBookId );
-			});
+			var tipoSolicitacao = null;
 
-			$(document).on("click", ".edit-type", function () {
-			     var myBookId = $(this).data('id');
-			     $(".modal-body #bookName").val( myBookId );
-			});
+			function add(){
+				tipoSolicitacao = new TipoSolicitacao();
+			}
+
+			function save() {
+				TipoSolicitacaoValidator.validate($('#form-add'));
+				if (tipoSolicitacao != null) {
+					var action = "add";
+					if (tipoSolicitacao.id != null) {
+						action = "edit";
+						tipoSolicitacao.id = $('#id').val();
+					}
+					tipoSolicitacao.nome = $('#nome').val();
+
+					// Requisição AJAX
+					$.ajax({
+						type: 'POST',
+						url: '',
+						data: 'action=' + action + '&' + 'tipoSolicitacao=' + tipoSolicitacao.toJSON(),
+						success: function(data){
+							
+						}
+					}); 
+				}
+			}
+
 		</script>
 		
 <?php
+	//Indentificando ações e parâmetros do post
+	if (isset($_POST['action']) && isset($_POST['tipoSolicitacao'])) {
+		//Recuperando dados do post
+		$action = $_POST['action'];
+		$json = $_POST['tipoSolicitacao'];
+		
+		$tipoSolicitacao = new TipoSolicitacao();
+		$tipoSolicitacao->loadJSON($json);
+		
+		
+		switch ($action){
+			case 'add':
+				$controller->insert($tipoSolicitacao);
+				break;
+			case 'edit':
+				//$controller->update($id, $nome);
+				echo $tipoSolicitacao['nome'];
+				break;
+			case 'delete':
+				$controller->delete($id);
+				break;
+		}
+	}
 	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
