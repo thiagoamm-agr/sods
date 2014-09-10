@@ -42,5 +42,9 @@
         public function add($lotacao) {
             $this->dao->insert($lotacao);
         }
+        
+        public function edit($lotacao) {
+            $this->dao->update($lotacao);
+        }
     }
 ?>
