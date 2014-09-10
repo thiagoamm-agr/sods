@@ -7,10 +7,10 @@
         if ($login !== '' && $senha !== '') {
             $conexao = get_db_connection("10.243.1.14", "sods", "dev123");
             $query = "select " . 
-                        "sol.id, sol.nome as nome, sol.lotacao_id, " .
-                        "sol.cargo, sol.telefone, sol.email, sol.login, " . 
-                        "sol.tipo_usuario, sol.status, sol.data_criacao, " . 
-                        "sol.data_alteracao, lot.nome as lotacao, lot.sigla ". 
+                         "sol.id, sol.nome as nome, sol.lotacao_id, " .
+                         "sol.cargo, sol.telefone, sol.email, sol.login, " . 
+                         "sol.tipo_usuario, sol.status, sol.data_criacao, " . 
+                         "sol.data_alteracao, lot.nome as lotacao, lot.sigla ". 
                      "from solicitante as sol " .
                      "inner join lotacao as lot " .
                          "on sol.lotacao_id = lot.id and ".
