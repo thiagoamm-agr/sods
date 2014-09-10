@@ -1,4 +1,4 @@
-sods
+SODS
 ====
 
-Sistema para Solicitação de Desenvolvimento de Software
+SODS (Sistema para Solicitação de Desenvolvimento de Software)
