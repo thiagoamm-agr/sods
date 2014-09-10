@@ -61,7 +61,33 @@
 
         public function update($lotacao) {
             if (isset($lotacao)) {
-                
+                $class = new ReflectionClass('Lotacao');
+                $properties = $class->getProperties();
+                $columns = "";
+                $values = "";
+                $pairs = "";
+                foreach ($properties as $property) {
+                    $property->setAccessible(true);
+                    $column = $property->getName();
+                    $value = $property->getValue($lotacao);
+                    if ($column != 'id') {
+                        if (!empty($value)) {
+                            if (gettype($value) == "string") {
+                                $pairs .= "$column = '{$value}', ";
+                            } else {
+                                if (endsWith($value, '_id')) {
+                                    $value = (int) $value;
+                                }
+                                $pairs .= "$column = {$value}, ";
+                            }
+                        }
+                    }
+                }
+                $pairs = substr($pairs, 0, strrpos($pairs, ", "));
+                if (!empty($pairs)) {
+                    $query = "update lotacao set $pairs where id = {$lotacao->id}";
+                    mysql_query($query, $this->connection);
+                }
             }
         }
 
