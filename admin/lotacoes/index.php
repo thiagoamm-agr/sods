@@ -235,7 +235,8 @@
                     lotacao.sigla = $('#sigla').val();
                     lotacao.gerencia_id = $('#gerencia').val();
                     // Validação dos dados do formulário de cadastro.
-                    // TODO: criar a requisição AJAX de acordo com o retorno do validador (true / false).
+                    // TODO: criar a requisição AJAX de acordo com o retorno 
+                    // do validador (true / false).
                     LotacaoValidator.validate($('#form-' + action));
                     // Requisição AJAX.
                     $.ajax({
