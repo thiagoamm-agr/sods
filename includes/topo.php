@@ -22,8 +22,8 @@
         <link rel="icon" href="/sods/favicon.ico" />
  
  		<!-- CSS -->
-		<link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="/sods/css/bootstrap/bootstrapValidator.css" />
+		<link rel="stylesheet" type="text/css" href="/sods/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/sods/bootstrap/css/bootstrapValidator.min.css" />
 		<link rel="stylesheet" type="text/css" href="/sods/css/sods.css" />		
 		        
         <!--  Javascript -->        
@@ -33,8 +33,8 @@
       		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<script src="/sods/js/jquery.min.js"></script>        
-        <script src="/sods/js/bootstrap/bootstrap.min.js"></script>        
-        <script src="/sods/js/bootstrap/bootstrapValidator.js"></script>
+        <script src="/sods/bootstrap/js/bootstrap.min.js"></script>        
+        <script src="/sods/bootstrap/js/bootstrapValidator.min.js"></script>
         
 		<title>SODS</title>
     </head>
