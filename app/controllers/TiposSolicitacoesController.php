@@ -29,8 +29,8 @@
 			
 		}
 		
-		public function insert() {
-			
+		public function insert($tipoSolicitacao) {
+			return $this->dao->insert($tipoSolicitacao);			
 		}
 		
 		public function delete($id) {
