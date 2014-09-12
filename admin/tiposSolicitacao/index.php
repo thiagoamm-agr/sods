@@ -43,8 +43,12 @@
 								<td><?php echo $tipo['id'] ?></td>
 								<td><?php echo $tipo['nome'] ?></td>
 								<td colspan="2">
-									<button class="edit-type btn btn-primary btn-sm" data-toggle="modal" 
-									    data-target="#modalEdit" data-id=<?php echo $tipo['id']?>>
+									<button 
+										class="edit-type btn btn-primary btn-sm" 
+										data-toggle="modal" 
+									    data-target="#modalEdit" 
+									    data-book-id=<?php echo $tipo['id']?>
+									    onclick="edit(<?php echo $tipo['id']?>)">
 										<strong>Editar</strong>
 									</button>
 									<button class="delete-type btn btn-danger btn-sm" data-toggle="modal" 
@@ -73,7 +77,7 @@
 							<h3 class="modal-title" id="modalAdd">Adicionar novo tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-add" role="from" action="#" method="post">
+    						 <form id="form-add" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
@@ -101,11 +105,10 @@
 							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-edit" action="index.php" method="post">
+    						 <form id="form-edit" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
-    								<input type="hidden" class="form-control" name="bookName" id="bookName" value=""/>
-    								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
+    								<input type="text" id="nome" name="nome" class="form-control" maxlength="50"/>    								
     							</div> 				
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-success" 
@@ -150,23 +153,35 @@
         
         <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoValidator.js"></script>
 		
-		<script type="text/javascript">
+		<script type="text/javascript">		
 			var tipoSolicitacao = null;
+			var action = null;
 
-			function add(){
+			function add() {
+				action = "add";
 				tipoSolicitacao = new TipoSolicitacao();
 			}
 
-			function save() {
-				TipoSolicitacaoValidator.validate($('#form-add'));
-				if (tipoSolicitacao != null) {
-					var action = "add";
-					if (tipoSolicitacao.id != null) {
+			function edit(id) {
+				try {
+					id = id == null ? "" : id;
+					if (id !== "") {
 						action = "edit";
-						tipoSolicitacao.id = $('#id').val();
+						tipoSolicitacao = new TipoSolicitacao();
+						tipoSolicitacao.id = id;
+					} else {
+						throw "Não foi possivel obter o id do tipo de solicitacao";
 					}
-					tipoSolicitacao.nome = $('#nome').val();
+				} catch(e) {
+					alert(e);
+				}
+			}
 
+			function save() {
+				if (tipoSolicitacao != null) {
+					TipoSolicitacaoValidator.validate($('#form-' + action));
+					tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
+					
 					// Requisição AJAX
 					$.ajax({
 						type: 'POST',
@@ -197,7 +212,7 @@
 				$controller->insert($tipoSolicitacao);
 				break;
 			case 'edit':
-				//$controller->update($id, $nome);
+				$controller->update($tipoSolicitacao);
 				break;
 			case 'delete':
 				$controller->delete($id);
