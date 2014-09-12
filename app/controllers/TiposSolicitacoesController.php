@@ -37,8 +37,8 @@
 			return $this->dao->delete($id);
 		}
 		
-		public function update($id, $nome) {
-			return $this->dao->update($id, $nome);
+		public function update($tipoSolicitacao) {
+			return $this->dao->update($tipoSolicitacao);
 		}
 	}
 
