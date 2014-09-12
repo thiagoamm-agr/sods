@@ -10,6 +10,6 @@ function TipoSolicitacao() {
 TipoSolicitacao.prototype.toJSON = function() {
 	return '{' +
 		'"id": ' + this.id + ', ' +
-		'"nome": ' + '"' + this.nome + '", ' +
+		'"nome": "'  + this.nome + '"' +
 	'}';
 };
