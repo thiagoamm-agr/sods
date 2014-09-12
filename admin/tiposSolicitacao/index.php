@@ -198,7 +198,6 @@
 				break;
 			case 'edit':
 				//$controller->update($id, $nome);
-				echo $tipoSolicitacao['nome'];
 				break;
 			case 'delete':
 				$controller->delete($id);
