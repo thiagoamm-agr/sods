@@ -47,7 +47,9 @@ create table solicitante(
 
 create table tipo_solicitacao(
     id int not null primary key auto_increment,
-    nome varchar(255) not null
+    nome varchar(255) not null,
+    status char not null default 'A' comment 'A - Ativo ou I - Inativo',
+    check (status in ('A', 'I'))
 ) character set utf8 collate utf8_general_ci;
 
 create table solicitacao(
