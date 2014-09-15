@@ -46,13 +46,14 @@
 									<button 
 										class="edit-type btn btn-primary btn-sm" 
 										data-toggle="modal" 
-									    data-target="#modalEdit" 
-									    data-book-id=<?php echo $tipo['id']?>
+									    data-target="#modalEdit"
 									    onclick="edit(<?php echo $tipo['id']?>)">
 										<strong>Editar</strong>
 									</button>
-									<button class="delete-type btn btn-danger btn-sm" data-toggle="modal" 
-									    data-target="#modalDel" data-id=<?php echo $tipo['id']?>>
+									<button class="delete-type btn btn-danger btn-sm" 
+											data-toggle="modal" 
+									    	data-target="#modalDel" 
+									    	onclick="del(<?php echo $tipo['id']?>)">
 								    <strong>Excluir</strong>
 							    </button>						
 								</td>
@@ -83,8 +84,7 @@
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" 
-										onclick="save()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 						    </form>
@@ -111,8 +111,7 @@
     								<input type="text" id="nome" name="nome" class="form-control" maxlength="50"/>    								
     							</div> 				
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" 
-										onclick="save()">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -132,13 +131,12 @@
 							</button>
 							<h4 class="modal-title" id="modalDel">Exclusão de Tipo</h4>
 						</div>
-						<form action="deletarTipo.php" method="post">
+						<form id="form-del" action="#" method="post">
 							<div class="modal-body">
 	    						<h5>Confirma exclusão do tipo de solicitação?</h5>
-	    						<input type="hidden" name="bookId" id="bookId" value=""/>
 	    					</div>
 	    					<div class="modal-footer">
-	    						<button type="submit" class="btn btn-danger">Sim</button>
+	    						<button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
 	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
 	    					</div>
     					</form>
@@ -160,6 +158,21 @@
 			function add() {
 				action = "add";
 				tipoSolicitacao = new TipoSolicitacao();
+			}
+
+			function del(id) {
+				try {
+					id = id == null ? "" : id;
+					if (id !== "") {
+						action = "del";
+						tipoSolicitacao = new TipoSolicitacao();
+						tipoSolicitacao.id = id;
+					} else {
+						throw "Não foi possivel obter o id do tipo de solicitacao";
+					}
+				} catch (e) {
+					alert(e);
+				}
 			}
 
 			function edit(id) {
@@ -214,8 +227,8 @@
 			case 'edit':
 				$controller->update($tipoSolicitacao);
 				break;
-			case 'delete':
-				$controller->delete($id);
+			case 'del':
+				$controller->delete($tipoSolicitacao);
 				break;
 		}
 	}
