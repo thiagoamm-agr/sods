@@ -25,7 +25,7 @@
 		}
 		
 		public function getAll() {
-			$query = "select * from tipo_solicitacao";
+			$query = "select * from tipo_solicitacao where status like 'A'";
 		
 			$result = mysql_query($query, $this->connection);
 			$all = array();
@@ -74,10 +74,34 @@
 			return;			
 		}
 		
-		public function delete($id) {
-			$query = "delete from tipo_solicitacao where id = '$id'";
-			
-			$result = mysql_query($query, $this->connection);
+		public function delete($tipoSolicitacao) {
+			if (isset($tipoSolicitacao)){
+				$class = new ReflectionClass('TipoSolicitacao');
+				$properties = $class->getProperties();
+				$columns = "";
+				$values = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$column = $property->getName();
+					$value = $property->getValue($tipoSolicitacao);					
+					if ($column == 'id') {
+						$columns .= "{$column}, ";
+						if(!empty($value)){
+							$values .= (int) $value;
+						}
+					}
+				}
+				$columns = substr($columns, 0, strrpos($columns, ", "));
+				//$values = substr($values, 0, strrpos($values, ", "));
+				if (!empty($columns) && !empty($values)) {
+					try {
+						$query = "update tipo_solicitacao set status = 'I' where id = $values";
+						mysql_query($query, $this->connection);
+					} catch (Exception $e) {
+						echo $e;
+					}
+				}
+			}
 			return;
 		}
 		
