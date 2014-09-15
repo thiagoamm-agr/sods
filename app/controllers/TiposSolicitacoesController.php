@@ -33,8 +33,8 @@
 			return $this->dao->insert($tipoSolicitacao);			
 		}
 		
-		public function delete($id) {
-			return $this->dao->delete($id);
+		public function delete($tipoSolicitacao) {
+			return $this->dao->delete($tipoSolicitacao);
 		}
 		
 		public function update($tipoSolicitacao) {
