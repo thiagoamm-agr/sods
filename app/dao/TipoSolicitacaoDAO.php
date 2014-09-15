@@ -36,10 +36,6 @@
 			return $all;
 		}
 		
-		public function all() {
-			
-		}
-		
 		public function insert($tipoSolicitacao) {
 			if (isset($tipoSolicitacao)){
 				$class = new ReflectionClass('TipoSolicitacao');
