@@ -25,10 +25,6 @@
 			return $this->dao->getAll();
 		}
 		
-		public function all() {
-			
-		}
-		
 		public function insert($tipoSolicitacao) {
 			return $this->dao->insert($tipoSolicitacao);			
 		}
