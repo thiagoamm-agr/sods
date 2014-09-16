@@ -16,7 +16,9 @@
 			<div class="row">
                 <div class="col-md-12">
                 	<button class="btn btn-warning btn-sm pull-right" 
-                    	data-toggle="modal" data-target="#modalAdd">
+                    	data-toggle="modal" 
+                    	data-target="#modalAdd"
+                    	onclick="add()">
                     	<b>Adicionar</b>
                 	</button>
                 </div>
@@ -41,9 +43,9 @@
 					</thead>
 					<tbody>
 <?php
-					$usuariosController = new UsuariosController(); 
+					$controller = new UsuariosController(); 
 
-					foreach ($usuariosController->getUsuarios() as $usuario) {
+					foreach ($controller->getUsuarios() as $usuario) {
 ?>
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
@@ -176,10 +178,10 @@
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h3 class="modal-title" id="modalEdit">Adicionar Usuário</h3>
+							<h3 class="modal-title" id="modalAdd">Adicionar Usuário</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-add" role="form" action="#" method="post">
+    						 <form id="form-add" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome</label>
     								<input type="text" class="form-control" name="nome" id="nome"/>    								
@@ -215,10 +217,27 @@
     								<input type="text" class="form-control" name="login" id="login"/>
     							</div>
     							<div class="form-group">
-    								<input type="checkbox" id="tipo_usr" name="tipo_usr" value="A"> Administrador
+    								<input type="hidden" 
+    									class="form-control" 
+    									name="senha" 
+    									id="senha" 
+    									value="<?php echo md5(12345)?>"/>
+    							</div>
+    							<div class="form-group">
+	    							<div>
+	    								<label for="tipoUsuario">Tipo</label>
+	    							</div>
+    								<div class="btn-group" data-toggle="buttons">
+    									<label class="btn btn-default">
+    										<input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;&nbsp;
+    									</label>
+    									<label class="btn btn-default">
+    										<input type="radio" name="tipoUsuario" value="A"/>Administrador
+    									</label>
+    								</div>
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="usuario('#form-add')">Salvar</button>
+									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
 									<button type="reset" class="btn btn-default">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
@@ -228,63 +247,63 @@
     			</div>
     		</div> <!-- modais -->		
 		</div> <!-- container -->
-
-		<script type="text/javascript" src="/sods/js/models/Usuario.js"></script>
 		
-		<script type="text/javascript" src="/sods/js/validators/usuario.js"></script>
+		<!-- Javascript -->
+        <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
+        
+        <script type="text/javascript" src="/sods/static/js/validators/UsuarioValidator.js"></script>
 		
 		<script type="text/javascript">
-			function editar(id) {
-				$.ajax({
-				    type: 'POST',
-				    url: '',
-				    data: 'acao=editar&id=' + id,
-				    success: function(data) {
-					    					    
-				    }
-                });
+			var usuario = null;
+			var action = null;
+
+			function add() {
+				action = "add";
+				usuario = new Usuario();
 			}
 
-			function salvar() {
-			    // 1 - JSON do usuário.
-			    var usuario = new Usuario();
-			    usuario.nome = $('#nome').val();
-			    usuario.secaoId = $('#lotacao').val();
-			    usuario.cargo = $('#cargo').val();
-			    usuario.telefoneRamal = $('#telefone_ramal').val();
-			    usuario.email = $('#email').val();			    		    
-			    // 2 - Requisição Ajax
-			    $.ajax({
-				    type: 'POST',
-				    url: '',
-				    data: 'acao=' + $('#acao').val() + '&' + 
-				          'json=' + usuario.toJSON(),
-				    success: function(data) {
-					    					    
-				    }
-                });
+			function save() {
+				if (usuario !=  null) {
+					UsuarioValidator.validate($('#form-' + action));
+					usuario.nome = $('#form-' + action  + ' input[name="nome"]').val();
+				    usuario.lotacao_id = $('#form-' + action  + ' select[name="lotacao"]').val();
+				    usuario.cargo = $('#form-' + action  + ' input[name="cargo"]').val();
+				    usuario.telefone = $('#form-' + action  + ' input[name="fone"]').val();
+				    usuario.email = $('#form-' + action  + ' input[name="email"]').val();
+				    usuario.login = $('#form-' + action  + ' input[name="login"]').val();
+				    usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
+				    usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
+				
+					// Requisição AJAX
+				    $.ajax({
+					    type: 'POST',
+					    url: '',
+					    data: 'action=' + action + '&' + 'usuario=' + usuario.toJSON(),
+					    success: function(data) {
+						    					    
+					    }
+	                });
+				}
 		    }
  		</script>
 <?php	
-	if (isset($_POST['acao'])) {
-		$acao = $_POST['acao'];
-		if ($acao == 'salvar') {
-			if (isset($_POST['json'])) {
-				$json = $_POST['json'];
-			}
-// 		$obj = json_decode($json);
-// 		$usuario = new Usuario();
-// 		$usuario->nome = $obj->nome;
-// 		$usuario->secao_id = $obj->secaoId;
-// 		$usuario->cargo = $obj->cargo;
-// 		$usuario->fone_ramal = $obj->telefoneRamal;
-// 		$usuario->email = $obj->email;
-// 		$controller->insert($usuario);	
-		} else if ($acao == 'editar') {
-			$usuario = $usuariosController->getUsuario($_POST['id']);
-		} else if ($acao == 'excluir') {
-			
-		}		
+	if (isset($_POST['action']) && isset($_POST['usuario'])) {
+		//Recuperando dados do post
+		$action = $_POST['action'];
+		$json = $_POST['usuario'];
+		
+		$usuario = new Usuario();
+		$usuario->loadJSON($json);
+		
+		switch ($action) {
+			case 'add':
+				$controller->insert($usuario);
+				break;
+			case 'edit':
+				break;
+			case 'del':
+				break;
+		}
 	}
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
