@@ -1,31 +1,31 @@
 function Usuario() {
-	this.id = "";
+	this.id = null;
 	this.nome = "";
-	this.secaoId = "";
+	this.lotacao_id = "";
 	this.cargo = "";
-	this.telefoneRamal = "";
+	this.telefone = "";
 	this.email = "";
 	this.login = "";
 	this.senha = "";
-	this.tipoUsuario = "";
+	this.tipo_usuario = "";
 	this.status = "";
-	this.dataCriacao = "";
-	this.dataAlteracao = "";
+	this.data_criacao = "";
+	this.data_alteracao = "";
 }
 
 Usuario.prototype.toJSON = function() {
 	return '{' +
 		'"id": ' + '"' + this.id + '", ' +
     	'"nome": ' + '"' + this.nome + '", ' +
-    	'"secaoId": ' + this.secaoId + ', ' +
+    	'"lotacao_id": ' + this.lotacao_id + ', ' +
     	'"cargo": ' + '"' + this.cargo + '", ' +
-    	'"telefoneRamal": ' + '"' + this.telefoneRamal + '", ' +
+    	'"telefone": ' + '"' + this.telefone + '", ' +
     	'"email": ' + '"' + this.email + '", ' +
     	'"login": ' + '"' + this.login + '", ' +
     	'"senha": ' + '"' + this.senha + '", ' +
-    	'"tipoUsuario": ' + '"' + this.tipoUsuario + '", ' +
+    	'"tipo_usuario": ' + '"' + this.tipo_usuario + '", ' +
     	'"status": ' + '"' + this.status + '", ' +
-    	'"dataCriacao": ' + '"' + this.dataCriacao + '", ' +
-    	'"dataAlteracao": ' + '"' + this.dataAlteracao + '"' +
+    	'"data_criacao": ' + '"' + this.data_criacao + '", ' +
+    	'"data_alteracao": ' + '"' + this.data_alteracao + '"' +
     '}';
 }
