@@ -28,27 +28,38 @@
 		
 		public function insert($usuario) {
 			if (isset($usuario)) {
-				$cls = new ReflectionClass('Usuario');
-				$properties = $cls->getProperties();
+				$class = new ReflectionClass('Usuario');
+				$properties = $class->getProperties();
 				$columns = "";
 				$values = "";
 				foreach ($properties as $property) {
 					$property->setAccessible(true);
+					$column = $property->getName();
 					$value = $property->getValue($usuario);
-					$value = trim($value);
-					if (!empty($value)) {
-						$columns .= "{$property->getName()}, ";
-						if (gettype($value) == "string") {
-							$values .= "'{$property->getValue($usuario)}', ";
+					if (($column != 'id') && ($column != 'status') && ($column != 'data_criacao') && ($column != 'data_alteracao')) {
+						$columns .= "{$column}, ";
+						
+						if (gettype($value) == "string"){
+							$values .= "'{$value}', ";
 						} else {
-							$values .= "{$property->getValue($usuario)}, ";
+							if (endsWith($value, '_id')){
+								$value = (int) $value;
+							}
+							$values .= "{$value}, ";
 						}
 					}
 				}
 				$columns = substr($columns, 0, strrpos($columns, ", "));
 				$values = substr($values, 0, strrpos($values, ", "));
-				$query = "insert into solicitante ($columns) values ($values)";
-				mysql_query($query, $this->connection);
+				if(!empty($columns) && !empty($values)){
+					try {
+						$query = "insert into solicitante ($columns) values ($values)";
+						mysql_query($query, $this->connection);
+					} catch (mysqli_sql_exception $e) {
+						echo $e;
+					}
+					
+				}
 			}
 		}
 		
@@ -88,7 +99,7 @@
 					 "from " .
 					     "solicitante as s " .
 					 "inner join lotacao as l " .
-					     "on s.lotacao_id = l.id;";			
+					     "on s.lotacao_id = l.id order by s.id;";			
 			$result = mysql_query($query, $this->connection);
 			$all = array();
 			while ($row = mysql_fetch_assoc($result)) {
