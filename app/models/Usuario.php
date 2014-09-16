@@ -4,9 +4,9 @@
 	class Usuario extends Model {				
 		protected $id;
 		protected $nome;
-		protected $secao_id;
+		protected $lotacao_id;
 		protected $cargo;
-		protected $fone_ramal;
+		protected $telefone;
 		protected $email;
 		protected $login;
 		protected $senha;
