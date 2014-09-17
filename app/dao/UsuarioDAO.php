@@ -52,15 +52,11 @@
 				$columns = substr($columns, 0, strrpos($columns, ", "));
 				$values = substr($values, 0, strrpos($values, ", "));
 				if(!empty($columns) && !empty($values)){
-					try {
-						$query = "insert into solicitante ($columns) values ($values)";
-						mysql_query($query, $this->connection);
-					} catch (mysqli_sql_exception $e) {
-						echo $e;
-					}
-					
+					$query = "insert into solicitante ($columns) values ($values)";
+					mysql_query($query, $this->connection);
 				}
 			}
+			return;
 		}
 		
 		public function update($usuario) {
@@ -75,10 +71,35 @@
 			}
 		}
 		
-		public function delete($id) {
-			if (isset($id)) {
-				
+		public function delete($usuario) {
+			if (isset($usuario)){
+				$class = new ReflectionClass('Usuario');
+				$properties = $class->getProperties();
+				$columns = "";
+				$values = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$column = $property->getName();
+					$value = $property->getValue($usuario);					
+					if ($column == 'id') {
+						$columns .= "{$column}, ";
+						if(!empty($value)){
+							$values .= (int) $value;
+						}
+					}
+				}
+				$columns = substr($columns, 0, strrpos($columns, ", "));
+				//$values = substr($values, 0, strrpos($values, ", "));
+				if (!empty($columns) && !empty($values)) {
+					try {
+						$query = "update solicitante set status = 'I' where id = $values";
+						mysql_query($query, $this->connection);
+					} catch (Exception $e) {
+						echo $e;
+					}
+				}
 			}
+			return;
 		}
 		
 		public function get($field, $value) {
@@ -99,7 +120,7 @@
 					 "from " .
 					     "solicitante as s " .
 					 "inner join lotacao as l " .
-					     "on s.lotacao_id = l.id order by s.id;";			
+					     "on s.lotacao_id = l.id where status like 'A' order by s.id desc";			
 			$result = mysql_query($query, $this->connection);
 			$all = array();
 			while ($row = mysql_fetch_assoc($result)) {
