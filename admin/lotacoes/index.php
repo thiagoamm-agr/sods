@@ -54,11 +54,14 @@
                                     class="btn btn-warning btn-sm" 
                                     data-toggle="modal" 
                                     data-target="#modalEdit"
-                                    onclick="edit(<?php echo $lotacao['id'] ?>)">
+                                    onclick='edit(<?php echo json_encode($lotacao) ?>)'>
                                     <strong>Editar</strong>
                                 </button>
-                                <button class="btn btn-danger btn-sm" 
-                                    data-toggle="modal" data-target="#modalDel">
+                                <button 
+                                    class="delete-type btn btn-danger btn-sm" 
+                                    data-toggle="modal" 
+                                    data-target="#modalDel"
+                                    onclick="del(<?php echo $lotacao['id'] ?>)">
                                     <strong>Excluir</strong>
                                 </button>
                             </td>
@@ -96,6 +99,8 @@
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
                                     <select id="gerencia" name="gerencia" class="form-control">
+                                        <option value="">SELECIONE UMA GERÊNCIA</option>
+                                        <option value="null">Nenhuma</option>
 <?php 
                                     foreach ($controller->getGerencias() as $gerencia) { 
 ?>
@@ -110,7 +115,9 @@
                                     <button type="submit" class="btn btn-success" onclick="save()">
                                         Salvar
                                     </button>
-                                    <button type="reset" class="btn btn-default">Limpar</button>
+                                    <button type="reset" class="btn btn-default" onclick="limpar()">
+                                        Limpar
+                                    </button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                         Fechar
                                     </button>
@@ -130,10 +137,10 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modalEdit">Editar Lotação</h3>
+                            <h3 class="modal-title">Editar Lotação</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="form-edit" action="#" method="post">
+                            <form id="form-edit" role="form" action="#" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input type="text" class="form-control" id="nome" name="nome" />
@@ -145,6 +152,8 @@
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
                                     <select id="gerencia" name="gerencia" class="form-control">
+                                        <option value="">SELECIONE UMA GERÊNCIA</option>
+                                        <option value="null">Nenhuma</option>
 <?php 
                                     foreach ($controller->getGerencias() as $gerencia) { 
 ?>
@@ -161,7 +170,7 @@
                                         class="btn btn-success" 
                                         onclick="save()">Salvar
                                     </button>
-                                    <button type="reset" class="btn btn-default">Limpar</button>
+                                    <button type="reset" class="btn btn-default" onclick="limpar()">Limpar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
                                         Fechar
                                     </button>
@@ -178,17 +187,21 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modalDel">Exclusão de Lotação</h4>
+                            <h4 class="modal-title">Exclusão de Lotação</h4>
                         </div>
-                        <div class="modal-body">
-                            <h5>Confirma exclusão de lotação?</h5>
-                        </div>
-                        <form action="#" method="post">
+                        <form id="form-del" action="#" method="post">
+                            <div class="modal-body">
+                                <h5>Confirma exclusão da lotação?</h5>
+                            </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Sim</button>
+                                <button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
                             </div>
                         </form>
@@ -204,19 +217,42 @@
 
         <script type="text/javascript">
             var lotacao = null;
+            var action = null;
+            var validator = null;
 
             function add() {
+                action = 'add';
                 lotacao = new Lotacao();
+                lotacao.id = null;
             }
 
-            function edit(id) {
+            function edit(lotacao_json) {
                 try {
-                    id = id == null ? "" : id;
+                    if (lotacao_json != null) {
+                        action = 'edit';
+                        var form = $('#form-' + action);
+                        $('#nome', form).val(lotacao_json.nome);
+                        $('#sigla', form).val(lotacao_json.sigla);
+                        $('#gerencia', form).val("" + lotacao_json.gerencia_id);
+                        lotacao = new Lotacao();
+                        lotacao.id = lotacao_json.id;
+                    } else {
+                        throw 'Não é possível editar uma alteração que não existe.';
+                    }
+                } catch(e) {
+                    alert(e);
+                }
+            }
+
+            function del(id) {
+                try {
+                    var id = id == null ? "" : id;
                     if (id !== "") {
+                        action = 'del';
                         lotacao = new Lotacao();
                         lotacao.id = id;
                     } else {
-                        throw "Não é possível editar uma lotação sem id.";
+                        throw "Não foi possível obter o id da lotação.";
                     }
                 } catch(e) {
                     alert(e);
@@ -225,35 +261,42 @@
 
             function save() {
                 if (lotacao != null) {
-                    var action = "add";
-                    var id = lotacao.id == null ? "" : lotacao.id;
-                    if (id !== "") {
-                        action = "edit";
-                        lotacao.id = id;
+                    if (action === 'add' || action === 'edit') {
+                        var form = $('#form-' + action);
+                        lotacao.nome = $('#nome', form).val();
+                        lotacao.sigla = $('#sigla', form).val();
+                        lotacao.gerencia_id = $('#gerencia', form).val();
+                        // Validação dos dados do formulário de cadastro.
+                        validator = new LotacaoValidator(form);
+                        if (!validator.validate()) {
+                            // Caso o formulário seja inválido cancela o processamento.
+                            return;
+                        }
                     }
-                    lotacao.nome = $('#nome').val();
-                    lotacao.sigla = $('#sigla').val();
-                    lotacao.gerencia_id = $('#gerencia').val();
-                    // Validação dos dados do formulário de cadastro.
-                    // TODO: criar a requisição AJAX de acordo com o retorno 
-                    // do validador (true / false).
-                    LotacaoValidator.validate($('#form-' + action));
                     // Requisição AJAX.
                     $.ajax({
                         type: 'POST',
                         url: '',
-                        data: 'action=' + action + '&' + 'lotacao=' + lotacao.toJSON(),
+                        data: 'action=' + action + '&' + 'json=' + lotacao.toJSON(),
                         success: function(data) {}
                     });
+                    action = null;
+                    lotacao = null;
+                }
+            }
+
+            function limpar() {
+                if (validator != null) {
+                    validator.resetForm();
                 }
             }
         </script>
 <?php
     // Identificação e atendimento das ações do usuário pelo controller.
-    if (isset($_POST['action']) && isset($_POST['lotacao'])) {
+    if (isset($_POST['action']) && isset($_POST['json'])) {
         // Recuperando os parâmetros da requisição.
         $action = $_POST['action'];
-        $json = $_POST['lotacao'];
+        $json = $_POST['json'];
 
         $lotacao = new Lotacao();
         $lotacao->loadJSON($json);
@@ -265,6 +308,9 @@
                 break;
             case 'edit':
                 $controller->edit($lotacao);
+                break;
+            case 'del':
+                $controller->del($lotacao->id);
                 break;
         }
     }
