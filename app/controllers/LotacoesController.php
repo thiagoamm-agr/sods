@@ -46,5 +46,9 @@
         public function edit($lotacao) {
             $this->dao->update($lotacao);
         }
+        
+        public function del($id) {
+            $this->dao->delete($id);
+        }
     }
 ?>
