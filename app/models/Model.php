@@ -48,7 +48,7 @@
          * JSON (Javascript Object Notation).
          */
         public function toJSON() {
-            return json_encode($this->toArray());
+            return json_encode($this->toArray(), JSON_PRETTY_PRINT);
         }
 
         /*
