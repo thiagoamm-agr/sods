@@ -25,6 +25,10 @@
 			$this->dao->insert($usuario);
 		}
 		
+		public function delete($usuario) {
+			$this->dao->delete($usuario);
+		}
+		
 		public function getUsuarios() {
 			return $this->dao->getAll();
 		}
