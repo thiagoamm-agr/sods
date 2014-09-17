@@ -63,7 +63,9 @@
 									<strong>Editar</strong>
 								</button>
 								<button class="btn btn-danger btn-sm" 
-								    data-toggle="modal" data-target="#modalDel">
+								    	data-toggle="modal" 
+								    	data-target="#modalDel"
+								    	onclick="del(<?php echo $usuario['id']?>)">
 								    <strong>Excluir</strong>
 							    </button>							
 							</td>
@@ -159,9 +161,9 @@
 						<div class="modal-body">
     						<h5>Confirma exclusão de usuário?</h5>
     					</div>
-						<form action="#">
+						<form id="form-del" action="#" method="post">
 	    					<div class="modal-footer">
-	    						<button type="submit" class="btn btn-danger">Sim</button>
+	    						<button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
 	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
 	    					</div>
     					</form>
@@ -262,6 +264,21 @@
 				usuario = new Usuario();
 			}
 
+			function del(id) {
+				try {
+					id = id == null ? "" : id;
+					if (id !== "") {
+						action = "del";
+						usuario = new Usuario();
+						usuario.id = id;
+					} else {
+						throw "Não foi possivel obter o id do tipo de solicitacao";
+					}
+				} catch (e) {
+					alert(e);
+				}
+			}
+
 			function save() {
 				if (usuario !=  null) {
 					UsuarioValidator.validate($('#form-' + action));
@@ -273,6 +290,11 @@
 				    usuario.login = $('#form-' + action  + ' input[name="login"]').val();
 				    usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
 				    usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
+
+				    if(action == 'del'){
+						usuario.lotacao_id = '""';
+				    }
+
 				
 					// Requisição AJAX
 				    $.ajax({
@@ -302,6 +324,7 @@
 			case 'edit':
 				break;
 			case 'del':
+				$controller->delete($usuario);
 				break;
 		}
 	}
