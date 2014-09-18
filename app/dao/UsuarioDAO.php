@@ -36,9 +36,11 @@
 					$property->setAccessible(true);
 					$column = $property->getName();
 					$value = $property->getValue($usuario);
-					if (($column != 'id') && ($column != 'status') && ($column != 'data_criacao') && ($column != 'data_alteracao')) {
-						$columns .= "{$column}, ";
-						
+					if (($column != 'id') && 
+						($column != 'status') && 
+						($column != 'data_criacao') && 
+						($column != 'data_alteracao')) {
+							$columns .= "{$column}, ";
 						if (gettype($value) == "string"){
 							$values .= "'{$value}', ";
 						} else {
@@ -65,12 +67,6 @@
 			}
 		}
 		
-		public function save($usuario) {
-			if (isset($usuario)) {
-				
-			}
-		}
-		
 		public function delete($usuario) {
 			if (isset($usuario)){
 				$class = new ReflectionClass('Usuario');
@@ -89,7 +85,6 @@
 					}
 				}
 				$columns = substr($columns, 0, strrpos($columns, ", "));
-				//$values = substr($values, 0, strrpos($values, ", "));
 				if (!empty($columns) && !empty($values)) {
 					try {
 						$query = "update solicitante set status = 'I' where id = $values";
