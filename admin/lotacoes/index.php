@@ -67,9 +67,12 @@
                             </td>
                         </tr>
 <?php
-                    } 
+                    }
 ?>
                     </tbody>
+                    <tfoot>
+                        <tr><td colspan="5"><?php echo $controller->paginate() ?></td></tr>
+                    </tfoot>
                 </table>
             </div>
 
