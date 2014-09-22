@@ -59,7 +59,7 @@
 							<td colspan="2">
 								<button class="btn btn-primary btn-sm" 
 								    data-toggle="modal" data-target="#modalEdit" 
-								    onclick="editar(<?php echo $usuario['id'] ?>)">
+								    onclick='edit(<?php echo json_encode($usuario) ?>)'>
 									<strong>Editar</strong>
 								</button>
 								<button class="btn btn-danger btn-sm" 
@@ -123,8 +123,8 @@
 		    						<input id="cargo" name="cargo" type="text" class="form-control" />
 		  						</div>		  
 								<div class="form-group">
-		    						<label for="telefone_ramal">Telefone / Ramal</label>
-		    						<input id="telefone_ramal" name="fone"
+		    						<label for="fone">Telefone / Ramal</label>
+		    						<input id="fone" name="fone"
 		    						    type="text" class="form-control" />
 		  						</div>
 								<div class="form-group">
@@ -132,13 +132,22 @@
 		    						<input id="email" name="email" type="email" class="form-control" />
 		  						</div>
 								<div class="form-group">
-									<input type="checkbox" id="tipo_usuario" name="tipo_usuario" />
-									<label for="tipo_usuario"> Administrador</label>									                				
-								</div>
+	    							<div>
+	    								<label for="tipoUsuario">Tipo</label>
+	    							</div>
+    								<div class="form-group">
+    									<input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
+    									<input type="radio" name="tipoUsuario" value="A"/>Administrador
+    									</label>
+    								</div>
+    							</div>
 								<div class="modal-footer">							
-									<button type="submit" class="btn btn-success" 
-										onclick="usuario('#form-edit')">Salvar</button>
-									<button type="reset" class="btn btn-default">Limpar</button>
+									<button type="submit" 
+											class="btn btn-success" 
+											onclick="save()">Salvar</button>
+									<button type="reset" 
+											class="btn btn-default" 
+											onclick="limpar()">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -229,12 +238,9 @@
 	    							<div>
 	    								<label for="tipoUsuario">Tipo</label>
 	    							</div>
-    								<div class="btn-group" data-toggle="buttons">
-    									<label class="btn btn-default">
-    										<input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;&nbsp;
-    									</label>
-    									<label class="btn btn-default">
-    										<input type="radio" name="tipoUsuario" value="A"/>Administrador
+    								<div class="form-group">
+    									<input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
+    									<input type="radio" name="tipoUsuario" value="A"/>Administrador
     									</label>
     								</div>
     							</div>					
@@ -263,6 +269,30 @@
 				action = "add";
 				usuario = new Usuario();
 			}
+			
+			function edit(usuario_json) {
+                try {
+                    if (usuario_json != null) {
+                        action = 'edit';
+                        var form = $('#form-' + action);
+
+                        $('#nome', form).val(usuario_json.nome_sol);
+                        $('#login', form).val(usuario_json.login);
+                        $('#lotacao', form).val("" + usuario_json.lotacao_id);
+                        $('#cargo', form).val(usuario_json.cargo);
+                        $('#fone', form).val(usuario_json.telefone);
+                        $('#email', form).val(usuario_json.email);
+                        $('#tipo_usuario', form).val(usuario_json.tipo_usuario);
+
+                        usuario = new Usuario();
+                        usuario.id = usuario_json.id;
+                    } else {
+                        throw 'Não é possível editar uma alteração que não existe.';
+                    }
+                } catch(e) {
+                    alert(e);
+                }
+            }
 
 			function del(id) {
 				try {
@@ -307,6 +337,12 @@
 	                });
 				}
 		    }
+
+			function limpar() {
+                if (validator != null) {
+                    validator.resetForm();
+                }
+            }
  		</script>
 <?php	
 	if (isset($_POST['action']) && isset($_POST['usuario'])) {
@@ -322,6 +358,7 @@
 				$controller->insert($usuario);
 				break;
 			case 'edit':
+				$controller->edit($usuario);
 				break;
 			case 'del':
 				$controller->delete($usuario);
