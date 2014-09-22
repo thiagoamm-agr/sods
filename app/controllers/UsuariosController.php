@@ -1,4 +1,6 @@
 <?php
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+	
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/UsuarioDAO.php';
 	
 	class UsuariosController {
@@ -27,6 +29,10 @@
 		
 		public function delete($usuario) {
 			$this->dao->delete($usuario);
+		}
+		
+		public function edit($usuario) {
+			$this->dao->update($usuario);
 		}
 		
 		public function getUsuarios() {
