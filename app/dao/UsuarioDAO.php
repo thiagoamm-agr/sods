@@ -5,7 +5,7 @@
 	
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
 	
-	class UsuarioDAO implements IDAO {
+	class UsuarioDAO implements IDAO{
 		
 		private $connection;
 		
@@ -63,7 +63,41 @@
 		
 		public function update($usuario) {
 			if (isset($usuario)) {
-				
+                $class = new ReflectionClass('Usuario');
+                $properties = $class->getProperties();
+                $columns = "";
+                $values = "";
+                $pairs = "";
+                foreach ($properties as $property) {
+                    $property->setAccessible(true);
+                    $column = $property->getName();
+                    $value = $property->getValue($usuario);
+                    if ($column != 'id') {
+                        if (!empty($value) && ($value != 'undefined')) {
+                            if (gettype($value) == "string") {
+                                $pairs .= "$column = '{$value}', ";
+                            } else {
+                                if (endsWith($value, '_id')) {
+                                    $value = (int) $value;
+                                }
+                                $pairs .= "$column = {$value}, ";
+                            }
+                        }
+                    }
+                }
+                $pairs = substr($pairs, 0, strrpos($pairs, ", "));
+                if (!empty($pairs)) {
+                    $query = "update solicitante set $pairs where id = {$usuario->id}";
+                    mysql_query($query, $this->connection);
+                }
+            }
+		}
+		
+		public function save($usuario) {
+			if (isset($usuario)) {
+				if (isset($usuario->id)) {
+		
+				}
 			}
 		}
 		
@@ -110,8 +144,8 @@
 		
 		public function getAll() {
 			$query = "select " .
-					     "s.id, s.nome as nome_sol, l.nome as lotacao, s.cargo, " .
-					     "s.telefone, s.login, s.tipo_usuario, s.status " .
+					     "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
+					     "s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
 					 "from " .
 					     "solicitante as s " .
 					 "inner join lotacao as l " .
