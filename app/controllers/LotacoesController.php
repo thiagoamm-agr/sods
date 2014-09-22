@@ -1,30 +1,23 @@
 <?php
-    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+
+    @require_once 'Controller.php';
 
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/paginator.php';
 
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/LotacaoDAO.php';
 
-    class LotacoesController {
-
-        private $dao;
-        private $paginator;
+    class LotacoesController extends Controller {
 
         public function __construct() {
+            // Chama o construtor da superclasse.
+            parent::__construct();
             $this->dao = new LotacaoDAO();
-            $this->paginator = new Paginator();
         }
 
         public function __destruct() {
             unset($this->dao);
-        }
-
-        public function __get($field) {
-            return $this->$field;
-        }
-
-        public function __set($field, $value) {
-            $this->$field = $value;
+            // Chama o destrutor da superclasse.
+            parent::__destruct();
         }
 
         public function insert($lotacao) {
