@@ -1,5 +1,6 @@
 <?php
     class Model {
+
         // Atributos.
         protected $id = 0;
 
