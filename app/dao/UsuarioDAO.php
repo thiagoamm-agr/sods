@@ -122,6 +122,7 @@
 				if (!empty($columns) && !empty($values)) {
 					try {
 						$query = "update solicitante set status = 'I' where id = $values";
+						//$query = "delete from usuario where id = $values";
 						mysql_query($query, $this->connection);
 					} catch (Exception $e) {
 						echo $e;
@@ -149,7 +150,7 @@
 					 "from " .
 					     "solicitante as s " .
 					 "inner join lotacao as l " .
-					     "on s.lotacao_id = l.id where status like 'A' order by s.id desc";			
+					     "on s.lotacao_id = l.id order by s.id desc";			
 			$result = mysql_query($query, $this->connection);
 			$all = array();
 			while ($row = mysql_fetch_assoc($result)) {
