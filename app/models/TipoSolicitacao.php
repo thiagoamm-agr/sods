@@ -4,5 +4,6 @@
 	class TipoSolicitacao extends Model {
 		protected  $id;
 		protected  $nome;
+		protected  $status;
 	}
 ?>
