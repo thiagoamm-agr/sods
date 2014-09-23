@@ -314,7 +314,7 @@
 
 			function save() {
 				if (usuario !=  null) {
-					UsuarioValidator.validate($('#form-' + action));
+					var form = $('#form-' + action);
 					usuario.nome = $('#form-' + action  + ' input[name="nome"]').val();
 				    usuario.lotacao_id = $('#form-' + action  + ' select[name="lotacao"]').val();
 				    usuario.cargo = $('#form-' + action  + ' input[name="cargo"]').val();
@@ -324,6 +324,13 @@
 				    usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
 				    usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
 
+				 	// Validação dos dados do formulário de cadastro.
+                    validator = new UsuarioValidator(form);
+                    if (!validator.validate()) {
+                    // Caso o formulário seja inválido cancela o processamento.
+                        return;
+                    }
+					
 				    if(action == 'del'){
 						usuario.lotacao_id = '""';
 				    }
