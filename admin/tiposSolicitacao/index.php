@@ -29,6 +29,7 @@
 						<tr>
 							<th>ID</th>
 							<th>Nome do Tipo de Solicitação</th>
+							<th>Status</th>
 							<th>Ação</th>
 						</tr>
 					</thead>
@@ -42,12 +43,13 @@
 							<tr>
 								<td><?php echo $tipo['id'] ?></td>
 								<td><?php echo $tipo['nome'] ?></td>
+								<td><?php echo $tipo['status'] ?></td>
 								<td colspan="2">
 									<button 
 										class="edit-type btn btn-primary btn-sm" 
 										data-toggle="modal" 
 									    data-target="#modalEdit"
-									    onclick="edit(<?php echo $tipo['id']?>)">
+									    onclick='edit(<?php echo json_encode($tipo)?>)'>
 										<strong>Editar</strong>
 									</button>
 									<button class="delete-type btn btn-danger btn-sm" 
@@ -84,7 +86,12 @@
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
+									<button type="submit" 
+											class="btn btn-success" 
+											onclick="save()">Salvar</button>
+									<button type="reset" 
+											class="btn btn-default" 
+											onclick="limpar()">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 						    </form>
@@ -109,9 +116,20 @@
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
     								<input type="text" id="nome" name="nome" class="form-control" maxlength="50"/>    								
-    							</div> 				
+    							</div>
+    							<div>
+	    								<label for="status">Status</label>
+	    							</div>
+    							<div class="form-group">
+    									<input type="radio" name="status" value="A"/>&nbsp; Ativar
+    								</div>			
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
+									<button type="submit" 
+											class="btn btn-success" 
+											onclick="save()">Salvar</button>
+									<button type="reset" 
+											class="btn btn-default" 
+											onclick="limpar()">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
@@ -175,25 +193,28 @@
 				}
 			}
 
-			function edit(id) {
-				try {
-					id = id == null ? "" : id;
-					if (id !== "") {
-						action = "edit";
-						tipoSolicitacao = new TipoSolicitacao();
-						tipoSolicitacao.id = id;
-					} else {
-						throw "Não foi possivel obter o id do tipo de solicitacao";
-					}
-				} catch(e) {
-					alert(e);
-				}
-			}
+			function edit(tipoSolicitacao_json) {
+                try {
+                    if (tipoSolicitacao_json != null) {
+                        action = 'edit';
+                        var form = $('#form-' + action);
+
+                        $('#nome', form).val(tipoSolicitacao_json.nome);
+                        tipoSolicitacao = new TipoSolicitacao();
+                        tipoSolicitacao.id = tipoSolicitacao_json.id;
+                    } else {
+                        throw 'Não é possível editar uma alteração que não existe.';
+                    }
+                } catch(e) {
+                    alert(e);
+                }
+            }
 
 			function save() {
 				if (tipoSolicitacao != null) {
 					TipoSolicitacaoValidator.validate($('#form-' + action));
 					tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
+					tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
 					
 					// Requisição AJAX
 					$.ajax({
@@ -206,6 +227,12 @@
 					}); 
 				}
 			}
+
+			function limpar() {
+                if (validator != null) {
+                    validator.resetForm();
+                }
+            }
 
 		</script>
 		
