@@ -241,12 +241,15 @@
     								<div class="form-group">
     									<input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
     									<input type="radio" name="tipoUsuario" value="A"/>Administrador
-    									</label>
     								</div>
     							</div>					
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-success" onclick="save()">Salvar</button>
-									<button type="reset" class="btn btn-default">Limpar</button>
+									<button type="submit" 
+											class="btn btn-success" 
+											onclick="save()">Salvar</button>
+									<button type="reset" 
+											class="btn btn-default" 
+											onclick="limpar()">Limpar</button>
 		    						<button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>    						
 								</div>
 							</form>
