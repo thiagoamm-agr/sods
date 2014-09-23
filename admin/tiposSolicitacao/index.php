@@ -212,9 +212,17 @@
 
 			function save() {
 				if (tipoSolicitacao != null) {
-					TipoSolicitacaoValidator.validate($('#form-' + action));
+					//TipoSolicitacaoValidator.validate($('#form-' + action));
+					var form = $('#form-' + action);
 					tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
 					tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+
+					// Validação dos dados do formulário de cadastro.
+                    validator = new TipoSolicitacaoValidator(form);
+                    if (!validator.validate()) {
+                    // Caso o formulário seja inválido cancela o processamento.
+                        return;
+                    }
 					
 					// Requisição AJAX
 					$.ajax({
