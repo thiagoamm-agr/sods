@@ -25,7 +25,7 @@
 		}
 		
 		public function getAll() {
-			$query = "select * from tipo_solicitacao where status like 'A'";
+			$query = "select * from tipo_solicitacao order by id desc";
 		
 			$result = mysql_query($query, $this->connection);
 			$all = array();
@@ -101,7 +101,7 @@
 			return;
 		}
 		
-		public function update($tipoSolicitacao) {
+/*		public function update($tipoSolicitacao) {
 			if (isset($tipoSolicitacao)){
 				$class = new ReflectionClass('TipoSolicitacao');
 				$properties = $class->getProperties();
@@ -134,6 +134,38 @@
 				}
 			}
 			return;		
+		}*/
+		
+		public function update($tipoSolicitacao) {
+			if (isset($tipoSolicitacao)) {
+				$class = new ReflectionClass('TipoSolicitacao');
+				$properties = $class->getProperties();
+				$columns = "";
+				$values = "";
+				$pairs = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$column = $property->getName();
+					$value = $property->getValue($tipoSolicitacao);
+					if ($column != 'id') {
+						if (!empty($value)) {
+							if (gettype($value) == "string") {
+								$pairs .= "$column = '{$value}', ";
+							} else {
+								if (endsWith($value, '_id')) {
+									$value = (int) $value;
+								}
+								$pairs .= "$column = {$value}, ";
+							}
+						}
+					}
+				}
+				$pairs = substr($pairs, 0, strrpos($pairs, ", "));
+				if (!empty($pairs)) {
+					$query = "update tipo_solicitacao set $pairs where id = {$tipoSolicitacao->id}";
+					mysql_query($query, $this->connection);
+				}
+			}
 		}
 		
 	}
