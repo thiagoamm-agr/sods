@@ -212,7 +212,6 @@
 
 			function save() {
 				if (tipoSolicitacao != null) {
-					//TipoSolicitacaoValidator.validate($('#form-' + action));
 					var form = $('#form-' + action);
 					tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
 					tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
