@@ -84,7 +84,14 @@
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
-    							</div>					
+    							</div>		
+    							<div class="form-group">
+    									<input type="radio" 
+    										   name="status" 
+    										   value="A" 
+    										   checked="checked" 
+    										   readonly/>&nbsp; Ativar
+    							</div>				
 								<div class="modal-footer">
 									<button type="submit" 
 											class="btn btn-success" 
@@ -122,7 +129,7 @@
 	    							</div>
     							<div class="form-group">
     									<input type="radio" name="status" value="A"/>&nbsp; Ativar
-    								</div>			
+    							</div>			
 								<div class="modal-footer">
 									<button type="submit" 
 											class="btn btn-success" 
