@@ -31,31 +31,38 @@ function UsuarioValidator(form) {
                 cargo: {
                     validators: {
                         notEmpty: {
-                            message: 'Cargo é um campo de preenchimento obrigatório.'
+                            message: 'Cargo é um campo de preenchimento obrigatório'
                         }
                     }
                 },
                 fone: {
                     validators: {
                         notEmpty: {
-                            message: 'Fone é um campo de preenchimento obrigatório.'
+                            message: 'Fone é um campo de preenchimento obrigatório'
                         }
                     }
                 },
                 email: {
                     validators: {
                         notEmpty: {
-                            message: 'e-mail é um campo de preenchimento obrigatório.'
+                            message: 'e-mail é um campo de preenchimento obrigatório'
                         }
                     }
                 },
                 login: {
                     validators: {
                         notEmpty: {
-                            message: 'Tipo de Usuario é um campo de preenchimento obrigatório.'
+                            message: 'Login é um campo de preenchimento obrigatório'
                         }
                     }
                 },
+                tipoUsuario: {
+                	validators: {
+                		notEmpty: {
+                			message: 'Tipo de Usuario é um campo de preenchimento obrigatório'
+                		}
+                	}
+                }
             }
         });
         this.data = this.form.data('bootstrapValidator')
