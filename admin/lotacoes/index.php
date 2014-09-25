@@ -61,7 +61,7 @@
                                     class="delete-type btn btn-danger btn-sm" 
                                     data-toggle="modal" 
                                     data-target="#modalDel"
-                                    onclick="del(<?php echo $lotacao['id'] ?>)">
+                                    onclick='del(<?php echo json_encode($lotacao) ?>)'>
                                     <strong>Excluir</strong>
                                 </button>
                             </td>
@@ -118,7 +118,7 @@
                                     <button type="submit" class="btn btn-success" onclick="save()">
                                         Salvar
                                     </button>
-                                    <button type="reset" class="btn btn-default" onclick="limpar()">
+                                    <button type="reset" class="btn btn-default" onclick="resetForm()">
                                         Limpar
                                     </button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -173,9 +173,15 @@
                                         class="btn btn-success" 
                                         onclick="save()">Salvar
                                     </button>
-                                    <button type="reset" class="btn btn-default" onclick="limpar()">Limpar</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Fechar
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-default" 
+                                        onclick="resetForm()">Limpar
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal">Fechar
                                     </button>
                                 </div>
                             </form>
@@ -216,24 +222,28 @@
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Lotacao.js"></script>
         
-        <script type="text/javascript" src="/sods/static/js/validators/LotacaoValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/LotacaoFormValidator.js"></script>
 
         <script type="text/javascript">
             var lotacao = null;
             var action = null;
-            var validator = null;
-
+            var form = null;
+            var formValidator = null;
+            
             function add() {
                 action = 'add';
                 lotacao = new Lotacao();
                 lotacao.id = null;
+                form = $('#form-add');
+                formValidator = new LotacaoFormValidator(form);
             }
 
             function edit(lotacao_json) {
                 try {
                     if (lotacao_json != null) {
                         action = 'edit';
-                        var form = $('#form-' + action);
+                        form = $('#form-' + action);
+                        formValidator = new LotacaoFormValidator(form);
                         $('#nome', form).val(lotacao_json.nome);
                         $('#sigla', form).val(lotacao_json.sigla);
                         $('#gerencia', form).val("" + lotacao_json.gerencia_id);
@@ -247,15 +257,15 @@
                 }
             }
 
-            function del(id) {
+            function del(lotacao_json) {
                 try {
-                    var id = id == null ? "" : id;
-                    if (id !== "") {
-                        action = 'del';
+                    if (lotacao_json != null) {
+                        action = 'delete';
                         lotacao = new Lotacao();
-                        lotacao.id = id;
-                    } else {
-                        throw "Não foi possível obter o id da lotação.";
+                        lotacao.id = lotacao_json.id;
+                        lotacao.nome = lotacao_json.nome;
+                        lotacao.sigla = lotacao_json.sigla;
+                        lotacao.gerencia_id = lotacao_json.gerencia_id;
                     }
                 } catch(e) {
                     alert(e);
@@ -265,16 +275,9 @@
             function save() {
                 if (lotacao != null) {
                     if (action === 'add' || action === 'edit') {
-                        var form = $('#form-' + action);
                         lotacao.nome = $('#nome', form).val();
                         lotacao.sigla = $('#sigla', form).val();
                         lotacao.gerencia_id = $('#gerencia', form).val();
-                        // Validação dos dados do formulário de cadastro.
-                        validator = new LotacaoValidator(form);
-                        if (!validator.validate()) {
-                            // Caso o formulário seja inválido cancela o processamento.
-                            return;
-                        }
                     }
                     // Requisição AJAX.
                     $.ajax({
@@ -285,12 +288,14 @@
                     });
                     action = null;
                     lotacao = null;
+                    form = null;
+                    formValidator = null;
                 }
             }
 
-            function limpar() {
-                if (validator != null) {
-                    validator.resetForm();
+            function resetForm() {
+                if (formValidator != null) {
+                    formValidator.reset();
                 }
             }
         </script>
@@ -312,8 +317,8 @@
             case 'edit':
                 $controller->edit($lotacao);
                 break;
-            case 'del':
-                $controller->del($lotacao->id);
+            case 'delete':
+                $controller->delete($lotacao->id);
                 break;
         }
     }
