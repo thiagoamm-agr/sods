@@ -48,6 +48,10 @@
                             }
                             $values .= "{$value}, ";
                         }
+                    } else {
+                        if (endsWith($column, '_id')) {
+                            $values .= "null, ";
+                        }
                     }
                 }
                 $columns = substr($columns, 0, strrpos($columns, ", "));
