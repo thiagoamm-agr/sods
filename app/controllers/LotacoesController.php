@@ -2,8 +2,6 @@
 
     @require_once 'Controller.php';
 
-    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/paginator.php';
-
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/LotacaoDAO.php';
 
     class LotacoesController extends Controller {
