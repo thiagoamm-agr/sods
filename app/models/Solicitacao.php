@@ -1,23 +1,17 @@
 <?php
-	class Solicitacao {
+
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Model.php';
+	
+	class Solicitacao extends Model {
 		
-		private $id;
-		private $solicitante_id;
-		private $detalhamento;
-		private $info_adicionais;
-		private $observacoes;
-		private $status;
-		private $observacoes_status;
-		private $data_abertura;
-		private $data_alteracao;
-		private $tipo_solicitacao_id;
-		
-		public function __get($field) {
-			return $this->$field;
-		}
-		
-		public function __set($field, $value) {
-			$this->$field = $value;
-		}
+		protected $id;
+		protected $solicitante_id;
+		protected $titulo;
+		protected $detalhamento;
+		protected $info_adicionais;
+		protected $observacoes;
+		protected $status;
+		protected $observacoes_status;
+		protected $tipo_solicitacao_id;
 	}
 ?>
