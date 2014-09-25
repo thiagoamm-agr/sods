@@ -27,13 +27,13 @@
             $this->$field = $value;
         }
 
-        // abstract protected function getAll();
-        
+        abstract public function _list();
+
         abstract public function add($model);
 
         abstract public function edit($model);
 
-        abstract public function del($id);
+        abstract public function delete($id);
 
         abstract public function paginate();
     }
