@@ -1,9 +1,11 @@
 <?php
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 	
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/IDAO.php';
+	
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Solicitacao.php';
 	
-	class SolicitacaoDAO {
+	class SolicitacaoDAO implements IDAO {
 		
 		private $connection;
 		
@@ -25,22 +27,66 @@
 		}
 		
 		public function insert($solicitacao) {
-			if(isset($usuario)) {
-				echo "Inserir Solicitação";
-				var_dump($solicitacao);
+			if (isset($solicitacao)) {
+				$class = new ReflectionClass('Solicitacao');
+				$properties = $class->getProperties();
+				$columns = "";
+				$values = "";
+				foreach ($properties as $property) {
+					$property->setAccessible(true);
+					$column = $property->getName();
+					$value = $property->getValue($solicitacao);
+					if (($column != 'id') && 
+						($column != 'status') &&
+						($column != 'observacoes_status') &&
+						($column != 'data_abertura') && 
+						($column != 'data_alteracao')) {
+							$columns .= "{$column}, ";
+						if (gettype($value) == "string"){
+							$values .= "'{$value}', ";
+						} else {
+							if (endsWith($value, '_id')){
+								$value = (int) $value;
+							}
+							$values .= "{$value}, ";
+						}
+					}
+				}
+				$columns = substr($columns, 0, strrpos($columns, ", "));
+				$values = substr($values, 0, strrpos($values, ", "));
+				if(!empty($columns) && !empty($values)){
+					$query = "insert into solicitacao ($columns) values ($values)";
+					mysql_query($query, $this->connection);
+				}
 			}
+			return;
 		}
 		
 		public function update($solicitacao) {
-			echo "Atualizar Solicitação";
-			var_dump($solicitacao);
+			if(isset($usuario)){
+				
+			}
+		}
+		
+		public function save($solicitacao) {
+			if (isset($solicitacao)) {
+				
+			}	
 		}
 		
 		public function delete($id) {
-			
+			if (isset($usuario)){
+				
+			}
 		}
 		
-		public function allAdmin() {
+		public function get($field, $value) {
+			if (isset($usuario)) {
+				
+			}
+		}
+		
+		public function getAll() {
 			$query= "select " . 
                         "so.id, s.nome, so.titulo, so.status, " .
 						"t.nome as nome_sol, so.data_abertura, so.data_alteracao " .
@@ -50,9 +96,18 @@
 				    "inner join tipo_solicitacao as t " .
 	    		        "on t.id = so.tipo_solicitacao_id";
 			
-			$result_set = mysql_query($query, $this->connection);
-						
-			return $result_set;
+			$result = mysql_query($query, $this->connection);
+			$all = array();
+			while ($row = mysql_fetch_assoc($result)) {
+				array_push($all, $row);
+			}
+			return $all;
+		}
+		
+		public function filter($criteria) {
+			if (isset($criteria)) {
+				
+			}
 		}
 		
 		public function allUser($login) {
