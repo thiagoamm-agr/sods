@@ -21,12 +21,24 @@
 			$this->$field = $value;
 		}
 		
-		public function allAdmin() {
-			return $this->dao->allAdmin();
+		public function getAll() {
+			return $this->dao->getAll();
 		}
 		
 		public function allUser($login) {
 			return $this->dao->allUser($login);
+		}
+		
+		public function insert($solicitacao) {
+			return $this->dao->insert($solicitacao);
+		}
+		
+		public function delete($solicitacao) {
+			return $this->dao->delete($solicitacao);
+		}
+		
+		public function update($solicitacao) {
+			return $this->dao->update($solicitacao);
 		}
 	}
 ?>
