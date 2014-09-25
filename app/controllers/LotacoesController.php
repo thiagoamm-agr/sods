@@ -20,20 +20,8 @@
             parent::__destruct();
         }
 
-        public function insert($lotacao) {
-            $this->dao->insert($lotacao);
-        }
-
-        public function getLotacoes() {
+        public function _list() {
             return $this->dao->getAll();
-        }
-
-        public function getLotacao($id) {
-            return $this->dao->get("id", (int) $id);
-        }
-
-        public function getGerencias() {
-            return $this->dao->filter('gerencia_id is null');
         }
 
         public function add($lotacao) {
@@ -44,7 +32,7 @@
             $this->dao->update($lotacao);
         }
         
-        public function del($id) {
+        public function delete($id) {
             $this->dao->delete($id);
         }
 
@@ -59,6 +47,18 @@
             $this->paginator->defaultUrl = "/sods/admin/lotacoes/index.php";
             $this->paginator->paginationUrl = "/sods/admin/lotacoes/index.php?p=[p]";
             return $this->paginator->paginate();
+        }
+
+        public function getLotacoes() {
+            return $this->_list();
+        }
+
+        public function getLotacao($id) {
+            return $this->dao->get("id", (int) $id);
+        }
+
+        public function getGerencias() {
+            return $this->dao->filter('gerencia_id is null');
         }
     }
 ?>
