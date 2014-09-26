@@ -35,6 +35,8 @@
 
         abstract public function delete($id);
 
+        abstract public function count($criteria);
+
         abstract public function paginate();
     }
 ?>
