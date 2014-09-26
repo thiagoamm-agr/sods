@@ -55,7 +55,7 @@
 									<button class="delete-type btn btn-danger btn-sm" 
 											data-toggle="modal" 
 									    	data-target="#modalDel" 
-									    	onclick="del(<?php echo $tipo['id']?>)">
+									    	onclick="del(<?php echo json_encode($tipo)?>)">
 								    <strong>Excluir</strong>
 							    </button>						
 								</td>
@@ -174,39 +174,29 @@
      	<!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/TipoSolicitacao.js"></script>
         
-        <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoFormValidator.js"></script>
 		
 		<script type="text/javascript">		
-			var tipoSolicitacao = null;
-			var action = null;
+			 var tipoSolicitacao = null;
+	         var action = null;
+	         var form = null;
+	         var formValidator = null;
 
 			function add() {
 				action = "add";
 				tipoSolicitacao = new TipoSolicitacao();
-			}
-
-			function del(id) {
-				try {
-					id = id == null ? "" : id;
-					if (id !== "") {
-						action = "del";
-						tipoSolicitacao = new TipoSolicitacao();
-						tipoSolicitacao.id = id;
-					} else {
-						throw "Não foi possivel obter o id do tipo de solicitacao";
-					}
-				} catch (e) {
-					alert(e);
-				}
+				tipoSolicitacao.id = null;
+				form= $('#form-add');
+				formValidator = new TipoSolicitacaoFormValidator(form);
 			}
 
 			function edit(tipoSolicitacao_json) {
                 try {
                     if (tipoSolicitacao_json != null) {
                         action = 'edit';
-                        var form = $('#form-' + action);
-
-                        $('#nome', form).val(tipoSolicitacao_json.nome);
+                        form = $('#form-edit');
+                        formValidator = new TipoSolicitacaoFormValidator(form);
+                        $('#nome', form).val(tipoSolicitacao_json.nome);                        
                         tipoSolicitacao = new TipoSolicitacao();
                         tipoSolicitacao.id = tipoSolicitacao_json.id;
                     } else {
@@ -217,18 +207,26 @@
                 }
             }
 
+			function del(tipoSolicitacao_json) {
+				 try {
+	                    if (tipoSolicitacao_json != null) {
+	                        action = 'del';
+	                        tipoSolicitacao = new TipoSolicitacao();
+	                        tipoSolicitacao.id = tipoSolicitacao_json.id;
+	                        tipoSolicitacao.nome = tipoSolicitacao_json.nome;
+	                        tipoSolicitacao.status = tipoSolicitacao_json.status;
+	                    }
+	                } catch(e) {
+	                    alert(e);
+	                }
+			}
+
 			function save() {
 				if (tipoSolicitacao != null) {
-					var form = $('#form-' + action);
-					tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
-					tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
-
-					// Validação dos dados do formulário de cadastro.
-                    validator = new TipoSolicitacaoValidator(form);
-                    if (!validator.validate()) {
-                    // Caso o formulário seja inválido cancela o processamento.
-                        return;
-                    }
+					if (action == 'add' || action == 'edit') {
+						tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
+						tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+					}
 					
 					// Requisição AJAX
 					$.ajax({
@@ -238,7 +236,11 @@
 						success: function(data){
 							
 						}
-					}); 
+					});
+					 var tipoSolicitacao = null;
+			         var action = null;
+			         var form = null;
+			         var formValidator = null;					 
 				}
 			}
 
