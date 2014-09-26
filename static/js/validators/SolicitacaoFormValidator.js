@@ -9,11 +9,6 @@ function SolicitacaoFormValidator(form) {
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
             fields: {
                 nome: {
                 	trigger: 'blur',
