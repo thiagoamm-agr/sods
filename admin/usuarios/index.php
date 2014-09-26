@@ -343,10 +343,6 @@
 					    data: 'action=' + action + '&' + 'usuario=' + usuario.toJSON(),
 					    success: function(data) {}
 	                });
-				    var tipoSolicitacao = null;
-			        var action = null;
-			        var form = null;
-			        var formValidator = null;
 				}
 		    }
 
