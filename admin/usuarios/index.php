@@ -59,13 +59,13 @@
 							<td colspan="2">
 								<button class="btn btn-primary btn-sm" 
 								    data-toggle="modal" data-target="#modalEdit" 
-								    onclick='edit(<?php echo json_encode($usuario) ?>)'>
+								    onclick='edit(<?php echo json_encode($usuario)?>)'>
 									<strong>Editar</strong>
 								</button>
 								<button class="btn btn-danger btn-sm" 
 								    	data-toggle="modal" 
 								    	data-target="#modalDel"
-								    	onclick="del(<?php echo $usuario['id']?>)">
+								    	onclick="del(<?php echo json_encode($usuario)?>)">
 								    <strong>Excluir</strong>
 							    </button>							
 							</td>
@@ -262,23 +262,28 @@
 		<!-- Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
         
-        <script type="text/javascript" src="/sods/static/js/validators/UsuarioValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
 		
 		<script type="text/javascript">
-			var usuario = null;
-			var action = null;
-
+			var tipoSolicitacao = null;
+	        var action = null;
+	        var form = null;
+	        var formValidator = null;
+	        
 			function add() {
 				action = "add";
 				usuario = new Usuario();
+				usuario.id = null;
+				form= $('#form-add');
+				formValidator = new UsuarioFormValidator(form);
 			}
 			
 			function edit(usuario_json) {
                 try {
                     if (usuario_json != null) {
                         action = 'edit';
-                        var form = $('#form-' + action);
-
+                        form = $('#form-edit');
+                        formValidator = new UsuarioValidator(form);
                         $('#nome', form).val(usuario_json.nome_sol);
                         $('#login', form).val(usuario_json.login);
                         $('#lotacao', form).val("" + usuario_json.lotacao_id);
@@ -286,7 +291,6 @@
                         $('#fone', form).val(usuario_json.telefone);
                         $('#email', form).val(usuario_json.email);
                         $('#tipo_usuario', form).val(usuario_json.tipo_usuario);
-
                         usuario = new Usuario();
                         usuario.id = usuario_json.id;
                     } else {
@@ -297,54 +301,52 @@
                 }
             }
 
-			function del(id) {
-				try {
-					id = id == null ? "" : id;
-					if (id !== "") {
-						action = "del";
-						usuario = new Usuario();
-						usuario.id = id;
-					} else {
-						throw "Não foi possivel obter o id do tipo de solicitacao";
-					}
-				} catch (e) {
-					alert(e);
-				}
+			function del(usuario_json) {
+				 try {
+	                    if (usuario_json != null) {
+	                        action = 'del';
+	                        usuario = new Usuario();
+	                        usuario.id = usuario_json.id;
+	                        usuario.nome = usuario_json.nome;
+	                        usuario.cargo = usuario_json.cargo;
+	                        usuario.telefone = usuario_json.telefone;
+	                        usuario.email = usuario_json.email;
+	                        usuario.login = usuario_json.login;
+	                        usuario.senha = usuario_json.senha;
+	                        usuario.tipo_usuario = usuario_json.tipo_usuario;
+	                        usuario.status = usuario_json.status;
+	                        usuario.data_criacao = usuario_json.data_criacao;
+	                        usuario.data_alteracao = usuario_json.data_alteracao;
+	                    }
+	                } catch(e) {
+	                    alert(e);
+	                }
 			}
 
 			function save() {
 				if (usuario !=  null) {
-					var form = $('#form-' + action);
-					usuario.nome = $('#form-' + action  + ' input[name="nome"]').val();
-				    usuario.lotacao_id = $('#form-' + action  + ' select[name="lotacao"]').val();
-				    usuario.cargo = $('#form-' + action  + ' input[name="cargo"]').val();
-				    usuario.telefone = $('#form-' + action  + ' input[name="fone"]').val();
-				    usuario.email = $('#form-' + action  + ' input[name="email"]').val();
-				    usuario.login = $('#form-' + action  + ' input[name="login"]').val();
-				    usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
-				    usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
-
-				 	// Validação dos dados do formulário de cadastro.
-                    validator = new UsuarioValidator(form);
-                    if (!validator.validate()) {
-                    // Caso o formulário seja inválido cancela o processamento.
-                        return;
-                    }
-					
-				    if(action == 'del'){
-						usuario.lotacao_id = '""';
-				    }
-
+					if (action == 'add' || action == 'edit') {
+						usuario.nome = $('#form-' + action  + ' input[name="nome"]').val();
+					    usuario.lotacao_id = $('#form-' + action  + ' select[name="lotacao"]').val();
+					    usuario.cargo = $('#form-' + action  + ' input[name="cargo"]').val();
+					    usuario.telefone = $('#form-' + action  + ' input[name="fone"]').val();
+					    usuario.email = $('#form-' + action  + ' input[name="email"]').val();
+					    usuario.login = $('#form-' + action  + ' input[name="login"]').val();
+					    usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
+					    usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
+					}
 				
 					// Requisição AJAX
 				    $.ajax({
 					    type: 'POST',
 					    url: '',
 					    data: 'action=' + action + '&' + 'usuario=' + usuario.toJSON(),
-					    success: function(data) {
-						    					    
-					    }
+					    success: function(data) {}
 	                });
+				    var tipoSolicitacao = null;
+			        var action = null;
+			        var form = null;
+			        var formValidator = null;
 				}
 		    }
 
