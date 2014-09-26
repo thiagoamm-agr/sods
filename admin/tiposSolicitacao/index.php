@@ -38,7 +38,7 @@
 					$controller = new TiposSolicitacoesController();
 
 					//Obtém a lista de todos os tipos de solicitação
-					foreach ($tipos = $controller->__list() as $tipo) {
+					foreach ($tipos = $controller->_list() as $tipo) {
 ?>
 							<tr>
 								<td><?php echo $tipo['id'] ?></td>
