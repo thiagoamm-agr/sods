@@ -45,7 +45,7 @@
 <?php
 					$controller = new UsuariosController(); 
 
-					foreach ($controller->getUsuarios() as $usuario) {
+					foreach ($controller->_list() as $usuario) {
 ?>
 						<tr>
 							<td><?php echo $usuario['id'] ?></td>
@@ -106,7 +106,7 @@
 <?php 
 										$lotacoesController = new LotacoesController();
 										
-										$lotacoes = $lotacoesController->getLotacoes();
+										$lotacoes = $lotacoesController->_list();
 										
 										foreach ($lotacoes as $lotacao){
 ?>
@@ -304,7 +304,7 @@
 			function del(usuario_json) {
 				 try {
 	                    if (usuario_json != null) {
-	                        action = 'del';
+	                        action = 'delete';
 	                        usuario = new Usuario();
 	                        usuario.id = usuario_json.id;
 	                        usuario.nome = usuario_json.nome;
@@ -363,12 +363,12 @@
 		
 		switch ($action) {
 			case 'add':
-				$controller->insert($usuario);
+				$controller->add($usuario);
 				break;
 			case 'edit':
 				$controller->edit($usuario);
 				break;
-			case 'del':
+			case 'delete':
 				$controller->delete($usuario);
 				break;
 		}
