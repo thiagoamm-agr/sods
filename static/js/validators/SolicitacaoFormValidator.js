@@ -2,9 +2,10 @@
  * Validador dos formulários de adição e edição de Solicitação.
  */
 
-function SolicitacaoValidator(form) {
-    this.form = form;
+function SolicitacaoFormValidator(form) {
+	this.form = form;
     this.data = null;
+    this.valid = false;
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
@@ -15,6 +16,7 @@ function SolicitacaoValidator(form) {
             },
             fields: {
                 nome: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Nome é um campo de preenchimento obrigatório.'
@@ -22,6 +24,7 @@ function SolicitacaoValidator(form) {
                     }
                 },
                 titulo: {
+                	trigger: 'blur',
                 	validators: {
                 		notEmpty: {
                 			message: 'Título é um campo de preenchimento obrigatório.'
@@ -29,6 +32,7 @@ function SolicitacaoValidator(form) {
                 	}
                 },
                 detalhamento: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Descrição é um campo de preenchimento obrigatório'
@@ -36,6 +40,7 @@ function SolicitacaoValidator(form) {
                      }
                 },
                 infoAdicionais: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Informações adicionais é um campo de preenchimento obrigatório.'
@@ -43,6 +48,7 @@ function SolicitacaoValidator(form) {
                     }
                 },
                 observacoes: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                         	message: 'Observação é um campo de preenchimento obrigatório.'
@@ -55,7 +61,7 @@ function SolicitacaoValidator(form) {
     }
 }
 
-SolicitacaoValidator.prototype.validate = function() {
+SolicitacaoFormValidator.prototype.validate = function() {
     var valid = false;
     if (this.form != null) {
         this.data.validate();
@@ -64,7 +70,7 @@ SolicitacaoValidator.prototype.validate = function() {
     return valid;
 };
 
-SolicitacaoValidador.prototype.resetForm = function() {
+SolicitacaoFormValidador.prototype.resetForm = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
