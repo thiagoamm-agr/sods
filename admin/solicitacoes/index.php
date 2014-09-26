@@ -48,7 +48,7 @@
 <?php
 					$controller = new SolicitacoesController();
 					
-					foreach ($controller->getAll() as $solicitacao) {
+					foreach ($controller->_list() as $solicitacao) {
 
 ?>
 			        	<tr>
@@ -128,13 +128,13 @@
 											<label for="tp_sol">Tipo de Solicitação</label>
 		  									<select id="tp_sol" name="tp_sol" class="form-control">
 <?php 
-												$sql = "select * from tipo_solicitacao";
-												$secoes = mysql_query($sql);
+												$tiposSolicitacoesController = new TiposSolicitacoesController();
+												$tiposSolicitacoes = $tiposSolicitacoesController->_list();
 																		
-		  										while ($secao = mysql_fetch_assoc($secoes)) {
+												foreach ($tiposSolicitacoes as $tipos){
 ?>
-												<option value="<?php echo $secao['id'] ?>">
-													<?php echo $secao['nome']?>
+												<option value="<?php echo $tipos['id'] ?>">
+															   <?php echo $tipos['nome']?>
 												</option>
 <?php
 												}
@@ -205,7 +205,7 @@
 <?php 
 										$lotacoesController = new LotacoesController();
 										
-										$lotacoes = $lotacoesController->getLotacoes();
+										$lotacoes = $lotacoesController->_list();
 										
 										foreach ($lotacoes as $lotacao){
 ?>
@@ -249,8 +249,6 @@
 	    												name="tipoSolicitacaoId" 
 	    												class="form-control">
 <?php 
-														$tiposSolicitacoesController = new TiposSolicitacoesController();
-														$tiposSolicitacoes = $tiposSolicitacoesController->getTipos();
 														foreach ($tiposSolicitacoes as $tipos){
 ?>
 															<option value="<?php echo $tipos['id'] ?>">
@@ -356,7 +354,7 @@
 			function del(solicitacao_json) {
 				 try {
 	                    if (solicitacao_json != null) {
-	                        action = 'del';
+	                        action = 'delete';
 	                        tipoSolicitacao = new Solicitacao();
 	                        solicitacao.id = solicitacao_json.id;
 	                        solicitacao.solicitanteId = solicitacao_json.solicitanteId;
@@ -416,12 +414,12 @@
 		
 		switch ($action){
 			case 'add':
-				$controller->insert($solicitacao);
+				$controller->add($solicitacao);
 				break;
 			case 'edit':
-				$controller->update($solicitacao);
+				$controller->edit($solicitacao);
 				break;
-			case 'del':
+			case 'delete':
 				$controller->delete($solicitacao);
 				break;
 		}
