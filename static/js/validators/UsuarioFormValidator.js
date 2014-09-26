@@ -2,9 +2,10 @@
  * Validador dos formulários de adição e edição de lotação.
  */
 
-function UsuarioValidator(form) {
-    this.form = form;
+function UsuarioFormValidator(form) {
+	this.form = form;
     this.data = null;
+    this.valid = false;
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
@@ -15,6 +16,7 @@ function UsuarioValidator(form) {
             },
             fields: {
                 nome: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Nome é um campo de preenchimento obrigatório.'
@@ -22,6 +24,7 @@ function UsuarioValidator(form) {
                     }
                 },
                 lotacao: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Lotação é um campo de preenchimento obrigatório'
@@ -29,6 +32,7 @@ function UsuarioValidator(form) {
                      }
                 },
                 cargo: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Cargo é um campo de preenchimento obrigatório'
@@ -36,6 +40,7 @@ function UsuarioValidator(form) {
                     }
                 },
                 fone: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Fone é um campo de preenchimento obrigatório'
@@ -43,6 +48,7 @@ function UsuarioValidator(form) {
                     }
                 },
                 email: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'e-mail é um campo de preenchimento obrigatório'
@@ -50,6 +56,7 @@ function UsuarioValidator(form) {
                     }
                 },
                 login: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Login é um campo de preenchimento obrigatório'
@@ -57,6 +64,7 @@ function UsuarioValidator(form) {
                     }
                 },
                 tipoUsuario: {
+                	trigger: 'blur',
                 	validators: {
                 		notEmpty: {
                 			message: 'Tipo de Usuario é um campo de preenchimento obrigatório'
@@ -65,20 +73,20 @@ function UsuarioValidator(form) {
                 }
             }
         });
-        this.data = this.form.data('bootstrapValidator')
+        this.data = this.form.data('bootstrapValidator');
     }
 }
 
-UsuarioValidator.prototype.validate = function() {
+UsuarioFormValidator.prototype.validate = function() {
     var valid = false;
     if (this.form != null) {
         this.data.validate();
         valid = this.data.isValid();
     }
     return valid;
-}
+};
 
-UsuarioValidator.prototype.resetForm = function() {
+UsuarioFormValidator.prototype.resetForm = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
