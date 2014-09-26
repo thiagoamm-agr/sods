@@ -38,7 +38,7 @@
 					$controller = new TiposSolicitacoesController();
 
 					//Obtém a lista de todos os tipos de solicitação
-					foreach ($tipos = $controller->getTipos() as $tipo) {
+					foreach ($tipos = $controller->__list() as $tipo) {
 ?>
 							<tr>
 								<td><?php echo $tipo['id'] ?></td>
@@ -210,7 +210,7 @@
 			function del(tipoSolicitacao_json) {
 				 try {
 	                    if (tipoSolicitacao_json != null) {
-	                        action = 'del';
+	                        action = 'delete';
 	                        tipoSolicitacao = new TipoSolicitacao();
 	                        tipoSolicitacao.id = tipoSolicitacao_json.id;
 	                        tipoSolicitacao.nome = tipoSolicitacao_json.nome;
@@ -259,12 +259,12 @@
 		
 		switch ($action){
 			case 'add':
-				$controller->insert($tipoSolicitacao);
+				$controller->add($tipoSolicitacao);
 				break;
 			case 'edit':
-				$controller->update($tipoSolicitacao);
+				$controller->edit($tipoSolicitacao);
 				break;
-			case 'del':
+			case 'delete':
 				$controller->delete($tipoSolicitacao);
 				break;
 		}
