@@ -1,14 +1,11 @@
 /**
- * 
- */
-
-/**
  * Validador dos formulários de adição e edição de Tipo de Solicitacao.
  */
 
-function TipoSolicitacaoValidator(form) {
+function TipoSolicitacaoFormValidator(form) {
     this.form = form;
     this.data = null;
+    this.valid = false;
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
@@ -19,6 +16,7 @@ function TipoSolicitacaoValidator(form) {
             },
             fields: {
                 nome: {
+                	trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Nome é um campo de preenchimento obrigatório.'
@@ -31,7 +29,7 @@ function TipoSolicitacaoValidator(form) {
     }
 }
 
-TipoSolicitacaoValidator.prototype.validate = function() {
+TipoSolicitacaoFormValidator.prototype.validate = function() {
     var valid = false;
     if (this.form != null) {
         this.data.validate();
@@ -40,7 +38,7 @@ TipoSolicitacaoValidator.prototype.validate = function() {
     return valid;
 }
 
-TipoSolicitacaoValidator.prototype.resetForm = function() {
+TipoSolicitacaoFormValidator.prototype.resetForm = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
