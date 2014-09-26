@@ -286,10 +286,6 @@
                         data: 'action=' + action + '&' + 'json=' + lotacao.toJSON(),
                         success: function(data) {}
                     });
-                    action = null;
-                    lotacao = null;
-                    form = null;
-                    formValidator = null;
                 }
             }
 
