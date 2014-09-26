@@ -33,6 +33,10 @@
 			$this->dao->update($usuario);
 		}
 		
+		public function count($criteria) {
+			$this->dao->count($criteria);
+		}
+		
 		public function paginate() {
 			$this->paginator->pagenumber = 1;
 			$this->paginator->pagesize = 1;
