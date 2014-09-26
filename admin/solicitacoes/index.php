@@ -68,7 +68,8 @@
 								</button>
 								<button class='btn btn-danger btn-sm' 
 								    	data-toggle='modal' 
-								    	data-target='#modalDel'>
+								    	data-target='#modalDel'
+								    	onclick="del(<?php json_encode($solicitacao)?>)">
 								    <strong>Excluir</strong>
 							    </button>							
 							</td>
@@ -312,22 +313,28 @@
     	
     	 <script type="text/javascript" src="/sods/static/js/models/Solicitacao.js"></script>
         
-        <script type="text/javascript" src="/sods/static/js/validators/SolicitacaoValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/SolicitacaoFormValidator.js"></script>
         
         <script type="text/javascript">
-	        var solicitacao = null;
-			var action = null;
+	        var Solicitacao = null;
+	        var action = null;
+	        var form = null;
+	        var formValidator = null;
 	
 			function add() {
 				action = "add";
 				solicitacao = new Solicitacao();
+				solicitacao.id = null;
+				form= $('#form-add');
+				formValidator = new SolicitacaoFormValidator(form);
 			}
 
 			function edit(solicitacao_json) {
 				try {
 					if (solicitacao_json != null) {
 						action = 'edit';
-						var form = $('#form-' + action);
+                        form = $('#form-edit');
+                        formValidator = new SolicitacaoFormValidator();
 						$('#solicitanteId', form).val(solicitacao_json.solicitanteId);
 						$('#titulo', form).val(solicitacao_json.titulo);
 						$('#detalhamento', form).val(solicitacao_json.detalhamento);
@@ -336,7 +343,6 @@
 						$('#status', form).val(solicitacao_json.status);
 						$('#observacoesStatus', form).val(solicitacao_json.observacoesStatus);
 						$('#tipoSolicitacaoId', form).val(solicitacao_json.tipoSolicitacaoId);
-
                         solicitacao = new solicitacao();
                         solicitacao.id = tipoSolicitacao_json.id;
                     } else {
@@ -347,36 +353,46 @@
                 }
 			}
 
+			function del(solicitacao_json) {
+				 try {
+	                    if (solicitacao_json != null) {
+	                        action = 'del';
+	                        tipoSolicitacao = new Solicitacao();
+	                        solicitacao.id = solicitacao_json.id;
+	                        solicitacao.solicitanteId = solicitacao_json.solicitanteId;
+	                        solicitacao.titulo = solicitacao_json.titulo;
+	                        solicitacao.detalhamento = solicitacao_json.detalhamento;
+	                        solicitacao.infoAdicionais = solicitacao_json.infoAdicionais;
+	                        solicitacao.observacoes = solicitacao_json.observacoes;
+	                        solicitacao.status = solicitacao_json.status;
+	                        solicitacao.tipoSolicitacaoId = solicitacao_json.tipoSolicitacaoId;	                        
+	                    }
+	                } catch(e) {
+	                    alert(e);
+	                }
+			}
+
 			function save() {
 				if (solicitacao != null) {
-					var form = $('#form-' + action);
-					solicitacao.solicitanteId = $('#form-' + action + ' input[name="solicitanteId"]').val();
-					solicitacao.titulo = $('#form-' + action  + ' input[name="titulo"]').val();
-					solicitacao.detalhamento = $('#form-' + action  + ' textarea[name="detalhamento"]').val();
-					solicitacao.infoAdicionais = $('#form-' + action  + ' textarea[name="infoAdicionais"]').val();
-					solicitacao.observacoes = $('#form-' + action  + ' textarea[name="observacoes"]').val();
-					if (action != 'add') {
-						solicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
-						solicitacao.observacoesStatus = $('#form-' + action  + ' input[name="observacoesStatus"]').val();
+					if (action == 'add' || action == 'edit'){
+						solicitacao.solicitanteId = $('#form-' + action + ' input[name="solicitanteId"]').val();
+						solicitacao.titulo = $('#form-' + action  + ' input[name="titulo"]').val();
+						solicitacao.detalhamento = $('#form-' + action  + ' textarea[name="detalhamento"]').val();
+						solicitacao.infoAdicionais = $('#form-' + action  + ' textarea[name="infoAdicionais"]').val();
+						solicitacao.observacoes = $('#form-' + action  + ' textarea[name="observacoes"]').val();
+						solicitacao.tipoSolicitacaoId = $('#form-' + action  + ' select[name="tipoSolicitacaoId"]').val();
+						//Se a ação for adição, os campos de status não devem ser setados.
+						if (action != 'add') {
+							solicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+							solicitacao.observacoesStatus = $('#form-' + action  + ' input[name="observacoesStatus"]').val();
+						}					
 					}
-					solicitacao.tipoSolicitacaoId = $('#form-' + action  + ' select[name="tipoSolicitacaoId"]').val();
-					
-
-					// Validação dos dados do formulário de cadastro.
-					validator = new SolicitacaoValidator(form);
-					if (!validator.validate()) {
-						// Caso o formulário seja inválido cancela o processamento.
-						return;
-					}
-					
 					// Requisição AJAX
 					$.ajax({
 						type: 'POST',
 						url: '',
 						data: 'action=' + action + '&' + 'solicitacao=' + solicitacao.toJSON(),
-						success: function(data){
-							
-						}
+						success: function(data){}
 					}); 
 				}
 			}
