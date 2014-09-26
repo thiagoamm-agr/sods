@@ -234,11 +234,7 @@
 						url: '',
 						data: 'action=' + action + '&' + 'tipoSolicitacao=' + tipoSolicitacao.toJSON(),
 						success: function(data){}
-					});
-					 var tipoSolicitacao = null;
-			         var action = null;
-			         var form = null;
-			         var formValidator = null;					 
+					});			 
 				}
 			}
 
