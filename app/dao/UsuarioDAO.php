@@ -164,5 +164,11 @@
 				
 			}
 		}
+		
+		public function count($criteria){
+			if (isset($criteria)){
+		
+			}
+		}
 	}
 ?>
