@@ -110,6 +110,12 @@
 			}
 		}
 		
+		public function count($criteria){
+			if (isset($criteria)){
+		
+			}
+		}
+		
 		public function allUser($login) {
 			$query= "select " .
 					    "so.id, s.nome, so.titulo, so.status, " .
