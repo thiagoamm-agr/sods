@@ -144,5 +144,15 @@
             }
             return $rows;
         }
+
+        public function count($criteria) {
+            $query = "select * from lotacao";
+            if (isset($criteria)) {
+                $query .= " where $criteria";
+            }
+            $result = mysql_query($query, $this->connection);
+            $rows = mysql_num_rows($result);
+            return $rows;
+        }
     }
 ?>
