@@ -233,9 +233,7 @@
 						type: 'POST',
 						url: '',
 						data: 'action=' + action + '&' + 'tipoSolicitacao=' + tipoSolicitacao.toJSON(),
-						success: function(data){
-							
-						}
+						success: function(data){}
 					});
 					 var tipoSolicitacao = null;
 			         var action = null;
