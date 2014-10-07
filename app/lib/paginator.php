@@ -22,8 +22,8 @@
         // Constructor
         function __construct() {
             $this->pagenumber = 1;
-            $this->pagesize = 20;
-            $this->totalrecords = 0;
+            $this->pagesize = 5;
+            $this->totalrecords = 50;
             $this->showfirst = true;
             $this->showlast = true;
             $this->paginationcss = "pagination-small";
@@ -50,7 +50,12 @@
             $this->$field = $value;
         }
 
-        function paginate() {
+        /**
+         * Retorna o paginador como uma barra de navegação. 
+         * 
+         * @return string
+         */
+        function __toString() {
             $paginationlst = "";
             $firstbound =0;
             $lastbound =0;
