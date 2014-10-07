@@ -56,7 +56,7 @@
 			        		<td><?php echo $solicitacao['nome'] ?></td>
 			        		<td width="350px"><?php echo $solicitacao['titulo'] ?></td>
 							<td><?php echo $solicitacao['status'] ?></td>
-							<td><?php echo $solicitacao['tipo_sol'] ?></td>
+							<td><?php echo $solicitacao['tipo_solicitacao'] ?></td>
 							<td><?php echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) ?></td>
 							<td><?php echo @$solicitacao['data_alteracao'] ?></td>
 							<td colspan="2">							
