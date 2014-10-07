@@ -32,22 +32,13 @@
         public function edit($lotacao) {
             $this->dao->update($lotacao);
         }
-        
+
         public function delete($id) {
             $this->dao->delete($id);
         }
 
         public function count($criteria) {
             return $this->dao->count($criteria);
-        }
-
-        public function getRows($page=1, $size=5) {
-            if (empty($page)) {
-                $page = 1;
-            }
-            $this->paginator->pagesize = $size;
-            $this->paginator->pagenumber = $page;
-            return $this->dao->rowSet($size, $page * $size - $size);
         }
 
         public function getLotacoes() {
@@ -60,6 +51,15 @@
 
         public function getGerencias() {
             return $this->dao->filter('gerencia_id is null');
+        }
+
+        public function getRows($page=1, $size=5) {
+            if (empty($page)) {
+                $page = 1;
+            }
+            $this->paginator->pagesize = $size;
+            $this->paginator->pagenumber = $page;
+            return $this->dao->rowSet($size, $page * $size - $size);
         }
 
     }

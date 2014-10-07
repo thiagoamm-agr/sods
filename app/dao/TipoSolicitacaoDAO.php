@@ -161,7 +161,7 @@
         }
         
         public function rowSet($size=10, $start=0) {
-            return null;
+            
         }
 
     }

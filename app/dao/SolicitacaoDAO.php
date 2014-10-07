@@ -1,31 +1,31 @@
 <?php
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
-    
+
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/DAO.php';
-    
+
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Solicitacao.php';
-    
+
     class SolicitacaoDAO implements DAO {
-        
+
         private $connection;
-        
+
         public function __construct() {
             $this->connection = get_db_connection();
         }
-        
+
         public function __destruct() {
             mysql_close($this->connection);
             unset($connection);
         }
-        
+
         public function __get($field) {
             return $this->$field;
         }
-        
+
         public function __set($field, $value) {
             $this->$field = $value;
         }
-        
+
         public function insert($solicitacao) {
             if (isset($solicitacao)) {
                 $class = new ReflectionClass('Solicitacao');
@@ -61,31 +61,31 @@
             }
             return;
         }
-        
+
         public function update($solicitacao) {
             if(isset($usuario)){
                 
             }
         }
-        
+
         public function save($solicitacao) {
             if (isset($solicitacao)) {
                 
             }    
         }
-        
+
         public function delete($id) {
             if (isset($usuario)){
                 
             }
         }
-        
+
         public function get($field, $value) {
             if (isset($usuario)) {
                 
             }
         }
-        
+
         public function getAll() {
             $query= "select " . 
                         "so.id, s.nome, so.titulo, so.status, " .
@@ -103,19 +103,19 @@
             }
             return $all;
         }
-        
+
         public function filter($criteria) {
             if (isset($criteria)) {
                 
             }
         }
-        
+
         public function count($criteria){
             if (isset($criteria)){
         
             }
         }
-        
+
         public function allUser($login) {
             $query= "select " .
                         "so.id, s.nome, so.titulo, so.status, " .
@@ -130,9 +130,9 @@
             
             return $result_set;
         }
-        
+
         public function rowSet($size=10, $start=0) {
-            return null;
+            
         }
     }
 ?>

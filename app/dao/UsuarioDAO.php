@@ -110,7 +110,7 @@
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
                     $column = $property->getName();
-                    $value = $property->getValue($usuario);                    
+                    $value = $property->getValue($usuario);
                     if ($column == 'id') {
                         $columns .= "{$column}, ";
                         if(!empty($value)){
@@ -172,7 +172,7 @@
         }
         
         public function rowSet($size=10, $start=0) {
-            return null;
+
         }
     }
 ?>
