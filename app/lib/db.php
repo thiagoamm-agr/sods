@@ -8,7 +8,7 @@
                 die("Não foi possível conectar ao servidor de banco de dados:" . mysql_error());
             }
             # Selecionando o banco de dados
-            mysql_select_db('sods_development');    
+            mysql_select_db('sods_development');
             # Informando o charset utilizado.
             mysql_set_charset('UTF8', $conexao);
         }
