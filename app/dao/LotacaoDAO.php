@@ -132,6 +132,17 @@
             return $all;
         }
 
+        public function rowSet($size=10, $start=0) {
+            $all = array();
+            $query = "select * from lotacao limit $size offset $start";
+            $result = mysql_query($query, $this->connection);
+            while ($row = mysql_fetch_array($result)) {
+                $row['gerencia'] = $this->get('id', $row['gerencia_id']);
+                array_push($all, $row);
+            }
+            return $all;
+        }
+
         public function filter($criteria) {
             $rows = array();
             if (isset($criteria)) {
@@ -155,4 +166,5 @@
             return $rows;
         }
     }
+
 ?>
