@@ -145,7 +145,7 @@
             return $rows;
         }
 
-        public function count($criteria) {
+        public function count($criteria=null) {
             $query = "select * from lotacao";
             if (isset($criteria)) {
                 $query .= " where $criteria";
