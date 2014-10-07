@@ -10,6 +10,9 @@
             // Chama o construtor da superclasse.
             parent::__construct();
             $this->dao = new LotacaoDAO();
+            $this->paginator->totalrecords = $this->dao->count();
+            $this->paginator->defaultUrl="/sods/admin/lotacoes/";
+            $this->paginator->paginationUrl="/sods/admin/lotacoes/index.php?p=[p]";
         }
 
         public function __destruct() {
@@ -35,20 +38,16 @@
         }
 
         public function count($criteria) {
-            $this->dao->count($criteria);
+            return $this->dao->count($criteria);
         }
 
-        public function paginate() {
-            $this->paginator->pagenumber = 1;
-            $this->paginator->pagesize = 1;
-            $this->paginator->totalrecords = 4;
-            $this->paginator->showfirst = true;
-            $this->paginator->showlast = true;
-            $this->paginator->paginationcss = "pagination-normal";
-            $this->paginator->paginationstyle = 1; // 1: advance, 0: normal
-            $this->paginator->defaultUrl = "/sods/admin/lotacoes/index.php";
-            $this->paginator->paginationUrl = "/sods/admin/lotacoes/index.php?p=[p]";
-            return $this->paginator->paginate();
+        public function getRows($page=1, $size=5) {
+            if (empty($page)) {
+                $page = 1;
+            }
+            $this->paginator->pagesize = $size;
+            $this->paginator->pagenumber = $page;
+            return $this->dao->rowSet($size, $page * $size - $size);
         }
 
         public function getLotacoes() {
@@ -62,5 +61,6 @@
         public function getGerencias() {
             return $this->dao->filter('gerencia_id is null');
         }
+
     }
 ?>
