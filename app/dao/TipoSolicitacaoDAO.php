@@ -154,16 +154,24 @@
             }
         }
         
-        public function count($criteria){
-            if (isset($criteria)){
-                
-            }
+        public function count($criteria=null) {
+        	$query = "select * from tipo_solicitacao";
+        	if (isset($criteria)) {
+        		$query .= " where $criteria";
+        	}
+        	$result = mysql_query($query, $this->connection);
+        	$rows = mysql_num_rows($result);
+        	return $rows;
         }
         
         public function rowSet($size=10, $start=0) {
-            
+        	$all = array();
+        	$query = "select * from tipo_solicitacao limit $size offset $start";
+        	$result = mysql_query($query, $this->connection);
+        	while ($row = mysql_fetch_array($result)) {
+        		array_push($all, $row);
+        	}
+        	return $all;
         }
-
     }
-
 ?>
