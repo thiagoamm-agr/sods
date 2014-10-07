@@ -1,11 +1,11 @@
 <?php
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 	
-	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/IDAO.php';
+	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/DAO.php';
 	
 	@require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Solicitacao.php';
 	
-	class SolicitacaoDAO implements IDAO {
+	class SolicitacaoDAO implements DAO {
 		
 		private $connection;
 		
@@ -118,7 +118,7 @@
 			$query= "select " . 
                         "so.id, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento, " .
                         "so.info_adicionais, so.observacoes, so.status, so.observacoes_status, " .
-						"t.nome as tipo_sol, t.id as tipo_solicitacao_id, so.data_abertura, so.data_alteracao " .
+						"t.nome as tipo_solicitacao, t.id as tipo_solicitacao_id, so.data_abertura, so.data_alteracao " .
 					"from solicitante as s " . 
                     "inner join solicitacao as so " .
                         "on s.id = so.solicitante_id " . 
