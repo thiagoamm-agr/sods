@@ -37,6 +37,7 @@
 
         abstract public function count($criteria);
 
-        abstract public function paginate();
+        abstract public function getRows($page=1, $size=10);
+
     }
 ?>
