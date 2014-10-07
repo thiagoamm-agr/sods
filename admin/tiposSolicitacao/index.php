@@ -35,10 +35,16 @@
 					</thead>
 					<tbody>
 <?php 
-					$controller = new TiposSolicitacoesController();
+                    $controller = new TiposSolicitacoesController();
+
+                    if (isset($_GET['p'])) {
+                        $page = (int) $_GET['p'];
+                    } else {
+                    	$page = '';
+                    }
 
 					//Obtém a lista de todos os tipos de solicitação
-					foreach ($tipos = $controller->_list() as $tipo) {
+					foreach ($controller->getRows($page) as $tipo) {
 ?>
 							<tr>
 								<td><?php echo $tipo['id'] ?></td>
@@ -64,6 +70,9 @@
 					}
 ?>				
 					</tbody>
+					<tfoot>
+                        <tr><td colspan="5"><?php echo $controller->paginator ?></td></tr>
+                    </tfoot>
 				</table>
 			</div>
 			<!-- Modais -->
