@@ -1,11 +1,11 @@
 <?php
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
 
-    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/IDAO.php';
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/DAO.php';
 
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';
 
-    class LotacaoDAO implements IDAO {
+    class LotacaoDAO implements DAO {
 
         private $connection;
 
@@ -132,17 +132,6 @@
             return $all;
         }
 
-        public function rowSet($size=10, $start=0) {
-            $all = array();
-            $query = "select * from lotacao limit $size offset $start";
-            $result = mysql_query($query, $this->connection);
-            while ($row = mysql_fetch_array($result)) {
-                $row['gerencia'] = $this->get('id', $row['gerencia_id']);
-                array_push($all, $row);
-            }
-            return $all;
-        }
-
         public function filter($criteria) {
             $rows = array();
             if (isset($criteria)) {
@@ -164,6 +153,17 @@
             $result = mysql_query($query, $this->connection);
             $rows = mysql_num_rows($result);
             return $rows;
+        }
+
+        public function rowSet($size=10, $start=0) {
+            $all = array();
+            $query = "select * from lotacao limit $size offset $start";
+            $result = mysql_query($query, $this->connection);
+            while ($row = mysql_fetch_array($result)) {
+                $row['gerencia'] = $this->get('id', $row['gerencia_id']);
+                array_push($all, $row);
+            }
+            return $all;
         }
     }
 
