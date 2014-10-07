@@ -41,7 +41,9 @@
 <?php
                     $controller = new LotacoesController();
 
-                    foreach ($controller->getLotacoes() as $lotacao) {
+                    $page = (int) $_GET['p'];
+
+                    foreach ($controller->getRows($page) as $lotacao) {
 ?>
                         <tr>
                             <td><?php echo $lotacao['id'] ?></td>
@@ -71,7 +73,7 @@
 ?>
                     </tbody>
                     <tfoot>
-                        <tr><td colspan="5"><?php echo $controller->paginate() ?></td></tr>
+                        <tr><td colspan="5"><?php echo $controller->paginator ?></td></tr>
                     </tfoot>
                 </table>
             </div>
