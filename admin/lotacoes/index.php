@@ -41,7 +41,11 @@
 <?php
                     $controller = new LotacoesController();
 
-                    $page = (int) $_GET['p'];
+                    if (isset($_GET['p'])) {
+                        $page = (int) $_GET['p'];
+                    } else {
+                        $page = "";
+                    }
 
                     foreach ($controller->getRows($page) as $lotacao) {
 ?>
