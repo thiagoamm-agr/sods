@@ -109,21 +109,17 @@
 		  							<label for="titulo">Título</label>
 		  							<input type="text" class="form-control" id="titulo" name="titulo">
 		  						</div>
-		  						
 		  						<div class="form-group">
 	    							<label for="detalhamento">Descrição do Sistema</label>
 	    							<textarea class="form-control" id="detalhamento" name="detalhamento" 
 		    						    rows="6" style="width: 100%;"></textarea>
 	    						
 	    						</div>
-	    						
 			    				<div class="form-group">
 	    							<label for="info_adicionais">Inf. Adicionais</label>
 	    							<textarea class="form-control" id="info_adicionais" name="info_adicionais"
-		    						    rows="4" style="width: 100%;"></textarea>
+		    						    rows="2" style="width: 100%;"></textarea>
 	    						</div>
-	    						
-		  						
 		  						<div class="form-group">
 		  							<div class="row">
 		  							
@@ -158,15 +154,35 @@
 										</div>
 										
 										<div class="col-sm-4">
-											<label for="ultAlter">Ultima Alteração</label>
-											<input type="text" class="form-control" name="ultAlter" 
-											    id="ult_alteracao" readonly>
+											<label for="data_alteracao">Ultima Alteração</label>
+											<input type="text" class="form-control" name="data_alteracao" 
+												id="data_alteracao" readonly/>
+										</div>
+									</div>
+									
+									<div class="row">
+										
+										<div class="col-sm-4">
+											<label for="status">Status</label>
+											<select id="status" name="status" class="form-control">
+												<option  value="EM ANÁLISE">Em análise</option>
+												<option  value="DEFERIDA">Deferida</option>
+												<option  value="INDEFERIDA">Indeferida</option>
+												<option  value="ATENDIDA">Atendida</option>
+												<option  value="CANCELADA">Cancelada</option>
+											</select>
+										</div>
+										
+										<div class="col-sm-4">
+											<label for="observacoes_status">Obs. Status</label>
+											<input type="text" class="form-control" name="observacoes_status"
+												id="observacoes_status"/>
 										</div>
 									
-									
 									</div>
+									
   								</div>
-								
+								<input type="hidden" id="solicitante_id" name="solicitante_id">
 								<div class="modal-footer">
 									<button type="submit" class="btn btn-primary" onclick="save()">Salvar</button>
 									<button type="button" class="btn btn-default" data-dismiss="modal">
@@ -309,7 +325,7 @@
     					</div>
 						<form action="#">
 	    					<div class="modal-footer">
-	    						<button type="submit" class="btn btn-danger">Sim</button>
+	    						<button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
 	    						<button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>	    						
 	    					</div>
     					</form>
@@ -351,6 +367,7 @@
 						$('#observacoes_status', form).val(solicitacao_json.observacoes_status);
 						$('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
 						$('#data_abertura', form).val(solicitacao_json.data_abertura);
+						$('#data_alteracao', form).val(solicitacao_json.data_alteracao);
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
                     } else {
@@ -365,15 +382,17 @@
 				 try {
 	                    if (solicitacao_json != null) {
 	                        action = 'delete';
-	                        tipoSolicitacao = new Solicitacao();
+	                        solicitacao = new Solicitacao();
 	                        solicitacao.id = solicitacao_json.id;
-	                        solicitacao.solicitanteId = solicitacao_json.solicitanteId;
+	                        solicitacao.solicitante_id = solicitacao_json.solicitante_id;
 	                        solicitacao.titulo = solicitacao_json.titulo;
 	                        solicitacao.detalhamento = solicitacao_json.detalhamento;
-	                        solicitacao.infoAdicionais = solicitacao_json.infoAdicionais;
+	                        solicitacao.info_adicionais = solicitacao_json.info_adicionais;
 	                        solicitacao.observacoes = solicitacao_json.observacoes;
 	                        solicitacao.status = solicitacao_json.status;
-	                        solicitacao.tipoSolicitacaoId = solicitacao_json.tipoSolicitacaoId;	                        
+	                        solicitacao.tipo_solicitacao_id = solicitacao_json.tipo_solicitacao_id;
+	                        solicitacao.data_abertura = solicitacao_json.data_abertura;
+	                        solicitacao.data_alteracao = solicitacao_json.data_alteracao;	                        
 	                    }
 	                } catch(e) {
 	                    alert(e);
@@ -391,7 +410,7 @@
 						solicitacao.tipo_solicitacao_id = $('#form-' + action  + ' select[name="tipo_solicitacao_id"]').val();
 						//Se a ação for adição, os campos de status não devem ser setados.
 						if (action != 'add') {
-							solicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+							solicitacao.status = $('#form-' + action + ' select[name="status"]').val();
 							solicitacao.observacoes_status = $('#form-' + action  + ' input[name="observacoes_status"]').val();
 						}					
 					}
