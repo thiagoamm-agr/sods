@@ -177,7 +177,6 @@
         
         public function rowSet($size=10, $start=0) {
         	$all = array();
-        	//$query = "select * from solicitante limit $size offset $start";
         	$query = "select " .
         			"s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
         			"s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
