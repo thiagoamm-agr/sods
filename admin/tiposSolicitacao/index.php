@@ -12,7 +12,7 @@
 			<div class="row" style="width: 50%; margin: 0 auto";>
                 <div class="col-md-12">
                 	<button 
-                		class="btn btn-warning btn-sm pull-right" 
+                		class="btn btn-primary btn-sm pull-right" 
                     	data-toggle="modal" 
                     	data-target="#modalAdd"
                     	onclick="add()">
@@ -52,7 +52,7 @@
 								<td><?php echo $tipo['status'] ?></td>
 								<td colspan="2">
 									<button 
-										class="edit-type btn btn-primary btn-sm" 
+										class="edit-type btn btn-warning btn-sm" 
 										data-toggle="modal" 
 									    data-target="#modalEdit"
 									    onclick='edit(<?php echo json_encode($tipo)?>)'>
