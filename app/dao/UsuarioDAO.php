@@ -165,14 +165,31 @@
             }
         }
         
-        public function count($criteria){
-            if (isset($criteria)){
-        
+        public function count($criteria = null){
+            $query = "select * from solicitante";
+        	if (isset($criteria)){
+        		$query .= "where $criteria";
             }
+            $result = mysql_query($query, $this->connection);
+            $rows = mysql_num_rows($result);
+            return $rows;
         }
         
         public function rowSet($size=10, $start=0) {
-
+        	$all = array();
+        	//$query = "select * from solicitante limit $size offset $start";
+        	$query = "select " .
+        			"s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
+        			"s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
+        			"from " .
+        			"solicitante as s " .
+        			"inner join lotacao as l " .
+        			"on s.lotacao_id = l.id order by s.id desc limit $size offset $start";
+        	$result = mysql_query($query, $this->connection);
+        	while ($row = mysql_fetch_array($result)) {
+        		array_push($all, $row);
+        	}
+        	return $all;
         }
     }
 ?>
