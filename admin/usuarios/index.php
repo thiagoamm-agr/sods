@@ -15,7 +15,7 @@
             <h2>Usuários</h2>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-warning btn-sm pull-right" 
+                    <button class="btn btn-primary btn-sm pull-right" 
                         data-toggle="modal" 
                         data-target="#modalAdd"
                         onclick="add()">
@@ -43,9 +43,15 @@
                     </thead>
                     <tbody>
 <?php
-                    $controller = new UsuariosController(); 
+                    $controller = new UsuariosController();
+                    
+                    if (isset($_GET['p'])) {
+                    	$page = (int) $_GET['p'];
+                    } else {
+                    	$page = '';
+                    }
 
-                    foreach ($controller->_list() as $usuario) {
+                    foreach ($controller->getRows($page) as $usuario) {
 ?>
                         <tr>
                             <td><?php echo $usuario['id'] ?></td>
@@ -57,7 +63,7 @@
                             <td><?php echo $usuario['status'] ?></td>
                             <td><?php echo $usuario['login'] ?></td>
                             <td colspan="2">
-                                <button class="btn btn-primary btn-sm" 
+                                <button class="btn btn-warning btn-sm" 
                                     data-toggle="modal" data-target="#modalEdit" 
                                     onclick='edit(<?php echo json_encode($usuario)?>)'>
                                     <strong>Editar</strong>
@@ -74,6 +80,9 @@
                     } 
 ?>
                     </tbody>
+                    <tfoot>
+						<tr><td colspan="10"><?php echo $controller->paginator ?></td></tr>
+                    </tfoot>
                 </table>
             </div>
 
