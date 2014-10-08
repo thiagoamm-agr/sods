@@ -27,7 +27,9 @@
                 <div class="col-md-12">&nbsp;</div>
             </div>
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-condensed">
+                <table class="table table-striped table-bordered table-condensed"
+                       class="tablesorter"
+                       id="tablesorter">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -38,7 +40,7 @@
                             <th>Tipo de Usuário</th>
                             <th>Status</th>
                             <th>Login</th>
-                            <th>Ação</th>
+                            <th class="nonSortable">Ação</th>
                         </tr>
                     </thead>
                     <tbody>

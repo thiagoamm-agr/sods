@@ -24,13 +24,15 @@
 				<div class="col-md-12">&nbsp;</div>
 			</div>
 			<div class="table-responsive" style="width: 50%; margin: 0 auto";>
-				<table class="table table-striped table-bordered table-condensed">
+				<table class="table table-striped table-bordered table-condensed" 
+					   class="tablesorter"
+					   id="tablesorter">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>Nome do Tipo de Solicitação</th>
 							<th>Status</th>
-							<th>Ação</th>
+							<th class="nonSortable">Ação</th>
 						</tr>
 					</thead>
 					<tbody>

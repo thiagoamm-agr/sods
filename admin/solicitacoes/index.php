@@ -31,7 +31,9 @@
 				<div class="col-md-12">&nbsp;</div>
 			</div>
 			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-condensed">
+				<table class="table table-striped table-bordered table-condensed"
+					   class="tablesorter"
+					   id="tablesorter">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -41,7 +43,7 @@
 	            			<th>Tipo</th>
 	            			<th>Data Abertura</th>
 	            			<th>Data Alteração</th>
-	            			<th>Ação</th>
+	            			<th class="nonSortable">Ação</th>
 	            		</tr>
             		</thead>
             		<tbody>
