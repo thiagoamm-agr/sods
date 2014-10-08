@@ -19,7 +19,7 @@
 			<h2>Solicitações</h2>
 			<div class="row">
                 <div class="col-md-12">
-					<button class="btn btn-warning btn-sm pull-right" 
+					<button class="btn btn-primary btn-sm pull-right" 
 					    	data-toggle="modal" 
 					    	data-target="#modalAdd"
 					    	onclick="add()">
@@ -48,7 +48,13 @@
 <?php
 					$controller = new SolicitacoesController();
 					
-					foreach ($controller->_list() as $solicitacao) {
+					if (isset($_GET['p'])) {
+						$page = (int) $_GET['p'];
+					} else {
+						$page = '';
+					}
+					
+					foreach ($controller->getRows($page) as $solicitacao) {
 
 ?>
 			        	<tr>
@@ -60,7 +66,7 @@
 							<td><?php echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) ?></td>
 							<td><?php echo @$solicitacao['data_alteracao'] ?></td>
 							<td colspan="2">							
-								<button class='btn btn-primary btn-sm' 
+								<button class='btn btn-warning btn-sm' 
 								    	data-toggle='modal' 
 								    	data-target='#modalEdit'
 								    	onclick='edit(<?php echo json_encode($solicitacao)?>)'>
@@ -78,6 +84,9 @@
 					}
 ?>
 					</tbody>
+					<tfoot>
+						<tr><td colspan="8"><?php echo $controller->paginator ?></td></tr>
+					</tfoot>
 	    		</table>
     		</div>
     		
