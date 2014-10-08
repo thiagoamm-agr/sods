@@ -25,6 +25,7 @@
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrapValidator.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/sods.css" />
+        <link rel="stylesheet" type="text/css" href="/sods/static/css/theme.default.css" />
                 
         <!--  Javascript -->        
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -35,6 +36,42 @@
         <script src="/sods/static/js/jquery.min.js"></script>        
         <script src="/sods/static/bootstrap/js/bootstrap.min.js"></script>        
         <script src="/sods/static/bootstrap/js/bootstrapValidator.min.js"></script>
+        <script src="/sods/static/js/jquery.tablesorter.min.js"></script>
+        <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
+        
+        <script>
+			$(document).ready(function(){
+				$("table thead .nonSortable").data("sorter", false);
+				
+				$(function(){
+					$("#tablesorter").tablesorter(
+						{
+							theme : 'default',
+							//sortList : [[1,0],[2,0],[3,0]],
+    						// header layout template; {icon} needed for some themes
+    						headerTemplate : '{content}{icon}',
+							// initialize column styling of the table
+    						//widgets : ["columns"],
+							widgetOptions : {
+      						// change the default column class names
+      						// primary is the first column sorted, secondary is the second, etc
+      						columns : [ "primary", "secondary", "tertiary" ],
+
+      						 //headers: {
+      						      // disable sorting of the first column (we can use zero or the header class name)
+      						      '.nonSortable' : {
+      						        // disable it by setting the property sorter to false
+      						        sorter: false
+      						      }
+      						 //}
+      						
+						}
+
+						
+					});
+				});
+			});
+		</script>
         
         <title>SODS</title>
     </head>
