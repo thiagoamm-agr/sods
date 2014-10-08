@@ -9,6 +9,9 @@
             //faz chamada ao construtor da superclasse
             parent::__construct();
             $this->dao = new SolicitacaoDAO();
+            $this->paginator->totalrecords = $this->dao->count();
+            $this->paginator->defaultUrl = "/sods/admin/solicitacoes/";
+            $this->paginator->paginationUrl = "/sods/admin/solicitacoes/index.php?p=[p]";
         }
 
         public function __destruct() {
@@ -33,7 +36,7 @@
             return $this->dao->update($solicitacao);
         }
 
-        public function count($criteria) {
+        public function count($criteria = null) {
             $this->dao->count($criteria);
         }
 
@@ -42,7 +45,12 @@
         }
 
         public function getRows($page=1, $size=5) {
-            
+        	if (empty($page)) {
+        		$page = 1;
+        	}
+        	$this->paginator->pagesize = $size;
+        	$this->paginator->pagenumber = $page;
+        	return $this->dao->rowSet($size, $page * $size - $size);
         }
 
     }
