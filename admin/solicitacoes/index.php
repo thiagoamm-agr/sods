@@ -131,7 +131,8 @@
 		  							
 		  								<div class="col-sm-4">
 											<label for="tipo_solicitacao_id">Tipo de Solicitação</label>
-		  									<select id="tipo_solicitacao_id" name="tipo_solicitacao_id" class="form-control">
+		  									<select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
+		  											class="form-control">
 <?php 
 												$tiposSolicitacoesController = new TiposSolicitacoesController();
 												$tiposSolicitacoes = $tiposSolicitacoesController->_list();
@@ -162,7 +163,7 @@
 									
 									<div class="row">
 										
-										<div class="col-sm-4">
+										<div class="col-sm-6">
 											<label for="status">Status</label>
 											<select id="status" name="status" class="form-control">
 												<option  value="EM ANÁLISE">Em análise</option>
@@ -173,7 +174,7 @@
 											</select>
 										</div>
 										
-										<div class="col-sm-4">
+										<div class="col-sm-6">
 											<label for="observacoes_status">Obs. Status</label>
 											<input type="text" class="form-control" name="observacoes_status"
 												id="observacoes_status"/>
@@ -184,8 +185,15 @@
   								</div>
 								<input type="hidden" id="solicitante_id" name="solicitante_id">
 								<div class="modal-footer">
-									<button type="submit" class="btn btn-primary" onclick="save()">Salvar</button>
-									<button type="button" class="btn btn-default" data-dismiss="modal">
+									<button type="submit" 
+											class="btn btn-primary" 
+											onclick="save()">Salvar</button>
+									<button type="button"
+											class="btn btn-default"
+											onclick="reset()">Limpar</button>
+									<button type="button" 
+											class="btn btn-default" 
+											data-dismiss="modal">
 									    Fechar
 									</button>
 								</div>
@@ -297,7 +305,7 @@
 											class="btn btn-primary" 
 											onclick="save()">Salvar</button>
 									<button type="reset"
-											class="btn btn-primary"
+											class="btn btn-default"
 											onclick="reset()">Limpar</button>
 									<button type="button" 
 											class="btn btn-default" 
@@ -407,11 +415,13 @@
 						solicitacao.detalhamento = $('#form-' + action  + ' textarea[name="detalhamento"]').val();
 						solicitacao.info_adicionais = $('#form-' + action  + ' textarea[name="info_adicionais"]').val();
 						solicitacao.observacoes = $('#form-' + action  + ' textarea[name="observacoes"]').val();
-						solicitacao.tipo_solicitacao_id = $('#form-' + action  + ' select[name="tipo_solicitacao_id"]').val();
+						solicitacao.tipo_solicitacao_id = 
+								$('#form-' + action  + ' select[name="tipo_solicitacao_id"]').val();
 						//Se a ação for adição, os campos de status não devem ser setados.
 						if (action != 'add') {
 							solicitacao.status = $('#form-' + action + ' select[name="status"]').val();
-							solicitacao.observacoes_status = $('#form-' + action  + ' input[name="observacoes_status"]').val();
+							solicitacao.observacoes_status = 
+									$('#form-' + action  + ' input[name="observacoes_status"]').val();
 						}					
 					}
 					// Requisição AJAX
