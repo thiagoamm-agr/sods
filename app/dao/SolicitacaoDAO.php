@@ -102,8 +102,14 @@
 			}	
 		}
 		
-		public function delete($id) {
-			if (isset($usuario)){
+		public function delete($solicitacao) {
+			if (isset($solicitacao)){
+				try {
+					$query = "delete from solicitacao where id = {$solicitacao->id}";
+					mysql_query($query, $this->connection);
+				} catch (Exception $e) {
+					echo $e;
+				}
 				
 			}
 		}
