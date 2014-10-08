@@ -139,13 +139,17 @@
 			}
 		}
 		
-		public function count($criteria){
+		public function count($criteria = null){
+			$query = "select * from solicitacao";
 			if (isset($criteria)){
-		
+				$query .= "where $criteria";		
 			}
+			$result = mysql_query($query, $this->connection);
+			$rows = mysql_num_rows($result);
+			return $rows;
 		}
 		
-		public function allUser($login) {
+		/*public function allUser($login) {
 			$query= "select " .
 					    "so.id, s.nome, so.titulo, so.status, " .
 					    "t.nome as nome_sol, so.data_abertura, so.data_alteracao " .
@@ -158,10 +162,24 @@
 			$result_set = mysql_query($query, $this->connection);
 			
 			return $result_set;
-		}
+		}*/
 
 		public function rowSet($size=10, $start=0) {
-		
+			$all = array();
+			$query = "select " . 
+                        "so.id, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento, " .
+                        "so.info_adicionais, so.observacoes, so.status, so.observacoes_status, " .
+						"t.nome as tipo_solicitacao, t.id as tipo_solicitacao_id, so.data_abertura, so.data_alteracao " .
+					"from solicitante as s " . 
+                    "inner join solicitacao as so " .
+                        "on s.id = so.solicitante_id " . 
+				    "inner join tipo_solicitacao as t " .
+	    		        "on t.id = so.tipo_solicitacao_id limit $size offset $start";
+			$result = mysql_query($query, $this->connection);
+			while ($row = mysql_fetch_array($result)) {
+				array_push($all, $row);
+			}
+			return $all;
 		}
 		
 	}
