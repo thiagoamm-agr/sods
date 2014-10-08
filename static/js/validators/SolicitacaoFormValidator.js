@@ -34,7 +34,7 @@ function SolicitacaoFormValidator(form) {
                         }
                      }
                 },
-                infoAdicionais: {
+                info_adicionais: {
                 	trigger: 'blur',
                     validators: {
                         notEmpty: {
@@ -49,6 +49,22 @@ function SolicitacaoFormValidator(form) {
                         	message: 'Observação é um campo de preenchimento obrigatório.'
                         }
                     }
+                },
+                status: {
+                	trigger: 'blur',
+                	validators: {
+                		notEmpty: {
+                			message: 'Status é um campo de preenchimento obrigatório.'
+                		}
+                	}
+                },
+                observacoes_status: {
+                	trigger: 'blur',
+                	validator: {
+                		notEmpty: {
+                			message: 'Observações do status é um campo de preenchimento obrigatório.'
+                		}
+                	}
                 }
             }
         });
