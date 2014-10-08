@@ -9,6 +9,9 @@
             //faz a chamada do construtor da superclasse
             parent::__construct();
             $this->dao = new UsuarioDAO();
+            $this->paginator->totalrecords = $this->dao->count();
+            $this->paginator->defaultUrl = "/sods/admin/usuarios/";
+            $this->paginator->paginationUrl = "/sods/admin/usuarios/index.php?p=[p]";
         }
 
         public function __destruct() {
@@ -33,21 +36,8 @@
             $this->dao->update($usuario);
         }
 
-        public function count($criteria) {
+        public function count($criteria = null) {
             $this->dao->count($criteria);
-        }
-
-        public function paginate() {
-            $this->paginator->pagenumber = 1;
-            $this->paginator->pagesize = 1;
-            $this->paginator->totalrecords = 4;
-            $this->paginator->showfirst = true;
-            $this->paginator->showlast = true;
-            $this->paginator->paginationcss = "pagination-normal";
-            $this->paginator->paginationstyle = 1; // 1: advance, 0: normal
-            $this->paginator->defaultUrl = "/sods/admin/lotacoes/index.php";
-            $this->paginator->paginationUrl = "/sods/admin/lotacoes/index.php?p=[p]";
-            return $this->paginator->paginate();
         }
         
         public function getUsuario($id) {
@@ -55,7 +45,12 @@
         }
 
         public function getRows($page=1, $size=5) {
-            
+        	if (empty($page)) {
+        		$page = 1;
+        	}
+        	$this->paginator->pagesize = $size;
+        	$this->paginator->pagenumber = $page;
+        	return $this->dao->rowSet($size, $page * $size - $size);
         }
 
     }
