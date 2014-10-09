@@ -39,22 +39,22 @@
         <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
         
         <script>
-			$(document).ready(function(){
-				$("table thead .nonSortable").data("sorter", false);
-				
-				$(function(){
-					$("#tablesorter").tablesorter(
-						{
-							emptyTo: 'none',	
-							theme : 'default',
-    						headerTemplate : '{content}{icon}',
-							widgetOptions : {
-      						columns : [ "primary", "secondary", "tertiary" ],
-						}		
-					});
-				});
-			});
-		</script>
+            $(document).ready(function(){
+                $("table thead .nonSortable").data("sorter", false);
+                
+                $(function(){
+                    $("#tablesorter").tablesorter(
+                        {
+                            emptyTo: 'none',    
+                            theme : 'default',
+                            headerTemplate : '{content}{icon}',
+                            widgetOptions : {
+                              columns : [ "primary", "secondary", "tertiary" ],
+                        }        
+                    });
+                });
+            });
+        </script>
         
         <title>SODS</title>
     </head>
