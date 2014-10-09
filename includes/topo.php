@@ -6,7 +6,6 @@
     validar_acesso();
 
     date_default_timezone_set("Brazil/East");
-    $data = date("d/m/y " . " H:i");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
