@@ -1,4 +1,9 @@
 <?php 
+
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+
+    script_guard();
+
     function get_db_connection($host='10.243.1.14', $user='sods', $password='dev123') {
         $conexao = null;
         if (isset($host) && isset($user) && isset($password)) {
