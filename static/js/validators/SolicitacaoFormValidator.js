@@ -44,14 +44,25 @@ function SolicitacaoFormValidator(form) {
                 },
                 observacoes: {
                 	trigger: 'blur',
+                	group: '.col-sm-6',
                     validators: {
                         notEmpty: {
                         	message: 'Observação é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
+                tipo_solicitacao_id: {
+                	trigger: 'blur',
+                	group: '.col-sm-4',
+                	validator: {
+                		notEmpty: {
+                			message: 'Tipo de solicitação é um campo de preenchimento obrigatório.'
+                		}
+                	}
+                },
                 status: {
                 	trigger: 'blur',
+                	group: '.col-sm-6',
                 	validators: {
                 		notEmpty: {
                 			message: 'Status é um campo de preenchimento obrigatório.'
@@ -60,7 +71,8 @@ function SolicitacaoFormValidator(form) {
                 },
                 observacoes_status: {
                 	trigger: 'blur',
-                	validator: {
+                	group: '.col-sm-6',
+                	validators: {
                 		notEmpty: {
                 			message: 'Observações do status é um campo de preenchimento obrigatório.'
                 		}
