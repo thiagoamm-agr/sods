@@ -28,8 +28,8 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-condensed"
-                	   class="tablesorter"
-                	   id="tablesorter">
+                       class="tablesorter"
+                       id="tablesorter">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -56,7 +56,7 @@
                             <td><?php echo $lotacao['nome'] ?></td>
                             <td><?php echo $lotacao['sigla'] ?></td>
                             <td><?php echo isset($lotacao['gerencia']) ? 
-                                $lotacao['gerencia']->sigla : ''?></td>
+                                $lotacao['gerencia']->sigla : '' ?></td>
                             <td colspan="2">
                                 <button 
                                     class="btn btn-warning btn-sm" 
