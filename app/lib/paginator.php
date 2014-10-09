@@ -27,8 +27,8 @@
         // Constructor
         function __construct() {
             $this->pagenumber = 1;
-            $this->pagesize = 5;
-            $this->totalrecords = 50;
+            $this->pagesize = 10;
+            $this->totalrecords = 20;
             $this->showfirst = true;
             $this->showlast = true;
             $this->paginationcss = "pagination-small";
