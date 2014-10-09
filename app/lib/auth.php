@@ -1,6 +1,7 @@
-<?php    
+<?php
+
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
-    
+
     function autenticar_usuario($login, $senha) {
         $login = isset($login) ? trim($login) : '';
         $senha = isset($senha) ? trim($senha) : '';
