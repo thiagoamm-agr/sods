@@ -294,7 +294,7 @@
                     if (usuario_json != null) {
                         action = 'edit';
                         form = $('#form-edit');
-                        formValidator = new UsuarioValidator(form);
+                        formValidator = new UsuarioFormValidator(form);
                         $('#nome', form).val(usuario_json.nome_sol);
                         $('#login', form).val(usuario_json.login);
                         $('#lotacao', form).val("" + usuario_json.lotacao_id);
