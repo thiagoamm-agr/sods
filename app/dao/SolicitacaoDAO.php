@@ -112,6 +112,7 @@
 				}
 				
 			}
+			return;
 		}
 		
 		public function get($field, $value) {
