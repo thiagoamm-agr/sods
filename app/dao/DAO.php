@@ -1,4 +1,10 @@
 <?php
+
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+
+    // Protege o script de acesso direto.
+    script_guard();
+
     /**
      * Interface ou contrato lógico que estabelece as operações ou serviços fundamentais 
      * que todo objeto DAO (Data Access Object) deve oferecer (interface pública) 
