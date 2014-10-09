@@ -4,6 +4,9 @@
 
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/paginator.php';
 
+    // Protege o script de acesso direito.
+    script_guard();
+
     abstract class Controller {
 
         protected $dao;
