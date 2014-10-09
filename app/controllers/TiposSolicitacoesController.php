@@ -41,13 +41,13 @@
             $this->dao->count($criteria);
         }
 
-        public function getRows($page=1, $size=5) {
-        	if (empty($page)) {
-        		$page = 1;
-        	}
-        	$this->paginator->pagesize = $size;
-        	$this->paginator->pagenumber = $page;
-        	return $this->dao->rowSet($size, $page * $size - $size);
+        public function getRows($page=1, $size=10) {
+            if (empty($page)) {
+                $page = 1;
+            }
+            $this->paginator->pagesize = $size;
+            $this->paginator->pagenumber = $page;
+            return $this->dao->rowSet($size, $page * $size - $size);
         }
 
     }

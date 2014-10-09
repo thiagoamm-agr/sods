@@ -53,7 +53,7 @@
             return $this->dao->filter('gerencia_id is null');
         }
 
-        public function getRows($page=1, $size=5) {
+        public function getRows($page=1, $size=10) {
             if (empty($page)) {
                 $page = 1;
             }
