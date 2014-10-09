@@ -366,8 +366,8 @@
 				try {
 					if (solicitacao_json != null) {
 						action = 'edit';
-                        form = $('#form-edit');
-                        formValidator = new SolicitacaoFormValidator();
+						form = $('#form-edit');
+						formValidator = new SolicitacaoFormValidator(form);
 						$('#solicitante_id', form).val(solicitacao_json.solicitante_id);
 						$('#titulo', form).val(solicitacao_json.titulo);
 						$('#detalhamento', form).val(solicitacao_json.detalhamento);
@@ -378,8 +378,8 @@
 						$('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
 						$('#data_abertura', form).val(solicitacao_json.data_abertura);
 						$('#data_alteracao', form).val(solicitacao_json.data_alteracao);
-                        solicitacao = new Solicitacao();
-                        solicitacao.id = solicitacao_json.id;
+						solicitacao = new Solicitacao();
+						solicitacao.id = solicitacao_json.id;
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
