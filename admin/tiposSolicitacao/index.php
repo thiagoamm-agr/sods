@@ -63,7 +63,7 @@
 									<button class="delete-type btn btn-danger btn-sm" 
 											data-toggle="modal" 
 									    	data-target="#modalDel" 
-									    	onclick="del(<?php echo json_encode($tipo)?>)">
+									    	onclick='del(<?php echo json_encode($tipo)?>)'>
 								    <strong>Excluir</strong>
 							    </button>						
 								</td>
