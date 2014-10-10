@@ -15,7 +15,7 @@ function Usuario() {
 
 Usuario.prototype.toJSON = function() {
 	return '{' +
-		'"id": ' + '"' + this.id + '", ' +
+		'"id": ' + this.id + ', ' +
     	'"nome": ' + '"' + this.nome + '", ' +
     	'"lotacao_id": ' + this.lotacao_id + ', ' +
     	'"cargo": ' + '"' + this.cargo + '", ' +
