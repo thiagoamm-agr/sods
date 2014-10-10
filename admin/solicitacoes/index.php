@@ -109,7 +109,7 @@
                             <form id="form-edit" role="form" action="#" method="post">
                                   <div class="form-group">
                                       <label for="titulo">Título</label>
-                                      <input type="text" class="form-control" id="titulo" name="titulo">
+                                      <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
                                   </div>
                                   <div class="form-group">
                                     <label for="detalhamento">Descrição do Sistema</label>
@@ -260,7 +260,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="titulo">Titulo da Solicitação</label>
-                                    <input type="text" class="form-control" name="titulo" id="titulo"/>
+                                    <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="detalhamento">Detalhamento do Sistema</label>
