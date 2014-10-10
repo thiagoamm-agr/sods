@@ -131,7 +131,7 @@
                                                 rows="6" style="width: 100%"></textarea>
                                         </div>
                                       
-                                          <div class="col-sm-4">
+                                          <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo de Solicitação</label>
                                               <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
                                                       class="form-control">
@@ -150,19 +150,21 @@
                                             </select>
                                         </div>
                                     
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-6">
                                             <label for="data_abertura">Data de Criação</label>
                                             <input type="text" class="form-control" name="data_abertura" 
                                                 id="data_abertura" readonly>
                                         </div>
                                         
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-6">
                                             <label for="data_alteracao">Ultima Alteração</label>
                                             <input type="text" class="form-control" name="data_alteracao" 
                                                 id="data_alteracao" readonly/>
                                         </div>
                                     </div>
-                                    
+<?php 
+									if ($_SESSION['usuario']['tipo_usuario'] == "A") {
+?>
                                     <div class="row">
                                         
                                         <div class="col-sm-6">
@@ -183,7 +185,9 @@
                                         </div>
                                     
                                     </div>
-                                    
+<?php 
+                                    }
+?>
                                   </div>
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
                                 <div class="modal-footer">
