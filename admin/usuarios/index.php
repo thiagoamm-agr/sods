@@ -73,7 +73,7 @@
                                 <button class="btn btn-danger btn-sm" 
                                         data-toggle="modal" 
                                         data-target="#modalDel"
-                                        onclick="del(<?php echo json_encode($usuario)?>)">
+                                        onclick='del(<?php echo json_encode($usuario)?>)'>
                                     <strong>Excluir</strong>
                                 </button>
                             </td>
@@ -149,7 +149,6 @@
                                     <div class="form-group">
                                         <input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
                                         <input type="radio" name="tipoUsuario" value="A"/>Administrador
-                                        </label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -318,7 +317,8 @@
                             action = 'delete';
                             usuario = new Usuario();
                             usuario.id = usuario_json.id;
-                            usuario.nome = usuario_json.nome;
+                            usuario.nome = usuario_json.nome_sol;
+                            usuario.lotacao_id = usuario_json.lotacao_id;
                             usuario.cargo = usuario_json.cargo;
                             usuario.telefone = usuario_json.telefone;
                             usuario.email = usuario_json.email;
