@@ -94,10 +94,10 @@
     						 <form id="form-add" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
-    								<input type="text" class="form-control" name="nome" id="nome" maxlength="50"/>    								
+    								<input type="text" class="form-control" name="nome" id="nome" maxlength="80"/>    								
     							</div>		
     							<div class="form-group">
-    									<input type="radio" 
+    									<input type="checkbox" 
     										   name="status" 
     										   value="A" 
     										   checked="checked" 
@@ -133,13 +133,13 @@
     						 <form id="form-edit" action="#" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
-    								<input type="text" id="nome" name="nome" class="form-control" maxlength="50"/>    								
+    								<input type="text" id="nome" name="nome" class="form-control" maxlength="80"/>    								
     							</div>
     							<div>
 	    								<label for="status">Status</label>
 	    							</div>
     							<div class="form-group">
-    									<input type="radio" name="status" value="A"/>&nbsp; Ativar
+    									<input type="checkbox" name="status" value="A" checked="checked"/>&nbsp; Ativar
     							</div>			
 								<div class="modal-footer">
 									<button type="submit" 
@@ -236,7 +236,7 @@
 				if (tipoSolicitacao != null) {
 					if (action == 'add' || action == 'edit') {
 						tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
-						tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+						tipoSolicitacao.status = $('#form-' + action  + ' input:checkbox[name="status"]:checked').val();
 						if (tipoSolicitacao.status != "A") {
 							tipoSolicitacao.status = "I";
 						}
