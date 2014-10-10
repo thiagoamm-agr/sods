@@ -237,6 +237,9 @@
 					if (action == 'add' || action == 'edit') {
 						tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
 						tipoSolicitacao.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+						if (tipoSolicitacao.status != "A") {
+							tipoSolicitacao.status = "I";
+						}
 					}
 					
 					// Requisição AJAX
