@@ -102,34 +102,16 @@
         }
         
         public function delete($usuario) {
-            if (isset($usuario)){
-                $class = new ReflectionClass('Usuario');
-                $properties = $class->getProperties();
-                $columns = "";
-                $values = "";
-                foreach ($properties as $property) {
-                    $property->setAccessible(true);
-                    $column = $property->getName();
-                    $value = $property->getValue($usuario);
-                    if ($column == 'id') {
-                        $columns .= "{$column}, ";
-                        if(!empty($value)){
-                            $values .= (int) $value;
-                        }
-                    }
-                }
-                $columns = substr($columns, 0, strrpos($columns, ", "));
-                if (!empty($columns) && !empty($values)) {
-                    try {
-                        $query = "update solicitante set status = 'I' where id = $values";
-                        //$query = "delete from usuario where id = $values";
-                        mysql_query($query, $this->connection);
-                    } catch (Exception $e) {
-                        echo $e;
-                    }
-                }
-            }
-            return;
+			if (isset($usuario)){
+				try {
+					$query = "update solicitante set status = 'I' where id = {$usuario->id}";
+					mysql_query($query, $this->connection);
+				} catch (Exception $e) {
+					echo $e;
+				}
+				
+			}
+			return;
         }
         
         public function get($field, $value) {
@@ -179,7 +161,8 @@
         	$all = array();
         	$query = "select " .
         			"s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
-        			"s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
+        			"s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
+        			"s.data_criacao, s.data_alteracao " .
         			"from " .
         			"solicitante as s " .
         			"inner join lotacao as l " .
