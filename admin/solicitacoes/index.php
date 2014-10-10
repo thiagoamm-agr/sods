@@ -277,7 +277,7 @@
 	    									<textarea class="form-control" id="observacoes" name="observacoes"
 	    										rows="4" style="width: 100%"></textarea>
 	    								</div>
-	    								<div class="col-sm-4">
+	    								<div class="col-sm-6">
 	    									<div class="form-group">
 	    										<label for="tipo_solicitacao_id">Tipo de Solicitação</label>
 	    										<select id="tipo_solicitacao_id" 
@@ -294,11 +294,6 @@
 ?>
 											</select>	    									
 	    									</div>
-	    									<div class="form-group">
-												<label for="data_abertura">Data de Criação</label>
-												<input type="text" class="form-control" name="data_abertura" 
-											    	id="data_abertura" value="<?php echo $data ?>" readonly>
-											</div>
 	    								</div>
 	    							</div>
 	    						</div>
