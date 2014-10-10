@@ -9,7 +9,7 @@
 ?>
 		<div class="container">
 			<h2>Tipos de Solicitação</h2>
-			<div class="row" style="width: 50%; margin: 0 auto";>
+			<div class="row">
                 <div class="col-md-12">
                 	<button 
                 		class="btn btn-primary btn-sm pull-right" 
@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-12">&nbsp;</div>
 			</div>
-			<div class="table-responsive" style="width: 50%; margin: 0 auto";>
+			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-condensed" 
 					   class="tablesorter"
 					   id="tablesorter">
