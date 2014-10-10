@@ -151,6 +151,14 @@
                                         <input type="radio" name="tipoUsuario" value="A"/>Administrador
                                     </div>
                                 </div>
+                                 <div class="form-group">
+                                    <div>
+                                        <label for="status">Status</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="radio" name="status" value="A"/>Ativar &nbsp;&nbsp;
+                                    </div>
+                                </div>
                                 <div class="modal-footer">
                                     <button type="submit" 
                                             class="btn btn-success" 
@@ -301,6 +309,7 @@
                         $('#fone', form).val(usuario_json.telefone);
                         $('#email', form).val(usuario_json.email);
                         $('#tipo_usuario', form).val(usuario_json.tipo_usuario);
+                        $('#status', form).val(usuario_json.status);
                         usuario = new Usuario();
                         usuario.id = usuario_json.id;
                     } else {
@@ -345,6 +354,7 @@
                         usuario.login = $('#form-' + action  + ' input[name="login"]').val();
                         usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
                         usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
+                        usuario.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
                     }
                 
                     // Requisição AJAX
