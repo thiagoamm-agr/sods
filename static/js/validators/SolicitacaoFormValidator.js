@@ -34,47 +34,12 @@ function SolicitacaoFormValidator(form) {
                         }
                      }
                 },
-                info_adicionais: {
-                	trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Informações adicionais é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                },
-                observacoes: {
-                	trigger: 'blur',
-                	group: '.col-sm-6',
-                    validators: {
-                        notEmpty: {
-                        	message: 'Observação é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                },
                 tipo_solicitacao_id: {
                 	trigger: 'blur',
-                	group: '.col-sm-4',
+                	group: '.col-sm-6',
                 	validator: {
                 		notEmpty: {
                 			message: 'Tipo de solicitação é um campo de preenchimento obrigatório.'
-                		}
-                	}
-                },
-                status: {
-                	trigger: 'blur',
-                	group: '.col-sm-6',
-                	validators: {
-                		notEmpty: {
-                			message: 'Status é um campo de preenchimento obrigatório.'
-                		}
-                	}
-                },
-                observacoes_status: {
-                	trigger: 'blur',
-                	group: '.col-sm-6',
-                	validators: {
-                		notEmpty: {
-                			message: 'Observações do status é um campo de preenchimento obrigatório.'
                 		}
                 	}
                 }
