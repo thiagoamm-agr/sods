@@ -107,7 +107,7 @@
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
                     $column = $property->getName();
-                    $value = $property->getValue($tipoSolicitacao);                    
+                    $value = $property->getValue($tipoSolicitacao);
                     if ($column == 'id') {
                         $columns .= "{$column}, ";
                         if(!empty($value)){
@@ -155,23 +155,23 @@
         }
         
         public function count($criteria=null) {
-        	$query = "select * from tipo_solicitacao";
-        	if (isset($criteria)) {
-        		$query .= " where $criteria";
-        	}
-        	$result = mysql_query($query, $this->connection);
-        	$rows = mysql_num_rows($result);
-        	return $rows;
+            $query = "select * from tipo_solicitacao";
+            if (isset($criteria)) {
+                $query .= " where $criteria";
+            }
+            $result = mysql_query($query, $this->connection);
+            $rows = mysql_num_rows($result);
+            return $rows;
         }
         
         public function rowSet($size=10, $start=0) {
-        	$all = array();
-        	$query = "select * from tipo_solicitacao limit $size offset $start";
-        	$result = mysql_query($query, $this->connection);
-        	while ($row = mysql_fetch_array($result)) {
-        		array_push($all, $row);
-        	}
-        	return $all;
+            $all = array();
+            $query = "select * from tipo_solicitacao limit $size offset $start";
+            $result = mysql_query($query, $this->connection);
+            while ($row = mysql_fetch_array($result)) {
+                array_push($all, $row);
+            }
+            return $all;
         }
     }
 ?>
