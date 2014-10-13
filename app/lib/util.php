@@ -13,7 +13,7 @@
     function script_guard() {
         $uri = $_SERVER['REQUEST_URI'];
         if (startsWith($uri, '/sods/app') || startswith($uri, '/sods/includes')) {
-            header('location: /sods/');
+            header('location: /sods/404.html');
         }
     }
 
