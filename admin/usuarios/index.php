@@ -105,11 +105,11 @@
                             <form role="form" id="form-edit">
                                   <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input id="nome" name="nome" type="text" class="form-control" />
+                                    <input id="nome" name="nome" type="text" class="form-control" maxlength="255" />
                                   </div>
                                   <div class="form-group">
                                       <label for="login">Login</label>
-                                      <input id="login" name="login" type="text" class="form-control" />
+                                      <input id="login" name="login" type="text" class="form-control" maxlength="50"/>
                                   </div>
                                 <div class="form-group">
                                     <label for="lotacao">Lotação</label>
@@ -131,16 +131,15 @@
                                   </div>
                                   <div class="form-group">
                                     <label for="cargo">Cargo</label>
-                                    <input id="cargo" name="cargo" type="text" class="form-control" />
+                                    <input id="cargo" name="cargo" type="text" class="form-control" maxlength="255"/>
                                   </div>          
                                 <div class="form-group">
                                     <label for="fone">Telefone / Ramal</label>
-                                    <input id="fone" name="fone"
-                                        type="text" class="form-control" />
+                                    <input id="fone" name="fone" type="text" class="form-control" maxlength="30" />
                                   </div>
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
-                                    <input id="email" name="email" type="email" class="form-control" />
+                                    <input id="email" name="email" type="email" class="form-control" maxlength="100"/>
                                   </div>
                                 <div class="form-group">
                                     <div>
@@ -213,7 +212,7 @@
                              <form id="form-add" action="#" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" name="nome" id="nome"/>
+                                    <input type="text" class="form-control" name="nome" id="nome" maxlength="255"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="lotacao">Lotação</label>
@@ -231,19 +230,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cargo">Cargo</label>
-                                    <input type="text" class="form-control" name="cargo" id="cargo"/>
+                                    <input type="text" class="form-control" name="cargo" id="cargo" maxlength="255"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="fone_ramal">Telefone / Ramal</label>
-                                    <input type="text" class="form-control" name="fone" id="fone"/>
+                                    <input type="text" class="form-control" name="fone" id="fone" maxlength="30"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
-                                    <input type="text" class="form-control" name="email" id="email"/>
+                                    <input type="text" class="form-control" name="email" id="email" maxlength="100"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="login">Login</label>
-                                    <input type="text" class="form-control" name="login" id="login"/>
+                                    <input type="text" class="form-control" name="login" id="login" maxlength="50"/>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" 
