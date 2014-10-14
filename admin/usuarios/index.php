@@ -143,11 +143,18 @@
                                   </div>
                                 <div class="form-group">
                                     <div>
-                                        <label for="tipoUsuario">Tipo</label>
+                                        <label for="tipo_usuario">Tipo</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
-                                        <input type="radio" name="tipoUsuario" value="A"/>Administrador
+                                        <input type="radio" 
+                                               id="tipo_usuario_u"
+                                               name="tipo_usuario"
+                                               value="U"/>Usuário
+                                        &nbsp;&nbsp;
+                                        <input type="radio"
+                                               id="tipo_usuario_a"
+                                               name="tipo_usuario" 
+                                               value="A"/>Administrador
                                     </div>
                                 </div>
                                  <div class="form-group">
@@ -155,7 +162,11 @@
                                         <label for="status">Status</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="radio" name="status" value="A"/>Ativar &nbsp;&nbsp;
+                                        <input type="radio" 
+                                        	   id="statusEdit" 
+                                        	   name="statusEdit" 
+                                        	   value="A" 
+                                        	   checked="checked"/>Ativar &nbsp;
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -253,11 +264,11 @@
                                 </div>
                                 <div class="form-group">
                                     <div>
-                                        <label for="tipoUsuario">Tipo</label>
+                                        <label for="tipo_usuario">Tipo</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="radio" name="tipoUsuario" value="U"/>Usuário &nbsp;&nbsp;
-                                        <input type="radio" name="tipoUsuario" value="A"/>Administrador
+                                        <input type="radio" name="tipo_usuario" value="U"/>Usuário &nbsp;&nbsp;
+                                        <input type="radio" name="tipo_usuario" value="A"/>Administrador
                                     </div>
                                 </div>                    
                                 <div class="modal-footer">
@@ -297,6 +308,16 @@
             
             function edit(usuario_json) {
                 try {
+                    if (usuario_json.status == 'A') {
+                        document.getElementById('statusEdit').setAttribute("checked", "checked");
+                    } else {
+                    	document.getElementById('statusEdit').removeAttribute("checked");
+                    }
+                    if (usuario_json.tipo_usuario == 'A') {
+                        document.getElementById('tipo_usuario_a').setAttribute("checked", "checked");
+                    } else {
+                        document.getElementById('tipo_usuario_u').setAttribute("checked", "checked");
+                    }
                     if (usuario_json != null) {
                         action = 'edit';
                         form = $('#form-edit');
@@ -307,8 +328,6 @@
                         $('#cargo', form).val(usuario_json.cargo);
                         $('#fone', form).val(usuario_json.telefone);
                         $('#email', form).val(usuario_json.email);
-                        $('#tipo_usuario', form).val(usuario_json.tipo_usuario);
-                        $('#status', form).val(usuario_json.status);
                         usuario = new Usuario();
                         usuario.id = usuario_json.id;
                     } else {
@@ -352,8 +371,8 @@
                         usuario.email = $('#form-' + action  + ' input[name="email"]').val();
                         usuario.login = $('#form-' + action  + ' input[name="login"]').val();
                         usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
-                        usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipoUsuario"]:checked').val();
-                        usuario.status = $('#form-' + action  + ' input:radio[name="status"]:checked').val();
+                        usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
+                        usuario.status = $('#form-' + action  + ' input:radio[name="statusEdit"]:checked').val();
                     }
                 
                     // Requisição AJAX
