@@ -15,7 +15,7 @@
 
         public function __destruct() {
             mysql_close($this->connection);
-            unset($connection);
+            unset($this->connection);
         }
 
         public function __get($field) {
@@ -67,22 +67,28 @@
             if (isset($lotacao)) {
                 $class = new ReflectionClass('Lotacao');
                 $properties = $class->getProperties();
-                $columns = "";
-                $values = "";
                 $pairs = "";
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
                     $column = $property->getName();
                     $value = $property->getValue($lotacao);
                     if ($column != 'id') {
-                        if (!empty($value)) {
-                            if (gettype($value) == "string") {
+                        if (isset($value) && !empty($value)) {
+                            if (gettype($value) == 'string') {
                                 $pairs .= "$column = '{$value}', ";
                             } else {
-                                if (endsWith($value, '_id')) {
+                                if (endsWith($column, '_id')) {
                                     $value = (int) $value;
                                 }
                                 $pairs .= "$column = {$value}, ";
+                            }
+                        } else {
+                            if (gettype($value) == 'string') {
+                                $pairs .= "$column = '', ";
+                            } else {
+                                if (endsWith($column, '_id')) {
+                                    $pairs .= "$column = null, ";
+                                }
                             }
                         }
                     }
