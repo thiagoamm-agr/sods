@@ -91,7 +91,7 @@
 							<h3 class="modal-title" id="modalAdd">Adicionar novo tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-add" action="#" method="post">
+    						 <form id="form-add" action="/sods/admin/tiposSolicitacao/" method="post">
     							<div class="form-group">
     								<label for="nome">Nome do Tipo de Solicitação</label>
     								<input type="text" class="form-control" name="nome" id="nome" maxlength="80"/>    								
@@ -130,7 +130,7 @@
 							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
-    						 <form id="form-edit" action="#" method="post">
+    						 <form id="form-edit" action="/sods/admin/tiposSolicitacao/" method="post">
     							<div class="form-group">
     								<label for="nome">Digite o novo nome</label>
     								<input type="text" id="nome" name="nome" class="form-control" maxlength="80"/>    								
@@ -167,7 +167,7 @@
 							</button>
 							<h4 class="modal-title" id="modalDel">Exclusão de Tipo</h4>
 						</div>
-						<form id="form-del" action="#" method="post">
+						<form id="form-del" action="/sods/admin/tiposSolicitacao/" method="post">
 							<div class="modal-body">
 	    						<h5>Confirma exclusão do tipo de solicitação?</h5>
 	    					</div>
@@ -249,10 +249,18 @@
 					
 					// Requisição AJAX
 					$.ajax({
-						type: 'POST',
-						url: '',
-						data: 'action=' + action + '&' + 'tipoSolicitacao=' + tipoSolicitacao.toJSON(),
-						success: function(data){}
+						type: 'post',
+						url: '/sods/admin/tiposSolicitacao/',
+						dataType: 'json',
+						contentType: 'application/x-www-form-urlencoded',
+						cache: false,
+						timeout: 70000,
+						async: false,
+						data: {
+							'action': action,
+							'tipoSolicitacao': tipoSolicitacao.toJSON()
+						}
+						
 					});			 
 				}
 			}
