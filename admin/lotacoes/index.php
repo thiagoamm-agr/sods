@@ -17,7 +17,7 @@
                     <button 
                         class="btn btn-primary btn-sm pull-right" 
                         data-toggle="modal" 
-                        data-target="#modalAdd" 
+                        data-target="#modal-add" 
                         onclick="add()">
                         <b>Adicionar</b>
                     </button>
@@ -87,18 +87,18 @@
             <!--  Modais -->
 
             <!-- Modal de Adição de Lotação -->
-            <div id="modalAdd" class="modal fade" tabindex="-1" role="dialog" 
-                aria-labelledby="modalAdd" aria-hidden="true">
+            <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-add" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modalAdd">Adicionar Lotação</h3>
+                            <h3 class="modal-title" id="modal-add">Adicionar Lotação</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="form-add" role="form" action="#" method="post">
+                            <form id="form-add" role="form" action="/sods/admin/lotacoes/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input type="text" class="form-control" id="nome" name="nome" />
@@ -113,7 +113,7 @@
                                         <option value="">SELECIONE UMA GERÊNCIA</option>
                                         <option value="null">Nenhuma</option>
 <?php 
-                                    foreach ($controller->getGerencias() as $gerencia) { 
+                                    foreach ($controller->getGerencias() as $gerencia) {
 ?>
                                         <option value="<?php echo $gerencia['id'] ?>"><?php 
                                         echo $gerencia['nome'] . ' - ' . $gerencia['sigla'] ?></option>
@@ -151,7 +151,7 @@
                             <h3 class="modal-title">Editar Lotação</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="form-edit" role="form" action="#" method="post">
+                            <form id="form-edit" role="form" action="/sods/admin/lotacoes/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input type="text" class="form-control" id="nome" name="nome" />
@@ -166,7 +166,7 @@
                                         <option value="">SELECIONE UMA GERÊNCIA</option>
                                         <option value="null">Nenhuma</option>
 <?php 
-                                    foreach ($controller->getGerencias() as $gerencia) { 
+                                    foreach ($controller->getGerencias() as $gerencia) {
 ?>
                                         <option value="<?php echo $gerencia['id'] ?>"><?php 
                                         echo $gerencia['nome'] . ' - ' . $gerencia['sigla'] ?></option>
@@ -179,7 +179,8 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-success" 
-                                        onclick="save()">Salvar
+                                        onclick="save()">
+                                        Salvar
                                     </button>
                                     <button 
                                         type="reset" 
@@ -213,7 +214,7 @@
                             </button>
                             <h4 class="modal-title">Exclusão de Lotação</h4>
                         </div>
-                        <form id="form-del" action="#" method="post">
+                        <form id="form-del" action="/sods/admin/lotacoes/" method="post">
                             <div class="modal-body">
                                 <h5>Confirma exclusão da lotação?</h5>
                             </div>
@@ -237,7 +238,7 @@
             var action = null;
             var form = null;
             var formValidator = null;
-            
+
             function add() {
                 action = 'add';
                 lotacao = new Lotacao();
@@ -250,10 +251,21 @@
                 try {
                     if (lotacao_json != null) {
                         action = 'edit';
+                        modal = 'modal-edit';
                         form = $('#form-' + action);
                         formValidator = new LotacaoFormValidator(form);
                         $('#nome', form).val(lotacao_json.nome);
                         $('#sigla', form).val(lotacao_json.sigla);
+                        var select = $('#gerencia option', form);
+                        select.each(function(i, e) {
+                            var t1 = $(e).text();
+                            var n = $('#nome', '#form-edit').val();
+                            var s = $('#sigla', '#form-edit').val();
+                            var t2 = n + ' - ' + s; 
+                            if (t1 == t2) {
+                                $(this).remove();
+                            }
+                        });
                         $('#gerencia', form).val("" + lotacao_json.gerencia_id);
                         lotacao = new Lotacao();
                         lotacao.id = lotacao_json.id;
@@ -268,7 +280,7 @@
             function del(lotacao_json) {
                 try {
                     if (lotacao_json != null) {
-                        action = 'delete';
+                        action = 'delete'; 
                         lotacao = new Lotacao();
                         lotacao.id = lotacao_json.id;
                         lotacao.nome = lotacao_json.nome;
@@ -289,10 +301,17 @@
                     }
                     // Requisição AJAX.
                     $.ajax({
-                        type: 'POST',
-                        url: '',
-                        data: 'action=' + action + '&' + 'json=' + lotacao.toJSON(),
-                        success: function(data) {}
+                        type: 'post',
+                        url: '/sods/admin/lotacoes/',
+                        dataType: 'json',
+                        contentType: 'application/x-www-form-urlencoded',
+                        cache: false,
+                        timeout: 70000,
+                        async: false,
+                        data: {
+                            'action': action,
+                            'json': lotacao.toJSON()
+                        }
                     });
                 }
             }
