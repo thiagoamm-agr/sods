@@ -101,11 +101,11 @@
                             <form id="form-add" role="form" action="/sods/admin/lotacoes/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="nome" />
+                                    <input type="text" class="form-control" id="nome" name="nome" maxlength="67" />
                                 </div>
                                 <div class="form-group">
                                     <label for="sigla">Sigla</label>
-                                    <input type="text" class="form-control" id="sigla" name="sigla" />
+                                    <input type="text" class="form-control" id="sigla" name="sigla" maxlength="10" />
                                 </div>
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
@@ -154,11 +154,11 @@
                             <form id="form-edit" role="form" action="/sods/admin/lotacoes/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
-                                    <input type="text" class="form-control" id="nome" name="nome" />
+                                    <input type="text" class="form-control" id="nome" name="nome" maxlength="67" />
                                 </div>
                                 <div class="form-group">
                                     <label for="sigla">Sigla</label>
-                                    <input type="text" class="form-control" id="sigla" name="sigla" />
+                                    <input type="text" class="form-control" id="sigla" name="sigla" maxlength="10" />
                                 </div>
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
