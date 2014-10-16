@@ -78,9 +78,15 @@
                     }
 ?>
                     </tbody>
+<?php
+                if ($controller->count() > 10) { 
+?>
                     <tfoot>
                         <tr><td colspan="5"><?php echo $controller->paginator ?></td></tr>
                     </tfoot>
+<?php
+                }
+?>
                 </table>
             </div>
 
