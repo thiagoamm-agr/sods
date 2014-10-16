@@ -15,7 +15,7 @@
         
         public function __destruct() {
             mysql_close($this->connection);
-            unset($this->connection);
+            unset($connection);
         }
         
         public function __get($field) {
@@ -57,22 +57,20 @@
                     mysql_query($query, $this->connection);
                 }
             }
-            return;
+            return;            
         }
         
         public function update($tipoSolicitacao) {
             if (isset($tipoSolicitacao)) {
                 $class = new ReflectionClass('TipoSolicitacao');
                 $properties = $class->getProperties();
-                $columns = "";
-                $values = "";
                 $pairs = "";
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
                     $column = $property->getName();
                     $value = $property->getValue($tipoSolicitacao);
                     if ($column != 'id') {
-                        if (!empty($value)) {
+                        if (isset($value) && !empty($value)) {
                             if (gettype($value) == "string") {
                                 $pairs .= "$column = '{$value}', ";
                             } else {
@@ -81,6 +79,14 @@
                                 }
                                 $pairs .= "$column = {$value}, ";
                             }
+                        } else {
+                        	if(gettype($value) == 'string'){
+                        		$pairs .= "$column = '', ";
+                        	} else {
+                        		if(endsWith($column, '_id')){
+                        			$pairs .= "$column = null, ";
+                        		}
+                        	}
                         }
                     }
                 }
