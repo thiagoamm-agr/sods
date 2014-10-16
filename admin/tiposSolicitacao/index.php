@@ -14,7 +14,7 @@
                 	<button 
                 		class="btn btn-primary btn-sm pull-right" 
                     	data-toggle="modal" 
-                    	data-target="#modalAdd"
+                    	data-target="#modal-add"
                     	onclick="add()">
                     	<b>Adicionar</b>
                 	</button>
@@ -56,13 +56,13 @@
 									<button 
 										class="edit-type btn btn-warning btn-sm" 
 										data-toggle="modal" 
-									    data-target="#modalEdit"
+									    data-target="#modal-edit"
 									    onclick='edit(<?php echo json_encode($tipo)?>)'>
 										<strong>Editar</strong>
 									</button>
 									<button class="delete-type btn btn-danger btn-sm" 
 											data-toggle="modal" 
-									    	data-target="#modalDel" 
+									    	data-target="#modal-del" 
 									    	onclick='del(<?php echo json_encode($tipo)?>)'>
 								    <strong>Excluir</strong>
 							    </button>						
@@ -80,15 +80,15 @@
 			<!-- Modais -->
 			
 			<!-- Adicionar Tipo de Solicitação -->
-			<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" 
-			    aria-labelledby="modalAdd" aria-hidden="true">
+			<div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
+			    aria-labelledby="modal-add" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h3 class="modal-title" id="modalAdd">Adicionar novo tipo</h3>
+							<h3 class="modal-title" id="modal-add">Adicionar novo tipo</h3>
 						</div>
 						<div class="modal-body">    						
     						 <form id="form-add" action="/sods/admin/tiposSolicitacao/" method="post">
@@ -119,15 +119,15 @@
     		</div>
 			
 			<!-- Editar Tipo de Solicitação-->
-			<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
-			    aria-labelledby="modalEdit" aria-hidden="true">
+			<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
+			    aria-labelledby="modal-edit" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h3 class="modal-title" id="modalEdit">Editar Tipo</h3>
+							<h3 class="modal-title" id="modal-edit">Editar Tipo</h3>
 						</div>
 						<div class="modal-body">    						
     						 <form id="form-edit" action="/sods/admin/tiposSolicitacao/" method="post">
@@ -157,15 +157,15 @@
     		</div>
     		
 			<!-- Excluir Tipo de Solicitação -->
-			<div class="modal fade" id="modalDel" tabindex="-1" role="dialog" 
-			    aria-labelledby="modalDel" aria-hidden="true">
+			<div class="modal fade" id="modal-del" tabindex="-1" role="dialog" 
+			    aria-labelledby="modal-del" aria-hidden="true">
 				<div class="modal-dialog modal-sm">
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 							    &times;
 							</button>
-							<h4 class="modal-title" id="modalDel">Exclusão de Tipo</h4>
+							<h4 class="modal-title" id="modal-del">Exclusão de Tipo</h4>
 						</div>
 						<form id="form-del" action="/sods/admin/tiposSolicitacao/" method="post">
 							<div class="modal-body">
