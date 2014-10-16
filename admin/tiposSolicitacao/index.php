@@ -95,12 +95,12 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modal-add">Adicionar Tipo Solicitação</h3>
+                            <h3 class="modal-title" id="modal-add">Adicionar Tipo de Solicitação</h3>
                         </div>
                         <div class="modal-body">
                              <form id="form-add" action="/sods/admin/tiposSolicitacao/" method="post">
                                 <div class="form-group">
-                                    <label for="nome">Nome do Tipo de Solicitação</label>
+                                    <label for="nome">Nome</label>
                                     <input type="text" class="form-control" name="nome" id="nome" maxlength="80"/>
                                 </div>
                                 <div class="form-group">
@@ -143,12 +143,12 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modal-edit">Editar Tipo Solicitação</h3>
+                            <h3 class="modal-title" id="modal-edit">Editar Tipo de Solicitação</h3>
                         </div>
                         <div class="modal-body">
                              <form id="form-edit" action="/sods/admin/tiposSolicitacao/" method="post">
                                 <div class="form-group">
-                                    <label for="nome">Digite o novo nome</label>
+                                    <label for="nome">Nome</label>
                                     <input type="text" id="nome" name="nome" class="form-control" maxlength="80" />
                                 </div>
                                 <div>
@@ -197,11 +197,11 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modal-del">Exclusão de Tipo Solicitação</h4>
+                            <h4 class="modal-title" id="modal-del">Exclusão de Tipo de Solicitação</h4>
                         </div>
                         <form id="form-del" action="/sods/admin/tiposSolicitacao/" method="post">
                             <div class="modal-body">
-                                <h5>Confirma exclusão do tipo de solicitação?</h5>
+                                <h5>Confirma a exclusão?</h5>
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
