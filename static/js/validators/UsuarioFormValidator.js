@@ -9,6 +9,7 @@ function UsuarioFormValidator(form) {
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
+            submitButtons: 'button[type="submit"]',
             fields: {
                 nome: {
                 	trigger: 'blur',
