@@ -94,7 +94,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modal-add">Adicionar novo tipo</h3>
+                            <h3 class="modal-title" id="modal-add">Adicionar Tipo Solicitação</h3>
                         </div>
                         <div class="modal-body">                            
                              <form id="form-add" action="/sods/admin/tiposSolicitacao/" method="post">
@@ -133,7 +133,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modal-edit">Editar Tipo</h3>
+                            <h3 class="modal-title" id="modal-edit">Editar Tipo Solicitação</h3>
                         </div>
                         <div class="modal-body">                            
                              <form id="form-edit" action="/sods/admin/tiposSolicitacao/" method="post">
@@ -171,7 +171,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modal-del">Exclusão de Tipo</h4>
+                            <h4 class="modal-title" id="modal-del">Exclusão de Tipo Solicitação</h4>
                         </div>
                         <form id="form-del" action="/sods/admin/tiposSolicitacao/" method="post">
                             <div class="modal-body">
