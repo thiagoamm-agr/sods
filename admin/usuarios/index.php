@@ -372,9 +372,11 @@
                         usuario.email = $('#form-' + action  + ' input[name="email"]').val();
                         usuario.login = $('#form-' + action  + ' input[name="login"]').val();
                         usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
-                        usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
+                        usuario.tipo_usuario = 
+                            $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
                         if (action == 'edit'){
-                            usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
+                            usuario.status = 
+                                $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
                         }
                     }
                 
