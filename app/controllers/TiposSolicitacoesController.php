@@ -7,7 +7,7 @@
     class TiposSolicitacoesController extends Controller {
 
         public function __construct() {
-            //faz a chamada do construtor da superclasse
+            // Chamada ao construtor da super-classe
             parent::__construct();
             $this->dao = new TipoSolicitacaoDAO();
             $this->paginator->totalrecords = $this->dao->count();
@@ -38,7 +38,7 @@
         }
 
         public function count($criteria=null) {
-            $this->dao->count($criteria);
+            return $this->dao->count($criteria);
         }
 
         public function getRows($page=1, $size=10) {
