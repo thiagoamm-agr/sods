@@ -37,7 +37,7 @@
             $this->dao->delete($id);
         }
 
-        public function count($criteria) {
+        public function count($criteria=null) {
             return $this->dao->count($criteria);
         }
 
