@@ -23,8 +23,8 @@ use sods_development;
 -- Tabelas.
 create table lotacao(
     id int not null primary key auto_increment,
-    nome varchar(255) not null unique,
-    sigla varchar(50) not null unique,
+    nome varchar(67) not null unique,
+    sigla varchar(10) not null unique,
     gerencia_id int
 ) character set utf8 collate utf8_general_ci;
 
