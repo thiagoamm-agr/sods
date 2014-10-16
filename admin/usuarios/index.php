@@ -302,6 +302,7 @@
                 action = "add";
                 usuario = new Usuario();
                 usuario.id = null;
+                usuario.status = null;
                 form= $('#form-add');
                 formValidator = new UsuarioFormValidator(form);
             }
@@ -372,15 +373,24 @@
                         usuario.login = $('#form-' + action  + ' input[name="login"]').val();
                         usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
                         usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
-                        usuario.status = $('#form-' + action  + ' input:radio[name="statusEdit"]:checked').val();
+                        if (action == 'edit'){
+                            usuario.status = $('#form-' + action  + ' input:radio[name="statusEdit"]:checked').val();
+                        }
                     }
                 
                     // Requisição AJAX
                     $.ajax({
-                        type: 'POST',
-                        url: '',
-                        data: 'action=' + action + '&' + 'usuario=' + usuario.toJSON(),
-                        success: function(data) {}
+                        type: 'post',
+                        url: '/sods/admin/usuarios/',
+                        dataType: 'json',
+                        contentType: 'application/x-www-form-urlencoded',
+                        cache: false,
+                        timeout: 7000,
+                        async: false,
+                        data: {
+                            'action': action,
+                            'json': usuario.toJSON()
+                        }
                     });
                 }
             }
@@ -392,10 +402,10 @@
             }
          </script>
 <?php    
-    if (isset($_POST['action']) && isset($_POST['usuario'])) {
+    if (isset($_POST['action']) && isset($_POST['json'])) {
         //Recuperando dados do post
         $action = $_POST['action'];
-        $json = $_POST['usuario'];
+        $json = $_POST['json'];
         
         $usuario = new Usuario();
         $usuario->loadJSON($json);
