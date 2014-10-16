@@ -102,7 +102,7 @@
                             <h3 class="modal-title" id="modalEdit">Editar Usuário</h3>
                         </div>
                         <div class="modal-body">
-                            <form role="form" id="form-edit">
+                            <form id="form-edit" role="form" action="/sods/admin/usuarios/" method="post">
                                   <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input id="nome" name="nome" type="text" class="form-control" maxlength="255" />
@@ -198,7 +198,7 @@
                         <div class="modal-body">
                             <h5>Confirma exclusão de usuário?</h5>
                         </div>
-                        <form id="form-del" action="#" method="post">
+                        <form id="form-del" action="/sods/admin/usuarios" role="form" method="post">
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
@@ -220,7 +220,7 @@
                             <h3 class="modal-title" id="modalAdd">Adicionar Usuário</h3>
                         </div>
                         <div class="modal-body">
-                             <form id="form-add" action="#" method="post">
+                             <form id="form-add" action="/sods/admin/usuarios/" role="form" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input type="text" class="form-control" name="nome" id="nome" maxlength="255"/>
