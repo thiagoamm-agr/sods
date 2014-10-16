@@ -15,7 +15,7 @@
         
         public function __destruct() {
             mysql_close($this->connection);
-            unset($connection);
+            unset($this->connection);
         }
         
         public function __get($field) {
@@ -57,7 +57,7 @@
                     mysql_query($query, $this->connection);
                 }
             }
-            return;            
+            return;
         }
         
         public function update($tipoSolicitacao) {
