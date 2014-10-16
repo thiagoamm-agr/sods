@@ -262,14 +262,21 @@
                         formValidator = new LotacaoFormValidator(form);
                         $('#nome', form).val(lotacao_json.nome);
                         $('#sigla', form).val(lotacao_json.sigla);
+                        // Caixa de seleção de gerências.
                         var select = $('#gerencia option', form);
+                        // Itera sobre a lista de opções (caixa de seleção).
                         select.each(function(i, e) {
                             var t1 = $(e).text();
                             var n = $('#nome', '#form-edit').val();
                             var s = $('#sigla', '#form-edit').val();
-                            var t2 = n + ' - ' + s; 
+                            // Texto vísivel para o usuário.
+                            var t2 = n + ' - ' + s;
+                            $(this).attr('disabled', false); 
                             if (t1 == t2) {
-                                $(this).remove();
+                                /* Desabilita a gerência que for homônima a lotação 
+                                 * que está sendo editada.
+                                 */
+                                $(this).attr('disabled', true);
                             }
                         });
                         $('#gerencia', form).val("" + lotacao_json.gerencia_id);
