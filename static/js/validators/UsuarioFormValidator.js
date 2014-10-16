@@ -48,6 +48,9 @@ function UsuarioFormValidator(form) {
                     validators: {
                         notEmpty: {
                             message: 'e-mail é um campo de preenchimento obrigatório'
+                        },
+                        emailAddress: {
+                        	message: 'Preencha um endereço de e-mail válido'
                         }
                     }
                 },
