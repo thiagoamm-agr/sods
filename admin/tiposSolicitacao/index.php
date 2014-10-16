@@ -45,7 +45,7 @@
                         $page = '';
                     }
 
-                    //Obtém a lista de todos os tipos de solicitação
+                    // Obtém a lista de todos os tipos de solicitação
                     foreach ($controller->getRows($page) as $tipo) {
 ?>
                             <tr>
@@ -65,12 +65,12 @@
                                             data-target="#modal-del" 
                                             onclick='del(<?php echo json_encode($tipo)?>)'>
                                     <strong>Excluir</strong>
-                                </button>                        
+                                </button>
                                 </td>
                             </tr>
 <?php 
                     }
-?>                        
+?>
                     </tbody>
 <?php
                 if ($controller->paginator->totalrecords > 10) {
@@ -83,8 +83,9 @@
 ?>
                 </table>
             </div>
+
             <!-- Modais -->
-            
+
             <!-- Adicionar Tipo de Solicitação -->
             <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-add" aria-hidden="true">
@@ -96,34 +97,43 @@
                             </button>
                             <h3 class="modal-title" id="modal-add">Adicionar Tipo Solicitação</h3>
                         </div>
-                        <div class="modal-body">                            
+                        <div class="modal-body">
                              <form id="form-add" action="/sods/admin/tiposSolicitacao/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome do Tipo de Solicitação</label>
-                                    <input type="text" class="form-control" name="nome" id="nome" maxlength="80"/>                                    
-                                </div>        
+                                    <input type="text" class="form-control" name="nome" id="nome" maxlength="80"/>
+                                </div>
                                 <div class="form-group">
-                                        <input type="checkbox" 
-                                               name="status" 
-                                               value="A" 
-                                               checked="checked" 
-                                               readonly/>&nbsp; Ativar
-                                </div>                
+                                        <input 
+                                             type="checkbox" 
+                                             name="status" 
+                                             value="A" 
+                                             checked="checked" 
+                                             readonly/>&nbsp; Ativar
+                                </div>
                                 <div class="modal-footer">
-                                    <button type="submit" 
-                                            class="btn btn-success" 
-                                            onclick="save()">Salvar</button>
-                                    <button type="reset" 
-                                            class="btn btn-default" 
-                                            onclick="limpar()">Limpar</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>                            
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success" 
+                                        onclick="save()">Salvar
+                                    </button>
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-default" 
+                                        onclick="limpar()">Limpar
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-primary" 
+                                        data-dismiss="modal">Cancelar
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Editar Tipo de Solicitação-->
             <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-edit" aria-hidden="true">
@@ -135,26 +145,42 @@
                             </button>
                             <h3 class="modal-title" id="modal-edit">Editar Tipo Solicitação</h3>
                         </div>
-                        <div class="modal-body">                            
+                        <div class="modal-body">
                              <form id="form-edit" action="/sods/admin/tiposSolicitacao/" method="post">
                                 <div class="form-group">
                                     <label for="nome">Digite o novo nome</label>
-                                    <input type="text" id="nome" name="nome" class="form-control" maxlength="80"/>                                    
+                                    <input type="text" id="nome" name="nome" class="form-control" maxlength="80" />
                                 </div>
                                 <div>
                                         <label for="status">Status</label>
                                     </div>
                                 <div class="form-group">
-                                        <input type="checkbox" name="status" value="A" id="statusEdit" checked="checked"/>&nbsp; Ativar
-                                </div>            
+                                    <input 
+                                        id="statusEdit" 
+                                        type="checkbox" 
+                                        name="status" 
+                                        value="A" 
+                                        checked="checked"/>&nbsp; Ativar
+                                </div>
                                 <div class="modal-footer">
-                                    <button type="submit" 
-                                            class="btn btn-success" 
-                                            onclick="save()">Salvar</button>
-                                    <button type="reset" 
-                                            class="btn btn-default" 
-                                            onclick="limpar()">Limpar</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>                            
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success" 
+                                        onclick="save()">
+                                        Salvar
+                                    </button>
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-default" 
+                                        onclick="limpar()">
+                                        Limpar
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-primary" 
+                                        data-dismiss="modal">
+                                        Cancelar
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -179,21 +205,21 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>                                
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
                             </div>
                         </form>
                     </div>
                 </div>
-            </div><!-- Modais -->    
-            
-        </div><!-- container -->
-        
+            </div>
+            <!-- Modais -->
+        </div><!-- Container -->
+
          <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/TipoSolicitacao.js"></script>
-        
+
         <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoFormValidator.js"></script>
-        
-        <script type="text/javascript">        
+
+        <script type="text/javascript">
              var tipoSolicitacao = null;
              var action = null;
              var form = null;
@@ -218,7 +244,7 @@
                         action = 'edit';
                         form = $('#form-edit');
                         formValidator = new TipoSolicitacaoFormValidator(form);
-                        $('#nome', form).val(tipoSolicitacao_json.nome);                        
+                        $('#nome', form).val(tipoSolicitacao_json.nome);
                         tipoSolicitacao = new TipoSolicitacao();
                         tipoSolicitacao.id = tipoSolicitacao_json.id;
                     } else {
@@ -247,12 +273,14 @@
                 if (tipoSolicitacao != null) {
                     if (action == 'add' || action == 'edit') {
                         tipoSolicitacao.nome = $('#form-' + action  + ' input[name="nome"]').val();
-                        tipoSolicitacao.status = $('#form-' + action  + ' input:checkbox[name="status"]:checked').val();
+                        tipoSolicitacao.status = $(
+                            '#form-' + action  + ' input:checkbox[name="status"]:checked'
+                        ).val();
                         if (tipoSolicitacao.status != "A") {
                             tipoSolicitacao.status = "I";
                         }
                     }
-                    
+
                     // Requisição AJAX
                     $.ajax({
                         type: 'post',
@@ -266,7 +294,7 @@
                             'action': action,
                             'tipoSolicitacao': tipoSolicitacao.toJSON()
                         }
-                    });             
+                    });
                 }
             }
 
@@ -277,18 +305,18 @@
             }
 
         </script>
-        
+
 <?php
-    //Indentificando ações e parâmetros do post
+
+    // Indentificando ações e parâmetros do post
     if (isset($_POST['action']) && isset($_POST['tipoSolicitacao'])) {
         //Recuperando dados do post
         $action = $_POST['action'];
         $json = $_POST['tipoSolicitacao'];
-        
+
         $tipoSolicitacao = new TipoSolicitacao();
         $tipoSolicitacao->loadJSON($json);
-        
-        
+
         switch ($action){
             case 'add':
                 $controller->add($tipoSolicitacao);
@@ -301,5 +329,7 @@
                 break;
         }
     }
+
+    // Rodapé
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
