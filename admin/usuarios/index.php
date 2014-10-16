@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <button class="btn btn-primary btn-sm pull-right" 
                         data-toggle="modal" 
-                        data-target="#modalAdd"
+                        data-target="#modal-add"
                         onclick="add()">
                         <b>Adicionar</b>
                     </button>
@@ -66,13 +66,13 @@
                             <td><?php echo $usuario['login'] ?></td>
                             <td colspan="2">
                                 <button class="btn btn-warning btn-sm" 
-                                    data-toggle="modal" data-target="#modalEdit" 
+                                    data-toggle="modal" data-target="#modal-edit" 
                                     onclick='edit(<?php echo json_encode($usuario)?>)'>
                                     <strong>Editar</strong>
                                 </button>
                                 <button class="btn btn-danger btn-sm" 
                                         data-toggle="modal" 
-                                        data-target="#modalDel"
+                                        data-target="#modal-del"
                                         onclick='del(<?php echo json_encode($usuario)?>)'>
                                     <strong>Excluir</strong>
                                 </button>
@@ -91,7 +91,7 @@
             <!--  Modais -->
             
             <!-- Editar Usuário -->
-            <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="modalEdit" 
+            <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" 
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -99,7 +99,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modalEdit">Editar Usuário</h3>
+                            <h3 class="modal-title" id="modal-edit">Editar Usuário</h3>
                         </div>
                         <div class="modal-body">
                             <form id="form-edit" role="form" action="/sods/admin/usuarios/" method="post">
@@ -185,15 +185,15 @@
             </div>            
             
             <!-- Excluir Usuário -->
-            <div class="modal fade .bs-example-modal-sm" id="modalDel" tabindex="-1" role="dialog" 
-                aria-labelledby="modalDel" aria-hidden="true">
+            <div class="modal fade .bs-example-modal-sm" id="modal-del" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modalDel">Exclusão de Usuário</h4>
+                            <h4 class="modal-title" id="modal-del">Exclusão de Usuário</h4>
                         </div>
                         <div class="modal-body">
                             <h5>Confirma exclusão de usuário?</h5>
@@ -209,15 +209,15 @@
             </div> 
             
             <!-- Adicionar Usuário -->
-            <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" 
-                aria-labelledby="modalAdd" aria-hidden="true">
+            <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-add" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modalAdd">Adicionar Usuário</h3>
+                            <h3 class="modal-title" id="modal-add">Adicionar Usuário</h3>
                         </div>
                         <div class="modal-body">
                              <form id="form-add" action="/sods/admin/usuarios/" role="form" method="post">
