@@ -163,7 +163,7 @@
             $rows = mysql_num_rows($result);
             return $rows;
         }
-        
+
         public function rowSet($size=10, $start=0) {
             $all = array();
             $query = "select * from tipo_solicitacao limit $size offset $start";

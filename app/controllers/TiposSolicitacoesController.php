@@ -21,7 +21,7 @@
             parent::__destruct();
         }
 
-        public function _list(){
+        public function _list() {
             return $this->dao->getAll();
         }
 

@@ -38,7 +38,7 @@
 
         abstract public function delete($id);
 
-        abstract public function count($criteria);
+        abstract public function count($criteria=null);
 
         abstract public function getRows($page=1, $size=10);
 
