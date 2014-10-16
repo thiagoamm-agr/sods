@@ -162,7 +162,7 @@
                                         <label for="status">Status</label>
                                     </div>
                                     <div class="form-group">
-                                        <input type="radio" 
+                                        <input type="checkbox" 
                                         	   id="statusEdit" 
                                         	   name="statusEdit" 
                                         	   value="A" 
@@ -374,7 +374,7 @@
                         usuario.senha = $('#form-' + action  + ' input[name="senha"]').val();
                         usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
                         if (action == 'edit'){
-                            usuario.status = $('#form-' + action  + ' input:radio[name="statusEdit"]:checked').val();
+                            usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
                         }
                     }
                 
