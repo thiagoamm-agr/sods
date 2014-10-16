@@ -61,14 +61,14 @@
                                 <button 
                                     class="btn btn-warning btn-sm" 
                                     data-toggle="modal" 
-                                    data-target="#modalEdit"
+                                    data-target="#modal-edit"
                                     onclick='edit(<?php echo json_encode($lotacao) ?>)'>
                                     <strong>Editar</strong>
                                 </button>
                                 <button 
                                     class="delete-type btn btn-danger btn-sm" 
                                     data-toggle="modal" 
-                                    data-target="#modalDel"
+                                    data-target="#modal-del"
                                     onclick='del(<?php echo json_encode($lotacao) ?>)'>
                                     <strong>Excluir</strong>
                                 </button>
@@ -146,8 +146,8 @@
             </div>
 
             <!-- Editar lotação -->
-            <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
-                aria-labelledby="modalEdit" aria-hidden="true">
+            <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-edit" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -206,8 +206,8 @@
             </div>
 
             <!-- Excluir Lotação -->
-            <div class="modal fade" id="modalDel" tabindex="-1" role="dialog" 
-                aria-labelledby="modalDel" aria-hidden="true">
+            <div class="modal fade" id="modal-del" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
