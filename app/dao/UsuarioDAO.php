@@ -65,8 +65,6 @@
             if (isset($usuario)) {
                 $class = new ReflectionClass('Usuario');
                 $properties = $class->getProperties();
-                $columns = "";
-                $values = "";
                 $pairs = "";
                 foreach ($properties as $property) {
                     $property->setAccessible(true);
