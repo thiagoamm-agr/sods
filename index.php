@@ -42,7 +42,7 @@
     } else if (isset($_POST['login']) && isset($_POST['senha'])) {
 ?>
             <div class='alert alert-danger' role='alert'>
-                <center>Usuário ou senha inválidas.</center>
+                <center><b>Login inválido.</b></center>
             </div>
 <?php 
     }
