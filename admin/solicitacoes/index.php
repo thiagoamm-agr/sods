@@ -21,7 +21,7 @@
                 <div class="col-md-12">
                     <button class="btn btn-primary btn-sm pull-right" 
                             data-toggle="modal" 
-                            data-target="#modalAdd"
+                            data-target="#modal-add"
                             onclick="add()">
                         <b>Adicionar</b>
                     </button>
@@ -37,7 +37,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Solicitante</th>
-                            <th>Solicitação</th>
+                            <th>Titulo</th>
                             <th>Status</th>
                             <th>Tipo</th>
                             <th>Data Abertura</th>
@@ -69,13 +69,13 @@
                             <td colspan="2">
                                 <button class='btn btn-warning btn-sm' 
                                         data-toggle='modal' 
-                                        data-target='#modalEdit'
+                                        data-target='#modal-edit'
                                         onclick='edit(<?php echo json_encode($solicitacao)?>)'>
                                         <strong>Editar</strong>
                                 </button>
                                 <button class='btn btn-danger btn-sm' 
                                         data-toggle='modal' 
-                                        data-target='#modalDel'
+                                        data-target='#modal-del'
                                         onclick='del(<?php echo json_encode($solicitacao)?>)'>
                                     <strong>Excluir</strong>
                                 </button>
@@ -94,18 +94,18 @@
             <!--  Modais -->
             
             <!-- Editar Solicitação -->
-            <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" 
-                aria-labelledby="modalEdit" aria-hidden="true">
+            <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-edit" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h3 class="modal-title" id="modalEdit">Editar Solicitação</h3>
+                            <h3 class="modal-title" id="modal-edit">Editar Solicitação</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="form-edit" role="form" action="#" method="post">
+                            <form id="form-edit" action="/sods/admin/solicitacoes" role="form" method="post">
                                   <div class="form-group">
                                       <label for="titulo">Título</label>
                                       <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
@@ -210,18 +210,18 @@
             </div>
             
             <!-- Adicionar Solicitação -->
-            <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" 
-                aria-labelledby="modalAdd" aria-hidden="true">
+            <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-add" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modalAdd">Adicionar Solicitação</h4>
+                            <h4 class="modal-title" id="modal-add">Adicionar Solicitação</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="form-add" action="#" method="post">
+                            <form id="form-add" action="/sods/admin/solicitacoes/" role="form" method="post">
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -318,20 +318,20 @@
             </div>
             
             <!-- Excluir solicitação -->
-            <div class="modal fade .bs-example-modal-sm" id="modalDel" tabindex="-1" role="dialog" 
-                aria-labelledby="modalDel" aria-hidden="true">
+            <div class="modal fade .bs-example-modal-sm" id="modal-del" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modalDel">Exclusão de Solicitação</h4>
+                            <h4 class="modal-title" id="modal-del">Exclusão de Solicitação</h4>
                         </div>
                         <div class="modal-body">
                             <h5>Confirma exclusão de solicitação?</h5>
                         </div>
-                        <form action="#">
+                        <form id="modal-del" action="/sods/admin/solicitacoes/" role="form" method="post">
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger" onclick="save()">Sim</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
@@ -410,26 +410,39 @@
             function save() {
                 if (solicitacao != null) {
                     if (action == 'add' || action == 'edit'){
-                        solicitacao.solicitante_id = $('#form-' + action + ' input[name="solicitante_id"]').val();
-                        solicitacao.titulo = $('#form-' + action  + ' input[name="titulo"]').val();
-                        solicitacao.detalhamento = $('#form-' + action  + ' textarea[name="detalhamento"]').val();
-                        solicitacao.info_adicionais = $('#form-' + action  + ' textarea[name="info_adicionais"]').val();
-                        solicitacao.observacoes = $('#form-' + action  + ' textarea[name="observacoes"]').val();
+                        solicitacao.solicitante_id = 
+                            $('#form-' + action + ' input[name="solicitante_id"]').val();
+                        solicitacao.titulo = 
+                            $('#form-' + action  + ' input[name="titulo"]').val();
+                        solicitacao.detalhamento = 
+                            $('#form-' + action  + ' textarea[name="detalhamento"]').val();
+                        solicitacao.info_adicionais = 
+                            $('#form-' + action  + ' textarea[name="info_adicionais"]').val();
+                        solicitacao.observacoes = 
+                            $('#form-' + action  + ' textarea[name="observacoes"]').val();
                         solicitacao.tipo_solicitacao_id = 
                                 $('#form-' + action  + ' select[name="tipo_solicitacao_id"]').val();
                         //Se a ação for adição, os campos de status não devem ser setados.
                         if (action != 'add') {
-                            solicitacao.status = $('#form-' + action + ' select[name="status"]').val();
+                            solicitacao.status = 
+                                $('#form-' + action + ' select[name="status"]').val();
                             solicitacao.observacoes_status = 
-                                    $('#form-' + action  + ' input[name="observacoes_status"]').val();
+                                $('#form-' + action  + ' input[name="observacoes_status"]').val();
                         }                    
                     }
                     // Requisição AJAX
                     $.ajax({
-                        type: 'POST',
-                        url: '',
-                        data: 'action=' + action + '&' + 'solicitacao=' + solicitacao.toJSON(),
-                        success: function(data){}
+                        type: 'post',
+                        url: '/sods/admin/solicitacoes/',
+                        dataType: 'json',
+                        contentType: 'application/x-www-form-urlencoded',
+                        cache: false,
+                        timeout: 7000,
+                        async: false,
+                        data: {
+                            'action': action,
+                            'json': solicitacao.toJSON()
+                        }
                     }); 
                 }
             }
@@ -442,15 +455,14 @@
         </script>
 <?php
     //Indentificando ações e parâmetros do post
-    if (isset($_POST['action']) && isset($_POST['solicitacao'])) {
+    if (isset($_POST['action']) && isset($_POST['json'])) {
         //Recuperando dados do post
         $action = $_POST['action'];
-        $json = $_POST['solicitacao'];
+        $json = $_POST['json'];
         
         $solicitacao = new Solicitacao();
         $solicitacao->loadJSON($json);
-        
-        
+
         switch ($action){
             case 'add':
                 $controller->add($solicitacao);
