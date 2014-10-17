@@ -39,6 +39,12 @@
 
     if (autenticar_usuario($login, $senha)) {
         header('location: /sods/admin');
+    } else if (isset($_POST['login']) && isset($_POST['senha'])) {
+?>
+            <div class='alert alert-danger' role='alert'>
+                <center>Usuário ou senha inválidas.</center>
+            </div>
+<?php 
     }
 ?>
     </body>
