@@ -55,8 +55,6 @@
                         $page = '';
                     }
                     
-                    if ($controller->getRows() > 0){
-                    
                     foreach ($controller->getRows($page) as $solicitacao) {
 
 ?>
