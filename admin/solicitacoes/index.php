@@ -374,8 +374,8 @@
                         $('#status', form).val(solicitacao_json.status);
                         $('#observacoes_status', form).val(solicitacao_json.observacoes_status);
                         $('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
-                        $('#data_abertura', form).val(solicitacao_json.data_abertura);
-                        $('#data_alteracao', form).val(solicitacao_json.data_alteracao);
+                        $('#data_abertura', form).val(formataData(solicitacao_json.data_abertura));                        
+                        $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
                     } else {
@@ -452,6 +452,24 @@
                     validator.resetForm();
                 }
             }
+
+            function formataData(data_antiga) {
+                if(data_antiga != null) {
+                    var data = data_antiga.split("-");
+                    var jsDate = new Date(data[0], data[1]-1, data[2].substr(0,2), data[2].substr(3,2), 
+                                          data[2].substr(6,2), data[2].substr(9,2));
+                    var dia = jsDate.getUTCDate();
+                    var mes = jsDate.getUTCMonth()+1;
+                    var ano = jsDate.getUTCFullYear();
+                    var hora = jsDate.getHours();
+                    var min = jsDate.getMinutes();
+                    var seg = jsDate.getSeconds();
+                    return (dia + "/" + mes + "/" + ano + " " + hora + ":" + min + ":" + seg);
+                } else {
+                    return "";
+                }
+            }
+
         </script>
 <?php
     //Indentificando ações e parâmetros do post
