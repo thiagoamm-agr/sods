@@ -37,7 +37,7 @@
         }
 
         public function count($criteria = null) {
-            $this->dao->count($criteria);
+            return $this->dao->count($criteria);
         }
 
         public function allUser($login) {
