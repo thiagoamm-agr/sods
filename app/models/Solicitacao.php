@@ -13,5 +13,6 @@
 		protected $status;
 		protected $observacoes_status;
 		protected $tipo_solicitacao_id;
+		protected $data_alteracao;
 	}
 ?>
