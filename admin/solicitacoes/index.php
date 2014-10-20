@@ -55,42 +55,57 @@
                         $page = '';
                     }
                     
-                    foreach ($controller->getRows($page) as $solicitacao) {
+                    $teste = $controller->getRows();
+                    
+                    if (!(empty($teste))) {
+                    
+                    	foreach ($controller->getRows($page) as $solicitacao) {
 
 ?>
-                        <tr>
-                            <td><?php echo $solicitacao['id'] ?></td>
-                            <td><?php echo $solicitacao['nome'] ?></td>
-                            <td><?php echo $solicitacao['titulo'] ?></td>
-                            <td><?php echo $solicitacao['status'] ?></td>
-                            <td><?php echo $solicitacao['tipo_solicitacao'] ?></td>
-                            <td><?php echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_abertura'])) ?></td>
-                            <td><?php if ($solicitacao['data_alteracao'] != null) {
-                            	 		echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_alteracao']));
-                            	} ?></td>
-                            <td colspan="2">
-                                <button class='btn btn-warning btn-sm' 
-                                        data-toggle='modal' 
-                                        data-target='#modal-edit'
-                                        onclick='edit(<?php echo json_encode($solicitacao)?>)'>
-                                        <strong>Editar</strong>
-                                </button>
-                                <button class='btn btn-danger btn-sm' 
-                                        data-toggle='modal' 
-                                        data-target='#modal-del'
-                                        onclick='del(<?php echo json_encode($solicitacao)?>)'>
-                                    <strong>Excluir</strong>
-                                </button>
-                            </td>
-                         </tr>
+	                        <tr>
+	                            <td><?php echo $solicitacao['id'] ?></td>
+	                            <td><?php echo $solicitacao['nome'] ?></td>
+	                            <td><?php echo $solicitacao['titulo'] ?></td>
+	                            <td><?php echo $solicitacao['status'] ?></td>
+	                            <td><?php echo $solicitacao['tipo_solicitacao'] ?></td>
+	                            <td><?php echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_abertura'])) ?></td>
+	                            <td><?php if ($solicitacao['data_alteracao'] != null) {
+	                            	 		echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_alteracao']));
+	                            	} ?></td>
+	                            <td colspan="2">
+	                                <button class='btn btn-warning btn-sm' 
+	                                        data-toggle='modal' 
+	                                        data-target='#modal-edit'
+	                                        onclick='edit(<?php echo json_encode($solicitacao)?>)'>
+	                                        <strong>Editar</strong>
+	                                </button>
+	                                <button class='btn btn-danger btn-sm' 
+	                                        data-toggle='modal' 
+	                                        data-target='#modal-del'
+	                                        onclick='del(<?php echo json_encode($solicitacao)?>)'>
+	                                    <strong>Excluir</strong>
+	                                </button>
+	                            </td>
+	                         </tr>
 <?php
-                    }
+                    	}
 ?>
-                    </tbody>
-                    <tfoot>
-                        <tr><td colspan="8"><?php echo $controller->paginator ?></td></tr>
-                    </tfoot>
-                </table>
+	                    </tbody>
+	                    <tfoot>
+	                        <tr><td colspan="8"><?php echo $controller->paginator ?></td></tr>
+	                    </tfoot>
+	                </table>
+                <?php 
+                    } else {
+?>
+                    	</tbody>
+                    </table>
+                    <div class='alert alert-danger' role='alert'>
+                    	<center><b>Não há registros de solicitações.</b></center>
+            		</div>                    	
+<?php
+                    }                
+?>
             </div>
             
             <!--  Modais -->
