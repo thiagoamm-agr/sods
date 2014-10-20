@@ -86,6 +86,7 @@
 						}
 					}
 				}
+				$pairs .= "data_alteracao = current_timestamp, ";
 				$pairs = substr($pairs, 0, strrpos($pairs, ", "));
 				if (!empty($pairs)) {
 					$query = "update solicitacao set $pairs where id = {$solicitacao->id}";
