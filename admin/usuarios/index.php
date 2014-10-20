@@ -51,40 +51,59 @@
                     } else {
                     	$page = '';
                     }
+                    
+                    if (!(empty($controller->getRows()))) {
 
-                    foreach ($controller->getRows($page) as $usuario) {
+                    	foreach ($controller->getRows($page) as $usuario) {
 ?>
-                        <tr>
-                            <td><?php echo $usuario['id'] ?></td>
-                            <td><?php echo $usuario['nome_sol'] ?></td>
-                            <td><?php echo $usuario['lotacao'] ?></td>
-                            <td><?php echo $usuario['cargo'] ?></td>
-                            <td><?php echo $usuario['telefone'] ?></td>
-                            <td><?php echo $usuario['tipo_usuario'] ?></td>
-                            <td><?php echo $usuario['status'] ?></td>
-                            <td><?php echo $usuario['login'] ?></td>
-                            <td colspan="2">
-                                <button class="btn btn-warning btn-sm" 
-                                    data-toggle="modal" data-target="#modal-edit" 
-                                    onclick='edit(<?php echo json_encode($usuario)?>)'>
-                                    <strong>Editar</strong>
-                                </button>
-                                <button class="btn btn-danger btn-sm" 
-                                        data-toggle="modal" 
-                                        data-target="#modal-del"
-                                        onclick='del(<?php echo json_encode($usuario)?>)'>
-                                    <strong>Excluir</strong>
-                                </button>
-                            </td>
-                        </tr>
+	                        <tr>
+	                            <td><?php echo $usuario['id'] ?></td>
+	                            <td><?php echo $usuario['nome_sol'] ?></td>
+	                            <td><?php echo $usuario['lotacao'] ?></td>
+	                            <td><?php echo $usuario['cargo'] ?></td>
+	                            <td><?php echo $usuario['telefone'] ?></td>
+	                            <td><?php echo $usuario['tipo_usuario'] ?></td>
+	                            <td><?php echo $usuario['status'] ?></td>
+	                            <td><?php echo $usuario['login'] ?></td>
+	                            <td colspan="2">
+	                                <button class="btn btn-warning btn-sm" 
+	                                    data-toggle="modal" data-target="#modal-edit" 
+	                                    onclick='edit(<?php echo json_encode($usuario)?>)'>
+	                                    <strong>Editar</strong>
+	                                </button>
+	                                <button class="btn btn-danger btn-sm" 
+	                                        data-toggle="modal" 
+	                                        data-target="#modal-del"
+	                                        onclick='del(<?php echo json_encode($usuario)?>)'>
+	                                    <strong>Excluir</strong>
+	                                </button>
+	                            </td>
+	                        </tr>
 <?php
-                    } 
+                    	}
 ?>
                     </tbody>
+<?php 
+                        if ($controller->count() > 10) {
+?>                    
                     <tfoot>
 						<tr><td colspan="10"><?php echo $controller->paginator ?></td></tr>
                     </tfoot>
+<?php 
+                        }
+?>
                 </table>
+<?php 
+                    } else {
+?> 
+                  	</tbody>
+                </table>
+                <div class='alert alert-danger' role='alert'>
+                	<center><b>Não há registros de solicitações.</b></center>
+                </div>
+<?php 
+                    }              
+?>
             </div>
 
             <!--  Modais -->
