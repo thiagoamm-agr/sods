@@ -55,6 +55,8 @@
                         $page = '';
                     }
                     
+                    if ($controller->getRows() > 0){
+                    
                     foreach ($controller->getRows($page) as $solicitacao) {
 
 ?>
@@ -64,8 +66,10 @@
                             <td><?php echo $solicitacao['titulo'] ?></td>
                             <td><?php echo $solicitacao['status'] ?></td>
                             <td><?php echo $solicitacao['tipo_solicitacao'] ?></td>
-                            <td><?php echo date('d/m/Y H:m:s', strtotime ($solicitacao['data_abertura'])) ?></td>
-                            <td><?php echo @$solicitacao['data_alteracao'] ?></td>
+                            <td><?php echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_abertura'])) ?></td>
+                            <td><?php if ($solicitacao['data_alteracao'] != null) {
+                            	 		echo date('d/m/Y H:i:s', strtotime ($solicitacao['data_alteracao']));
+                            	} ?></td>
                             <td colspan="2">
                                 <button class='btn btn-warning btn-sm' 
                                         data-toggle='modal' 
@@ -169,11 +173,12 @@
                                         <div class="col-sm-6">
                                             <label for="status">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                                <option  value="EM ANÁLISE">Em análise</option>
-                                                <option  value="DEFERIDA">Deferida</option>
-                                                <option  value="INDEFERIDA">Indeferida</option>
-                                                <option  value="ATENDIDA">Atendida</option>
-                                                <option  value="CANCELADA">Cancelada</option>
+                                            	<option value="CRIADA">Criada</option>
+                                                <option value="EM ANÁLISE">Em análise</option>
+                                                <option value="DEFERIDA">Deferida</option>
+                                                <option value="INDEFERIDA">Indeferida</option>
+                                                <option value="ATENDIDA">Atendida</option>
+                                                <option value="CANCELADA">Cancelada</option>
                                             </select>
                                         </div>
                                         
@@ -235,7 +240,8 @@
                                                    class="form-control" 
                                                    name="nome" 
                                                    id="nome"
-                                                   value= "<?php echo $_SESSION['usuario']['nome']; ?>"/>
+                                                   value= "<?php echo $_SESSION['usuario']['nome']; ?>"
+                                                   readonly/>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="lotacao">Lotação</label>
@@ -374,7 +380,7 @@
                         $('#status', form).val(solicitacao_json.status);
                         $('#observacoes_status', form).val(solicitacao_json.observacoes_status);
                         $('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
-                        $('#data_abertura', form).val(formataData(solicitacao_json.data_abertura));                        
+                        $('#data_abertura', form).val(formataData(solicitacao_json.data_abertura));
                         $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
@@ -466,9 +472,11 @@
                     var seg = jsDate.getSeconds();
                     return (dia + "/" + mes + "/" + ano + " " + hora + ":" + min + ":" + seg);
                 } else {
-                    return "";
+                    return " ";
                 }
             }
+
+
 
         </script>
 <?php
