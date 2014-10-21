@@ -62,8 +62,25 @@
 	                            <td><?php echo $usuario['lotacao'] ?></td>
 	                            <td><?php echo $usuario['cargo'] ?></td>
 	                            <td><?php echo $usuario['telefone'] ?></td>
-	                            <td><?php echo $usuario['tipo_usuario'] ?></td>
-	                            <td><?php echo $usuario['status'] ?></td>
+	                            <td>
+<?php
+                                     if ($usuario['tipo_usuario'] == "A") {
+                                     	echo "Administrador";
+                                     } else {
+                                     	echo "Usuário";
+                                     }
+?>	                            
+	                            </td>
+	                            <td>
+<?php
+                                     if ($usuario['status'] == "A") {
+                                     	echo "Ativo";
+                                     } else {
+                                     	echo "<font color='#FF0000'>Inativo</font>";
+                                     }
+
+?>
+                                </td>
 	                            <td><?php echo $usuario['login'] ?></td>
 	                            <td colspan="2">
 	                                <button class="btn btn-warning btn-sm" 
