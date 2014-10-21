@@ -167,7 +167,7 @@
                     "inner join solicitacao as so " .
                         "on s.id = so.solicitante_id " . 
 				    "inner join tipo_solicitacao as t " .
-	    		        "on t.id = so.tipo_solicitacao_id limit $size offset $start";
+	    		        "on t.id = so.tipo_solicitacao_id order by so.id desc limit $size offset $start";
 			$result = mysql_query($query, $this->connection);
 			while ($row = mysql_fetch_array($result)) {
 				array_push($all, $row);
