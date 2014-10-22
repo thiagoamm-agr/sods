@@ -104,6 +104,10 @@
 				try {
 					$query = "update solicitante set status = 'I' where id = {$usuario->id}";
 					mysql_query($query, $this->connection);
+					if ($usuario->id == $_SESSION['usuario']['id']) {
+						session_unset();
+						session_destroy();
+					}
 				} catch (Exception $e) {
 					echo $e;
 				}
