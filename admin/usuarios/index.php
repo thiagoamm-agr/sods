@@ -280,7 +280,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="fone_ramal">Telefone / Ramal</label>
-                                    <input type="text" class="form-control" name="fone" id="fone" maxlength="30"/>
+                                    <input type="text" class="form-control" name="fone" id="fone"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
@@ -326,6 +326,8 @@
         <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
         
         <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
+        
+        <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
         
         <script type="text/javascript">
             var tipoSolicitacao = null;
@@ -437,6 +439,25 @@
                     validator.resetForm();
                 }
             }
+
+            //Máscara para campo Telefone
+            jQuery(document).ready(function() {
+                //Inicio Mascara Telefone
+                jQuery('input[id=fone]').mask("(99) 9999-9999?9").ready(function(event) {
+                    var target, phone, element;
+                    target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+                    phone = target.value.replace(/\D/g, '');
+                    element = $(target);
+                    element.unmask();
+                    if(phone.length > 10) {
+                        element.mask("(99) 99999-999?9");
+                    } else {
+                        element.mask("(99) 9999-9999?9");
+                    }
+                });
+            });
+            (jQuery);
+            
          </script>
 <?php    
     if (isset($_POST['action']) && isset($_POST['json'])) {
