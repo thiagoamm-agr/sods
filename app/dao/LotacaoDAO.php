@@ -112,7 +112,9 @@
         public function delete($id) {
             if (isset($id)) {
                 $query = "delete from lotacao where id = $id";
-                mysql_query($query, $this->connection);
+                return mysql_query($query, $this->connection);
+            } else {
+                return false;
             }
         }
 
