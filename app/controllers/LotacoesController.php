@@ -34,7 +34,7 @@
         }
 
         public function delete($id) {
-            $this->dao->delete($id);
+            return !$this->dao->delete($id);
         }
 
         public function count($criteria=null) {
@@ -62,5 +62,55 @@
             return $this->dao->rowSet($size, $page * $size - $size);
         }
 
+        public function getGrid($page=1) {
+            $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter\"";
+            $html .= "id=\"tablesorter\">";
+            $html .= "<thead>";
+            $html .= "<tr>";
+            $html .= "<th>ID</th>";
+            $html .= "<th>Nome</th>";
+            $html .= "<th>Sigla</th>";
+            $html .= "<th>Gerência</th>";
+            $html .= "<th class=\"nonSortable\">Ação</th>";
+            $html .= "</tr>";
+            $html .= "</thead>";
+            $html .= "<tbody>";
+            foreach ($this->getRows($page) as $lotacao) {
+                $html .= "<tr>";
+                $html .= "<td>{$lotacao['id']}</td>";
+                $html .= "<td>{$lotacao['nome']}</td>";
+                $html .= "<td>{$lotacao['sigla']}</td>";
+                if (isset($lotacao['gerencia'])) {
+                    $html .= "<td>{$lotacao['gerencia']->sigla}</td>";
+                } else {
+                    $html .= "<td></td>";
+                }
+                $html .= "<td colspan=\"2\">";
+                $html .= "<button"; 
+                $html .= "    class=\"btn btn-warning btn-sm\""; 
+                $html .= "    data-toggle=\"modal\""; 
+                $html .= "    data-target=\"#modal-edit\"";
+                $html .= "    onclick='edit(" . json_encode($lotacao) .")'>";
+                $html .= "    <strong>Editar</strong>";
+                $html .= "</button> ";
+                $html .= "<button";
+                $html .= "    class=\"delete-type btn btn-danger btn-sm\""; 
+                $html .= "    data-toggle=\"modal\""; 
+                $html .= "    data-target=\"#modal-del\"";
+                $html .= "    onclick='del(" . json_encode($lotacao) . ")'>";
+                $html .= "    <strong>Excluir</strong>";
+                $html .= "</button>";
+                $html .= "</td>";
+                $html .= "</tr>";
+            }
+            $html .= "</tbody>";
+            if ($this->count() > 10) {
+                $html .= "<tfoot>";
+                $html .= "<tr><td colspan=\"5\">{$this->paginator}</td></tr>";
+                $html .= "</tfoot>";
+            }
+            $html .= "</table>";
+            return $html;
+        }
     }
 ?>
