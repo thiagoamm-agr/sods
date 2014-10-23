@@ -36,6 +36,17 @@ function LotacaoFormValidator(form) {
                     }
                 }
             }
+        }).on('success.form.bv', function(event) {
+            // Validação bem sucedida
+            event.preventDefault();
+            // Obtem o formulário (o alvo da ação)
+            var f = $(event.target);
+            // Obtem o id da modal
+            var modal = $(f).attr('id').replace('form', '#modal');
+            // Esconde a modal
+            $(modal).modal('hide');
+            // Limpa o formulário
+            $(f).data('bootstrapValidator').resetForm(true);
         })
         this.data = this.form.data('bootstrapValidator');
     }
