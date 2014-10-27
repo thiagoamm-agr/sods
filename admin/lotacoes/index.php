@@ -224,13 +224,22 @@
             <h2>Lotações</h2>
             <div class="row">
                 <div class="col-md-12">
+                    <div class="col-md-11">
+                        <button
+                            id="btn-add"
+                            class="btn btn-primary btn-sm pull-right" 
+                            data-toggle="modal" 
+                            data-target="#modal-add"
+                            onclick="add()">
+                            <b>Adicionar</b>
+                        </button>
+                    </div>
                     <button
-                        id="btn-add"
-                        class="btn btn-primary btn-sm pull-right" 
+                        id="btn-search"
+                        class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
-                        data-target="#modal-add"
-                        onclick="add()">
-                        <b>Adicionar</b>
+                        data-target="#modal-search">
+                        <b>Pesquisar</b>
                     </button>
                 </div>
             </div>
@@ -387,7 +396,46 @@
                         </form>
                     </div>
                 </div>
-            </div><!-- Modais -->
+            </div>
+
+            <!--  Pesquisar -->
+            <div 
+                id="modal-search"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="modal-edit"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
+                            </button>
+                            <h3 class="modal-title">Pesquisar Lotação</h3>
+                        </div>
+                        <form id="form-search" role="form">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nome">Pesquisar por:</label>
+                                    <select 
+                                        id="filtro" 
+                                        name="filtro"
+                                        class="form-control">
+                                        <option id="nome" name="nome">Nome</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Modais -->
              
             <!-- Alerta -->
             <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
