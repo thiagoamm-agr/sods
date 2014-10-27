@@ -238,64 +238,14 @@
                 <div class="col-md-12">&nbsp;</div>
             </div>
             <div id="grid" class="table-responsive">
-                <table class="table table-striped table-bordered table-condensed tablesorter"
-                       id="tablesorter">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Sigla</th>
-                            <th>Gerência</th>
-                            <th class="nonSortable">Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
 <?php
                     if (isset($_GET['p'])) {
                         $page = (int) $_GET['p'];
                     } else {
-                        $page = "";
+                        $page = 1;
                     }
-
-                    foreach ($controller->getRows($page) as $lotacao) {
+                    echo $controller->getGrid($page);
 ?>
-                        <tr>
-                            <td><?php echo $lotacao['id'] ?></td>
-                            <td><?php echo $lotacao['nome'] ?></td>
-                            <td><?php echo $lotacao['sigla'] ?></td>
-                            <td><?php echo isset($lotacao['gerencia']) ? 
-                                $lotacao['gerencia']->sigla : '' ?></td>
-                            <td colspan="2">
-                                <button 
-                                    class="btn btn-warning btn-sm" 
-                                    data-toggle="modal" 
-                                    data-target="#modal-edit"
-                                    onclick='edit(<?php echo json_encode($lotacao) ?>)'>
-                                    <strong>Editar</strong>
-                                </button>
-                                <button 
-                                    class="delete-type btn btn-danger btn-sm" 
-                                    data-toggle="modal" 
-                                    data-target="#modal-del"
-                                    onclick='del(<?php echo json_encode($lotacao) ?>)'>
-                                    <strong>Excluir</strong>
-                                </button>
-                            </td>
-                        </tr>
-<?php
-                    }
-?>
-                    </tbody>
-<?php
-                if ($controller->count() > 10) { 
-?>
-                    <tfoot>
-                        <tr><td colspan="5"><?php echo $controller->paginator ?></td></tr>
-                    </tfoot>
-<?php
-                }
-?>
-                </table>
             </div>
 
             <!--  Modais -->
