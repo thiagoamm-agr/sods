@@ -85,14 +85,14 @@
                 } else {
                     $html .= "<td></td>";
                 }
-                $html .= "<td colspan=\"2\">";
+                $html .= "<td colspan=\"2\" style=\"width: 15%;\">";
                 $html .= "<button"; 
                 $html .= "    class=\"btn btn-warning btn-sm\""; 
                 $html .= "    data-toggle=\"modal\""; 
                 $html .= "    data-target=\"#modal-edit\"";
                 $html .= "    onclick='edit(" . json_encode($lotacao) .")'>";
                 $html .= "    <strong>Editar</strong>";
-                $html .= "</button> ";
+                $html .= "</button>&nbsp;&nbsp;";
                 $html .= "<button";
                 $html .= "    class=\"delete-type btn btn-danger btn-sm\""; 
                 $html .= "    data-toggle=\"modal\""; 
