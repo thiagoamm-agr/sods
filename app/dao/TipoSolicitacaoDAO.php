@@ -54,7 +54,7 @@
                 $values = substr($values, 0, strrpos($values, ", "));
                 if (!empty($columns) && !empty($values)) {
                     $query = "insert into tipo_solicitacao ($columns) values ($values)";
-                    mysql_query($query, $this->connection);
+                    $result=mysql_query($query, $this->connection);
                 }
             }
             return;            
@@ -80,13 +80,13 @@
                                 $pairs .= "$column = {$value}, ";
                             }
                         } else {
-                        	if(gettype($value) == 'string'){
-                        		$pairs .= "$column = '', ";
-                        	} else {
-                        		if(endsWith($column, '_id')){
-                        			$pairs .= "$column = null, ";
-                        		}
-                        	}
+                        if(gettype($value) == 'string'){
+                        $pairs .= "$column = '', ";
+                        } else {
+                        if(endsWith($column, '_id')){
+                        $pairs .= "$column = null, ";
+                        }
+                        }
                         }
                     }
                 }
@@ -127,7 +127,7 @@
                     try {
                         //$query = "update tipo_solicitacao set status = 'I' where id = $values";
                         $query = "delete from tipo_solicitacao where id = {$tipoSolicitacao->id}";
-                        mysql_query($query, $this->connection);
+                       return mysql_query($query, $this->connection);
                     } catch (Exception $e) {
                         echo $e;
                     }
