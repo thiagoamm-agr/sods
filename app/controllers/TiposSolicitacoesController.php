@@ -34,7 +34,7 @@
         }
 
         public function delete($tipoSolicitacao) {
-            return $this->dao->delete($tipoSolicitacao);
+            return !$this->dao->delete($tipoSolicitacao);
         }
 
         public function count($criteria=null) {
@@ -48,6 +48,51 @@
             $this->paginator->pagesize = $size;
             $this->paginator->pagenumber = $page;
             return $this->dao->rowSet($size, $page * $size - $size);
+        }
+        
+        public function getGrid($page=1) {
+        $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter\"";
+        $html .= "id=\"tablesorter\">";
+        $html .= "<thead>";
+        $html .= "<tr>";
+        $html .= "<th>ID</th>";
+        $html .= "<th>Nome do tipo de Solicitação</th>";
+        $html .= "<th>Status</th>";
+        $html .= "<th class=\"nonSortable\">Ação</th>";
+        $html .= "</tr>";
+        $html .= "</thead>";
+        $html .= "<tbody>";
+        foreach ($this->getRows($page) as $tipo) {
+        $html .= "<tr>";
+        $html .= "<td>{$tipo['id']}</td>";
+        $html .= "<td>{$tipo['nome']}</td>";
+        $html .= "<td>{$tipo['status']}</td>";
+        $html .= "<td colspan=\"2\">";
+        $html .= "<button";
+        $html .= "    class=\"btn btn-warning btn-sm\"";
+        $html .= "    data-toggle=\"modal\"";
+        $html .= "    data-target=\"#modal-edit\"";
+        $html .= "    onclick='edit(" . json_encode($tipo) .")'>";
+        $html .= "    <strong>Editar</strong>";
+        $html .= "</button> ";
+        $html .= "<button";
+        $html .= "    class=\"delete-type btn btn-danger btn-sm\"";
+        $html .= "    data-toggle=\"modal\"";
+        $html .= "    data-target=\"#modal-del\"";
+        $html .= "    onclick='del(" . json_encode($tipo) . ")'>";
+        $html .= "    <strong>Excluir</strong>";
+        $html .= "</button>";
+        $html .= "</td>";
+        $html .= "</tr>";
+        }
+        $html .= "</tbody>";
+        if ($this->paginator->totalrecords > 10) {
+        $html .= "<tfoot>";
+        $html .= "<tr><td colspan=\"5\">{$this->paginator}</td></tr>";
+        $html .= "</tfoot>";
+        }
+        $html .= "</table>";
+        return $html;
         }
 
     }
