@@ -6,9 +6,9 @@
 
     // Controllers
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';
-    
+
     $controller = new LotacoesController();
-    
+
     // Identificação e atendimento das ações do usuário pelo controller.
     if (isset($_POST['action'])) {
         // Recuperando os parâmetros da requisição.
@@ -282,7 +282,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
-                                    <select id="gerencia" name="gerencia" class="form-control">
+                                    <select 
+                                        id="gerencia" 
+                                        name="gerencia" 
+                                        class="form-control">
                                         <option value="">SELECIONE UMA GERÊNCIA</option>
                                         <option value="null">Nenhuma</option>
 <?php 
@@ -335,7 +338,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="gerencia">Gerência</label>
-                                    <select id="gerencia" name="gerencia" class="form-control">
+                                    <select 
+                                        id="gerencia" 
+                                        name="gerencia" 
+                                        class="form-control">
                                         <option value="">SELECIONE UMA GERÊNCIA</option>
                                         <option value="null">Nenhuma</option>
 <?php 
@@ -420,16 +426,95 @@
                         <form id="form-search" role="form">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="nome">Pesquisar por:</label>
+                                    <label for="nome">Atributo:</label>
                                     <select 
-                                        id="filtro" 
-                                        name="filtro"
+                                        id="atributo" 
+                                        name="atributo"
                                         class="form-control">
-                                        <option id="nome" name="nome">Nome</option>
+                                        <option id="id" name="id" value="id">ID</option>
+                                        <option id="nome" name="nome" value="nome">NOME</option>
+                                        <option id="sigla" name="sigla" value="sigla">SIGLA</option>
+                                        <option id="gerencia" name="gerencia" value="gerencia_id">GERÊNCIA</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="criterio">Critério:</label>
+                                    <select
+                                        id="criterio"
+                                        name="criterio"
+                                        class="form-control">
+                                        <option 
+                                            id="igual_a" 
+                                            name="igual_a" 
+                                            value="igual_a">IGUAL A
+                                        </option>
+                                        <option 
+                                            id="diferente_de" 
+                                            name="diferente_de" 
+                                            value="diferente_de">
+                                            DIFERENTE DE
+                                        </option>
+                                        <option 
+                                            id="menor_que" 
+                                            name="menor_que" 
+                                            value="menor_que">MENOR QUE
+                                        </option>
+                                        <option 
+                                            id="menor_que_ou_igual_a" 
+                                            name="menor_que_ou_igual_a" 
+                                            value="menor_que_ou_igual_a">MENOR QUE OU IGUAL A
+                                        </option>
+                                        <option 
+                                            id="maior_que" 
+                                            name="maior_que" 
+                                            value="maior_que">MAIOR QUE
+                                        </option>
+                                        <option 
+                                            id="maior_que_ou_igual_a" 
+                                            name="maior_que_ou_igual_a" 
+                                            value="maior_que_ou_igual_a">MAIOR QUE OU IGUAL A
+                                        </option>
+                                        <option 
+                                            id="comeca_com" 
+                                            name="comeca_com" 
+                                            value="comecao_com">COMEÇA COM
+                                        </option>
+                                        <option 
+                                            id="nao_comeca_com" 
+                                            name="nao_comeca_com" 
+                                            value="nao_comeca_com">NÃO COMEÇA COM
+                                        </option>
+                                        <option 
+                                            id="contem" 
+                                            name="contem" 
+                                            value="contem">CONTÉM
+                                        </option>
+                                        <option 
+                                            id="nao_contem" 
+                                            name="nao_contem" 
+                                            value="nao_contem">NÃO CONTÉM
+                                        </option>
+                                        <option 
+                                            id="termina_com" 
+                                            name="termina_com" 
+                                            value="termina_com">TERMINA COM
+                                        </option>
+                                        <option 
+                                            id="nao_termina_com" 
+                                            name="nao_termina_com" 
+                                            value="nao_termina_com">NÃO TERMINA COM
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor:</label>
+                                    <input id="valor" name="valor" type="text" class="form-control" />
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Pesquisar</button>
+                                <button type="button" class="btn btn-default">Limpar</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
