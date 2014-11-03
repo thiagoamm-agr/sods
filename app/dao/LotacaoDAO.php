@@ -131,7 +131,7 @@
 
         public function getAll() {
             $all = array();
-            $query = "select * from lotacao";
+            $query = "select * from lotacao order by nome";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_assoc($result)) {
                 $row['gerencia'] = $this->get('id', $row['gerencia_id']);
