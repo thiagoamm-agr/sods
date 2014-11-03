@@ -126,6 +126,15 @@ if (isset ( $_POST ['action'] )) {
                             $('#alert-del').modal('show');
                         } else {
                             $('#grid').html(data);
+                            $("table thead .nonSortable").data("sorter", false);
+                            $("#tablesorter").tablesorter({
+                                emptyTo: 'none',
+                                theme : 'default',
+                                headerTemplate : '{content}{icon}',
+                                widgetOptions : {
+                                    columns : [ "primary", "secondary", "tertiary" ]
+                                }
+                            });
                             console.log(data);
                         }
                     },
