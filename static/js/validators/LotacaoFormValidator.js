@@ -60,7 +60,7 @@ LotacaoFormValidator.prototype.validate = function() {
     }
     this.valid = valid;
     return valid;
-}
+};
 
 LotacaoFormValidator.prototype.reset = function() {
     if (this.data != null) {
