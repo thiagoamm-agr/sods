@@ -43,6 +43,10 @@
                 echo $controller->getGrid();
                 exit();
                 break;
+            case 'search':
+                echo $controller->search(null, null, null);
+                exit();
+                break;
         }
     }
 ?>
@@ -153,7 +157,7 @@
                                   columns : [ "primary", "secondary", "tertiary" ]
                                 }
                             });
-                            //console.log(data);
+                            console.log(data);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -196,7 +200,7 @@
                             if (data == 'ERRO') {
                                 $('#alert-del').modal('show');
                             }
-                            //console.log(data);
+                            console.log(data);
                             // Recarrega a grid.
                             list();
                         },
@@ -217,9 +221,22 @@
                 }
             }
 
-            function pesquisar() {
-                formPesquisa = $('#form-search');
-                formPesquisaValidator = new PesquisaLotacaoFormValidator(formPesquisa);
+            function search() {
+                $.ajax({
+                    url: '',
+                    type: 'post',
+                    cache: false,
+                    dataType: 'text',
+                    async: true,
+                    data: {
+                        action: 'search',
+                        attribute: $('#atributo').val()
+                    },
+                    success: function(data, status, xhr) {
+                        console.log(data);
+                    }
+                });
+                return false;
             }
 
             function limparFormPesquisa() {
@@ -242,6 +259,11 @@
                 $('#form-del').submit(function(event) {
                     event.preventDefault();
                     save();
+                });
+
+                $('#form-search').submit(function(event) {
+                    event.preventDefault();
+                    search();
                 });
             });
         </script>
@@ -499,8 +521,7 @@
                             <div class="modal-footer">
                                 <button 
                                     type="submit" 
-                                    class="btn btn-success" 
-                                    onclick="pesquisar()">Pesquisar
+                                    class="btn btn-success">Pesquisar
                                 </button>
                                 <button 
                                     type="reset" 
