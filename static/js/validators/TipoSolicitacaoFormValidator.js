@@ -45,7 +45,7 @@ TipoSolicitacaoFormValidator.prototype.validate = function() {
     return valid;
 }
 
-TipoSolicitacaoFormValidator.prototype.resetForm = function() {
+TipoSolicitacaoFormValidator.prototype.reset = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
