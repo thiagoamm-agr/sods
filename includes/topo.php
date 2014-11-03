@@ -112,12 +112,12 @@
                     } else {
                         // Menu do Usuário do Sistema.
 ?>
-                        <li><a href="/sods/admin/account.php">Conta</a></li>
                         <li><a href="/sods/admin/solicitacoes/">Solicitações</a></li>
 <?php 
                     }
 ?>
                         <li class="dropdown"><a class="dropdown-toggle" href="#">Sobre</a></li>
+                        <li class="active"><a href="/sods/admin/account.php">Conta</a></li>
                     </ul>
                     <span style="width: 100px"></span>
                     <ul class="nav navbar-nav navbar-right">
