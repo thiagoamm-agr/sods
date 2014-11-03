@@ -112,5 +112,14 @@
             $html .= "</table>\n";
             return $html;
         }
+
+        public function search($attribute, $criteria, $value) {
+            switch($criteria) {
+                case '':
+                    break;
+            }
+            $criteria = "{attribute}{criteria}{value}";
+            return $this->dao->filter($criteria);
+        }
     }
 ?>
