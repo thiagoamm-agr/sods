@@ -63,53 +63,53 @@
         }
 
         public function getGrid($page=1) {
-            $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter\"";
-            $html .= "id=\"tablesorter\">";
-            $html .= "<thead>";
-            $html .= "<tr>";
-            $html .= "<th>ID</th>";
-            $html .= "<th>Nome</th>";
-            $html .= "<th>Sigla</th>";
-            $html .= "<th>Gerência</th>";
-            $html .= "<th class=\"nonSortable\">Ação</th>";
-            $html .= "</tr>";
-            $html .= "</thead>";
-            $html .= "<tbody>";
+            $html = "<table id=\"tablesorter\"\n";
+            $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
+            $html .= "    <thead>\n";
+            $html .= "        <tr>\n";
+            $html .= "            <th>ID</th>\n";
+            $html .= "            <th>Nome</th>\n";
+            $html .= "            <th>Sigla</th>\n";
+            $html .= "            <th>Gerência</th>\n";
+            $html .= "            <th class=\"nonSortable\">Ação</th>\n";
+            $html .= "        </tr>\n";
+            $html .= "    </thead>\n";
+            $html .= "    <tbody>\n";
             foreach ($this->getRows($page) as $lotacao) {
-                $html .= "<tr>";
-                $html .= "<td>{$lotacao['id']}</td>";
-                $html .= "<td>{$lotacao['nome']}</td>";
-                $html .= "<td>{$lotacao['sigla']}</td>";
+                $html .= "        <tr>\n";
+                $html .= "            <td>{$lotacao['id']}</td>\n";
+                $html .= "            <td>{$lotacao['nome']}</td>\n";
+                $html .= "            <td>{$lotacao['sigla']}</td>\n";
                 if (isset($lotacao['gerencia'])) {
-                    $html .= "<td>{$lotacao['gerencia']->sigla}</td>";
+                    $html .= "        <td>{$lotacao['gerencia']->sigla}</td>\n";
                 } else {
-                    $html .= "<td></td>";
+                    $html .= "        <td></td>\n";
                 }
-                $html .= "<td colspan=\"2\" style=\"width: 15%;\">";
-                $html .= "<button"; 
-                $html .= "    class=\"btn btn-warning btn-sm\""; 
-                $html .= "    data-toggle=\"modal\""; 
-                $html .= "    data-target=\"#modal-edit\"";
-                $html .= "    onclick='edit(" . json_encode($lotacao) .")'>";
-                $html .= "    <strong>Editar</strong>";
-                $html .= "</button>&nbsp;&nbsp;";
-                $html .= "<button";
-                $html .= "    class=\"delete-type btn btn-danger btn-sm\""; 
-                $html .= "    data-toggle=\"modal\""; 
-                $html .= "    data-target=\"#modal-del\"";
-                $html .= "    onclick='del(" . json_encode($lotacao) . ")'>";
-                $html .= "    <strong>Excluir</strong>";
-                $html .= "</button>";
-                $html .= "</td>";
-                $html .= "</tr>";
+                $html .= "            <td colspan=\"2\" style=\"width: 15%;\">\n";
+                $html .= "                <button\n"; 
+                $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
+                $html .= "                    data-toggle=\"modal\"\n"; 
+                $html .= "                    data-target=\"#modal-edit\"\n";
+                $html .= "                    onclick='edit(" . json_encode($lotacao) .")'>\n";
+                $html .= "                    <strong>Editar</strong>\n";
+                $html .= "                </button>&nbsp;&nbsp;\n";
+                $html .= "                <button\n";
+                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
+                $html .= "                    data-toggle=\"modal\"\n"; 
+                $html .= "                    data-target=\"#modal-del\"\n";
+                $html .= "                    onclick='del(" . json_encode($lotacao) . ")'>\n";
+                $html .= "                    <strong>Excluir</strong>\n";
+                $html .= "                </button>\n";
+                $html .= "            </td>\n";
+                $html .= "        </tr>\n";
             }
-            $html .= "</tbody>";
+            $html .= "    </tbody>\n";
             if ($this->count() > 10) {
-                $html .= "<tfoot>";
-                $html .= "<tr><td colspan=\"5\">{$this->paginator}</td></tr>";
-                $html .= "</tfoot>";
+                $html .= "<tfoot>\n";
+                $html .= "    <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
+                $html .= "</tfoot>\n";
             }
-            $html .= "</table>";
+            $html .= "</table>\n";
             return $html;
         }
     }
