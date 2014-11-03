@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrapValidator.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/sods.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/theme.default.css" />
-                
+
         <!--  Javascript -->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -37,25 +37,20 @@
         <script src="/sods/static/bootstrap/js/bootstrapValidator.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
-        
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $("table thead .nonSortable").data("sorter", false);
-                
-                $(function(){
-                    $("#tablesorter").tablesorter(
-                        {
-                            emptyTo: 'none',
-                            theme : 'default',
-                            headerTemplate : '{content}{icon}',
-                            widgetOptions : {
-                              columns : [ "primary", "secondary", "tertiary" ],
-                        }
-                    });
+                $("#tablesorter").tablesorter({
+                    emptyTo: 'none',
+                    theme : 'default',
+                    headerTemplate : '{content}{icon}',
+                    widgetOptions : {
+                        columns : [ "primary", "secondary", "tertiary" ]
+                    }
                 });
             });
         </script>
-        
+
         <title>SODS</title>
     </head>
     <body>
