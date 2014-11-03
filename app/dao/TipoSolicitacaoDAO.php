@@ -143,7 +143,7 @@
         }
         
         public function getAll() {
-            $query = "select * from tipo_solicitacao order by id desc";
+            $query = "select * from tipo_solicitacao order by nome";
         
             $result = mysql_query($query, $this->connection);
             $all = array();
