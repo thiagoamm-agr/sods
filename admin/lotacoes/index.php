@@ -53,12 +53,15 @@
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Lotacao.js"></script>
         <script type="text/javascript" src="/sods/static/js/validators/LotacaoFormValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/PesquisaLotacaoFormValidator.js"></script>
 
         <script type="text/javascript">
             var lotacao = null;
             var action = null;
             var form = null;
+            var formPesquisa = null;
             var formValidator = null;
+            var formPesquisaValidator = null;
             var resposta = null;
 
             function add() {
@@ -139,6 +142,17 @@
                             $('#alert-del').modal('show');
                         } else {
                             $('#grid').html(data);
+
+                            $("table thead .nonSortable").data("sorter", false);
+
+                            $("#tablesorter").tablesorter({
+                                emptyTo: 'none',
+                                theme : 'default',
+                                headerTemplate : '{content}{icon}',
+                                widgetOptions : {
+                                  columns : [ "primary", "secondary", "tertiary" ]
+                                }
+                            });
                             //console.log(data);
                         }
                     },
@@ -201,6 +215,17 @@
                 if (formValidator != null) {
                     formValidator.reset();
                 }
+            }
+
+            function pesquisar() {
+                formPesquisa = $('#form-search');
+                formPesquisaValidator = new PesquisaLotacaoFormValidator(formPesquisa);
+            }
+
+            function limparFormPesquisa() {
+                formPesquisa = $('#form-search');
+                formPesquisaValidator = new PesquisaLotacaoFormValidator(formPesquisa);
+                formPesquisaValidator.reset(); 
             }
 
             $(document).ready(function() {
@@ -271,7 +296,7 @@
                             <h3 class="modal-title" id="modal-add">Adicionar Lotação</h3>
                         </div>
                         <div class="modal-body">
-                            <form id="form-add" role="form" action="/sods/admin/lotacoes" method="post">
+                            <form id="form-add" role="form" action="" method="post">
                                 <div class="form-group">
                                     <label for="nome">Nome</label>
                                     <input type="text" class="form-control" id="nome" name="nome" maxlength="67" />
@@ -389,15 +414,22 @@
                                 aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title">Exclusão de Lotação</h4>
+                            <h4 class="modal-title">Excluir Lotação</h4>
                         </div>
                         <form id="form-del" action="" method="post">
                             <div class="modal-body">
                                 <h5>Confirma exclusão da lotação?</h5>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-danger">Sim</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-danger">Sim
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-primary" 
+                                    data-dismiss="modal">Não
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -423,7 +455,7 @@
                             </button>
                             <h3 class="modal-title">Pesquisar Lotação</h3>
                         </div>
-                        <form id="form-search" role="form">
+                        <form id="form-search" role="form" action="#" method="post">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nome">Atributo:</label>
@@ -431,10 +463,11 @@
                                         id="atributo" 
                                         name="atributo"
                                         class="form-control">
-                                        <option id="id" name="id" value="id">ID</option>
-                                        <option id="nome" name="nome" value="nome">NOME</option>
-                                        <option id="sigla" name="sigla" value="sigla">SIGLA</option>
-                                        <option id="gerencia" name="gerencia" value="gerencia_id">GERÊNCIA</option>
+                                        <option value="">SELECIONE UM ATRIBUTO</option>
+                                        <option value="id">Id</option>
+                                        <option value="nome">Nome</option>
+                                        <option value="sigla">Sigla</option>
+                                        <option value="gerencia_id">Gerência</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -443,67 +476,19 @@
                                         id="criterio"
                                         name="criterio"
                                         class="form-control">
-                                        <option 
-                                            id="igual_a" 
-                                            name="igual_a" 
-                                            value="igual_a">IGUAL A
-                                        </option>
-                                        <option 
-                                            id="diferente_de" 
-                                            name="diferente_de" 
-                                            value="diferente_de">
-                                            DIFERENTE DE
-                                        </option>
-                                        <option 
-                                            id="menor_que" 
-                                            name="menor_que" 
-                                            value="menor_que">MENOR QUE
-                                        </option>
-                                        <option 
-                                            id="menor_que_ou_igual_a" 
-                                            name="menor_que_ou_igual_a" 
-                                            value="menor_que_ou_igual_a">MENOR QUE OU IGUAL A
-                                        </option>
-                                        <option 
-                                            id="maior_que" 
-                                            name="maior_que" 
-                                            value="maior_que">MAIOR QUE
-                                        </option>
-                                        <option 
-                                            id="maior_que_ou_igual_a" 
-                                            name="maior_que_ou_igual_a" 
-                                            value="maior_que_ou_igual_a">MAIOR QUE OU IGUAL A
-                                        </option>
-                                        <option 
-                                            id="comeca_com" 
-                                            name="comeca_com" 
-                                            value="comecao_com">COMEÇA COM
-                                        </option>
-                                        <option 
-                                            id="nao_comeca_com" 
-                                            name="nao_comeca_com" 
-                                            value="nao_comeca_com">NÃO COMEÇA COM
-                                        </option>
-                                        <option 
-                                            id="contem" 
-                                            name="contem" 
-                                            value="contem">CONTÉM
-                                        </option>
-                                        <option 
-                                            id="nao_contem" 
-                                            name="nao_contem" 
-                                            value="nao_contem">NÃO CONTÉM
-                                        </option>
-                                        <option 
-                                            id="termina_com" 
-                                            name="termina_com" 
-                                            value="termina_com">TERMINA COM
-                                        </option>
-                                        <option 
-                                            id="nao_termina_com" 
-                                            name="nao_termina_com" 
-                                            value="nao_termina_com">NÃO TERMINA COM
-                                        </option>
+                                        <option value="">SELECIONE UM CRITÉRIO</option>
+                                        <option value="igual_a">Igual a</option>
+                                        <option value="diferente_de">Diferente de</option>
+                                        <option value="menor_que">Menor que</option>
+                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
+                                        <option value="maior_que">Maior que</option>
+                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
+                                        <option value="comecao_com">Começa com</option>
+                                        <option value="nao_comeca_com">Não começa com</option>
+                                        <option value="contem">Contém</option>
+                                        <option value="nao_contem">Não contém</option>
+                                        <option value="termina_com">Termina com</option>
+                                        <option value="nao_termina_com">Não termina com</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -512,9 +497,21 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Pesquisar</button>
-                                <button type="button" class="btn btn-default">Limpar</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success" 
+                                    onclick="pesquisar()">Pesquisar
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-default"
+                                    onclick="limparFormPesquisa()">Limpar
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal">Cancelar
+                                </button>
                             </div>
                         </form>
                     </div>
