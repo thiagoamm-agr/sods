@@ -1,31 +1,31 @@
 <?php
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/db.php';
-    
+
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/DAO.php';
-    
+
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/TipoSolicitacao.php';
-    
+
     class TipoSolicitacaoDAO implements DAO {
-        
+
         private $connection;
-        
+
         public function __construct() {
             $this->connection = get_db_connection();
         }
-        
+
         public function __destruct() {
             mysql_close($this->connection);
-            unset($connection);
+            unset($this->connection);
         }
-        
+
         public function __get($field) {
             return $this->$field;
         }
-        
+
         public function __set($field, $value) {
             $this->$field = $value;
         }
-        
+
         public function insert($tipoSolicitacao) {
             if (isset($tipoSolicitacao)){
                 $class = new ReflectionClass('TipoSolicitacao');
@@ -57,9 +57,9 @@
                     $result=mysql_query($query, $this->connection);
                 }
             }
-            return;            
+            return;
         }
-        
+
         public function update($tipoSolicitacao) {
             if (isset($tipoSolicitacao)) {
                 $class = new ReflectionClass('TipoSolicitacao');
@@ -97,13 +97,13 @@
                 }
             }
         }
-        
+
         public function save($tipoSolicitacao) {
             if (isset($tipoSolicitacao)){
         
             }
         }
-        
+
         public function delete($tipoSolicitacao) {
             if (isset($tipoSolicitacao)){
                 $class = new ReflectionClass('TipoSolicitacao');
@@ -135,31 +135,29 @@
             }
             return;
         }
-        
+
         public function get($field, $value) {
             if (isset($field) && isset($value)) {
                 
             }
         }
-        
+
         public function getAll() {
-            $query = "select * from tipo_solicitacao order by nome";
-        
+            $query = "select * from tipo_solicitacao order by id desc";
             $result = mysql_query($query, $this->connection);
             $all = array();
             while ($row = mysql_fetch_assoc($result)){
                 array_push($all, $row);
             }
-        
             return $all;
         }
-        
+
         public function filter($criteria) {
             if (isset($criteria)) {
                 
             }
         }
-        
+
         public function count($criteria=null) {
             $query = "select * from tipo_solicitacao";
             if (isset($criteria)) {
@@ -170,9 +168,10 @@
             return $rows;
         }
 
-        public function rowSet($size=10, $start=0) {
+        public function paginate($rows=10, $start=0, $criteria='') {
             $all = array();
-            $query = "select * from tipo_solicitacao limit $size offset $start";
+            $where = $criteria == '' ? $criteria : "where $criteria";
+            $query = "select * from tipo_solicitacao $where limit $rows offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 array_push($all, $row);
