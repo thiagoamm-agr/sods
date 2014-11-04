@@ -76,6 +76,13 @@
          */
         public function count($criteria);
 
-        public function rowSet($size=10, $start=0);
+        /**
+         * Método que realiza a paginação de registros de uma tabela.
+         * 
+         * @param number $rows quantidade de registros a serem retornadas
+         * @param number $start registro inicial da paginação
+         * @param string $criteria critério de escolha ou filtragem de registros
+         */
+        public function paginate($rows=10, $start=0, $criteria='');
     }
 ?>
