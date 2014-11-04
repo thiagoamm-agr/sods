@@ -44,14 +44,13 @@
             return $this->dao->allUser($login);
         }
 
-        public function getRows($page=1, $size=10) {
-            if (empty($page)) {
-                $page = 1;
+        public function getPage($page_number=1, $rows=10) {
+            if (empty($page_number)) {
+                $page_number = 1;
             }
-            $this->paginator->pagesize = $size;
-            $this->paginator->pagenumber = $page;
-            return $this->dao->rowSet($size, $page * $size - $size);
+            $this->paginator->pagesize = $rows;
+            $this->paginator->pagenumber = $page_number;
+            return $this->dao->paginate($rows, $page_number * $rows - $rows);
         }
-
     }
 ?>
