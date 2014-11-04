@@ -69,7 +69,7 @@
                         $('#alert-del').modal('show');
                     } else {
                         $('#grid').html(data);
-                        console.log(data);
+                        //console.log(data);
                     }
                 },
                 error: function(xhr, status, error) {
@@ -82,10 +82,6 @@
         }
 
         function save() {
-            //action = 'edit';
-            //form = $('#form-edit');
-            //var usuario = new Usuario();
-            //usuario.id = $('#id', form).val();
             var id = $('#id', form).val();
             id = id == null ? '' : id;
             if (id != '') {
@@ -260,7 +256,6 @@
                     Dados atualizados com sucesso.
                </div>
             </div>
-        </div>
         
 	</div> <!-- container -->
 <?php
