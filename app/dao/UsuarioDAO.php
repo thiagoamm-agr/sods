@@ -89,6 +89,14 @@
                 if (!empty($pairs)) {
                     $query = "update solicitante set $pairs where id = {$usuario->id}";
                     mysql_query($query, $this->connection);
+                    if ($usuario->id == $_SESSION['usuario']['id']) {
+                        $query = "select s.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao, s.cargo, s.telefone, s.email, s.login, s.senha, 
+            		              s.tipo_usuario, s.status, s.data_criacao, s.data_alteracao from solicitante as s 
+            		              inner join lotacao as l on s.lotacao_id = l.id and 
+            		              s.login = '$usuario->login' and s.senha = '$usuario->senha' and s.status <> 'I';";
+                        $result = mysql_query($query);
+                        $_SESSION['usuario'] = mysql_fetch_array($result);
+                    }
                 }
             }
         }
@@ -120,15 +128,12 @@
         
         public function get($field, $value) {
             if (isset($field) && isset($value)) {
-                if (gettype($value) == 'string' && $field != 's.id') {
+                if (gettype($value) == 'string') {
                     $value = "'$value'";
                 } 
-                //$query = "select * from solicitante where $field = $value";
-                $query = "select s.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao, s.cargo, s.telefone, s.email,
-                		  s.login, s.senha, s.tipo_usuario, s.status, s.data_criacao, s.data_alteracao from
-                		  solicitante as s inner join lotacao as l on s.lotacao_id = l.id and $field = $value";
+                $query = "select * from solicitante where $field = $value";
                 $result = mysql_query($query, $this->connection);
-                return mysql_fetch_assoc($result);
+                return mysql_fetch_object($result);
             }
         }
         
@@ -164,16 +169,17 @@
             return $rows;
         }
         
-        public function rowSet($size=10, $start=0) {
+        public function paginate($rows=10, $start=0, $criteria='') {
         	$all = array();
+        	$where = $criteria == '' ? $criteria : "where $criteria";
         	$query = "select " .
         			"s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
         			"s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
         			"s.data_criacao, s.data_alteracao " .
         			"from " .
-        			"solicitante as s " .
+        			"solicitante as s $where " .
         			"inner join lotacao as l " .
-        			"on s.lotacao_id = l.id order by s.id desc limit $size offset $start";
+        			"on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
         	$result = mysql_query($query, $this->connection);
         	while ($row = mysql_fetch_array($result)) {
         		array_push($all, $row);
