@@ -41,60 +41,59 @@
             return $this->dao->count($criteria);
         }
 
-        public function getRows($page=1, $size=10) {
-            if (empty($page)) {
-                $page = 1;
+        public function getPage($page_number=1, $rows=10) {
+            if (empty($page_number)) {
+                $page_number = 1;
             }
-            $this->paginator->pagesize = $size;
-            $this->paginator->pagenumber = $page;
-            return $this->dao->rowSet($size, $page * $size - $size);
-        }
-        
-        public function getGrid($page=1) {
-        $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter\"";
-        $html .= "id=\"tablesorter\">";
-        $html .= "<thead>";
-        $html .= "<tr>";
-        $html .= "<th>ID</th>";
-        $html .= "<th>Nome do tipo de Solicitação</th>";
-        $html .= "<th>Status</th>";
-        $html .= "<th class=\"nonSortable\">Ação</th>";
-        $html .= "</tr>";
-        $html .= "</thead>";
-        $html .= "<tbody>";
-        foreach ($this->getRows($page) as $tipo) {
-        $html .= "<tr>";
-        $html .= "<td>{$tipo['id']}</td>";
-        $html .= "<td>{$tipo['nome']}</td>";
-        $html .= "<td>{$tipo['status']}</td>";
-        $html .= "<td colspan=\"2\">";
-        $html .= "<button";
-        $html .= "    class=\"btn btn-warning btn-sm\"";
-        $html .= "    data-toggle=\"modal\"";
-        $html .= "    data-target=\"#modal-edit\"";
-        $html .= "    onclick='edit(" . json_encode($tipo) .")'>";
-        $html .= "    <strong>Editar</strong>";
-        $html .= "</button> ";
-        $html .= "<button";
-        $html .= "    class=\"delete-type btn btn-danger btn-sm\"";
-        $html .= "    data-toggle=\"modal\"";
-        $html .= "    data-target=\"#modal-del\"";
-        $html .= "    onclick='del(" . json_encode($tipo) . ")'>";
-        $html .= "    <strong>Excluir</strong>";
-        $html .= "</button>";
-        $html .= "</td>";
-        $html .= "</tr>";
-        }
-        $html .= "</tbody>";
-        if ($this->paginator->totalrecords > 10) {
-        $html .= "<tfoot>";
-        $html .= "<tr><td colspan=\"5\">{$this->paginator}</td></tr>";
-        $html .= "</tfoot>";
-        }
-        $html .= "</table>";
-        return $html;
+            $this->paginator->pagesize = $rows;
+            $this->paginator->pagenumber = $page_number;
+            return $this->dao->paginate($rows, $page_number * $rows - $rows);
         }
 
+        public function getGrid($page_number=1) {
+            $html = "<table\n";
+            $html .= "    id=\"tablesorter\"\n";
+            $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
+            $html .= "    <thead>\n";
+            $html .= "        <tr>\n";
+            $html .= "            <th>ID</th>\n";
+            $html .= "            <th>Nome do tipo de Solicitação</th>\n";
+            $html .= "            <th>Status</th>\n";
+            $html .= "            <th class=\"nonSortable\">Ação</th>\n";
+            $html .= "        </tr>\n";
+            $html .= "    </thead>\n";
+            $html .= "    <tbody>\n";
+            foreach ($this->getPage($page_number) as $tipo) {
+                $html .= "        <tr>\n";
+                $html .= "            <td>{$tipo['id']}</td>\n";
+                $html .= "            <td>{$tipo['nome']}</td>\n";
+                $html .= "            <td>{$tipo['status']}</td>\n";
+                $html .= "            <td colspan=\"2\">\n";
+                $html .= "                <button\n";
+                $html .= "                    class=\"btn btn-warning btn-sm\"\n";
+                $html .= "                    data-toggle=\"modal\"\n";
+                $html .= "                    data-target=\"#modal-edit\"\n";
+                $html .= "                    onclick='edit(" . json_encode($tipo) .")'>\n";
+                $html .= "                    <strong>Editar</strong>\n";
+                $html .= "                </button> ";
+                $html .= "                <button\n";
+                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n";
+                $html .= "                    data-toggle=\"modal\"\n";
+                $html .= "                    data-target=\"#modal-del\"\n";
+                $html .= "                    onclick='del(" . json_encode($tipo) . ")'>\n";
+                $html .= "                    <strong>Excluir</strong>\n";
+                $html .= "                </button>\n";
+                $html .= "            </td>\n";
+                $html .= "        </tr>\n";
+            }
+            $html .= "    </tbody>\n";
+            if ($this->paginator->totalrecords > 10) {
+                $html .= "    <tfoot>\n";
+                $html .= "        <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
+                $html .= "    </tfoot>\n";
+            }
+            $html .= "</table>\n";
+            return $html;
+        }
     }
-
 ?>
