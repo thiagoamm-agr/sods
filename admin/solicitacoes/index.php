@@ -55,9 +55,9 @@
                         $page = '';
                     }
                     
-                    if (!(empty($controller->getRows()))) {
+                    if (!(empty($controller->getPage()))) {
                     
-                    	foreach ($controller->getRows($page) as $solicitacao) {
+                    	foreach ($controller->getPage($page) as $solicitacao) {
 
 ?>
 	                        <tr>
