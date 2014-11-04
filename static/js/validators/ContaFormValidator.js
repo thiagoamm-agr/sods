@@ -61,14 +61,6 @@ function ContaFormValidator(form) {
                             message: 'Login é um campo de preenchimento obrigatório'
                         }
                     }
-                },
-                tipoUsuario: {
-                	trigger: 'blur',
-                	validators: {
-                		notEmpty: {
-                			message: 'Tipo de Usuario é um campo de preenchimento obrigatório'
-                		}
-                	}
                 }
             }
         }).on('success.form.bv', function(event) {
