@@ -40,11 +40,15 @@
                 exit();
                 break;
             case 'list':
-                echo $controller->getGrid();
+                $page = isset($_POST['p']) ? $_POST['p'] : 1;
+                echo $controller->getGrid($page);
                 exit();
                 break;
             case 'search':
-                echo $controller->search(null, null, null);
+                $attribute = isset($_POST['attribute']) ? $_POST['attribute'] : '';
+                $criteria = isset($_POST['criteria']) ? $_POST['criteria'] : '';
+                $value = isset($_POST['value']) ? $_POST['value'] : '';
+                echo $controller->search($attribute, $criteria, $value);
                 exit();
                 break;
         }
@@ -130,7 +134,23 @@
                 }
             }
 
-            function list() {
+            function createAJAXPagination() {
+                $('.pagination-css').on({
+                    click: function(e) {
+                        var page = $(this).attr('id');
+                        page = page.replace('pg_', '');
+                        page = page.replace('pn_', '');
+                        page = page.replace('pl_', '');
+                        page = page.replace('pp_', '');
+                        page = page.replace('p_', '');
+                        list(page);
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+            }
+
+            function list(page) {
                 $.ajax({
                     type: 'post',
                     url: '/sods/admin/lotacoes/',
@@ -139,16 +159,19 @@
                     timeout: 70000,
                     async: true,
                     data: {
-                        action: 'list'
+                        action: 'list',
+                        p: page
                     },
                     success: function(data, status, xhr) {
                         if (data == 'ERRO') {
                             $('#alert-del').modal('show');
                         } else {
+                            // Carrega o HTML da Grid.
                             $('#grid').html(data);
-
+                            // Paginação AJAX na Grid.
+                            createAJAXPagination();
+                            // Ordenação dos resultados da Grid.
                             $("table thead .nonSortable").data("sorter", false);
-
                             $("#tablesorter").tablesorter({
                                 emptyTo: 'none',
                                 theme : 'default',
@@ -157,6 +180,7 @@
                                   columns : [ "primary", "secondary", "tertiary" ]
                                 }
                             });
+                            // Mostra saída no console do Firebug.
                             console.log(data);
                         }
                     },
@@ -167,6 +191,7 @@
                         //console.log('A requisição foi completada.');
                     }
                 });
+                return false;
             }
 
             function save() {
@@ -202,7 +227,8 @@
                             }
                             console.log(data);
                             // Recarrega a grid.
-                            list();
+                            var page = 1;
+                            list(page);
                         },
                         error: function(xhr, status, error) {
                             // console.log(error);
@@ -223,17 +249,20 @@
 
             function search() {
                 $.ajax({
-                    url: '',
+                    url: '/sods/admin/lotacoes/',
                     type: 'post',
                     cache: false,
                     dataType: 'text',
                     async: true,
                     data: {
                         action: 'search',
-                        attribute: $('#atributo').val()
+                        attribute: $('#atributo').val(),
+                        criteria: $('#criterio').val(),
+                        value: $('#valor').val()
                     },
                     success: function(data, status, xhr) {
                         console.log(data);
+                        $('#grid').html(data);
                     }
                 });
                 return false;
@@ -265,6 +294,8 @@
                     event.preventDefault();
                     search();
                 });
+
+                createAJAXPagination();
             });
         </script>
         <div class="container">
@@ -295,12 +326,15 @@
             </div>
             <div id="grid" class="table-responsive">
 <?php
+/*
+                    Lista os registros sem usar AJAX.
                     if (isset($_GET['p'])) {
                         $page = (int) $_GET['p'];
                     } else {
                         $page = 1;
                     }
-                    echo $controller->getGrid($page);
+*/
+                    echo $controller->getGrid(1);
 ?>
             </div>
 
@@ -477,7 +511,7 @@
                             </button>
                             <h3 class="modal-title">Pesquisar Lotação</h3>
                         </div>
-                        <form id="form-search" role="form" action="#" method="post">
+                        <form id="form-search" role="form" method="post">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nome">Atributo:</label>
