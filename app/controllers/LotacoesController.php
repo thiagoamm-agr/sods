@@ -11,8 +11,12 @@
             parent::__construct();
             $this->dao = new LotacaoDAO();
             $this->paginator->totalrecords = $this->dao->count();
+            // Com AJAX
             $this->paginator->defaultUrl="/sods/admin/lotacoes/";
-            $this->paginator->paginationUrl="/sods/admin/lotacoes/index.php?p=[p]";
+            $this->paginator->paginationUrl="/sods/admin/lotacoes/";
+            // Sem AJAX
+            //$this->paginator->defaultUrl="/sods/admin/lotacoes/";
+            //$this->paginator->paginationUrl="/sods/admin/lotacoes/index.php?p=[p]";
         }
 
         public function __destruct() {
@@ -53,16 +57,18 @@
             return $this->dao->filter('gerencia_id is null');
         }
 
-        public function getRows($page=1, $size=10) {
-            if (empty($page)) {
-                $page = 1;
+        public function getPage($page_number=1, $rows=10) {
+            if (empty($page_number)) {
+                $page_number = 1;
             }
-            $this->paginator->pagesize = $size;
-            $this->paginator->pagenumber = $page;
-            return $this->dao->rowSet($size, $page * $size - $size);
+            $this->paginator->pagesize = $rows;
+            $this->paginator->pagenumber = $page_number;
+            return $this->dao->paginate($rows, $page_number * $rows - $rows);
         }
 
-        public function getGrid($page=1) {
+        public function getGrid($page_number=1, $lotacoes=null) {
+            $lotacoes = empty($lotacoes) ? $this->getPage($page_number) : $lotacoes;
+            if (count($lotacoes) > 0) {
             $html = "<table id=\"tablesorter\"\n";
             $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
             $html .= "    <thead>\n";
@@ -75,7 +81,7 @@
             $html .= "        </tr>\n";
             $html .= "    </thead>\n";
             $html .= "    <tbody>\n";
-            foreach ($this->getRows($page) as $lotacao) {
+            foreach ($lotacoes as $lotacao) {
                 $html .= "        <tr>\n";
                 $html .= "            <td>{$lotacao['id']}</td>\n";
                 $html .= "            <td>{$lotacao['nome']}</td>\n";
@@ -110,16 +116,25 @@
                 $html .= "</tfoot>\n";
             }
             $html .= "</table>\n";
+            } else {
+                $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
+                $html .= "    <center><b>Não há registros de solicitações.</b></center>\n";
+                $html .= "</div>\n";
+            }
             return $html;
         }
 
-        public function search($attribute, $criteria, $value) {
-            switch($criteria) {
-                case '':
-                    break;
+        public function search($attribute, $criteria, $value, $page=1) {
+            if (!empty($attribute) && !empty($criteria) || !empty($value)) {
+                switch ($criteria) {
+                    case 'igual_a':
+                        $criteria = '=';
+                        break;
+                }
+                $criteria = "{$attribute}{$criteria}{$value}";
+                $lotacoes = $this->dao->filter($criteria);
+                return $this->getGrid($page, $lotacoes);
             }
-            $criteria = "{attribute}{criteria}{value}";
-            return $this->dao->filter($criteria);
         }
     }
 ?>
