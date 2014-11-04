@@ -25,10 +25,11 @@
 		switch ($action) {
 			case 'edit':
 		        $controller->edit($usuario);
+		        $_SESSION['usuario'] = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
 		        exit();
 		        break;
 			case 'list':
-				echo $controller->getForm();
+				echo $controller->getForm($_SESSION['usuario']['id']);
 				exit();
 		        break;
 		}
@@ -87,8 +88,6 @@
             //usuario.id = $('#id', form).val();
             var id = $('#id', form).val();
             id = id == null ? '' : id;
-            form = $('#form-edit');
-            formValidator = new ContaFormValidator(form);
             if (id != '') {
                 var usuario = new Usuario();
                 var json = null;
@@ -113,8 +112,8 @@
                 if (usuario.senha == '') {
                     usuario.senha = "<?php echo $_SESSION['usuario']['senha']?>";
                 }else if (usuario.senha != "<?php echo $_SESSION['usuario']['senha']?>") {
-                    var psw = usuario2.senha;
-                    usuario2.senha = CryptoJS.MD5(psw);
+                    var psw = usuario.senha;
+                    usuario.senha = CryptoJS.MD5(psw);
                 }
                 
                 json = usuario.toJSON();
@@ -131,10 +130,8 @@
                         'json': json
                     },
                     success: function(data, status, xhr) {
-                        if (data == 'ERRO') {
-                            $('#alert-del').modal('show');
-                        }
                         //console.log(data);
+                        $('#alert-upd').modal('show');
                         // Recarrega a grid.
                         list();
                     },
@@ -155,17 +152,16 @@
             }
         }
 
-        function limpar() {
-            if (validator != null) {
-                validator.resetForm();
-            }
-        }
-
         $(document).ready(function() {
+
+            form = $('#form-edit');
+            formValidator = new ContaFormValidator(form);
+
             $('#form-edit').submit(function(event) {
                 event.preventDefault();
                 save();                
             });
+
             var fone = $('#fone');
             var mascara = "(99) 9999-9999?9";
             if (fone.val().length > 10) {
@@ -181,9 +177,13 @@
 		        <div>
 		        	<h2>Conta</h2>
 		        </div>
+<?php 
+                $usuario = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
+?>
                 <div class="form-group">
 					<label for="nome">Nome</label>
-					<input type="text" id="nome" name="nome" class="form-control" value="<?php echo $_SESSION['usuario']['nome'] ?>" />
+					<input type="text" id="nome" name="nome" class="form-control" 
+					       value="<?php echo $usuario['nome'] ?>" />
 				</div>		  
 				<div class="form-group">
 					<label for="lotacao">Lotação</label>
@@ -203,19 +203,23 @@
 				</div>
 				<div class="form-group">
 					<label for="cargo">Cargo</label>
-					<input type="text" id="cargo" name="cargo" class="form-control" value="<?php echo $_SESSION['usuario']['cargo']?>" />
+					<input type="text" id="cargo" name="cargo" class="form-control" 
+					       value="<?php echo $usuario['cargo']?>" />
 				</div>		  
 				<div class="form-group">
 				   	<label for="fone">Telefone / Ramal</label>
-				   	<input type="text" id="fone" name="fone" class="form-control" value="<?php echo $_SESSION['usuario']['telefone']?>"/>
+				   	<input type="text" id="fone" name="fone" class="form-control" 
+				   	       value="<?php echo $usuario['telefone']?>"/>
 				</div>		  
 				<div class="form-group">
 					<label for="email">E-mail</label>
-					<input type="email" id="email" name="email" class="form-control" value="<?php echo $_SESSION['usuario']['email']?>"/>
+					<input type="email" id="email" name="email" class="form-control" 
+					       value="<?php echo $usuario['email']?>"/>
 				</div>
 				<div class="form-group">
 					<label for="login">Login</label>
-					<input type="text" id="login" name="login" class="form-control" value="<?php echo $_SESSION['usuario']['login']?>" readonly />
+					<input type="text" id="login" name="login" class="form-control" 
+					       value="<?php echo $usuario['login']?>" readonly />
 				</div>
 				<div class="form-group">
 				    <label for="senha">Senha</label>
@@ -224,27 +228,40 @@
 				<div class="form-group">
 				    <input type="hidden" 
 				           id="id" 
-				           name="id" value="<?php echo $_SESSION['usuario']['id']?>"/>
+				           name="id" value="<?php echo $usuario['id']?>"/>
 				    <input type="hidden" 
 				           id="status" 
-				           name="status" value="<?php echo $_SESSION['usuario']['status']?>"/>
+				           name="status" value="<?php echo $usuario['status']?>"/>
 				    <input type="hidden" 
 				           id="data_criacao" 
-				           name="data_criacao" value="<?php echo $_SESSION['usuario']['data_criacao']?>"/>
+				           name="data_criacao" value="<?php echo $usuario['data_criacao']?>"/>
 				    <input type="hidden" 
 				           id="data_alteracao" 
-				           name="data_alteracao" value="<?php echo $_SESSION['usuario']['data_alteracao']?>"/>
+				           name="data_alteracao" value="<?php echo $usuario['data_alteracao']?>"/>
 				    <input type="hidden" 
 				           id="tipo_usuario" 
-				           name="tipo_usuario" value="<?php echo $_SESSION['usuario']['tipo_usuario']?>"/>
+				           name="tipo_usuario" value="<?php echo $usuario['tipo_usuario']?>"/>
 				</div>
 				<div class="btn-toolbar pull-right form-footer">
                     <button type="submit" class="btn btn-success">Salvar</button>
-                    <button type="reset" class="btn btn-default" onclick="limpar()">Limpar</button>
+                    <button type="reset" class="btn btn-default" onclick="resetForm()">Resetar</button>
                 </div>
 				
 			</div>
 		</form>
+		
+		<!-- Alerta -->
+            <div class="modal fade" id="alert-upd" tabindex="-1" role="dialog" aria-labelledby="" 
+                aria-hidden="true">
+                <div class="alert alert-success fade in" role="alert">
+                    <button type="button" class="close" onclick="$('#alert-upd').modal('toggle');">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                    </button>
+                    Dados atualizados com sucesso.
+               </div>
+            </div>
+        </div>
+        
 	</div> <!-- container -->
 <?php
 	@include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
