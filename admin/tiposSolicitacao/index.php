@@ -126,23 +126,14 @@ if (isset ( $_POST ['action'] )) {
                             $('#alert-del').modal('show');
                         } else {
                             $('#grid').html(data);
-                            $("table thead .nonSortable").data("sorter", false);
-                            $("#tablesorter").tablesorter({
-                                emptyTo: 'none',
-                                theme : 'default',
-                                headerTemplate : '{content}{icon}',
-                                widgetOptions : {
-                                    columns : [ "primary", "secondary", "tertiary" ]
-                                }
-                            });
-                            console.log(data);
                         }
+                        console.log(data);
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
                     },
                     complete: function(xhr, status) {
-                        console.log('A requisição foi completada.');
+                        //console.log('A requisição foi completada.');
                     }
                 });
             }
@@ -155,8 +146,8 @@ if (isset ( $_POST ['action'] )) {
                         case 'edit':
                             tipoSolicitacao.nome = $('#nome', form).val();
                             tipoSolicitacao.status = $(
-                                    '#form-' + action  + ' input:checkbox[name="status"]:checked'
-                                ).val();
+                                '#form-' + action  + ' input:checkbox[name="status"]:checked'
+                            ).val();
                             if (tipoSolicitacao.status != "A") {
                                 tipoSolicitacao.status = "I";
                             }
@@ -183,7 +174,7 @@ if (isset ( $_POST ['action'] )) {
                             if (data == 'ERRO') {
                                 $('#alert-del').modal('show');
                             }
-                            //console.log(data);
+                            console.log(data);
                             list();
                         },
                         error: function(xhr, status, error) {
