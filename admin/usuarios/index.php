@@ -52,9 +52,9 @@
                     	$page = '';
                     }
                     
-                    if (!(empty($controller->getRows()))) {
+                    if (!(empty($controller->getPage()))) {
 
-                    	foreach ($controller->getRows($page) as $usuario) {
+                    	foreach ($controller->getPage($page) as $usuario) {
 ?>
 	                        <tr>
 	                            <td><?php echo $usuario['id'] ?></td>
