@@ -83,7 +83,7 @@ ContaFormValidator.prototype.validate = function() {
     }
     this.valid = valid;
     return valid;
-}
+};
 
 ContaFormValidator.prototype.reset = function() {
     if (this.data != null) {
