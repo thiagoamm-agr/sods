@@ -1,5 +1,5 @@
 <?php
-    /* Cadastro de Lotações */
+    // Cadastro de Lotações
 
     // Models
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';
