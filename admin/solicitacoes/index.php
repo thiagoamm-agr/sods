@@ -455,7 +455,7 @@
                                                 <select id="tipo_solicitacao_id" 
                                                         name="tipo_solicitacao_id" 
                                                         class="form-control">
-                                                        <option value="">SELECIONE UM TIPO DE LOTAÇÃO</option>
+                                                        <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
 <?php 
                                                         foreach ($tiposSolicitacoes as $tipos){
 ?>
