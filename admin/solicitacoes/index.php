@@ -416,7 +416,7 @@
                                                    readonly/>
                                         </div>
                                         <div class="col-sm-6">
-  										<label for="lotacao">Lotação</label>
+                                            <label for="lotacao">Lotação</label>
                                             <input type="text" 
                                                    class="form-control" 
                                                    name="lotacao" 
