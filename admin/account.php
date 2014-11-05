@@ -65,20 +65,23 @@
                     action: 'list'
                 },
                 success: function(data, status, xhr) {
+                	console.log(data);
                     if (data == 'ERRO') {
-                        $('#alert-del').modal('show');
+                        $('#alert-del').modal('show');                        
                     } else {
-                        $('#grid').html(data);
-                        //console.log(data);
-                    }
+                        $('#grid').html(data);                        
+                        var usuario_nome = $(data).find('#nome').val()
+                        $('#usuario_nome').text(usuario_nome);
+                    }                    
                 },
                 error: function(xhr, status, error) {
-                    // console.log(error);
+                    console.log(error);
                 },
                 complete: function(xhr, status) {
                     //console.log('A requisição foi completada.');
                 }
             });
+            return false;
         }
 
         function save() {
@@ -87,15 +90,13 @@
             if (id != '') {
                 var usuario = new Usuario();
                 var json = null;
-
-                //variáveis escondidas no formulário
+                // Variáveis escondidas no formulário
                 usuario.id = id;
                 usuario.status = $('#status', form).val();
                 usuario.data_criacao = $('#data_criacao', form).val();
                 usuario.data_alteracao = $('#data_alteracao', form).val();
                 usuario.tipo_usuario = $('#tipo_usuario', form).val();
-
-                //variáveis visíveis no formulário
+                // Variáveis visíveis no formulário
                 usuario.nome = $('#nome', form).val();
                 usuario.lotacao_id = $('#lotacao_id', form).val();
                 usuario.cargo = $('#cargo', form).val();
@@ -103,11 +104,10 @@
                 usuario.email = $('#email', form).val();
                 usuario.login = $('#login', form).val();
                 usuario.senha = $('#senha', form).val();
-
-                //se a senha foi editada, ela é criptografada.
+                // Se a senha foi editada, ela é criptografada.
                 if (usuario.senha == '') {
-                    usuario.senha = "<?php echo $_SESSION['usuario']['senha']?>";
-                }else if (usuario.senha != "<?php echo $_SESSION['usuario']['senha']?>") {
+                    usuario.senha = "<?php echo $_SESSION['usuario']['senha'] ?>";
+                } else if (usuario.senha != "<?php echo $_SESSION['usuario']['senha'] ?>") {
                     var psw = usuario.senha;
                     usuario.senha = CryptoJS.MD5(psw);
                 }
@@ -126,13 +126,14 @@
                         'json': json
                     },
                     success: function(data, status, xhr) {
-                        //console.log(data);
+                        console.log(data);
+                        // Mostra mensagem de operação bem sucedida.
                         $('#alert-upd').modal('show');
                         // Recarrega a grid.
                         list();
                     },
                     error: function(xhr, status, error) {
-                        // console.log(error);
+                        console.log(error);
                     },
                     complete: function(xhr, status) {
                         //console.log('A requisição foi completada.');
@@ -149,15 +150,14 @@
         }
 
         $(document).ready(function() {
-
+            // Associando um validador ao formulário.
             form = $('#form-edit');
             formValidator = new ContaFormValidator(form);
-
             $('#form-edit').submit(function(event) {
                 event.preventDefault();
                 save();                
             });
-
+            // Máscara telefone.
             var fone = $('#fone');
             var mascara = "(99) 9999-9999?9";
             if (fone.val().length > 10) {
@@ -168,7 +168,7 @@
     </script>
 		
     <div class="container">
-        <form role="form" id="form-edit" action="" method="post">
+        <form role="form" id="form-edit" method="post">
 		    <div id="grid" class="table-responsive">
 		        <div>
 		        	<h2>Conta</h2>
