@@ -35,13 +35,13 @@ function SolicitacaoFormValidator(form) {
                      }
                 },
                 tipo_solicitacao_id: {
-                	trigger: 'blur',
-                	group: '.col-sm-6',
-                	validator: {
-                		notEmpty: {
-                			message: 'Tipo de solicitação é um campo de preenchimento obrigatório.'
-                		}
-                	}
+                    trigger: 'blur change',
+                    group: '.col-sm-6',
+                    validators: {
+                        notEmpty: {
+                            message: 'Tipo de Solicitação é um campo de preenchimento obrigatório.'
+                        }
+                    }
                 }
             }
         });
