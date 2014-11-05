@@ -150,8 +150,8 @@
             }
 
             function limpar() {
-                if (validator != null) {
-                    validator.resetForm();
+                if (formValidator != null) {
+                    formValidator.reset();
                 }
             }
             
@@ -476,7 +476,7 @@
                                             onclick="save()">Salvar</button>
                                     <button type="reset"
                                             class="btn btn-default"
-                                            onclick="reset()">Limpar</button>
+                                            onclick="limpar()">Limpar</button>
                                     <button type="button" 
                                             class="btn btn-default" 
                                             data-dismiss="modal">Fechar</button>
