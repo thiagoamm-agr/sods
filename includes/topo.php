@@ -120,7 +120,7 @@
                             <a href="/sods/admin/account.php">
                                 Bem-vindo(a), 
                                 <font color="white">
-                                    <b><?php echo $_SESSION['usuario']['nome'];?></b>
+                                    <b><span id="usuario_nome"><?php echo $_SESSION['usuario']['nome'];?></span></b>
                                 </font>.
                             </a>
                         </li>
