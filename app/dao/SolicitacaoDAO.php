@@ -162,23 +162,23 @@
 
         public function paginate($rows=10, $start=0, $criteria='') {
             $all = array();
-            $where = $criteria == '' ? $criteria : "where $criteria ";
-            $query = "select " . 
-                        "so.id, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento, " .
-                        "so.info_adicionais, so.observacoes, so.status, so.observacoes_status, " .
-                        "so.data_abertura, so.data_alteracao, " .
-                        "t.nome as tipo_solicitacao, t.id as tipo_solicitacao_id" .
-                    "from " . 
-                        "solicitante as s " . 
-                    "inner join " . 
-                        "solicitacao as so " .
-                        "on s.id = so.solicitante_id " . 
-                    "inner join " . 
-                        "tipo_solicitacao as t " .
-                        "on t.id = so.tipo_solicitacao_id " .
+            $where = $criteria == '' ? $criteria : "where\n\t$criteria\n ";
+            $query = "select\n" . 
+                        "\tso.id, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
+                        "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
+                        "\tso.data_abertura, so.data_alteracao,\n " .
+                        "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
+                    "from\n" . 
+                        "\tsolicitante as s\n" . 
+                    "inner join\n" . 
+                        "\tsolicitacao as so on s.id = so.solicitante_id\n" . 
+                    "inner join\n" . 
+                        "\ttipo_solicitacao as t on t.id = so.tipo_solicitacao_id\n" .
                     "$where" . 
-                    "order by so.id desc " . 
-                    "limit $rows offset $start";
+                    "order by\n" . 
+                        "\tso.id desc\n" . 
+                    "limit $rows\n" . 
+                    "offset $start\n";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 array_push($all, $row);
