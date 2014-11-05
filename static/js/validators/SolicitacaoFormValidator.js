@@ -58,7 +58,7 @@ SolicitacaoFormValidator.prototype.validate = function() {
     return valid;
 };
 
-SolicitacaoFormValidador.prototype.resetForm = function() {
+SolicitacaoFormValidator.prototype.reset = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
