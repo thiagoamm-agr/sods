@@ -145,7 +145,7 @@
                             'action': action,
                             'json': solicitacao.toJSON()
                         }
-                    }); 
+                    });                     
                 }
             }
 
@@ -154,7 +154,7 @@
                     validator.resetForm();
                 }
             }
-
+            
             function formataData(data_antiga) {
                 if(data_antiga != null) {
                     var data = data_antiga.split("-");
@@ -416,18 +416,13 @@
                                                    readonly/>
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="lotacao">Lotação</label>
-                                            <select id="lotacao" name="lotacao" class="form-control">
-<?php 
-                                        foreach ($lotacoes as $lotacao){
-?>
-                                            <option value="<?php echo $lotacao['id'] ?>">
-                                                <?php echo trim($lotacao['nome']) ?>
-                                            </option>
-<?php
-                                        } 
-?>
-                                            </select>
+  										<label for="lotacao">Lotação</label>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   name="lotacao" 
+                                                   id="lotacao"
+                                                   value= "<?php echo $_SESSION['usuario']['nome_lotacao']; ?>"
+                                                   readonly/>
                                         </div>
                                     </div>
                                 </div>
@@ -515,6 +510,16 @@
                 </div>
             </div> <!--  modais -->
         </div> <!-- container -->
+            <!-- Alerta -->
+            <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
+                aria-hidden="true">
+                <div class="alert alert-danger fade in" role="alert">
+                    <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                    </button>
+                    <strong>ERRO:</strong> Não é possível excluir um registro com referências.
+               </div>
+            </div>        
 <?php
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
