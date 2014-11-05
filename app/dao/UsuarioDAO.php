@@ -89,14 +89,6 @@
                 if (!empty($pairs)) {
                     $query = "update solicitante set $pairs where id = {$usuario->id}";
                     mysql_query($query, $this->connection);
-                    if ($usuario->id == $_SESSION['usuario']['id']) {
-                        $query = "select s.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao, s.cargo, s.telefone, s.email, s.login, s.senha, 
-            		              s.tipo_usuario, s.status, s.data_criacao, s.data_alteracao from solicitante as s 
-            		              inner join lotacao as l on s.lotacao_id = l.id and 
-            		              s.login = '$usuario->login' and s.senha = '$usuario->senha' and s.status <> 'I';";
-                        $result = mysql_query($query);
-                        $_SESSION['usuario'] = mysql_fetch_array($result);
-                    }
                 }
             }
         }
