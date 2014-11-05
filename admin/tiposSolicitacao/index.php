@@ -69,63 +69,107 @@
 
         function edit(tipoSolicitacao_json) {
             try {
-                if (tipoSolicitacao_json.status == 'A') {
-                    //document.getElementById('statusEdit').setAttribute("checked","checked");
-                    $('#statusEdit').prop('checked', true);
-                } else {
-                    //document.getElementById('statusEdit').removeAttribute("checked");
-                    $('#statusEdit').prop('checked', false);
-                }
                 if (tipoSolicitacao_json != null) {
-                        action = 'edit';
-                        modal='modal-edit';
-                        form = $('#form-' + action);
-                        formValidator = new TipoSolicitacaoFormValidator(form);
-                        $('#nome', form).val(tipoSolicitacao_json.nome);
-                        tipoSolicitacao = new TipoSolicitacao();
-                        tipoSolicitacao.id = tipoSolicitacao_json.id;
+                    action = 'edit';
+                    modal = 'modal-edit';
+                    form = $('#form-edit');
+                    tipoSolicitacao = new TipoSolicitacao();
+                    tipoSolicitacao.id = tipoSolicitacao_json.id;
+                    $('#nome', form).val(tipoSolicitacao_json.nome);
+                    if (tipoSolicitacao.status == 'A') {
+                        $('#status', form).prop('checked', true);
                     } else {
-                        throw 'Não é possível editar uma alteração que não existe.';
+                        $('#status', form).prop('checked', false);
                     }
-                } catch(e) {
-                    alert(e);
+                    formValidator = new TipoSolicitacaoFormValidator(form);
+                } else {
+                    throw 'Não é possível editar um tipo de lotação inexistente!';
                 }
+            } catch(e) {
+                alert(e);
             }
+        }
 
-            function del(tipoSolicitacao_json) {
-                 try {
-                        if (tipoSolicitacao_json != null) {
-                            action = 'delete';
-                            tipoSolicitacao = new TipoSolicitacao();
-                            tipoSolicitacao.id = tipoSolicitacao_json.id;
-                            tipoSolicitacao.nome = tipoSolicitacao_json.nome;
-                            tipoSolicitacao.status = tipoSolicitacao_json.status;
-                            form = $('#form-del');
-                            formValidator = new TipoSolicitacaoFormValidator(form)
-                        }
-                    } catch(e) {
-                        alert(e);
+        function del(tipoSolicitacao_json) {
+            try {
+                 if (tipoSolicitacao_json != null) {
+                     action = 'delete';
+                     tipoSolicitacao = new TipoSolicitacao();
+                     tipoSolicitacao.id = tipoSolicitacao_json.id;
+                     tipoSolicitacao.nome = tipoSolicitacao_json.nome;
+                     tipoSolicitacao.status = tipoSolicitacao_json.status;
+                     form = $('#form-del');
+                     formValidator = new TipoSolicitacaoFormValidator(form)
+                }
+            } catch(e) {
+                alert(e);
+            }
+        }
+
+        function list(){
+            $.ajax({
+                type: 'post',
+                url: '/sods/admin/tiposSolicitacao/',
+                dataType: 'text',
+                cache: false,
+                timeout: 70000,
+                async: true,
+                data: {
+                    action: 'list'
+                },
+                success: function(data, status, xhr) {
+                    console.log(data);
+                    if (data == 'ERRO') {
+                        $('#alert-del').modal('show');
+                    } else {
+                        $('#grid').html(data);
                     }
-            }
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                },
+                complete: function(xhr, status) {
+                    //console.log('A requisição foi completada.');
+                }
+            });
+        }
 
-            function list(){
+        function save() {
+            if (tipoSolicitacao != null) {
+                var json = null;
+                switch (action) {
+                    case 'add':
+                    case 'edit':
+                        tipoSolicitacao.nome = $('#nome', form).val();
+                        if ($('#status', form).prop('checked')) {
+                            tipoSolicitacao.status = 'A';
+                        } else {
+                            tipoSolicitacao.status = 'I';
+                        }
+                        json = tipoSolicitacao.toJSON();
+                        break;
+                    case 'delete':
+                        json = tipoSolicitacao.toJSON();
+                        break;
+                }
+                // Requisição AJAX
                 $.ajax({
                     type: 'post',
                     url: '/sods/admin/tiposSolicitacao/',
                     dataType: 'text',
                     cache: false,
                     timeout: 70000,
-                    async: true,
+                    async: false,
                     data: {
-                        action: 'list'
+                        'action': action,
+                        'json': json
                     },
                     success: function(data, status, xhr) {
                         console.log(data);
                         if (data == 'ERRO') {
                             $('#alert-del').modal('show');
-                        } else {
-                            $('#grid').html(data);
                         }
+                        list();
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
@@ -135,85 +179,38 @@
                     }
                 });
             }
+            return false;
+        }
 
-            function save() {
-                if (tipoSolicitacao != null) {
-                    var json = null;
-                    switch (action) {
-                        case 'add':
-                        case 'edit':
-                            tipoSolicitacao.nome = $('#nome', form).val();
-                            tipoSolicitacao.status = $(
-                               '#form-' + 
-                                action  + 
-                                ' input:checkbox[name="status"]:checked'
-                            ).val();
-                            if (tipoSolicitacao.status != "A") {
-                                tipoSolicitacao.status = "I";
-                            }
-                            json = tipoSolicitacao.toJSON();
-                            break;
-                        case 'delete':
-                            json = tipoSolicitacao.toJSON();
-                            break;
-                    }
-
-                    // Requisição AJAX
-                    $.ajax({
-                        type: 'post',
-                        url: '/sods/admin/tiposSolicitacao/',
-                        dataType: 'text',
-                        cache: false,
-                        timeout: 70000,
-                        async: false,
-                        data: {
-                            'action': action,
-                            'json': json
-                        },
-                        success: function(data, status, xhr) {
-                            console.log(data);
-                            if (data == 'ERRO') {
-                                $('#alert-del').modal('show');
-                            }
-                            list();
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(error);
-                        },
-                        complete: function(xhr, status) {
-                            //console.log('A requisição foi completada.');
-                        }
-                    });
-                }
-                return false;
+        function resetForm() {
+            if (formValidator != null) {
+                formValidator.reset();
             }
+        }
 
-            function resetForm() {
-                document.getElementById('statusEdit').removeAttribute("checked");
-                if (formValidator != null) {
-                    formValidator.reset();
-                }
-            }
-
-            $(document).ready(function() {
-                $('#form-add').submit(function(event) {
-                    event.preventDefault();
-                    save();
-                });
-
-                $('#form-edit').submit(function(event) {
-                    event.preventDefault();
-                    save();
-                });
-
-                $('#form-del').submit(function(event) {
-                    event.preventDefault();
-                    save();
-                });
+        $(document).ready(function() {
+            $('#form-add').submit(function(event) {
+                event.preventDefault();
+                save();
             });
-            
 
-        </script>
+            $('#form-del').submit(function(event) {
+                event.preventDefault();
+                save();
+            });
+
+            $('#status', '#form-edit').click(function(event) {
+                if ($(this).prop('checked')) {
+                    $(this).val('A');
+                } else {
+                    $(this).val('I');
+                }
+                alert($(this).val());
+            });
+        });
+    </script>
+
+        <!-- Container -->
         <div class="container">
             <h2>Tipos de Solicitação</h2>
             <div class="row">
@@ -309,8 +306,8 @@
                         </div>
                         <div class="form-group">
                             <input 
-                                id="statusEdit" 
-                                type="checkbox" 
+                                type="checkbox"
+                                id="status"
                                 name="status" 
                                 value="A" 
                                 checked="checked" />&nbsp; Ativar
