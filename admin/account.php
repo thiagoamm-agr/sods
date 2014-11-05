@@ -104,10 +104,8 @@
                 usuario.email = $('#email', form).val();
                 usuario.login = $('#login', form).val();
                 usuario.senha = $('#senha', form).val();
-                // Se a senha foi editada, ela é criptografada.
-                if (usuario.senha == '') {
-                    usuario.senha = "<?php echo $_SESSION['usuario']['senha'] ?>";
-                } else if (usuario.senha != "<?php echo $_SESSION['usuario']['senha'] ?>") {
+
+                if (usuario.senha != "") {
                     var psw = usuario.senha;
                     usuario.senha = CryptoJS.MD5(psw);
                 }
