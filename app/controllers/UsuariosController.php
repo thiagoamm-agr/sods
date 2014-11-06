@@ -31,7 +31,7 @@
         }
 
         public function delete($usuario) {
-            $this->dao->delete($usuario);
+            return $this->dao->delete($usuario);
         }
 
         public function edit($usuario) {
@@ -53,6 +53,76 @@
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
             return $this->dao->paginate($rows, $page_number * $rows - $rows);
+        }
+        
+        public function getGrid() {
+        	$html = "<table class=\"table table-striped table-bordered table-condensed tablesorter tablesorter-default\" role=\"grid\"";
+        	$html .= "id=\"tablesorter\">";
+        	$html .= "<thead><tr>";
+        	
+        	$html .= "<th>ID</th>";
+        	$html .= "<th>Nome</th>";
+        	$html .= "<th>Lotação</th>";
+        	$html .= "<th>Cargo</th>";
+        	$html .= "<th>Telefone/Ramal</th>";
+        	$html .= "<th>Tipo de Usuário</th>";
+        	$html .= "<th>Status</th>";
+        	$html .= "<th>Login</th>";
+        	$html .= "<th class=\"nonSortable\">Ação</th>";
+        	
+        	$html .= "</tr></thead>";
+        	if (isset($_GET['p'])) {
+        		$page = (int) $_GET['p'];
+        	} else {
+        		$page = '';
+        	}
+        	if (!(empty($this->getPage()))) {
+        		foreach ($this->getPage($page) as $usuario) {
+        			$html .= "<tr>";
+        			$html .= "<td>{$usuario['id']}</td>";
+        			$html .= "<td>{$usuario['nome_sol']}</td>";
+        			$html .= "<td>{$usuario['lotacao']}</td>";
+        			$html .= "<td>{$usuario['cargo']}</td>";
+        			$html .= "<td>{$usuario['telefone']}</td>";
+        			$html .= "<td>";
+        			if($usuario['tipo_usuario'] == "A") {
+        				$html .= "Administrador";
+        			} else {
+        				$html .= "Usuário";
+        			}
+        			$html .= "</td>";
+        			$html .= "<td>";
+        			if ($usuario['status'] == "A") {
+        				$html .= "Ativo";
+        			} else {
+        				$html .= "<font color='#FF0000'>Inativo</font>";
+        			}
+        			$html .= "</td>";
+        			$html .= "<td>{$usuario['login']}</td>";
+        			$html .= "<td colspan=\"2\">";
+        			$html .= "<button class=\"btn btn-warning btn-sm\" ";
+        			$html .= "data-toggle=\"modal\"";
+        			$html .= "data-target=\"#modal-edit\"";
+        			$html .= "onclick='edit(" . json_encode($usuario) .")'><strong>Editar</strong></button> &nbsp";
+        			$html .= "<button class=\"btn btn-danger btn-sm\"";
+        			$html .= "data-toggle=\"modal\"";
+        			$html .= "data-target=\"#modal-del\"";
+        			$html .= "onclick='del(" . json_encode($usuario) .")'><strong>Excluir</strong></button>";
+        			$html .= "</td>";
+        			$html .= "</tr>";
+        		}
+        		$html .= "</tbody>";
+        		if ($this->count() > 10) {
+        			$html .= "<tfoot><tr><td colspan=\"10\">{$this->paginator}</td></tr></tfoot>";
+        		}
+        		$html .= "</table>";
+        	} else {
+        		$html .= "</tbody></table>";
+        		$html .= "<div class=\"alert alert-danger\" role=\"alert\">";
+        		$html .= "<center><br>Não há registros de usuários</b></center>";
+        		$html .= "</div>";
+        	}
+        	return $html;
         }
 
         public function getForm($id) {
