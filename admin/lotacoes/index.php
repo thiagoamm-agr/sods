@@ -299,7 +299,8 @@
             });
         </script>
         <div class="container">
-            <h2>Lotações</h2>
+            <h2>Lotações&nbsp;<span class="glyphicon glyphicon-th-list"
+            						style="font-size: 75%"></span></h2>
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-11">
@@ -309,7 +310,7 @@
                             data-toggle="modal" 
                             data-target="#modal-add"
                             onclick="add()">
-                            <b>Adicionar</b>
+                            <b>Adicionar&nbsp;<span class="glyphicon glyphicon-plus"></span></b>
                         </button>
                     </div>
                     <button
@@ -317,9 +318,9 @@
                         class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
                         data-target="#modal-search">
-                        <b>Pesquisar</b>
+                        <b>Pesquisar&nbsp;<span class="glyphicon glyphicon-search"></span></b>
                     </button>
-                </div>
+               </div>
             </div>
             <div class="row">
                 <div class="col-md-12">&nbsp;</div>
