@@ -298,9 +298,9 @@
                 createAJAXPagination();
             });
         </script>
+        <!--  Container -->
         <div class="container">
-            <h2>Lotações&nbsp;<span class="glyphicon glyphicon-th-list"
-                                    style="font-size: 75%"></span></h2>
+            <h2>Lotações</h2>
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-11">
@@ -310,7 +310,7 @@
                             data-toggle="modal" 
                             data-target="#modal-add"
                             onclick="add()">
-                            <b>Adicionar&nbsp;<span class="glyphicon glyphicon-plus"></span></b>
+                            <b>Adicionar</b>
                         </button>
                     </div>
                     <button
@@ -318,13 +318,15 @@
                         class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
                         data-target="#modal-search">
-                        <b>Pesquisar&nbsp;<span class="glyphicon glyphicon-search"></span></b>
+                        <b>Pesquisar</b>
                     </button>
-               </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12">&nbsp;</div>
             </div>
+
+            <!-- Grid -->
             <div id="grid" class="table-responsive">
 <?php
 /*
@@ -337,7 +339,7 @@
 */
                     echo $controller->getGrid(1);
 ?>
-            </div>
+            </div><!-- /Grid -->
 
             <!--  Modais -->
 
@@ -460,7 +462,7 @@
 
             <!-- Excluir Lotação -->
             <div class="modal fade" id="modal-del" tabindex="-1" role="dialog" 
-                aria-labelledby="modal-del" aria-hidden="true">
+            aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -468,8 +470,7 @@
                                 type="button" 
                                 class="close" 
                                 data-dismiss="modal" 
-                                aria-hidden="true">
-                                &times;
+                                aria-hidden="true">&times;
                             </button>
                             <h4 class="modal-title">Excluir Lotação</h4>
                         </div>
@@ -498,8 +499,8 @@
                 id="modal-search"
                 class="modal fade"
                 tabindex="-1"
-                role="dialog"
-                aria-labelledby="modal-edit"
+                role="dialog" 
+                aria-labelledby="modal-edit" 
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -572,19 +573,18 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            <!-- Modais -->
+            </div><!-- /Modais -->
              
-            <!-- Alerta -->
-            <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
-                aria-hidden="true">
+            <!-- Alertas -->
+            <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-del" aria-hidden="true">
                 <div class="alert alert-danger fade in" role="alert">
                     <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                     </button>
                     <strong>ERRO:</strong> Não é possível excluir um registro com referências.
                </div>
-            </div>
+            </div><!-- Alertas -->
         </div><!-- Container -->
 <?php
     // Rodapé
