@@ -76,7 +76,7 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="/sods/admin/">
-                                Início
+                                <b>Início</b>&nbsp;<span style="color:white" class="glyphicon glyphicon-home"></span>
                             </a>
                         </li>
 <?php 
@@ -85,7 +85,7 @@
 ?>                            
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Cadastros <span class="caret"></span>
+                                <b>Cadastros</b> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/sods/admin/lotacoes/">Cadastro de Lotações</a></li>
@@ -96,7 +96,7 @@
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Relatórios <span class="caret"></span>
+                                <b>Relatórios</b> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Relatório de Usuários</a></li>
@@ -111,8 +111,10 @@
 <?php 
                     }
 ?>
-                        <li class="dropdown"><a class="dropdown-toggle" href="#">Sobre</a></li>
-                        <li class="active"><a href="/sods/admin/account.php">Conta</a></li>
+                        <li><a href="/sods/admin/account.php"><b>Conta</b>
+                        <span class="glyphicon glyphicon-cog" style="color:white"></span></a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" href="#"><b>Sobre</b>
+                        	<span class="glyphicon glyphicon-info-sign" style="color:white;" ></span></a></li>
                     </ul>
                     <span style="width: 100px"></span>
                     <ul class="nav navbar-nav navbar-right">
@@ -121,6 +123,7 @@
                                 Bem-vindo(a), 
                                 <font color="white">
                                     <b><span id="usuario_nome"><?php echo $_SESSION['usuario']['nome'];?></span></b>
+                                    &nbsp;<span class="glyphicon glyphicon-user"></span>
                                 </font>.
                             </a>
                         </li>
@@ -133,7 +136,7 @@
                                     id="btnSair" 
                                     type="submit" 
                                     class="btn btn-success btn-sm pull-right">
-                                    <strong>Sair</strong>
+                                    <strong>Sair&nbsp; <span class="glyphicon glyphicon-log-out"></span></strong>
                                 </button>
                             </form>
                         </li>
