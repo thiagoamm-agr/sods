@@ -68,24 +68,24 @@
                 $html .= "            <td>{$tipo['id']}</td>\n";
                 $html .= "            <td>{$tipo['nome']}</td>\n";
                 $html .= "            <td>{$tipo['status']}</td>\n";
-                $html .= "            <td colspan=\"2\">\n";
-                $html .= "                <button\n";
-                $html .= "                    class=\"btn btn-warning btn-sm\"\n";
-                $html .= "                    data-toggle=\"modal\"\n";
+                $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
+                $html .= "                <button\n"; 
+                $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
+                $html .= "                    data-toggle=\"modal\"\n"; 
                 $html .= "                    data-target=\"#modal-edit\"\n";
                 $html .= "                    onclick='edit(" . json_encode($tipo) .")'>\n";
-                $html .= "                    <strong>Editar</strong>\n";
-                $html .= "                </button> ";
+                $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
+                $html .= "                </button>&nbsp;&nbsp;\n";
                 $html .= "                <button\n";
-                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n";
-                $html .= "                    data-toggle=\"modal\"\n";
+                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
+                $html .= "                    data-toggle=\"modal\"\n"; 
                 $html .= "                    data-target=\"#modal-del\"\n";
                 $html .= "                    onclick='del(" . json_encode($tipo) . ")'>\n";
-                $html .= "                    <strong>Excluir</strong>\n";
+                $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                 $html .= "                </button>\n";
                 $html .= "            </td>\n";
                 $html .= "        </tr>\n";
-            }
+                            }
             $html .= "    </tbody>\n";
             if ($this->paginator->totalrecords > 10) {
                 $html .= "    <tfoot>\n";

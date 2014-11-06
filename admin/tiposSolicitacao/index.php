@@ -212,12 +212,16 @@
 
         <!-- Container -->
         <div class="container">
-            <h2>Tipos de Solicitação</h2>
+            <h2>Tipos de Solicitação&nbsp;<span class="glyphicon glyphicon-th-list"
+                                                style="font-size: 75%">
+            </span></h2>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
-                        data-target="#modal-add" onclick="add()">
-                        <b>Adicionar</b>
+                    <button class="btn btn-primary btn-sm pull-right" 
+                            data-toggle="modal"
+                            data-target="#modal-add" 
+                            onclick="add()">
+                            <b>Adicionar&nbsp;<span class="glyphicon glyphicon-plus"></span></b>
                     </button>
                 </div>
             </div>
