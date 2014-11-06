@@ -28,7 +28,8 @@
                         <input type="checkbox" value="remember-me"> Lembre-me
                       </label>
                     </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Entrar&nbsp;   <span class="glyphicon glyphicon-log-in"></span></button>
                   </form>
                 </div> 
 <?php
@@ -42,7 +43,7 @@
     } else if (isset($_POST['login']) && isset($_POST['senha'])) {
 ?>
             <div class='alert alert-danger' role='alert'>
-                <center><b>Login inválido.</b></center>
+                <center><b>Login inválido&nbsp;<span class="glyphicon glyphicon-remove"></span></b></center>
             </div>
 <?php 
     }
