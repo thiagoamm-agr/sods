@@ -70,7 +70,7 @@
                         $('#alert-del').modal('show');                        
                     } else {
                         $('#grid').html(data);                        
-                        var usuario_nome = $(data).find('#nome').val()
+                        var usuario_nome = $(data).find('#nome').val();
                         $('#usuario_nome').text(usuario_nome);
                     }                    
                 },
