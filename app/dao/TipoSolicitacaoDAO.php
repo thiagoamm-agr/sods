@@ -80,13 +80,13 @@
                                 $pairs .= "$column = {$value}, ";
                             }
                         } else {
-                        if(gettype($value) == 'string'){
-                        $pairs .= "$column = '', ";
-                        } else {
-                        if(endsWith($column, '_id')){
-                        $pairs .= "$column = null, ";
-                        }
-                        }
+                            if (gettype($value) == 'string') {
+                                $pairs .= "$column = '', ";
+                            } else {
+                                if (endsWith($column, '_id')) {
+                                    $pairs .= "$column = null, ";
+                                }
+                            }
                         }
                     }
                 }
