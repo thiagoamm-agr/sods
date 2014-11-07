@@ -37,7 +37,8 @@
     			exit();
     			break;
     		case 'list':
-    			echo $controller->getGrid();
+    			$page = isset($_POST['p']) ? $_POST['p'] : 1;
+    			echo $controller->getGrid($page);
     			exit();
     			break;
     	}
@@ -124,7 +125,23 @@
             }
         }
 
-        function list() {
+        function createAJAXPagination() {
+            $('.pagination-css').on({
+                click: function(e) {
+                    var page = $(this).attr('id');
+                    page = page.replace('pg_', '');
+                    page = page.replace('pn_', '');
+                    page = page.replace('pl_', '');
+                    page = page.replace('pp_', '');
+                    page = page.replace('p_', '');
+                    list(page);
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        function list(page) {
             $.ajax({
                 type: 'post',
                 url: '/sods/admin/usuarios/',
@@ -134,6 +151,7 @@
                 async: true,
                 data: {
                     action: 'list',
+                    p: page
                 },
                 success: function (data, status, xhr) {
                     if (data == 'ERRO') {
@@ -142,6 +160,8 @@
                     } else {
                         // Carrega o HTML da Grid.
                         $('#grid').html(data);
+                        // Paginação AJAX na Grid.
+                        createAJAXPagination();
                         //Ordenação dos registros da Grid
                         $("table thead .nonSortable").data("sorter", false);
                         $("#tablesorter").tablesorter({
@@ -151,8 +171,7 @@
                             widgetOptions : {
                               columns : [ "primary", "secondary", "tertiary" ]
                             }
-                        });
-                        
+                        });                        
                     }
                     // Mostra saída no console do Firebug.
                     console.log(data);
@@ -214,7 +233,8 @@
                         }
                         console.log(data);
                         // Recarrega a grid.
-                        list();
+                        var page = 1;
+                        list(page);
                     },
                     error: function(xhr, status, error) {
                         // console.log(error);
@@ -249,7 +269,7 @@
                 save();
             });
 
-         	// Máscara telefone.
+         	//Máscara telefone.
             var fone = $('#fone');
             var mascara = "(99) 9999-9999?9";
             if (fone.val().length > 10) {
@@ -257,25 +277,8 @@
             }
             fone.mask(mascara);
 
+            createAJAXPagination();
         });
-        
-        /*Máscara para campo Telefone
-        jQuery(document).ready(function() {
-            //Inicio Mascara Telefone
-            jQuery('input[id=fone]').mask("(99) 9999-9999?9").ready(function(event) {
-                var target, phone, element;
-                target = (event.currentTarget) ? event.currentTarget : event.srcElement;
-                phone = target.value.replace(/\D/g, '');
-                element = $(target);
-                element.unmask();
-                if(phone.length > 10) {
-                    element.mask("(99) 99999-999?9");
-                } else {
-                    element.mask("(99) 9999-9999?9");
-                }
-            });
-        });
-        (jQuery);*/
     </script>
         
     <div class="container">
@@ -295,7 +298,7 @@
         </div>
         <div id="grid" class="table-responsive">
 <?php 
-            echo $controller->getGrid();
+            echo $controller->getGrid(1);
 ?>
         </div>
 
@@ -445,6 +448,7 @@
                             <div class="form-group">
                                 <label for="lotacao">Lotação</label>
                                 <select id="lotacao" name="lotacao" class="form-control">
+                                <option value="">SELECIONE UMA LOTAÇÃO</option>
 <?php
                                     foreach ($lotacoes as $lotacao){
 ?>
@@ -461,7 +465,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="fone">Telefone / Ramal</label>
-                                <input type="text" class="form-control" name="fone" id="fone"/>
+                                <input id="fone" name="fone" type="text" class="form-control" maxlength="30" />
                             </div>
                             <div class="form-group">
                                 <label for="email">E-mail</label>
