@@ -50,6 +50,7 @@
     <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>  
     <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
+        <script type="text/javascript" src="/sods/static/js/md5.js"></script>
     
     <script type="text/javascript">
         var usuario = null;
@@ -181,10 +182,12 @@
                         usuario.senha = $('#senha', form).val();
                         usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
                         usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
-                        json = usuario.toJSON();
                         if (action == 'add') {
                             usuario.status = "";
+                            var psw = usuario.senha;
+                            usuario.senha = CryptoJS.MD5(psw);
                         }
+                        json = usuario.toJSON();
                         break;
                     case 'delete':
                         json = usuario.toJSON();
@@ -291,99 +294,8 @@
             <div class="col-md-12">&nbsp;</div>
         </div>
         <div id="grid" class="table-responsive">
-            <table class="table table-striped table-bordered table-condensed tablesorter"
-                   id="tablesorter">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nome</th>
-                        <th>Lotação</th>
-                        <th>Cargo</th>
-                        <th>Telefone/Ramal</th>
-                        <th>Tipo de Usuário</th>
-                        <th>Status</th>
-                        <th>Login</th>
-                        <th class="nonSortable">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-<?php
-                    //$controller = new UsuariosController();
-                    
-                    if (isset($_GET['p'])) {
-                    	$page = (int) $_GET['p'];
-                    } else {
-                    	$page = '';
-                    }
-                    
-                    if (!(empty($controller->getPage()))) {
-
-                    	foreach ($controller->getPage($page) as $usuario) {
-?>
-	                    <tr>
-	                        <td><?php echo $usuario['id'] ?></td>
-	                        <td><?php echo $usuario['nome_sol'] ?></td>
-	                        <td><?php echo $usuario['lotacao'] ?></td>
-	                        <td><?php echo $usuario['cargo'] ?></td>
-	                        <td><?php echo $usuario['telefone'] ?></td>
-	                        <td>
-<?php
-                                 if ($usuario['tipo_usuario'] == "A") {
-                                 	echo "Administrador";
-                                 } else {
-                                 	echo "Usuário";
-                                 }
-?>	                            
-	                        </td>
-	                        <td>
-<?php
-                                 if ($usuario['status'] == "A") {
-                                 	echo "Ativo";
-                                 } else {
-                                 	echo "<font color='#FF0000'>Inativo</font>";
-                                 }
-
-?>
-                            </td>
-	                        <td><?php echo $usuario['login'] ?></td>
-	                        <td colspan="2">
-	                            <button class="btn btn-warning btn-sm" 
-	                                    data-toggle="modal" data-target="#modal-edit" 
-	                                    onclick='edit(<?php echo json_encode($usuario)?>)'>
-	                                    <strong>Editar</strong>
-	                            </button>
-	                            <button class="btn btn-danger btn-sm" 
-	                                    data-toggle="modal" 
-	                                    data-target="#modal-del"
-	                                    onclick='del(<?php echo json_encode($usuario)?>)'>
-	                                <strong>Excluir</strong>
-	                            </button>
-	                        </td>
-	                    </tr>
-<?php
-                    	}
-?>
-                </tbody>
 <?php 
-                if ($controller->count() > 10) {
-?>                    
-                <tfoot> 
-                    <tr><td colspan="10"><?php echo $controller->paginator ?></td></tr>
-                </tfoot>
-<?php
-                    }
-?>
-            </table>
-<?php 
-                    } else {
-?> 
-                </tbody>
-            </table>
-            <div class='alert alert-danger' role='alert'>
-                <center><b>Não há registros de usuários.</b></center>
-            </div>
-<?php 
-                    }              
+            echo $controller->getGrid();
 ?>
         </div>
 
@@ -493,16 +405,16 @@
                         </button>
                         <h4 class="modal-title" id="modal-del">Exclusão de Usuário</h4>
                     </div>
-                    <form id="form-del" action="" role="form" method="post">
+                    <form id="form-del" action="" method="post">
                         <div class="modal-body">
                             <h5>Confirma exclusão de usuário?</h5>
                         </div>
                         <div class="modal-footer">
                             <button 
-                                type="submit" 
+                                type="submit"
                                 class="btn btn-danger">Sim
                             </button>
-                            <button 
+                            <button
                                 type="button" 
                                 class="btn btn-primary" 
                                 data-dismiss="modal">Não
@@ -564,7 +476,7 @@
                                        class="form-control" 
                                        name="senha" 
                                        id="senha" 
-                                       value="<?php echo md5(12345)?>"/>
+                                       value="12345"/>
                             </div>
                             <div class="form-group">
                                 <div>
