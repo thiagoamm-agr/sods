@@ -164,7 +164,10 @@
                     },
                     success: function(data, status, xhr) {
                         if (data == 'ERRO') {
-                            $('#alert-del').modal('show');
+                            $('#alert-modal').modal('show');
+                            window.setTimeout(function() {
+                                $('#alert-modal').modal('hide');
+                            }, 3000);
                         } else {
                             // Carrega o HTML da Grid.
                             $('#grid').html(data);
@@ -223,7 +226,10 @@
                         },
                         success: function(data, status, xhr) {
                             if (data == 'ERRO') {
-                                $('#alert-del').modal('show');
+                                $('#alert-modal').modal('show');
+                                window.setTimeout(function() {
+                                    $('#alert-modal').modal('hide');
+                                }, 3000);
                             }
                             console.log(data);
                             // Recarrega a grid.
@@ -241,7 +247,7 @@
                 return false;
             }
 
-            function resetForm() {
+            function clean() {
                 if (formValidator != null) {
                     formValidator.reset();
                 }
@@ -274,6 +280,7 @@
                 formPesquisaValidator.reset(); 
             }
 
+            // Associando eventos após o carregamento da página.
             $(document).ready(function() {
                 $('#form-add').submit(function(event) {
                     event.preventDefault();
@@ -295,6 +302,10 @@
                     search();
                 });
 
+                $('#modal-add').on('hide.bs.modal', function () {
+                    clean();
+                });
+
                 createAJAXPagination();
             });
         </script>
@@ -311,6 +322,7 @@
                             data-target="#modal-add"
                             onclick="add()">
                             <b>Adicionar</b>
+                            <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </div>
                     <button
@@ -319,6 +331,7 @@
                         data-toggle="modal" 
                         data-target="#modal-search">
                         <b>Pesquisar</b>
+                        <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
             </div>
@@ -385,8 +398,9 @@
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-success">
                                         Salvar
+                                        <span class="glyphicon glyphicon-floppy-save"></span>
                                     </button>
-                                    <button type="reset" class="btn btn-default" onclick="resetForm()">
+                                    <button type="reset" class="btn btn-default" onclick="clean()">
                                         Limpar
                                     </button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -442,11 +456,12 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-success" >Salvar
+                                        <span class="glyphicon glyphicon-floppy-save"></span>
                                     </button>
                                     <button 
                                         type="reset" 
                                         class="btn btn-default" 
-                                        onclick="resetForm()">Limpar
+                                        onclick="clean()">Limpar
                                     </button>
                                     <button 
                                         type="button" 
@@ -482,6 +497,7 @@
                                 <button 
                                     type="submit" 
                                     class="btn btn-danger">Sim
+                                    <span class="glyphicon glyphicon-floppy-save"></span>
                                 </button>
                                 <button 
                                     type="button" 
@@ -576,13 +592,14 @@
             </div><!-- /Modais -->
              
             <!-- Alertas -->
-            <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" 
+            <div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-del" aria-hidden="true">
                 <div class="alert alert-danger fade in" role="alert">
-                    <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
+                    <button type="button" class="close" onclick="$('#alert-modal').modal('toggle');">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                     </button>
-                    <strong>ERRO:</strong> Não é possível excluir um registro com referências.
+                    <strong>ERRO:</strong>
+                    <span id="alert-msg">Não é possível excluir um registro com referências.</span>
                </div>
             </div><!-- Alertas -->
         </div><!-- Container -->
