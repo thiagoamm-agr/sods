@@ -57,7 +57,6 @@
                     $result=mysql_query($query, $this->connection);
                 }
             }
-            return;
         }
 
         public function update($tipoSolicitacao) {
@@ -132,8 +131,9 @@
                         echo $e;
                     }
                 }
+            }else{
+                return false;
             }
-            return;
         }
 
         public function get($field, $value) {

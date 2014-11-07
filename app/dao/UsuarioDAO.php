@@ -60,7 +60,6 @@
                     mysql_query($query, $this->connection);
                 }
             }
-            return;
         }
         
         public function update($usuario) {
@@ -102,20 +101,19 @@
         }
         
         public function delete($usuario) {
-			if (isset($usuario)){
-				try {
-					$query = "update solicitante set status = 'I' where id = {$usuario->id}";
-					mysql_query($query, $this->connection);
-					if ($usuario->id == $_SESSION['usuario']['id']) {
-						session_unset();
-						session_destroy();
-					}
-				} catch (Exception $e) {
-					echo $e;
-				}
-				
-			}
-			return;
+            if (isset($usuario)){
+                try {
+                    $query = "update solicitante set status = 'I' where id = {$usuario->id}";
+                    mysql_query($query, $this->connection);
+                    if ($usuario->id == $_SESSION['usuario']['id']) {
+                        session_unset();
+                        session_destroy();
+                    }
+                } catch (Exception $e) {
+                    echo $e;
+                }     
+            }
+            return;
         }
         
         public function get($field, $value) {
@@ -155,8 +153,8 @@
         
         public function count($criteria = null){
             $query = "select * from solicitante";
-        	if (isset($criteria)){
-        		$query .= "where $criteria";
+            if (isset($criteria)){
+                $query .= "where $criteria";
             }
             $result = mysql_query($query, $this->connection);
             $rows = mysql_num_rows($result);
@@ -164,21 +162,21 @@
         }
         
         public function paginate($rows=10, $start=0, $criteria='') {
-        	$all = array();
-        	$where = $criteria == '' ? $criteria : "where $criteria";
-        	$query = "select " .
-        			"s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
-        			"s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
-        			"s.data_criacao, s.data_alteracao " .
-        			"from " .
-        			"solicitante as s $where " .
-        			"inner join lotacao as l " .
-        			"on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
-        	$result = mysql_query($query, $this->connection);
-        	while ($row = mysql_fetch_array($result)) {
-        		array_push($all, $row);
-        	}
-        	return $all;
+            $all = array();
+            $where = $criteria == '' ? $criteria : "where $criteria";
+            $query = "select " .
+                    "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
+                    "s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
+                    "s.data_criacao, s.data_alteracao " .
+                    "from " .
+                    "solicitante as s $where " .
+                    "inner join lotacao as l " .
+                    "on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
+            $result = mysql_query($query, $this->connection);
+            while ($row = mysql_fetch_array($result)) {
+                array_push($all, $row);
+            }
+            return $all;
         }
         
     }

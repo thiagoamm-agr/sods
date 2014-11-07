@@ -212,7 +212,8 @@
                         $page = '';
                     }
                     
-                    if (!(empty($controller->getPage()))) {
+                    $solicitacoes=$controller->getPage();
+                    if (!empty($solicitacoes)) {
                     
                     	foreach ($controller->getPage($page) as $solicitacao) {
 

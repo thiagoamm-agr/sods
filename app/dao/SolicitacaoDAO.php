@@ -59,7 +59,6 @@
                     mysql_query($query, $this->connection);
                 }
             }
-            return;
         }
 
         public function update($solicitacao) {
@@ -91,9 +90,7 @@
                 if (!empty($pairs)) {
                     $query = "update solicitacao set $pairs where id = {$solicitacao->id}";
                     mysql_query($query, $this->connection);
-                }
-                
-                
+                } 
             }
         }
 
@@ -107,13 +104,14 @@
             if (isset($solicitacao)){
                 try {
                     $query = "delete from solicitacao where id = {$solicitacao->id}";
-                    mysql_query($query, $this->connection);
+                    return mysql_query($query, $this->connection);
                 } catch (Exception $e) {
                     echo $e;
-                }
-                
+                    return false;
+                }   
+            }else{
+                return false;
             }
-            return;
         }
 
         public function get($field, $value) {
