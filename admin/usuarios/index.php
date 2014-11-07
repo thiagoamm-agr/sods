@@ -8,58 +8,56 @@
     // Controllers
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
-    
+
     $controller = new UsuariosController();
-    
+
     if (isset($_POST['action'])) {
-    	//Recuperando dados do post
-    	$action = $_POST['action'];
-    	
-    	if (isset($_POST['json'])) {
-    		$json = $_POST['json'];
-    		if (!empty($json)){
-    			$usuario = new Usuario();
-    			$usuario->loadJSON($json);    			
-    		}
-    	}
-    	
-    	switch ($action) {
-    		case 'add':
-    			$controller->add($usuario);
-    			exit();
-    			break;
-    		case 'edit':
-    			$controller->edit($usuario);
-    			exit();
-    			break;
-    		case 'delete':
-    			$controller->delete($usuario);
-    			exit();
-    			break;
-    		case 'list':
-    			$page = isset($_POST['p']) ? $_POST['p'] : 1;
-    			echo $controller->getGrid($page);
-    			exit();
-    			break;
-    	}
+        //Recuperando dados do post
+        $action = $_POST['action'];
+        if (isset($_POST['json'])) {
+            $json = $_POST['json'];
+            if (!empty($json)){
+                $usuario = new Usuario();
+                $usuario->loadJSON($json);
+            }
+        }
+
+        switch ($action) {
+            case 'add':
+                $controller->add($usuario);
+                exit();
+                break;
+            case 'edit':
+                $controller->edit($usuario);
+                exit();
+                break;
+            case 'delete':
+                $controller->delete($usuario);
+                exit();
+                break;
+            case 'list':
+                echo $controller->getGrid();
+                exit();
+                break;
+        }
     }
 ?>
 <?php 
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 ?>
     <!-- Javascript -->
-    <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>  
+    <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
     <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
     <script type="text/javascript" src="/sods/static/js/md5.js"></script>
-    
+
     <script type="text/javascript">
         var usuario = null;
         var action = null;
         var form = null;
         var formValidator = null;
         var resposta = null;
-            
+
         function add() {
             action = 'add';
             usuario = new Usuario();
@@ -68,18 +66,18 @@
             form= $('#form-add');
             formValidator = new UsuarioFormValidator(form);
         }
-        
+
         function edit(usuario_json) {
             try {
                 if (usuario_json.status == 'A') {
-                    document.getElementById('statusEdit').setAttribute("checked", "checked");
+                    $('statusEdit').prop('checked', true);
                 } else {
-                    document.getElementById('statusEdit').removeAttribute("checked");
+                	$('statusEdit').prop('checked', false);
                 }
                 if (usuario_json.tipo_usuario == 'A') {
-                    document.getElementById('tipo_usuario_a').setAttribute("checked", "checked");
+                    $('tipo_usuario_a').prop('checked', true);
                 } else {
-                    document.getElementById('tipo_usuario_u').setAttribute("checked", "checked");
+                	$('tipo_usuario_a').prop('checked', false);
                 }
                 if (usuario_json != null) {
                     action = 'edit';
@@ -100,7 +98,7 @@
                 alert(e);
             }
         }
-        
+
         function del(usuario_json) {
             try {
                 if (usuario_json != null) {
@@ -269,7 +267,7 @@
                 save();
             });
 
-         	//Máscara telefone.
+             // Máscara telefone.
             var fone = $('#fone');
             var mascara = "(99) 9999-9999?9";
             if (fone.val().length > 10) {
@@ -505,8 +503,8 @@
                     </form>
                 </div>
             </div>
-        </div> <!-- modais -->
-    </div> <!-- container -->
+        </div> <!-- Modais -->
+    </div> <!-- Container -->
 <?php    
     @include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
