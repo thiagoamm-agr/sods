@@ -39,6 +39,7 @@
         <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
         <script>
             $(document).ready(function() {
+                // Table sorter.
                 $("table thead .nonSortable").data("sorter", false);
                 $("#tablesorter").tablesorter({
                     emptyTo: 'none',
@@ -48,6 +49,8 @@
                         columns : [ "primary", "secondary", "tertiary" ]
                     }
                 });
+                // Tooltip.
+                $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
             });
         </script>
 
@@ -76,24 +79,47 @@
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="/sods/admin/">
-                                <b>Início</b>&nbsp;<span style="color:white" class="glyphicon glyphicon-home"></span>
+                                <span style="color:white" class="glyphicon glyphicon-home"></span>&nbsp;
+                                <b>Início</b>
                             </a>
                         </li>
 <?php 
                     if ($_SESSION['usuario']['tipo_usuario'] == 'A') {
                         // Menu do Administrador do Sistema.
-?>                            
+?>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-file" style="color:white"></span>&nbsp;
                                 <b>Cadastros</b> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="/sods/admin/lotacoes/">Cadastro de Lotações</a></li>
-                                <li><a href="/sods/admin/usuarios/">Cadastro de Usuários</a></li>
-                                <li><a href="/sods/admin/solicitacoes/">Cadastro de Solicitações</a></li>
-                                <li><a href="/sods/admin/tiposSolicitacao/">Cadastro de Tipos de Solicitação</a></li>
+                                <li>
+                                    <a href="/sods/admin/lotacoes/">
+                                        <span class="glyphicon glyphicon-file" style="color:black"></span>
+                                        Cadastro de Lotações
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/sods/admin/usuarios/">
+                                        <span class="glyphicon glyphicon-file" style="color:black"></span>
+                                        Cadastro de Usuários
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/sods/admin/solicitacoes/">
+                                        <span class="glyphicon glyphicon-file" style="color:black"></span>
+                                        Cadastro de Solicitações
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/sods/admin/tiposSolicitacao/">
+                                        <span class="glyphicon glyphicon-file" style="color:black"></span>
+                                        Cadastro de Tipos de Solicitação
+                                    </a>
+                                </li>
                             </ul>
                         </li>
+                        <!--
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <b>Relatórios</b> <span class="caret"></span>
@@ -103,6 +129,7 @@
                                 <li><a href="#">Relatório de Solicitações</a></li>
                             </ul>
                         </li>
+                        -->
 <?php
                     } else {
                         // Menu do Usuário do Sistema.
@@ -111,19 +138,33 @@
 <?php 
                     }
 ?>
-                        <li><a href="/sods/admin/account.php"><b>Conta</b>
-                        <span class="glyphicon glyphicon-cog" style="color:white"></span></a></li>
-                        <li class="dropdown"><a class="dropdown-toggle" href="#"><b>Sobre</b>
-                        	<span class="glyphicon glyphicon-info-sign" style="color:white;" ></span></a></li>
+<!--
+                        <li>
+                            <a href="/sods/admin/account.php">
+                                <span class="glyphicon glyphicon-cog" style="color:white"></span>&nbsp;<b>Conta</b>
+                            </a>
+                        </li>
+-->
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" href="#">
+                                <span class="glyphicon glyphicon-info-sign" style="color:white;" ></span>&nbsp;
+                                <b>Sobre</b>
+                            </a>
+                        </li>
                     </ul>
                     <span style="width: 100px"></span>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/sods/admin/account.php">
+                            <a href="/sods/admin/account.php" title="Informações pessoais" data-toggle="tooltip" 
+                                data-placement="bottom">
                                 Bem-vindo(a), 
                                 <font color="white">
-                                    <b><span id="usuario_nome"><?php echo $_SESSION['usuario']['nome'];?></span></b>
-                                    &nbsp;<span class="glyphicon glyphicon-user"></span>
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                    <b>
+                                        <span id="usuario_nome">
+                                            <?php echo $_SESSION['usuario']['nome'] ?>
+                                        </span>
+                                    </b>
                                 </font>.
                             </a>
                         </li>
