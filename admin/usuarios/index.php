@@ -326,6 +326,10 @@
                                 <select id="lotacao" name="lotacao" class="form-control">
                                 <option value="">SELECIONE UMA LOTAÇÃO</option>
 <?php
+                                    $lotacoesController = new LotacoesController();
+
+                                    $lotacoes = $lotacoesController->_list();
+                                    
                                     foreach ($lotacoes as $lotacao){
 ?>
                                     <option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome']?>
@@ -407,11 +411,7 @@
                             <div class="form-group">
                                 <label for="lotacao">Lotação</label>
                                 <select id="lotacao" name="lotacao" class="form-control">
-<?php 
-                                    $lotacoesController = new LotacoesController();
-                                        
-                                    $lotacoes = $lotacoesController->_list();
-                                        
+<?php                                   
                                     foreach ($lotacoes as $lotacao){
 ?>
                                     <option value="<?php echo $lotacao['id'] ?>"><?php echo trim($lotacao['nome']) ?>
