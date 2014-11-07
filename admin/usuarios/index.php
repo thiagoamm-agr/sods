@@ -51,7 +51,7 @@
     <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>  
     <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
-        <script type="text/javascript" src="/sods/static/js/md5.js"></script>
+    <script type="text/javascript" src="/sods/static/js/md5.js"></script>
     
     <script type="text/javascript">
         var usuario = null;
@@ -303,7 +303,86 @@
         </div>
 
         <!--  Modais -->
-            
+        
+        <!-- Adicionar Usuário -->
+        <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
+             aria-labelledby="modal-add" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                        </button>
+                        <h3 class="modal-title" id="modal-add">Adicionar Usuário</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-add" action="" role="form" method="post">
+                            <div class="form-group">
+                                <label for="nome">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="nome" maxlength="255"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="lotacao">Lotação</label>
+                                <select id="lotacao" name="lotacao" class="form-control">
+                                <option value="">SELECIONE UMA LOTAÇÃO</option>
+<?php
+                                    foreach ($lotacoes as $lotacao){
+?>
+                                    <option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome']?>
+                                    </option>
+<?php
+                                    } 
+?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cargo">Cargo</label>
+                                <input type="text" class="form-control" name="cargo" id="cargo" maxlength="255"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="fone">Telefone / Ramal</label>
+                                <input id="fone" name="fone" type="text" class="form-control" maxlength="30" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-mail</label>
+                                <input type="text" class="form-control" name="email" id="email" maxlength="100"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="login">Login</label>
+                                <input type="text" class="form-control" name="login" id="login" maxlength="50"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" 
+                                       class="form-control" 
+                                       name="senha" 
+                                       id="senha" 
+                                       value="12345"/>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <label for="tipo_usuario">Tipo</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="radio" name="tipo_usuario" value="U"/>Usuário &nbsp;&nbsp;
+                                    <input type="radio" name="tipo_usuario" value="A"/>Administrador
+                                </div>
+                            </div>                    
+                            <div class="modal-footer">
+                                <button type="submit" 
+                                        class="btn btn-success">Salvar</button>
+                                <button type="reset" 
+                                        class="btn btn-default" 
+                                        onclick="resetForm()">Limpar</button>
+                                <button type="button" 
+                                        class="btn btn-primary" 
+                                        data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
         <!-- Editar Usuário -->
         <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit" 
              aria-hidden="true">
@@ -426,86 +505,7 @@
                     </form>
                 </div>
             </div>
-        </div> 
-            
-        <!-- Adicionar Usuário -->
-        <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
-             aria-labelledby="modal-add" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
-                        </button>
-                        <h3 class="modal-title" id="modal-add">Adicionar Usuário</h3>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-add" action="" role="form" method="post">
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" name="nome" id="nome" maxlength="255"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="lotacao">Lotação</label>
-                                <select id="lotacao" name="lotacao" class="form-control">
-                                <option value="">SELECIONE UMA LOTAÇÃO</option>
-<?php
-                                    foreach ($lotacoes as $lotacao){
-?>
-                                    <option value="<?php echo $lotacao['id'] ?>"><?php echo $lotacao['nome']?>
-                                    </option>
-<?php
-                                    } 
-?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="cargo">Cargo</label>
-                                <input type="text" class="form-control" name="cargo" id="cargo" maxlength="255"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="fone">Telefone / Ramal</label>
-                                <input id="fone" name="fone" type="text" class="form-control" maxlength="30" />
-                            </div>
-                            <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input type="text" class="form-control" name="email" id="email" maxlength="100"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="login">Login</label>
-                                <input type="text" class="form-control" name="login" id="login" maxlength="50"/>
-                            </div>
-                            <div class="form-group">
-                                <input type="hidden" 
-                                       class="form-control" 
-                                       name="senha" 
-                                       id="senha" 
-                                       value="12345"/>
-                            </div>
-                            <div class="form-group">
-                                <div>
-                                    <label for="tipo_usuario">Tipo</label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="radio" name="tipo_usuario" value="U"/>Usuário &nbsp;&nbsp;
-                                    <input type="radio" name="tipo_usuario" value="A"/>Administrador
-                                </div>
-                            </div>                    
-                            <div class="modal-footer">
-                                <button type="submit" 
-                                        class="btn btn-success">Salvar</button>
-                                <button type="reset" 
-                                        class="btn btn-default" 
-                                        onclick="resetForm()">Limpar</button>
-                                <button type="button" 
-                                        class="btn btn-primary" 
-                                        data-dismiss="modal">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- modais -->        
+        </div> <!-- modais -->
     </div> <!-- container -->
 <?php    
     @include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
