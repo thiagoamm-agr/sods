@@ -141,6 +141,17 @@
                     } else {
                         // Carrega o HTML da Grid.
                         $('#grid').html(data);
+                        //Ordenação dos registros da Grid
+                        $("table thead .nonSortable").data("sorter", false);
+                        $("#tablesorter").tablesorter({
+                            emptyTo: 'none',
+                            theme : 'default',
+                            headerTemplate : '{content}{icon}',
+                            widgetOptions : {
+                              columns : [ "primary", "secondary", "tertiary" ]
+                            }
+                        });
+                        
                     }
                     // Mostra saída no console do Firebug.
                     console.log(data);
