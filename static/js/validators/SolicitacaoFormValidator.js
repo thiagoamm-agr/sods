@@ -10,14 +10,6 @@ function SolicitacaoFormValidator(form) {
         form.bootstrapValidator({
             live: 'enabled',
             fields: {
-                nome: {
-                	trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Nome é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                },
                 titulo: {
                 	trigger: 'blur',
                 	validators: {
@@ -30,7 +22,7 @@ function SolicitacaoFormValidator(form) {
                 	trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Descrição é um campo de preenchimento obrigatório'
+                            message: 'Descrição da Solicitação é um campo de preenchimento obrigatório'
                         }
                      }
                 },
@@ -44,7 +36,18 @@ function SolicitacaoFormValidator(form) {
                     }
                 }
             }
-        });
+        }).on('success.form.bv', function(event) {
+            // Validação bem sucedida
+            event.preventDefault();
+            // Obtem o formulário (o alvo da ação)
+            var f = $(event.target);
+            // Obtem o id da modal
+            var modal = $(f).attr('id').replace('form', '#modal');
+            // Esconde a modal
+            $(modal).modal('hide');
+            // Limpa o formulário
+            $(f).data('bootstrapValidator').resetForm(true);
+        })
         this.data = this.form.data('bootstrapValidator');
     }
 }
