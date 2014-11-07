@@ -55,29 +55,23 @@
             return $this->dao->paginate($rows, $page_number * $rows - $rows);
         }
         
-        public function getGrid() {
-        	$html = "<table class=\"table table-striped table-bordered table-condensed tablesorter tablesorter-default\" role=\"grid\"";
-        	$html .= "id=\"tablesorter\">";
-        	$html .= "<thead><tr>";
-        	
-        	$html .= "<th>ID</th>";
-        	$html .= "<th>Nome</th>";
-        	$html .= "<th>Lotação</th>";
-        	$html .= "<th>Cargo</th>";
-        	$html .= "<th>Telefone/Ramal</th>";
-        	$html .= "<th>Tipo de Usuário</th>";
-        	$html .= "<th>Status</th>";
-        	$html .= "<th>Login</th>";
-        	$html .= "<th class=\"nonSortable\">Ação</th>";
-        	
-        	$html .= "</tr></thead>";
-        	if (isset($_GET['p'])) {
-        		$page = (int) $_GET['p'];
-        	} else {
-        		$page = '';
-        	}
-        	if (!(empty($this->getPage()))) {
-        		foreach ($this->getPage($page) as $usuario) {
+        public function getGrid($page_number=1, $usuarios=null) {
+        	$usuarios = empty($usuarios) ? $this->getPage($page_number) : $usuarios;
+        	if (count($usuarios) > 0) {
+	        	$html = "<table class=\"table table-striped table-bordered table-condensed tablesorter tablesorter-default\" role=\"grid\"";
+	        	$html .= "id=\"tablesorter\">";
+	        	$html .= "<thead><tr>";
+	        	$html .= "<th>ID</th>";
+	        	$html .= "<th>Nome</th>";
+	        	$html .= "<th>Lotação</th>";
+	        	$html .= "<th>Cargo</th>";
+	        	$html .= "<th>Telefone/Ramal</th>";
+	        	$html .= "<th>Tipo de Usuário</th>";
+	        	$html .= "<th>Status</th>";
+	        	$html .= "<th>Login</th>";
+	        	$html .= "<th class=\"nonSortable\">Ação</th>";
+	        	$html .= "</tr></thead>";
+        		foreach ($usuarios as $usuario) {
         			$html .= "<tr>";
         			$html .= "<td>{$usuario['id']}</td>";
         			$html .= "<td>{$usuario['nome_sol']}</td>";
@@ -116,11 +110,6 @@
         			$html .= "<tfoot><tr><td colspan=\"10\">{$this->paginator}</td></tr></tfoot>";
         		}
         		$html .= "</table>";
-        	} else {
-        		$html .= "</tbody></table>";
-        		$html .= "<div class=\"alert alert-danger\" role=\"alert\">";
-        		$html .= "<center><br>Não há registros de usuários</b></center>";
-        		$html .= "</div>";
         	}
         	return $html;
         }
