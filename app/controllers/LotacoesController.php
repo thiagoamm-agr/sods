@@ -69,53 +69,53 @@
         public function getGrid($page_number=1, $lotacoes=null) {
             $lotacoes = empty($lotacoes) ? $this->getPage($page_number) : $lotacoes;
             if (count($lotacoes) > 0) {
-            $html = "<table id=\"tablesorter\"\n";
-            $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
-            $html .= "    <thead>\n";
-            $html .= "        <tr>\n";
-            $html .= "            <th>ID</th>\n";
-            $html .= "            <th>Nome</th>\n";
-            $html .= "            <th>Sigla</th>\n";
-            $html .= "            <th>Gerência</th>\n";
-            $html .= "            <th class=\"nonSortable\">Ação</th>\n";
-            $html .= "        </tr>\n";
-            $html .= "    </thead>\n";
-            $html .= "    <tbody>\n";
-            foreach ($lotacoes as $lotacao) {
+                $html = "<table id=\"tablesorter\"\n";
+                $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
+                $html .= "    <thead>\n";
                 $html .= "        <tr>\n";
-                $html .= "            <td>{$lotacao['id']}</td>\n";
-                $html .= "            <td>{$lotacao['nome']}</td>\n";
-                $html .= "            <td>{$lotacao['sigla']}</td>\n";
-                if (isset($lotacao['gerencia'])) {
-                    $html .= "        <td>{$lotacao['gerencia']->sigla}</td>\n";
-                } else {
-                    $html .= "        <td></td>\n";
-                }
-                $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
-                $html .= "                <button\n"; 
-                $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
-                $html .= "                    data-toggle=\"modal\"\n"; 
-                $html .= "                    data-target=\"#modal-edit\"\n";
-                $html .= "                    onclick='edit(" . json_encode($lotacao) .")'>\n";
-                $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
-                $html .= "                </button>&nbsp;&nbsp;\n";
-                $html .= "                <button\n";
-                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
-                $html .= "                    data-toggle=\"modal\"\n"; 
-                $html .= "                    data-target=\"#modal-del\"\n";
-                $html .= "                    onclick='del(" . json_encode($lotacao) . ")'>\n";
-                $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
-                $html .= "                </button>\n";
-                $html .= "            </td>\n";
+                $html .= "            <th>ID</th>\n";
+                $html .= "            <th>Nome</th>\n";
+                $html .= "            <th>Sigla</th>\n";
+                $html .= "            <th>Gerência</th>\n";
+                $html .= "            <th class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";
-            }
-            $html .= "    </tbody>\n";
-            if ($this->count() > 10) {
-                $html .= "<tfoot>\n";
-                $html .= "    <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
-                $html .= "</tfoot>\n";
-            }
-            $html .= "</table>\n";
+                $html .= "    </thead>\n";
+                $html .= "    <tbody>\n";
+                foreach ($lotacoes as $lotacao) {
+                    $html .= "        <tr>\n";
+                    $html .= "            <td>{$lotacao['id']}</td>\n";
+                    $html .= "            <td>{$lotacao['nome']}</td>\n";
+                    $html .= "            <td>{$lotacao['sigla']}</td>\n";
+                    if (isset($lotacao['gerencia'])) {
+                        $html .= "        <td>{$lotacao['gerencia']->sigla}</td>\n";
+                    } else {
+                        $html .= "        <td></td>\n";
+                    }
+                    $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
+                    $html .= "                <button\n"; 
+                    $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
+                    $html .= "                    data-toggle=\"modal\"\n"; 
+                    $html .= "                    data-target=\"#modal-edit\"\n";
+                    $html .= "                    onclick='edit(" . json_encode($lotacao) . ", $page_number)'>\n";
+                    $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
+                    $html .= "                </button>&nbsp;&nbsp;\n";
+                    $html .= "                <button\n";
+                    $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
+                    $html .= "                    data-toggle=\"modal\"\n"; 
+                    $html .= "                    data-target=\"#modal-del\"\n";
+                    $html .= "                    onclick='del(" . json_encode($lotacao) . ", $page_number)'>\n";
+                    $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    $html .= "                </button>\n";
+                    $html .= "            </td>\n";
+                    $html .= "        </tr>\n";
+                }
+                $html .= "    </tbody>\n";
+                if ($this->count() > 10) {
+                    $html .= "<tfoot>\n";
+                    $html .= "    <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
+                    $html .= "</tfoot>\n";
+                }
+                $html .= "</table>\n";
             } else {
                 $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
                 $html .= "    <center><b>Não há registros de solicitações.</b></center>\n";
