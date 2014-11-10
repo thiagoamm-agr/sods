@@ -220,10 +220,25 @@
     <div class="container">
         <h2>Tipos de Solicitação</h2>
         <div class="row">
-            <div class="col-md-12">
-                <button class="btn btn-primary btn-sm pull-right" data-toggle="modal"
-                    data-target="#modal-add" onclick="add()">
-                    <b>Adicionar</b>
+                        <div class="col-md-12">
+                <div class="col-md-11">
+                    <button
+                        id="btn-add"
+                        class="btn btn-primary btn-sm pull-right" 
+                        data-toggle="modal" 
+                        data-target="#modal-add"
+                        onclick="add()">
+                        <b>Adicionar</b>
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+                <button
+                    id="btn-search"
+                    class="btn btn-info btn-sm pull-right" 
+                    data-toggle="modal" 
+                    data-target="#modal-search">
+                    <b>Pesquisar</b>
+                    <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
         </div>
@@ -282,7 +297,10 @@
                                     disabled />&nbsp;Ativo
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success">Salvar</button>
+                                <button type="submit" 
+                                        class="btn btn-success">Salvar
+                                        &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                                </button>
                                 <button type="reset" class="btn btn-default" onclick="resetForm()">Limpar</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
                             </div>
