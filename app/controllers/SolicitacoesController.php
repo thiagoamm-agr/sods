@@ -103,7 +103,7 @@
         }
 
         public function delete($solicitacao) {
-            return $this->dao->delete($solicitacao);
+            return !$this->dao->delete($solicitacao);
         }
 
         public function edit($solicitacao) {
