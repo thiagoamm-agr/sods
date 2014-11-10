@@ -80,8 +80,6 @@
                             "\" class=\"pagination-css\" data-toggle=\"tooltip\" title=\"" . 
                             $tooltip . "\"><i class=\"glyphicon glyphicon-backward\"></i></a></li>\n";
                     }
-                    //$firstbound = (($totalpages - 1) * $this->pagesize);
-                    //$lastbound = $firstbound + $this->pagesize - 1;
                     $lastbound = (($this->pagenumber - 1) * $this->pagesize);
                     $firstbound = $lastbound - $this->pagesize + 1;
                     if ($lastbound > $this->totalrecords) {
@@ -212,9 +210,6 @@
                 // Last Link
                 $firstbound = (($totalpages - 1) * $pagesize) + 1;
                 $lastbound = $firstbound + $pagesize - 1;
-                /*if ($lastbound > $totalpages) {
-                    $lastbound = $totalpages;
-                }*/
                 if ($lastbound > $totalrecords) {
                 	$lastbound = $totalrecords;
                 }                
