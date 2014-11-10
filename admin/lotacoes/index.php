@@ -13,7 +13,6 @@
     if (isset($_POST['action'])) {
         // Recuperando os parâmetros da requisição.
         $action = $_POST['action'];
-
         if (isset($_POST['json'])) {
             $json = $_POST['json'];
             if (!empty($json)) {
@@ -21,7 +20,6 @@
                 $lotacao->loadJSON($json);
             }
         }
-
         // Identificando a ação desempenhada pelo usuário.
         switch ($action) {
             case 'add':
@@ -71,6 +69,7 @@
             var formValidator = null;
             var formPesquisaValidator = null;
             var resposta = null;
+            var current_page = 1;
 
             function add() {
                 action = 'add';
@@ -80,7 +79,7 @@
                 formValidator = new LotacaoFormValidator(form);
             }
 
-            function edit(lotacao_json) {
+            function edit(lotacao_json, page) {
                 try {
                     if (lotacao_json != null) {
                         action = 'edit';
@@ -109,6 +108,7 @@
                         $('#gerencia', form).val("" + lotacao_json.gerencia_id);
                         lotacao = new Lotacao();
                         lotacao.id = lotacao_json.id;
+                        current_page = page; 
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
@@ -117,7 +117,7 @@
                 }
             }
 
-            function del(lotacao_json) {
+            function del(lotacao_json, page) {
                 try {
                     if (lotacao_json != null) {
                         action = 'delete'; 
@@ -128,6 +128,7 @@
                         lotacao.gerencia_id = lotacao_json.gerencia_id;
                         form = $('#form-del');
                         formValidator = new LotacaoFormValidator(form);
+                        current_page = page;
                     }
                 } catch(e) {
                     alert(e);
@@ -183,9 +184,11 @@
                                   columns : [ "primary", "secondary", "tertiary" ]
                                 }
                             });
-                            // Mostra saída no console do Firebug.
-                            console.log(data);
+                            // Tooltip.
+                            $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
                         }
+                        // Mostra saída no console do Firebug.
+                        console.log(data);
                     },
                     error: function(xhr, status, error) {
                         // console.log(error);
@@ -230,11 +233,12 @@
                                 window.setTimeout(function() {
                                     $('#alert-modal').modal('hide');
                                 }, 3000);
+                            } else {
+                                // Recarrega a grid.
+                                //var page = 1;
+                                list(current_page);
                             }
                             console.log(data);
-                            // Recarrega a grid.
-                            var page = 1;
-                            list(page);
                         },
                         error: function(xhr, status, error) {
                             // console.log(error);
