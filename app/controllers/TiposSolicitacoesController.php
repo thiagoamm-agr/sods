@@ -12,7 +12,7 @@
             $this->dao = new TipoSolicitacaoDAO();
             $this->paginator->totalrecords = $this->dao->count();
             $this->paginator->defaultUrl = "/sods/admin/tiposSolicitacao/";
-            $this->paginator->paginationUrl = "/sods/admin/tiposSolicitacao/index.php?p=[p]";
+            $this->paginator->paginationUrl = "/sods/admin/tiposSolicitacao/";
         }
 
         public function __destruct() {

@@ -38,7 +38,8 @@
                 exit();
                 break;
             case 'list':
-                echo $controller->getGrid();
+            	$page = isset($_POST['p']) ? $_POST['p'] : 1;
+                echo $controller->getGrid($page);
                 exit();
                 break;
     }
@@ -104,7 +105,23 @@
             }
         }
 
-        function list() {
+        function createAJAXPagination() {
+            $('.pagination-css').on({
+                click: function(e) {
+                    var page = $(this).attr('id');
+                    page = page.replace('pg_', '');
+                    page = page.replace('pn_', '');
+                    page = page.replace('pl_', '');
+                    page = page.replace('pp_', '');
+                    page = page.replace('p_', '');
+                    list(page);
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+
+        function list(page) {
             $.ajax({
                 type: 'post',
                 url: '/sods/admin/tiposSolicitacao/',
@@ -113,7 +130,8 @@
                 timeout: 70000,
                 async: true,
                 data: {
-                    action: 'list'
+                    action: 'list',
+                    p:page
                 },
                 success: function(data, status, xhr) {
                     if (data == 'ERRO') {
@@ -123,6 +141,7 @@
                         }, 3000);
                     } else {
                         $('#grid').html(data);
+                        createAJAXPagination();
                     }
                     console.log(data);
                 },
@@ -182,7 +201,8 @@
                                     $('#alert-modal').modal('hide');
                                 }, 3000);
                             } else {
-                                list();
+                                var page=1;
+                                list(page);
                             }
                             console.log(data);
                         },
@@ -221,6 +241,8 @@
                     $(this).val('I');
                 }
             });
+
+            createAJAXPagination();
         });
     </script>
 
@@ -257,12 +279,14 @@
         <!-- Grid -->
         <div id="grid" class="table-responsive">
 <?php
-            if (isset($_GET['p'])) {
-                $page = (int) $_GET['p'];
-            } else {
-                $page = 1;
-            }
-            echo $controller->getGrid($page);
+ /*Lista os registros sem usar AJAX.
+                    if (isset($_GET['p'])) {
+                        $page = (int) $_GET['p'];
+                    } else {
+                        $page = 1;
+                    }
+*/
+                    echo $controller->getGrid(1);
 ?>
         </div><!-- /Grid -->
 
