@@ -72,12 +72,12 @@
                 if (usuario_json.status == 'A') {
                     $('statusEdit').prop('checked', true);
                 } else {
-                	$('statusEdit').prop('checked', false);
+                $('statusEdit').prop('checked', false);
                 }
                 if (usuario_json.tipo_usuario == 'A') {
                     $('tipo_usuario_a').prop('checked', true);
                 } else {
-                	$('tipo_usuario_a').prop('checked', false);
+                $('tipo_usuario_a').prop('checked', false);
                 }
                 if (usuario_json != null) {
                     action = 'edit';
@@ -283,11 +283,24 @@
         <h2>Usuários</h2>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-primary btn-sm pull-right" 
+                <div class="col-md-11">
+                    <button
+                        id="btn-add"
+                        class="btn btn-primary btn-sm pull-right" 
                         data-toggle="modal" 
                         data-target="#modal-add"
                         onclick="add()">
                         <b>Adicionar</b>
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+                <button
+                    id="btn-search"
+                    class="btn btn-info btn-sm pull-right" 
+                    data-toggle="modal" 
+                    data-target="#modal-search">
+                    <b>Pesquisar</b>
+                    <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
         </div>
@@ -371,7 +384,9 @@
                             </div>                    
                             <div class="modal-footer">
                                 <button type="submit" 
-                                        class="btn btn-success">Salvar</button>
+                                        class="btn btn-success">Salvar
+                                        &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                                </button>
                                 <button type="reset" 
                                         class="btn btn-default" 
                                         onclick="resetForm()">Limpar</button>

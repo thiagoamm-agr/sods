@@ -235,8 +235,12 @@
                            name="tipo_usuario" value="<?php echo $usuario['tipo_usuario']?>"/>
                 </div>
                 <div class="btn-toolbar pull-right form-footer">
-                    <button type="submit" class="btn btn-success">Salvar</button>
-                    <button type="reset" class="btn btn-default" onclick="resetForm()">Resetar</button>
+                    <button type="submit" class="btn btn-success">
+                        Salvar &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                    </button>
+                    <button type="reset" class="btn btn-default" onclick="resetForm()">
+                        Resetar &nbsp;<span class="glyphicon glyphicon-refresh" style="color:black">
+                    </button>
                 </div>
                 
             </div>
