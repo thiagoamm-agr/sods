@@ -21,43 +21,43 @@
     
     //Indentificando ações e parâmetros do post
     if (isset($_POST['action'])) {
-    	// Recuperando os parâmetros da requisição.
-    	$action = $_POST['action'];
-    	if (isset($_POST['json'])) {
-    		$json = $_POST['json'];
-    		if (!empty($json)) {
-    			$solicitacao = new Solicitacao();
-    			$solicitacao->loadJSON($json);
-    		}
-    	}
-    	switch ($action) {
-    		case 'add':
-    			$controller->add($solicitacao);
-    			exit();
-    			break;
-    		case 'edit':
-    			$controller->edit($solicitacao);
-    			exit();
-    			break;
-    		case 'delete':
+        // Recuperando os parâmetros da requisição.
+        $action = $_POST['action'];
+        if (isset($_POST['json'])) {
+            $json = $_POST['json'];
+            if (!empty($json)) {
+                $solicitacao = new Solicitacao();
+                $solicitacao->loadJSON($json);
+            }
+        }
+        switch ($action) {
+            case 'add':
+                $controller->add($solicitacao);
+                exit();
+                break;
+            case 'edit':
+                $controller->edit($solicitacao);
+                exit();
+                break;
+            case 'delete':
 //                 $fail = $controller->delete($solicitacao->id);
-    			$fail = $controller->delete($solicitacao);
+                $fail = $controller->delete($solicitacao);
                 if ($fail) {
                     echo 'ERRO';
                 }
                 exit();
                 break;
-    		case 'list':
+            case 'list':
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page);
                 exit();
-                break;  			
-    	}
+                break;              
+        }
     }    
 ?>
 <?php
-	//Topo
-	@include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php'; 
+    //Topo
+    @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php'; 
 ?>
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Solicitacao.js"></script>
@@ -186,7 +186,7 @@
             }                
             
             function save() {
-            	var json = null;
+                var json = null;
                 if (solicitacao != null) {
                     switch (action) {
                         case 'add':
@@ -278,11 +278,11 @@
                     save();
                 });
                 $('#modal-add').on('hide.bs.modal', function () {
-                	clean();
+                    clean();
                 });
                 
                 $('#modal-edit').on('hide.bs.modal', function () {
-                	clean();
+                    clean();
                 });                                 
                 createAJAXPagination();
             });
@@ -292,11 +292,24 @@
             <h2>Solicitações</h2>
             <div class="row">
                 <div class="col-md-12">
-                    <button class="btn btn-primary btn-sm pull-right" 
+                    <div class="col-md-11">
+                        <button
+                            id="btn-add"
+                            class="btn btn-primary btn-sm pull-right" 
                             data-toggle="modal" 
                             data-target="#modal-add"
                             onclick="add()">
-                        <b>Adicionar</b>
+                            <b>Adicionar</b>
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+                    <button
+                        id="btn-search"
+                        class="btn btn-info btn-sm pull-right" 
+                        data-toggle="modal" 
+                        data-target="#modal-search">
+                        <b>Pesquisar</b>
+                        <span class="glyphicon glyphicon-search"></span>
                     </button>
                 </div>
             </div>
@@ -403,7 +416,9 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" 
-                                            class="btn btn-primary" >Salvar</button>
+                                            class="btn btn-success" >Salvar
+                                            &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                                    </button>
                                     <button type="reset"
                                             class="btn btn-default" onclick="clean();">Limpar
                                             </button>
@@ -486,14 +501,14 @@
                                         </div>
                                     </div>
 <?php 
-									if ($_SESSION['usuario']['tipo_usuario'] == "A") {
+                                    if ($_SESSION['usuario']['tipo_usuario'] == "A") {
 ?>
                                     <div class="row">
                                         
                                         <div class="col-sm-6">
                                             <label for="status">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                            	<option value="CRIADA">Criada</option>
+                                                <option value="CRIADA">Criada</option>
                                                 <option value="EM ANÁLISE">Em análise</option>
                                                 <option value="DEFERIDA">Deferida</option>
                                                 <option value="INDEFERIDA">Indeferida</option>
