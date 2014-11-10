@@ -91,13 +91,13 @@
 
         function del(tipoSolicitacao_json) {
             try {
-                 if (tipoSolicitacao_json != null) {
-                     action = 'delete';
-                     tipoSolicitacao = new TipoSolicitacao();
-                     tipoSolicitacao.id = tipoSolicitacao_json.id;
-                     tipoSolicitacao.nome = tipoSolicitacao_json.nome;
-                     tipoSolicitacao.status = tipoSolicitacao_json.status;
-                     form = $('#form-del');
+                if (tipoSolicitacao_json != null) {
+                    action = 'delete';
+                    tipoSolicitacao = new TipoSolicitacao();
+                    tipoSolicitacao.id = tipoSolicitacao_json.id;
+                    tipoSolicitacao.nome = tipoSolicitacao_json.nome;
+                    tipoSolicitacao.status = tipoSolicitacao_json.status;
+                    form = $('#form-del');
                 }
             } catch(e) {
                 alert(e);
@@ -117,11 +117,14 @@
                 },
                 success: function(data, status, xhr) {
                     if (data == 'ERRO') {
-                        $('#alert-del').modal('show');
+                        $('#alert-modal').modal('show');
+                        window.setTimeout(function() {
+                            $('#alert-modal').modal('hide');
+                        }, 3000);
                     } else {
                         $('#grid').html(data);
-                        console.log(data);
                     }
+                    console.log(data);
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
@@ -167,9 +170,13 @@
                         },
                         success: function(data, status, xhr) {
                             if (data == 'ERRO') {
-                                $('#alert-del').modal('show');
+                                $('#alert-modal').modal('show');
+                                window.setTimeout(function() {
+                                    $('#alert-modal').modal('hide');
+                                }, 3000);
+                            } else {
+                                list();
                             }
-                            list();
                             console.log(data);
                         },
                         error: function(xhr, status, error) {
@@ -184,7 +191,7 @@
             return false;
         }
 
-        function resetForm() {
+        function clean() {
             if (formValidator != null) {
                 formValidator.reset(true);
             }
@@ -301,7 +308,7 @@
                                         class="btn btn-success">Salvar
                                         &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
                                 </button>
-                                <button type="reset" class="btn btn-default" onclick="resetForm()">Limpar</button>
+                                <button type="reset" class="btn btn-default" onclick="clean()">Limpar</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
@@ -343,7 +350,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success" >Salvar</button>
-                                <button type="reset" class="btn btn-default" onclick="resetForm()">Limpar</button>
+                                <button type="reset" class="btn btn-default" onclick="clean()">Limpar</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
@@ -375,13 +382,14 @@
         </div><!-- /Modais -->
         
         <!-- Alertas -->
-        <div id="alert-del" class="modal fade" tabindex="-1" role="dialog" 
+        <div id="alert-modal" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
             <div class="alert alert-danger fade in" role="alert">
-                <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
+                <button type="button" class="close" onclick="$('#alert-modal').modal('toggle');">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                 </button>
-                <strong>ERRO:</strong> Não é possível excluir um registro com referências.
+                <strong>ERRO:</strong>
+                <span id="alert-msg">Não é possível excluir um registro com referências.</span>
             </div>
         </div><!--  /Alertas  -->
     </div><!-- /Container -->
