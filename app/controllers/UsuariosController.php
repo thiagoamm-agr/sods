@@ -170,8 +170,10 @@
                 name=\"tipo_usuario\" value=\"{$usuario['tipo_usuario']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"btn-toolbar pull-right form-footer\">";
-            $html .= "<button type=\"submit\" class=\"btn btn-success\">Salvar</button>";
-            $html .= "<button type=\"reset\" class=\"btn btn-default\" onclick=\"limpar()\">Resetar</button>";
+            $html .= "<button type=\"submit\" class=\"btn btn-success\">Salvar";
+            $html .= "&nbsp;<span class=\"glyphicon glyphicon-floppy-save\"></span></button>";
+            $html .= "<button type=\"reset\" class=\"btn btn-default\" onclick=\"limpar()\">Resetar";
+            $html .= "&nbsp;<span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"</button>";
             $html .= "</div>";
             return $html;
         }
