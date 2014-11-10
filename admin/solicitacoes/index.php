@@ -171,6 +171,8 @@
                                   columns : [ "primary", "secondary", "tertiary" ]
                                 }
                             });
+                            // Tooltip.
+                            $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
                             // Mostra saída no console do Firebug.
                             console.log(data);
                         }
