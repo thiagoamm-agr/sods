@@ -9,6 +9,7 @@ function TipoSolicitacaoFormValidator(form) {
     if (form != null) {
         form.bootstrapValidator({
             live: 'enabled',
+            excluded: [':disabled'],
             submitButtons: 'button[type="submit"]',
             fields: {
                 nome: {
@@ -29,8 +30,6 @@ function TipoSolicitacaoFormValidator(form) {
             var modal = $(f).attr('id').replace('form', '#modal');
             // Esconde a modal.
             $(modal).modal('hide');
-            // Limpa o formulário.
-            $(f).data('bootstrapValidator').resetForm(true);
             console.log('Formulário validado com sucesso!')
         });
         this.data = this.form.data('bootstrapValidator');

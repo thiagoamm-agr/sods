@@ -135,6 +135,12 @@
             });
         }
 
+        function clean() {
+            if (formValidator != null) {
+                formValidator.reset();
+            }
+        }
+
         function save() {
             // Verifica se o objeto a ser manipulado existe.
             if (tipoSolicitacao != null) {
@@ -155,6 +161,7 @@
                 // Instancia um validador de formulário.
                 formValidator = new TipoSolicitacaoFormValidator(form);
                 // Valida o formulário.
+                //validation=formValidator.validate();
                 if (formValidator.validate()) {
                     // Efetua uma requisição AJAX para essa página.
                     $.ajax({
@@ -183,18 +190,12 @@
                             console.log(error);
                         },
                         complete: function(xhr, status) {
-                            //console.log('A requisição foi completada.');
+                            clean();
                         }
                     });
                 }
             }
             return false;
-        }
-
-        function clean() {
-            if (formValidator != null) {
-                formValidator.reset(true);
-            }
         }
 
         $(document).ready(function() {
