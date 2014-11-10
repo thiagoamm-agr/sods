@@ -82,7 +82,7 @@
                     }
                     //$firstbound = (($totalpages - 1) * $this->pagesize);
                     //$lastbound = $firstbound + $this->pagesize - 1;
-                    $lastbound = (($totalpages - 1) * $this->pagesize);
+                    $lastbound = (($this->pagenumber - 1) * $this->pagesize);
                     $firstbound = $lastbound - $this->pagesize + 1;
                     if ($lastbound > $this->totalrecords) {
                         $lastbound = $this->totalrecords;
