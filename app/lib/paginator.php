@@ -71,8 +71,7 @@
                     if ($this->showfirst && $this->paginationstyle != 2) {
                         $firstbound = 1;
                         $lastbound = $firstbound + $this->pagesize - 1;
-                        $tooltip = "showing " . $firstbound . " - " . $lastbound . 
-                            " records of " . $this->totalrecords . " records";
+                        $tooltip = "Resultados " . $firstbound . " - " . $lastbound;
                         // First Link
                         if ($this->defaultUrl == "") {
                             $this->defaultUrl = "#";
@@ -81,13 +80,14 @@
                             "\" class=\"pagination-css\" data-toggle=\"tooltip\" title=\"" . 
                             $tooltip . "\"><i class=\"glyphicon glyphicon-backward\"></i></a></li>\n";
                     }
-                    $firstbound = (($totalpages - 1) * $this->pagesize);
-                    $lastbound = $firstbound + $this->pagesize - 1;
+                    //$firstbound = (($totalpages - 1) * $this->pagesize);
+                    //$lastbound = $firstbound + $this->pagesize - 1;
+                    $lastbound = (($totalpages - 1) * $this->pagesize);
+                    $firstbound = $lastbound - $this->pagesize + 1;
                     if ($lastbound > $this->totalrecords) {
                         $lastbound = $this->totalrecords;
                     }
-                    $tooltip = "showing " . $firstbound . " - " . $lastbound . " records of " . 
-                        $this->totalrecords . " records";
+                    $tooltip = "Resultados " . $firstbound . " - " . $lastbound;
                     // Previous Link Enabled
                     if($this->paginationUrl == "")
                         $this->paginationUrl = "#";
@@ -169,8 +169,7 @@
                     $lastbound = $firstbound + $pagesize - 1;
                     if ($lastbound > $totalrecords)
                         $lastbound = $totalrecords;
-                    $tooltip = "showing " . $firstbound . " - " . $lastbound . 
-                        " records  of " . $totalrecords . " records";
+                    $tooltip = "Resultados " . $firstbound . " - " . $lastbound;
                     $css = "";
                     if ($item == $pagenumber) {
                         $css = " class=\"active\"";
@@ -191,8 +190,7 @@
             if ($lastbound > $totalrecords) {
                 $lastbound = $totalrecords;
             }
-            $tooltip = "showing " . $firstbound . " - " . $lastbound . 
-                " records of " . $totalrecords . " records";
+            $tooltip = "Resultados " . $firstbound . " - " . $lastbound;
             // Next Link
             $pid = ($pagenumber + 1);
             if ($pid > $totalpages) {
@@ -214,11 +212,13 @@
                 // Last Link
                 $firstbound = (($totalpages - 1) * $pagesize) + 1;
                 $lastbound = $firstbound + $pagesize - 1;
-                if ($lastbound > $totalpages) {
+                /*if ($lastbound > $totalpages) {
                     $lastbound = $totalpages;
-                }
-                $tooltip = "showing " . $firstbound . " - " . $lastbound . 
-                    " records of " . $totalrecords . " records";
+                }*/
+                if ($lastbound > $totalrecords) {
+                	$lastbound = $totalrecords;
+                }                
+                $tooltip = "Resultados " . $firstbound . " - " . $lastbound;
                 $script .= "<li><a id=\"pl_" . $totalpages . "\" href=\"" . 
                     $this->prepareUrl($totalpages) . 
                     "\" class=\"pagination-css\" data-toggle=\"tooltip\" title=\"" . 
