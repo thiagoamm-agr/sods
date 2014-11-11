@@ -165,9 +165,9 @@
                     },
                     success: function(data, status, xhr) {
                         if (data == 'ERRO') {
-                            $('#alert-modal').modal('show');
+                            $('#modal-danger').modal('show');
                             window.setTimeout(function() {
-                                $('#alert-modal').modal('hide');
+                                $('#modal-danger').modal('hide');
                             }, 3000);
                         } else {
                             // Carrega o HTML da Grid.
@@ -229,14 +229,18 @@
                                 'json': json
                             },
                             success: function(data, status, xhr) {
+                                var modal = null;
                                 if (data == 'ERRO') {
-                                    $('#alert-modal').modal('show');
-                                    window.setTimeout(function() {
-                                        $('#alert-modal').modal('hide');
-                                    }, 3000);
+                                    modal = $('#modal-danger');
+                                    $(modal).modal('show');
                                 } else {
+                                    modal = $('#modal-success');
+                                    $(modal).modal('show');
                                     list(current_page);
                                 }
+                                window.setTimeout(function() {
+                                    $(modal).modal('hide');
+                                }, 3000);
                                 console.log(data);
                             },
                             error: function(xhr, status, error) {
@@ -591,18 +595,28 @@
                     </div>
                 </div>
             </div><!-- /Modais -->
-             
             <!-- Alertas -->
-            <div class="modal fade" id="alert-modal" tabindex="-1" role="dialog" 
+            <div class="modal fade" id="modal-danger" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-del" aria-hidden="true">
                 <div class="alert alert-danger fade in" role="alert">
-                    <button type="button" class="close" onclick="$('#alert-modal').modal('toggle');">
+                    <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                     </button>
-                    <strong>ERRO:</strong>
-                    <span id="alert-msg">Não é possível excluir um registro com referências.</span>
+                    <strong>FALHA:</strong>
+                    <span id="danger-msg">Não é possível excluir um registro com referências.</span>
                </div>
-            </div><!-- Alertas -->
+            </div>
+            <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" 
+                aria-labelledby="modal-success" aria-hidden="true">
+                <div class="alert alert-success fade in" role="alert">
+                    <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                    </button>
+                    <strong>SUCESSO:</strong>
+                    <span id="success-msg">Dados atualizados.</span>
+               </div>
+            </div>
+            <!-- Alertas -->
         </div><!-- Container -->
 <?php
     // Rodapé
