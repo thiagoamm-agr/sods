@@ -65,6 +65,7 @@
             tipoSolicitacao = new TipoSolicitacao();
             tipoSolicitacao.id = null;
             form = $('#form-add');
+            formValidator = new TipoSolicitacaoFormValidator(form);
         }
 
         function edit(tipoSolicitacao_json) {
@@ -73,6 +74,7 @@
                     action = 'edit';
                     form = $('#form-edit');
                     tipoSolicitacao = new TipoSolicitacao();
+                    formValidator = new TipoSolicitacaoFormValidator(form);
                     tipoSolicitacao.id = tipoSolicitacao_json.id;
                     $('#nome', form).val(tipoSolicitacao_json.nome);
                     if (tipoSolicitacao_json.status == 'A') {
@@ -99,6 +101,7 @@
                     tipoSolicitacao.nome = tipoSolicitacao_json.nome;
                     tipoSolicitacao.status = tipoSolicitacao_json.status;
                     form = $('#form-del');
+                    formValidator = new TipoSolicitacaoFormValidator(form);
                 }
             } catch(e) {
                 alert(e);
