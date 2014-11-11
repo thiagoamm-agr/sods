@@ -26,7 +26,7 @@
         }
 
         public function add($tipoSolicitacao) {
-            return $this->dao->insert($tipoSolicitacao);
+            return !$this->dao->insert($tipoSolicitacao);
         }
 
         public function edit($tipoSolicitacao) {

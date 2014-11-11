@@ -54,8 +54,10 @@
                 $values = substr($values, 0, strrpos($values, ", "));
                 if (!empty($columns) && !empty($values)) {
                     $query = "insert into tipo_solicitacao ($columns) values ($values)";
-                    $result=mysql_query($query, $this->connection);
+                    return mysql_query($query, $this->connection);
                 }
+            }else{
+                return false;
             }
         }
 

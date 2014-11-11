@@ -23,7 +23,10 @@
         // Identificando a ação desempenhada pelo usuário.
         switch ($action) {
             case 'add':
-                $controller->add($tipoSolicitacao);
+                $fail=$controller->add($tipoSolicitacao);
+                if($fail){
+                    echo 'NAOADD';
+                }
                 exit();
                 break;
             case 'edit':
@@ -61,7 +64,6 @@
         var resposta = null;
 
         function add() {
-            clean();
             action = "add";
             tipoSolicitacao = new TipoSolicitacao();
             tipoSolicitacao.id = null;
@@ -70,7 +72,6 @@
         }
 
         function edit(tipoSolicitacao_json) {
-            clean();
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'edit';
@@ -140,9 +141,9 @@
                 },
                 success: function(data, status, xhr) {
                     if (data == 'ERRO') {
-                        $('#alert-modal').modal('show');
+                        $('#modal-danger').modal('show');
                         window.setTimeout(function() {
-                            $('#alert-modal').modal('hide');
+                            $('#modal-danger').modal('hide');
                         }, 3000);
                     } else {
                         $('#grid').html(data);
@@ -200,15 +201,25 @@
                             'json': json
                         },
                         success: function(data, status, xhr) {
+                            modal='';
                             if (data == 'ERRO') {
-                                $('#alert-modal').modal('show');
-                                window.setTimeout(function() {
-                                    $('#alert-modal').modal('hide');
-                                }, 3000);
-                            } else {
+                                modal='#modal-danger';
+                                $(modal).modal('show');
+                            }
+                            if (data == 'NAOADD'){
+                                modal='#modal-danger';
+                                $('#alert-msg').text('Não é possivel adicionar um tipo de solicitação repetido.');
+                                $(modal).modal('show');
+                            }
+                            else {
+                                modal='#modal-success';
                                 var page=1;
+                                $(modal).modal('show');
                                 list(page);
                             }
+                            window.setTimeout(function() {
+                                $(modal).modal('hide');
+                            }, 3000);
                             console.log(data);
                         },
                         error: function(xhr, status, error) {
@@ -412,16 +423,27 @@
         </div><!-- /Modais -->
         
         <!-- Alertas -->
-        <div id="alert-modal" class="modal fade" tabindex="-1" role="dialog" 
+        <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
             <div class="alert alert-danger fade in" role="alert">
-                <button type="button" class="close" onclick="$('#alert-modal').modal('toggle');">
+                <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
                     <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                 </button>
-                <strong>ERRO:</strong>
+                <strong>FALHA:</strong>
                 <span id="alert-msg">Não é possível excluir um registro com referências.</span>
             </div>
         </div><!--  /Alertas  -->
+         <!-- Alertas -->
+        <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
+            aria-hidden="true">
+            <div class="alert alert-success fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>SUCESSO:</strong>
+                <span id="alert-msg">Dados atualizados</span>
+           </div>
+        </div><!-- Alertas -->
     </div><!-- /Container -->
 <?php
     // Rodapé
