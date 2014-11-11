@@ -85,7 +85,6 @@
                         action = 'edit';
                         modal = 'modal-edit';
                         form = $('#form-' + action);
-                        formValidator = new LotacaoFormValidator(form);
                         $('#nome', form).val(lotacao_json.nome);
                         $('#sigla', form).val(lotacao_json.sigla);
                         // Caixa de seleção de gerências.
@@ -108,6 +107,7 @@
                         $('#gerencia', form).val("" + lotacao_json.gerencia_id);
                         lotacao = new Lotacao();
                         lotacao.id = lotacao_json.id;
+                        formValidator = new LotacaoFormValidator(form);
                         current_page = page; 
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
@@ -191,10 +191,10 @@
                         console.log(data);
                     },
                     error: function(xhr, status, error) {
-                        // console.log(error);
+                        console.log(error);
                     },
                     complete: function(xhr, status) {
-                        //console.log('A requisição foi completada.');
+                        console.log('A requisição foi completada.');
                     }
                 });
                 return false;
@@ -215,38 +215,39 @@
                             json = lotacao.toJSON();
                             break;
                     }
-                    // Ajax
-                    $.ajax({
-                        type: 'post',
-                        url: '/sods/admin/lotacoes/',
-                        dataType: 'text',
-                        cache: false,
-                        timeout: 70000,
-                        async: true,
-                        data: {
-                            'action': action,
-                            'json': json
-                        },
-                        success: function(data, status, xhr) {
-                            if (data == 'ERRO') {
-                                $('#alert-modal').modal('show');
-                                window.setTimeout(function() {
-                                    $('#alert-modal').modal('hide');
-                                }, 3000);
-                            } else {
-                                // Recarrega a grid.
-                                //var page = 1;
-                                list(current_page);
+                    if (formValidator.validate()) {
+                        // Ajax
+                        $.ajax({
+                            type: 'post',
+                            url: '/sods/admin/lotacoes/',
+                            dataType: 'text',
+                            cache: false,
+                            timeout: 70000,
+                            async: true,
+                            data: {
+                                'action': action,
+                                'json': json
+                            },
+                            success: function(data, status, xhr) {
+                                if (data == 'ERRO') {
+                                    $('#alert-modal').modal('show');
+                                    window.setTimeout(function() {
+                                        $('#alert-modal').modal('hide');
+                                    }, 3000);
+                                } else {
+                                    list(current_page);
+                                }
+                                console.log(data);
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            },
+                            complete: function(xhr, status) {
+                                console.log('A requisição foi completada.');
+                                clean();
                             }
-                            console.log(data);
-                        },
-                        error: function(xhr, status, error) {
-                            // console.log(error);
-                        },
-                        complete: function(xhr, status) {
-                            //console.log('A requisição foi completada.');
-                        }
-                    });
+                        });
+                    }
                 }
                 return false;
             }
@@ -304,10 +305,6 @@
                 $('#form-search').submit(function(event) {
                     event.preventDefault();
                     search();
-                });
-
-                $('#modal-add').on('hide.bs.modal', function () {
-                    clean();
                 });
 
                 createAJAXPagination();
