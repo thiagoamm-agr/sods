@@ -147,6 +147,15 @@
                         }, 3000);
                     } else {
                         $('#grid').html(data);
+                        $("#tablesorter").tablesorter({
+                            emptyTo: 'none',
+                            theme : 'default',
+                            headerTemplate : '{content}{icon}',
+                            widgetOptions : {
+                              columns : [ "primary", "secondary", "tertiary" ]
+                            }
+                        });
+                        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
                         createAJAXPagination();
                     }
                     console.log(data);
