@@ -65,9 +65,13 @@
             $html .= "    <tbody>\n";
             foreach ($this->getPage($page_number) as $tipo) {
                 $html .= "        <tr>\n";
-                $html .= "            <td>{$tipo['id']}</td>\n";
+                $html .= "            <td width=\"5%\">{$tipo['id']}</td>\n";
                 $html .= "            <td>{$tipo['nome']}</td>\n";
-                $html .= "            <td>{$tipo['status']}</td>\n";
+                 				      if ($tipo['status'] == "A") {
+                $html .= "                <td width=\"10%\">Ativo</td>\n";
+                                      }else{
+                $html .= "                <td width=\"10%\">Inativo</td>\n";
+                                      }
                 $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
                 $html .= "                <button\n"; 
                 $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 

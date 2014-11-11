@@ -61,6 +61,7 @@
         var resposta = null;
 
         function add() {
+            clean();
             action = "add";
             tipoSolicitacao = new TipoSolicitacao();
             tipoSolicitacao.id = null;
@@ -69,6 +70,7 @@
         }
 
         function edit(tipoSolicitacao_json) {
+            clean();
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'edit';
