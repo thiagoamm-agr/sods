@@ -45,8 +45,6 @@ function LotacaoFormValidator(form) {
             var modal = $(f).attr('id').replace('form', '#modal');
             // Esconde a modal
             $(modal).modal('hide');
-            // Limpa o formulário
-            $(f).data('bootstrapValidator').resetForm(true);
         })
         this.data = this.form.data('bootstrapValidator');
     }
