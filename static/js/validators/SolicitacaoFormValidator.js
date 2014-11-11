@@ -3,12 +3,14 @@
  */
 
 function SolicitacaoFormValidator(form) {
-	this.form = form;
+    this.form = form;
     this.data = null;
     this.valid = false;
     if (form != null) {
         form.bootstrapValidator({
+            submitButtons: 'button[type="submit"]',
             live: 'enabled',
+            excluded: [':disabled', ':hidden'],
             fields: {
                 titulo: {
                 	trigger: 'blur',
@@ -35,19 +37,18 @@ function SolicitacaoFormValidator(form) {
                         }
                     }
                 }
-            }
+            }           
         }).on('success.form.bv', function(event) {
-            // Validação bem sucedida
+            // Evita a submissão padrão do formulário.
             event.preventDefault();
-            // Obtem o formulário (o alvo da ação)
+            // Obtém o alvo do evento (formulário).
             var f = $(event.target);
-            // Obtem o id da modal
+            // Obtem o id da modal.
             var modal = $(f).attr('id').replace('form', '#modal');
-            // Esconde a modal
+            // Esconde a modal.
             $(modal).modal('hide');
-            // Limpa o formulário
-            $(f).data('bootstrapValidator').resetForm(true);
-        })
+            console.log('Formulário validado com sucesso!')
+        });
         this.data = this.form.data('bootstrapValidator');
     }
 }
