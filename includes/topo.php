@@ -73,7 +73,9 @@
                     <a class="navbar-brand" 
                        style="font-size: 40px; color: white;" 
                        href="/sods/admin/" 
-                       title="Sistema para Solicitação de Desenvolvimento de Software">SODS</a>
+                       title="SISTEMA PARA SOLICITAÇÃO DE DESENVOLVIMENTO DE SOFTWARE"
+                       data-toggle="tooltip" 
+                       data-placement="bottom">SODS</a>
                   </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
