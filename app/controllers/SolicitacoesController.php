@@ -60,14 +60,14 @@
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n";
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-edit\"\n";
-                    $html .= "                    onclick='edit(" . json_encode($solicitacao) .")'>\n";
+                    $html .= "                    onclick='edit(" . json_encode($solicitacao) ."," . $page_number .")'>\n"; 
                     $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
                     $html .= "                </button>&nbsp;&nbsp;\n";
                     $html .= "                <button\n";
                     $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n";
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
-                    $html .= "                    onclick='del(" . json_encode($solicitacao) . ")'>\n";
+                    $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$this->count() .")'>\n"; 
                     $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
