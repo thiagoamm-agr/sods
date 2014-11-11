@@ -67,6 +67,7 @@
             var action = null;
             var form = null;
             var formValidator = null;
+            var current_page = null;
 
             function clean() {
                 if (formValidator != null) {
@@ -80,9 +81,11 @@
                 solicitacao.id = null;
                 form = $('#form-add');
                 formValidator = new SolicitacaoFormValidator(form);
+                current_page = 1;
             }
 
-            function edit(solicitacao_json) {
+            function edit(solicitacao_json, page) {
+                current_page = page;
                 try {
                     if (solicitacao_json != null) {
                         action = 'edit';
@@ -108,7 +111,14 @@
                 }
             }
 
-            function del(solicitacao_json) {
+            function del(solicitacao_json, page, totalRecords) {
+                 totalRecords = totalRecords - 1;
+                 var manipulatedPage = Math.ceil(totalRecords/10);
+                 if(manipulatedPage < page){
+                	 current_page = manipulatedPage;
+                 }else{
+                	 current_page = page;
+                 }
                  try {
                         if (solicitacao_json != null) {
                             action = 'delete';
@@ -235,8 +245,8 @@
                                 } else {
                                     console.log(data);
                                     // Recarrega a grid.
-                                    var page = 1;
-                                    list(page);
+                                    //var page = 1;
+                                    list(current_page);
                                 }
                             },
                             error: function(xhr, status, error) {
