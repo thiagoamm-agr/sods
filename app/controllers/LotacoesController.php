@@ -73,9 +73,9 @@
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
                 $html .= "    <thead>\n";
                 $html .= "        <tr>\n";
-                $html .= "            <th>ID</th>\n";
+                $html .= "            <th width=\"5%\">ID</th>\n";
                 $html .= "            <th>Nome</th>\n";
-                $html .= "            <th>Sigla</th>\n";
+                $html .= "            <th width=\"10%\">Sigla</th>\n";
                 $html .= "            <th>Gerência</th>\n";
                 $html .= "            <th class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";
