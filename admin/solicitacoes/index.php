@@ -51,7 +51,7 @@
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page);
                 exit();
-                break;              
+                break;
         }
     }    
 ?>
@@ -67,12 +67,18 @@
             var action = null;
             var form = null;
             var formValidator = null;
+
+            function clean() {
+                if (formValidator != null) {
+                    formValidator.reset();
+                }
+            }
     
             function add() {
                 action = "add";
                 solicitacao = new Solicitacao();
                 solicitacao.id = null;
-                form= $('#form-add');
+                form = $('#form-add');
                 formValidator = new SolicitacaoFormValidator(form);
             }
 
@@ -81,7 +87,6 @@
                     if (solicitacao_json != null) {
                         action = 'edit';
                         form = $('#form-edit');
-                        formValidator = new SolicitacaoFormValidator(form);
                         $('#solicitante_id', form).val(solicitacao_json.solicitante_id);
                         $('#titulo', form).val(solicitacao_json.titulo);
                         $('#detalhamento', form).val(solicitacao_json.detalhamento);
@@ -94,6 +99,7 @@
                         $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
+                        formValidator = new SolicitacaoFormValidator(form);
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
@@ -107,7 +113,6 @@
                         if (solicitacao_json != null) {
                             action = 'delete';
                             form = $('#form-del');
-                            formValidator = new SolicitacaoFormValidator(form);
                             solicitacao = new Solicitacao();
                             solicitacao.id = solicitacao_json.id;
                             solicitacao.solicitante_id = solicitacao_json.solicitante_id;
@@ -119,6 +124,7 @@
                             solicitacao.tipo_solicitacao_id = solicitacao_json.tipo_solicitacao_id;
                             solicitacao.data_abertura = solicitacao_json.data_abertura;
                             solicitacao.data_alteracao = solicitacao_json.data_alteracao;
+                            formValidator = new SolicitacaoFormValidator(form);
                         }
                     } catch(e) {
                         alert(e);
@@ -178,15 +184,15 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        // console.log(error);
+                        console.log(error);
                     },
                     complete: function(xhr, status) {
-                        //console.log('A requisição foi completada.');
+                        console.log('A requisição foi completada.');
                     }
                 });
                 return false;
-            }                
-            
+            }
+
             function save() {
                 var json = null;
                 if (solicitacao != null) {
@@ -198,7 +204,7 @@
                             solicitacao.detalhamento = $('#detalhamento', form).val();
                             solicitacao.obervacoes = $('#observaoes', form).val();
                             solicitacao.tipo_solicitacao_id = $('#tipo_solicitacao_id', form).val();
-                            // Se a ação for adição, os campos de status não devem ser setados.                            
+                            // Se a ação for adição, os campos de status não devem ser setados.
                             if (action == 'edit') {
                                solicitacao.status = $('#status', form).val();
                                solicitacao.observacoes_status = $('#observacoes_status', form).val();
@@ -209,51 +215,56 @@
                             json = solicitacao.toJSON();
                             break;
                     }
-                    // Ajax
-                    $.ajax({
-                        type: 'post',
-                        url: '/sods/admin/solicitacoes/',
-                        dataType: 'text',
-                        cache: false,
-                        timeout: 70000,
-                        async: true,
-                        data: {
-                            'action': action,
-                            'json': json
-                        },
-                        success: function(data, status, xhr) {
-                            if (data == 'ERRO') {
-                                $('#alert-del').modal('show');
+                    // Valida o formulário.
+                    if (formValidator.validate()) {
+                        // Ajax
+                        $.ajax({
+                           type: 'post',
+                           url: '/sods/admin/solicitacoes/',
+                           dataType: 'text',
+                           cache: false,
+                           timeout: 70000,
+                           async: true,
+                           data: {
+                              'action': action,
+                               'json': json
+                            },
+                            success: function(data, status, xhr) {
+                                if (data == 'ERRO') {
+                                    $('#alert-del').modal('show');
+                                } else {
+                                    console.log(data);
+                                    // Recarrega a grid.
+                                    var page = 1;
+                                    list(page);
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            },
+                            complete: function(xhr, status) {
+                                console.log('A requisição foi completada.');
+                                clean();
                             }
-                            console.log(data);
-                            // Recarrega a grid.
-                            var page = 1;
-                            list(page);
-                        },
-                        error: function(xhr, status, error) {
-                            // console.log(error);
-                        },
-                        complete: function(xhr, status) {
-                            //console.log('A requisição foi completada.');
-                        }
-                    });
+                        });
+                    }
                 }
                 return false;
             }
-            
-            function clean() {
-                if (formValidator != null) {
-                    formValidator.reset();
-                }
-            }
-            
+
             function formataData(data_antiga) {
                 if(data_antiga != null) {
                     var data = data_antiga.split("-");
-                    var jsDate = new Date(data[0], data[1]-1, data[2].substr(0,2), data[2].substr(3,2), 
-                                          data[2].substr(6,2), data[2].substr(9,2));
+                    var jsDate = new Date(
+                        data[0], 
+                        data[1] - 1, 
+                        data[2].substr(0,2),
+                        data[2].substr(3,2),
+                        data[2].substr(6,2),
+                        data[2].substr(9,2)
+                    );
                     var dia = jsDate.getUTCDate();
-                    var mes = jsDate.getUTCMonth()+1;
+                    var mes = jsDate.getUTCMonth() + 1;
                     var ano = jsDate.getUTCFullYear();
                     var hora = jsDate.getHours();
                     var min = jsDate.getMinutes();
@@ -279,13 +290,6 @@
                     event.preventDefault();
                     save();
                 });
-                $('#modal-add').on('hide.bs.modal', function () {
-                    clean();
-                });
-                
-                $('#modal-edit').on('hide.bs.modal', function () {
-                    clean();
-                });                                 
                 createAJAXPagination();
             });
         </script>
@@ -344,13 +348,13 @@
                             <h4 class="modal-title" id="modal-add">Adicionar Solicitação</h4>
                         </div>
                         <div class="modal-body">
-                            <form id="form-add" action="" role="form" method="post">
+                            <form id="form-add" action="" method="post" role="form">
                                 <div class="form-group">
                                  <input type="hidden" 
                                     class="form-control"
                                     name="solicitante_id" 
                                     id="solicitante_id" 
-                                    value="<?php echo $_SESSION['usuario']['id']?>"/>
+                                    value="<?php echo $_SESSION['usuario']['id'] ?>"/>
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="nome">Nome do Solicitante</label>
@@ -358,8 +362,8 @@
                                                    class="form-control" 
                                                    name="nome" 
                                                    id="nome"
-                                                   value= "<?php echo $_SESSION['usuario']['nome']; ?>"
-                                                   readonly/>
+                                                   value= "<?php echo $_SESSION['usuario']['nome'] ?>"
+                                                   disabled />
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="lotacao">Lotação</label>
@@ -367,8 +371,8 @@
                                                    class="form-control" 
                                                    name="lotacao" 
                                                    id="lotacao"
-                                                   value= "<?php echo $_SESSION['usuario']['nome_lotacao']; ?>"
-                                                   readonly/>
+                                                   value= "<?php echo $_SESSION['usuario']['nome_lotacao'] ?>"
+                                                   disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -425,7 +429,7 @@
                                             class="btn btn-default" onclick="clean();">Limpar
                                             </button>
                                     <button type="button" 
-                                            class="btn btn-default" 
+                                            class="btn btn-default"
                                             data-dismiss="modal">Fechar</button>
                                 </div>
                             </form>    
@@ -537,10 +541,13 @@
                                         class="btn btn-primary">
                                         Salvar
                                     </button>
-                                    <button type="button"
-                                            class="btn btn-default" onclick="clean();">Limpar
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        onclick="clean();">Limpar
+                                    </button>
                                     <button type="button" 
-                                            class="btn btn-default" 
+                                            class="btn btn-default"
                                             data-dismiss="modal">Fechar
                                     </button>
                                 </div>
