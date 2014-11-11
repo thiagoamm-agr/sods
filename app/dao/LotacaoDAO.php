@@ -168,7 +168,7 @@
         public function paginate($rows=10, $start=0, $criteria='') {
             $all = array();
             $where = $criteria == '' ? $criteria : "where $criteria";
-            $query = "select * from lotacao $where limit $rows offset $start";
+            $query = "select * from lotacao $where order by id desc limit $rows offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 $row['gerencia'] = $this->get('id', $row['gerencia_id']);
