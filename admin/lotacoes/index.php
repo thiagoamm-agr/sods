@@ -401,15 +401,26 @@
                                     </select>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-success">
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success">
                                         Salvar
-                                        <span class="glyphicon glyphicon-floppy-save"></span>
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
-                                    <button type="reset" class="btn btn-default" onclick="clean()">
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-primary" 
+                                        onclick="clean()">
                                         Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
                                     </button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                                        Fechar
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal" 
+                                        onclick="clean()">
+                                        Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
                             </form>
@@ -461,17 +472,20 @@
                                     <button 
                                         type="submit" 
                                         class="btn btn-success" >Salvar
-                                        <span class="glyphicon glyphicon-floppy-save"></span>
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
                                     <button 
                                         type="reset" 
-                                        class="btn btn-default" 
+                                        class="btn btn-primary" 
                                         onclick="clean()">Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
                                     </button>
                                     <button 
                                         type="button" 
                                         class="btn btn-default" 
-                                        data-dismiss="modal">Fechar
+                                        data-dismiss="modal"
+                                        onclick="clean()">Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
                             </form>
@@ -502,12 +516,13 @@
                                 <button 
                                     type="submit" 
                                     class="btn btn-danger">Sim
-                                    <span class="glyphicon glyphicon-floppy-save"></span>
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
                                 </button>
                                 <button 
                                     type="button" 
                                     class="btn btn-primary" 
                                     data-dismiss="modal">Não
+                                    <span class="glyphicon glyphicon-floppy-remove"></span>
                                 </button>
                             </div>
                         </form>
@@ -579,11 +594,13 @@
                                 <button 
                                     type="submit" 
                                     class="btn btn-success">Pesquisar
+                                    <span class="glyphicon glyphicon-search"></span>
                                 </button>
                                 <button 
                                     type="reset" 
-                                    class="btn btn-default"
+                                    class="btn btn-primary"
                                     onclick="limparFormPesquisa()">Limpar
+                                    <span class="glyphicon glyphicon-file"></span>
                                 </button>
                                 <button 
                                     type="button" 
