@@ -224,9 +224,10 @@
                             modal='';
                             if (data == 'ERRO') {
                                 modal='#modal-danger';
+                                $('#alert-msg').text('Não é possivel excluir um tipo de solicitação referenciado');
                                 $(modal).modal('show');
                             }
-                            if (data == 'NAOADD'){
+                            else if (data == 'NAOADD'){
                                 modal='#modal-danger';
                                 $('#alert-msg').text('Não é possivel adicionar um tipo de solicitação repetido.');
                                 $(modal).modal('show');
@@ -369,7 +370,9 @@
                                         &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
                                 </button>
                                 <button type="reset" class="btn btn-default" onclick="clean()">Limpar</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" onclick="clean()" data-dismiss="modal">
+                                    Cancelar
+                                </button>
                             </div>
                         </form>
                     </div>
