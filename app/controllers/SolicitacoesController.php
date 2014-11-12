@@ -25,13 +25,13 @@
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
                 $html .= "    <thead>\n";
                 $html .= "        <tr>\n";
-                $html .= "            <th>ID</th>\n";
-                $html .= "            <th>Solicitante</th>\n";
-                $html .= "            <th>Titulo</th>\n";
-                $html .= "            <th>Status</th>\n";
-                $html .= "            <th>Tipo</th>\n";
-                $html .= "            <th>Data Abertura</th>\n";
-                $html .= "            <th>Data Alteração</th>\n";                
+                $html .= "            <th width=\"5%\">ID</th>\n";
+                $html .= "            <th width=\"10%\">Solicitante</th>\n";
+                $html .= "            <th width=\"20%\">Titulo</th>\n";
+                $html .= "            <th width=\"7%\">Status</th>\n";
+                $html .= "            <th width=\"15%\">Tipo</th>\n";
+                $html .= "            <th width=\"10%\">Abertura</th>\n";
+                $html .= "            <th width=\"10%\">Alteração</th>\n";                
                 $html .= "            <th class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";
                 $html .= "    </thead>\n";
@@ -39,19 +39,23 @@
                 foreach ($solicitacoes as $solicitacao) {
                     $html .= "        <tr>\n";
                     $html .= "            <td>{$solicitacao['id']}</td>\n";
-                    $html .= "            <td>{$solicitacao['nome']}</td>\n";
-                    $html .= "            <td>{$solicitacao['titulo']}</td>\n";
+                    $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"{$solicitacao['nome']} \">{$solicitacao['solicitante']}</span></td>\n";
+                    $html .= "            <td width=\"20%\">{$solicitacao['titulo']}</td>\n";
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
                     if ($solicitacao['data_abertura'] != null){
-                        $data_abertura = date('d/m/Y H:i:s', strtotime ($solicitacao['data_abertura']));
-                        $html .= "            <td>$data_abertura</td>\n";
+                        $data_abertura_simples = date('d/m/Y', strtotime ($solicitacao['data_abertura']));
+                        $data_abertura_hora = date('H:i:s', strtotime ($solicitacao['data_abertura']));
+                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_abertura_simples 
+                        Hora: $data_abertura_hora \">$data_abertura_simples</span></td>\n";
                     }else{
                         $html .= "            <td></td>\n";
                     }
                     if ($solicitacao['data_alteracao'] != null){
-                        $data_alteracao = date('d/m/Y H:i:s', strtotime ($solicitacao['data_alteracao']));
-                        $html .= "            <td>$data_alteracao</td>\n";
+                        $data_alteracao_hora = date('H:i:s', strtotime ($solicitacao['data_alteracao']));
+                        $data_alteracao_simples = date('d/m/Y', strtotime ($solicitacao['data_alteracao']));
+                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_alteracao_simples 
+                        Hora: $data_alteracao_hora \">$data_alteracao_simples</span></td>\n";
                     }else{
                         $html .= "            <td></td>\n";
                     }
