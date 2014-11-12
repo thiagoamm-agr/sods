@@ -121,17 +121,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <!--
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <b>Relatórios</b> <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Relatório de Usuários</a></li>
-                                <li><a href="#">Relatório de Solicitações</a></li>
-                            </ul>
-                        </li>
-                        -->
 <?php
                     } else {
                         // Menu do Usuário do Sistema.
@@ -140,13 +129,6 @@
 <?php 
                     }
 ?>
-<!--
-                        <li>
-                            <a href="/sods/admin/account.php">
-                                <span class="glyphicon glyphicon-cog" style="color:white"></span>&nbsp;<b>Conta</b>
-                            </a>
-                        </li>
--->
                         <li class="dropdown">
                             <a class="dropdown-toggle" href="#">
                                 <span class="glyphicon glyphicon-info-sign" style="color:white;" ></span>&nbsp;
