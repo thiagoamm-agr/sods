@@ -173,7 +173,7 @@
         public function paginate($rows=10, $start=0, $criteria='') {
             $all = array();
             $where = $criteria == '' ? $criteria : "where $criteria";
-            $query = "select * from tipo_solicitacao $where limit $rows offset $start";
+            $query = "select * from tipo_solicitacao $where order by id desc limit $rows offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 array_push($all, $row);

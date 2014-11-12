@@ -62,6 +62,7 @@
         var form = null;
         var formValidator = null;
         var resposta = null;
+        var current_page = null;
 
         function add() {
             action = "add";
@@ -69,9 +70,11 @@
             tipoSolicitacao.id = null;
             form = $('#form-add');
             formValidator = new TipoSolicitacaoFormValidator(form);
+            current_page=1;
         }
 
-        function edit(tipoSolicitacao_json) {
+        function edit(tipoSolicitacao_json, page) {
+            current_page=page;
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'edit';
@@ -95,7 +98,14 @@
             }
         }
 
-        function del(tipoSolicitacao_json) {
+        function del(tipoSolicitacao_json, page, totalRecords) {
+        	 totalRecords = totalRecords - 1;
+             var manipulatedPage = Math.ceil(totalRecords/10);
+             if(manipulatedPage < page){
+            	 current_page = manipulatedPage;
+             }else{
+            	 current_page = page;
+             }
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'delete';
@@ -147,6 +157,7 @@
                         }, 3000);
                     } else {
                         $('#grid').html(data);
+                        $("table thead .nonSortable").data("sorter", false);
                         $("#tablesorter").tablesorter({
                             emptyTo: 'none',
                             theme : 'default',
@@ -222,9 +233,8 @@
                             }
                             else {
                                 modal='#modal-success';
-                                var page=1;
                                 $(modal).modal('show');
-                                list(page);
+                                list(current_page);
                             }
                             window.setTimeout(function() {
                                 $(modal).modal('hide');
