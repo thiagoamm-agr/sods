@@ -144,11 +144,7 @@
                                 Bem-vindo(a), 
                                 <font color="white">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
-                                    <b>
-                                        <span id="usuario_nome">
-                                            <?php echo $_SESSION['usuario']['login'] ?>
-                                        </span>
-                                    </b>
+                                    <b><span id="usuario_nome"><?php echo $_SESSION['usuario']['login'] ?></span></b>
                                 </font>.
                             </a>
                         </li>
