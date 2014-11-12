@@ -34,8 +34,16 @@ body {
     left: 30%;
 }
 
-#tablesorter th, #tablesorter td {
+#tablesorter th {
     text-align: center;
     vertical-align: middle;
     font-size: 14px;
+}
+
+#tablesorter td {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px;
+    word-wrap: break-word;
+    word-break: break-all;
 }
