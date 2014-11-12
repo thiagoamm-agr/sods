@@ -162,7 +162,7 @@
             $all = array();
             $where = $criteria == '' ? $criteria : "where\n\t$criteria\n ";
             $query = "select\n" . 
-                        "\tso.id, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
+                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
                         "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
                         "\tso.data_abertura, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
