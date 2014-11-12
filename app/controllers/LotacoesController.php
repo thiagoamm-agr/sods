@@ -91,7 +91,7 @@
                     } else {
                         $html .= "        <td></td>\n";
                     }
-                    $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
+                    $html .= "            <td colspan=\"2\" style=\"width: 16%;\">\n";
                     $html .= "                <button\n"; 
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
                     $html .= "                    data-toggle=\"modal\"\n"; 
