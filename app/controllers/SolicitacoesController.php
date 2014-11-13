@@ -27,12 +27,12 @@
                 $html .= "        <tr>\n";
                 $html .= "            <th width=\"5%\">ID</th>\n";
                 $html .= "            <th width=\"10%\">Solicitante</th>\n";
-                $html .= "            <th width=\"20%\">Titulo</th>\n";
-                $html .= "            <th width=\"7%\">Status</th>\n";
-                $html .= "            <th width=\"15%\">Tipo</th>\n";
-                $html .= "            <th width=\"10%\">Abertura</th>\n";
-                $html .= "            <th width=\"10%\">Alteração</th>\n";                
-                $html .= "            <th class=\"nonSortable\">Ação</th>\n";
+                $html .= "            <th width=\"22%\">Titulo</th>\n";
+                $html .= "            <th width=\"10%\">Status</th>\n";
+                $html .= "            <th width=\"18%\">Tipo</th>\n";
+                $html .= "            <th width=\"9%\">Abertura</th>\n";
+                $html .= "            <th width=\"9%\">Alteração</th>\n";
+                $html .= "            <th width=\"17%\" class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";
                 $html .= "    </thead>\n";
                 $html .= "    <tbody>\n";
@@ -40,7 +40,7 @@
                     $html .= "        <tr>\n";
                     $html .= "            <td>{$solicitacao['id']}</td>\n";
                     $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"{$solicitacao['nome']} \">{$solicitacao['solicitante']}</span></td>\n";
-                    $html .= "            <td width=\"20%\">{$solicitacao['titulo']}</td>\n";
+                    $html .= "            <td>{$solicitacao['titulo']}</td>\n";
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
                     if ($solicitacao['data_abertura'] != null){
@@ -59,7 +59,7 @@
                     }else{
                         $html .= "            <td></td>\n";
                     }
-                    $html .= "            <td colspan=\"2\" style=\"width: 16%;\">\n";
+                    $html .= "            <td colspan=\"2\">\n";
                     $html .= "                <button\n";
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n";
                     $html .= "                    data-toggle=\"modal\"\n";
