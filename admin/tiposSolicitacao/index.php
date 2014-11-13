@@ -41,7 +41,7 @@
                 exit();
                 break;
             case 'list':
-            	$page = isset($_POST['p']) ? $_POST['p'] : 1;
+                $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page);
                 exit();
                 break;
@@ -286,7 +286,7 @@
     <div class="container">
         <h2>Tipos de Solicitação</h2>
         <div class="row">
-                        <div class="col-md-12">
+            <div class="col-md-12">
                 <div class="col-md-11">
                     <button
                         id="btn-add"

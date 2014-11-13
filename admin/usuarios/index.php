@@ -36,7 +36,8 @@
                 exit();
                 break;
             case 'list':
-                echo $controller->getGrid();
+                $page = isset($_POST['p']) ? $_POST['p'] : 1;
+                echo $controller->getGrid($page);
                 exit();
                 break;
         }
@@ -57,6 +58,7 @@
         var form = null;
         var formValidator = null;
         var resposta = null;
+        var current_page = null;
 
         function add() {
             action = 'add';
@@ -65,9 +67,11 @@
             usuario.status = null;
             form= $('#form-add');
             formValidator = new UsuarioFormValidator(form);
+            current_page=1;
         }
 
-        function edit(usuario_json) {
+        function edit(usuario_json, page) {
+        	current_page=page;
             try {
                 if (usuario_json.status == 'A') {
                     $('statusEdit').prop('checked', true);
@@ -99,7 +103,14 @@
             }
         }
 
-        function del(usuario_json) {
+        function del(usuario_json, page, totalRecords ) {
+            totalRecords = totalRecords - 1;
+            var manipulatedPage = Math.ceil(totalRecords/10);
+            if(manipulatedPage < page){
+                current_page = manipulatedPage;
+            }else{
+                current_page = page;
+            }
             try {
                 if (usuario_json != null) {
                     action = 'delete';
@@ -117,6 +128,7 @@
                     usuario.data_criacao = usuario_json.data_criacao;
                     usuario.data_alteracao = usuario_json.data_alteracao;
                     form = $('#form-del');
+                    formValidator = new UsuarioFormValidator(form);
                 }
             } catch(e) {
                 alert(e);
@@ -149,7 +161,7 @@
                 async: true,
                 data: {
                     action: 'list',
-                    p: page
+                    p:page
                 },
                 success: function (data, status, xhr) {
                     if (data == 'ERRO') {
@@ -231,8 +243,7 @@
                         }
                         console.log(data);
                         // Recarrega a grid.
-                        var page = 1;
-                        list(page);
+                        list(current_page);
                     },
                     error: function(xhr, status, error) {
                         // console.log(error);

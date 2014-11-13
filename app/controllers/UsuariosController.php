@@ -13,7 +13,7 @@
             $this->dao = new UsuarioDAO();
             $this->paginator->totalrecords = $this->dao->count();
             $this->paginator->defaultUrl = "/sods/admin/usuarios/";
-            $this->paginator->paginationUrl = "/sods/admin/usuarios/index.php?p=[p]";
+            $this->paginator->paginationUrl = "/sods/admin/usuarios/";
         }
 
         public function __destruct() {
@@ -97,12 +97,12 @@
                     $html .= "<button class=\"btn btn-warning btn-sm\" ";
                     $html .= "data-toggle=\"modal\"";
                     $html .= "data-target=\"#modal-edit\"";
-                    $html .= "onclick='edit(" . json_encode($usuario) .")'>\n";
+                    $html .= "onclick='edit(" . json_encode($usuario) .", ".$page_number .")'>\n";
                     $html .= "<strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong></button>\n";
                     $html .= "&nbsp;&nbsp;<button class=\"btn btn-danger btn-sm\"";
                     $html .= "data-toggle=\"modal\"";
                     $html .= "data-target=\"#modal-del\"";
-                    $html .= "onclick='del(" . json_encode($usuario) .")'>";
+                    $html .= "onclick='del(" . json_encode($usuario) . ", ". $page_number .", " . $this->count() .")'>\n";
                     $html .= "<strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "</td>";
                     $html .= "</tr>";
