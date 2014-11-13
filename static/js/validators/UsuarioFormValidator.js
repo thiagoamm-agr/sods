@@ -93,11 +93,12 @@ UsuarioFormValidator.prototype.validate = function() {
         this.data.validate();
         valid = this.data.isValid();
     }
+    this.valid=valid;
     return valid;
 };
 
 UsuarioFormValidator.prototype.reset = function() {
     if (this.data != null) {
-        this.data.resetForm(true);
+        this.data.resetForm();
     }
 };

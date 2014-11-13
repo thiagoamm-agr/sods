@@ -103,13 +103,13 @@
             }
         }
 
-        function del(usuario_json, page, totalRecords ) {
-            totalRecords = totalRecords - 1;
+        function del(usuario_json, page, totalRecords) {
+        	totalRecords = totalRecords - 1;
             var manipulatedPage = Math.ceil(totalRecords/10);
             if(manipulatedPage < page){
-                current_page = manipulatedPage;
+           	 current_page = manipulatedPage;
             }else{
-                current_page = page;
+           	 current_page = page;
             }
             try {
                 if (usuario_json != null) {
