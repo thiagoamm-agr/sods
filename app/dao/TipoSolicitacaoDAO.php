@@ -153,6 +153,16 @@
             }
             return $all;
         }
+        
+        public function getActiveElements() {
+        	$query = "select * from tipo_solicitacao where status != 'I' order by nome" ;
+        	$result = mysql_query($query, $this->connection);
+        	$all = array();
+        	while ($row = mysql_fetch_assoc($result)){
+        		array_push($all, $row);
+        	}
+        	return $all;
+        }        
 
         public function filter($criteria) {
             if (isset($criteria)) {
