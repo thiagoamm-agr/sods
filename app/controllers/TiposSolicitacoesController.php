@@ -24,6 +24,10 @@
         public function _list() {
             return $this->dao->getAll();
         }
+        
+        public function activeElements(){
+        	return $this->dao->getActiveElements();
+        }
 
         public function add($tipoSolicitacao) {
             return !$this->dao->insert($tipoSolicitacao);
