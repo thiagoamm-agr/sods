@@ -364,16 +364,29 @@
                                     checked="checked" 
                                     disabled />&nbsp;Ativo
                             </div>
-                            <div class="modal-footer">
-                                <button type="submit" 
-                                        class="btn btn-success">Salvar
-                                        &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
-                                </button>
-                                <button type="reset" class="btn btn-default" onclick="clean()">Limpar</button>
-                                <button type="button" class="btn btn-primary" onclick="clean()" data-dismiss="modal">
-                                    Cancelar
-                                </button>
-                            </div>
+                                <div class="modal-footer">
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success">
+                                        Salvar
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-primary" 
+                                        onclick="clean()">
+                                        Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal" 
+                                        onclick="clean()">
+                                        Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                                    </button>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -412,10 +425,25 @@
                                     checked="checked" />&nbsp;Ativo
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-success" >Salvar</button>
-                                <button type="reset" class="btn btn-default" onclick="clean()">Limpar</button>
-                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                            </div>
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success" >Salvar
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                    <button 
+                                        type="reset" 
+                                        class="btn btn-primary" 
+                                        onclick="clean()">Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal"
+                                        onclick="clean()">Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                                    </button>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -436,14 +464,104 @@
                             <h5>Confirma a exclusão?</h5>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger">Sim</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Não</button>
+                            <button 
+                                type="submit" 
+                                class="btn btn-danger">Sim
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </button>
+                            <button 
+                                type="button" 
+                                class="btn btn-primary" 
+                                data-dismiss="modal">Não
+                                <span class="glyphicon glyphicon-floppy-remove"></span>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div><!-- /Modais -->
+        </div>
         
+        <!--  Pesquisar -->
+            <div 
+                id="modal-search"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog" 
+                aria-labelledby="modal-edit" 
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
+                            </button>
+                            <h3 class="modal-title">Pesquisar Tipo de Solicitação</h3>
+                        </div>
+                        <form id="form-search" role="form" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nome">Atributo:</label>
+                                    <select 
+                                        id="atributo" 
+                                        name="atributo"
+                                        class="form-control">
+                                        <option value="">SELECIONE UM ATRIBUTO</option>
+                                        <option value="nome">Nome</option>
+                                        <option value="sigla">Status</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="criterio">Critério:</label>
+                                    <select
+                                        id="criterio"
+                                        name="criterio"
+                                        class="form-control">
+                                        <option value="">SELECIONE UM CRITÉRIO</option>
+                                        <option value="igual_a">Igual a</option>
+                                        <option value="diferente_de">Diferente de</option>
+                                        <option value="menor_que">Menor que</option>
+                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
+                                        <option value="maior_que">Maior que</option>
+                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
+                                        <option value="comecao_com">Começa com</option>
+                                        <option value="nao_comeca_com">Não começa com</option>
+                                        <option value="contem">Contém</option>
+                                        <option value="nao_contem">Não contém</option>
+                                        <option value="termina_com">Termina com</option>
+                                        <option value="nao_termina_com">Não termina com</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor:</label>
+                                    <input id="valor" name="valor" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success">Pesquisar
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-primary"
+                                    onclick="limparFormPesquisa()">Limpar
+                                    <span class="glyphicon glyphicon-file"></span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal">Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <!-- /Modais -->
         <!-- Alertas -->
         <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
