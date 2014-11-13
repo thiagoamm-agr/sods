@@ -28,6 +28,12 @@ function SolicitacaoFormValidator(form) {
                         }
                      }
                 },
+                observacoes: {
+
+                },
+                info_adicionais: {
+
+                },                                  
                 tipo_solicitacao_id: {
                     trigger: 'blur change',
                     group: '.col-sm-6',
