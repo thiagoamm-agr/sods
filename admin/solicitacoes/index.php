@@ -1,24 +1,24 @@
 <?php
     /* CADASTRO DE SOLICITAÇÕES */
-        
+
     // Models
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Solicitacao.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/TipoSolicitacao.php';
-    
+
     // Controllers
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/SolicitacoesController.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/LotacoesController.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/UsuariosController.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/TiposSolicitacoesController.php';
-    
+
     $controller = new SolicitacoesController();
     $lotacoesController = new LotacoesController();
     $lotacoes = $lotacoesController->_list();
     $tiposSolicitacoesController = new TiposSolicitacoesController();
-    $tiposSolicitacoes = $tiposSolicitacoesController->_list();
-    
+    $tiposSolicitacoes = $tiposSolicitacoesController->activeElements();
+
     //Indentificando ações e parâmetros do post
     if (isset($_POST['action'])) {
         // Recuperando os parâmetros da requisição.
@@ -40,7 +40,6 @@
                 exit();
                 break;
             case 'delete':
-//                 $fail = $controller->delete($solicitacao->id);
                 $fail = $controller->delete($solicitacao);
                 if ($fail) {
                     echo 'ERRO';
@@ -53,7 +52,7 @@
                 exit();
                 break;
         }
-    }    
+    }
 ?>
 <?php
     //Topo
@@ -78,7 +77,6 @@
             function add() {
                 action = "add";
                 solicitacao = new Solicitacao();
-                solicitacao.id = null;
                 form = $('#form-add');
                 formValidator = new SolicitacaoFormValidator(form);
                 current_page = 1;
@@ -113,8 +111,8 @@
 
             function del(solicitacao_json, page, totalRecords) {
                  totalRecords = totalRecords - 1;
-                 var manipulatedPage = Math.ceil(totalRecords/10);
-                 if(manipulatedPage < page){
+                 var manipulatedPage = Math.ceil(totalRecords / 10);
+                 if(manipulatedPage < page) {
                 	 current_page = manipulatedPage;
                  }else{
                 	 current_page = page;
@@ -197,7 +195,7 @@
                         console.log(error);
                     },
                     complete: function(xhr, status) {
-                        console.log('A requisição foi completada.');
+                        console.log('A requisição list foi completada.');
                     }
                 });
                 return false;
@@ -212,7 +210,8 @@
                             solicitacao.solicitante_id = $('#solicitante_id', form).val();
                             solicitacao.titulo = $('#titulo', form).val();
                             solicitacao.detalhamento = $('#detalhamento', form).val();
-                            solicitacao.obervacoes = $('#observaoes', form).val();
+                            solicitacao.info_adicionais = $('#info_adicionais', form).val();
+                            solicitacao.observacoes = $('#observacoes', form).val();
                             solicitacao.tipo_solicitacao_id = $('#tipo_solicitacao_id', form).val();
                             // Se a ação for adição, os campos de status não devem ser setados.
                             if (action == 'edit') {
@@ -243,11 +242,14 @@
                                 if (data == 'ERRO') {
                                     $('#alert-del').modal('show');
                                 } else {
-                                    console.log(data);
-                                    // Recarrega a grid.
-                                    //var page = 1;
+                                    modal='#modal-success';
+                                    $(modal).modal('show');
                                     list(current_page);
                                 }
+                                window.setTimeout(function() {
+                                    $(modal).modal('hide');
+                                }, 3000);
+                                console.log(data);
                             },
                             error: function(xhr, status, error) {
                                 console.log(error);
@@ -300,6 +302,7 @@
                     event.preventDefault();
                     save();
                 });
+
                 createAJAXPagination();
             });
         </script>
@@ -388,7 +391,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="titulo">Titulo da Solicitação</label>
-                                    <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100"/>
+                                    <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100" />
                                 </div>
                                 <div class="form-group">
                                     <label for="detalhamento">Descrição da Solicitação</label>
@@ -433,7 +436,7 @@
                                 <div class="modal-footer">
                                     <button type="submit" 
                                             class="btn btn-success" >Salvar
-                                            &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                                            <span class="glyphicon glyphicon-floppy-save"></span>
                                     </button>
                                     <button type="reset"
                                             class="btn btn-default" onclick="clean();">Limpar
@@ -524,7 +527,7 @@
                                         <div class="col-sm-6">
                                             <label for="status">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                                <option value="CRIADA">Criada</option>
+                                                <option value="CRIADA" selected="selected">Criada</option>
                                                 <option value="EM ANÁLISE">Em análise</option>
                                                 <option value="DEFERIDA">Deferida</option>
                                                 <option value="INDEFERIDA">Indeferida</option>
@@ -552,7 +555,7 @@
                                         Salvar
                                     </button>
                                     <button 
-                                        type="button" 
+                                        type="reset" 
                                         class="btn btn-default" 
                                         onclick="clean();">Limpar
                                     </button>
@@ -591,7 +594,6 @@
                     </div>
                 </div>
             </div> <!--  modais -->
-        </div> <!-- container -->
             <!-- Alerta -->
             <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
                 aria-hidden="true">
@@ -601,7 +603,19 @@
                     </button>
                     <strong>ERRO:</strong> Não é possível excluir um registro com referências.
                </div>
-            </div>        
+            </div>
+         <!-- Alertas -->
+        <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
+            aria-hidden="true">
+            <div class="alert alert-success fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>SUCESSO:</strong>
+                <span id="alert-msg">Dados atualizados</span>
+           </div>
+        </div><!-- Alertas -->
+  </div> <!-- container -->
 <?php
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
