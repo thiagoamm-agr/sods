@@ -106,7 +106,7 @@
         }
 
         function del(usuario_json, page, totalRecords) {
-        	totalRecords = totalRecords - 1;
+            totalRecords = totalRecords - 1;
             var manipulatedPage = Math.ceil(totalRecords/10);
             if(manipulatedPage < page){
            	 current_page = manipulatedPage;
@@ -159,7 +159,7 @@
                 url: '/sods/admin/usuarios/',
                 dataType: 'text',
                 cache: false,
-                timeout: 7000,
+                timeout: 70000,
                 async: true,
                 data: {
                     action: 'list',
@@ -168,12 +168,10 @@
                 success: function (data, status, xhr) {
                     if (data == 'ERRO') {
                         //implementar uma modal de erro caso haja
-                        alert();
                     } else {
                         // Carrega o HTML da Grid.
                         $('#grid').html(data);
                         // Paginação AJAX na Grid.
-                        createAJAXPagination();
                         //Ordenação dos registros da Grid
                         $("table thead .nonSortable").data("sorter", false);
                         $("#tablesorter").tablesorter({
@@ -183,19 +181,26 @@
                             widgetOptions : {
                               columns : [ "primary", "secondary", "tertiary" ]
                             }
-                        });                        
+                        });
+                        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+                        createAJAXPagination();
                     }
                     // Mostra saída no console do Firebug.
                     console.log(data);
                 },
                 error: function(xhr, status, error) {
-                    // console.log(error);
+                    console.log(error);
                 },
                 complete: function(xhr, status) {
-                    //console.log('A requisição foi completada.');
+                    console.log('A requisição foi completada.');
                 }
             });
-            return false;
+        }
+
+        function clean() {
+            if (formValidator != null) {
+                formValidator.reset();
+            }
         }
         
         function save() {
@@ -231,10 +236,9 @@
 	                    type: 'post',
 	                    url: '/sods/admin/usuarios/',
 	                    dataType: 'text',
-	                    contentType: 'application/x-www-form-urlencoded',
 	                    cache: false,
-	                    timeout: 7000,
-	                    async: false,
+	                    timeout: 70000,
+	                    async: true,
 	                    data: {
 	                        'action': action,
 	                        'json': json
@@ -266,12 +270,6 @@
                 }
             }
             return false;
-        }
-        
-        function clean() {
-            if (formValidator != null) {
-                formValidator.reset();
-            }
         }
 
         $(document).ready(function() {
