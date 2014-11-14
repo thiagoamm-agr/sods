@@ -436,14 +436,20 @@
                                 <div class="modal-footer">
                                     <button type="submit" 
                                             class="btn btn-success" >Salvar
-                                            <span class="glyphicon glyphicon-floppy-save"></span>
+                                      <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
                                     <button type="reset"
-                                            class="btn btn-default" onclick="clean();">Limpar
-                                            </button>
-                                    <button type="button" 
-                                            class="btn btn-default"
-                                            data-dismiss="modal">Fechar</button>
+                                            class="btn btn-primary" onclick="clean();">Limpar
+                                         <span class="glyphicon glyphicon-file"></span>
+                                     </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal" 
+                                        onclick="clean()">
+                                        Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                                    </button>
                                 </div>
                             </form>    
                         </div>
@@ -549,19 +555,21 @@
                                   </div>
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
                                 <div class="modal-footer">
-                                    <button 
-                                        type="submit" 
-                                        class="btn btn-primary">
-                                        Salvar
+                                    <button type="submit" 
+                                            class="btn btn-success" >Salvar
+                                      <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
+                                    <button type="reset"
+                                            class="btn btn-primary" onclick="clean();">Limpar
+                                         <span class="glyphicon glyphicon-file"></span>
+                                     </button>
                                     <button 
-                                        type="reset" 
+                                        type="button" 
                                         class="btn btn-default" 
-                                        onclick="clean();">Limpar
-                                    </button>
-                                    <button type="button" 
-                                            class="btn btn-default"
-                                            data-dismiss="modal">Fechar
+                                        data-dismiss="modal" 
+                                        onclick="clean()">
+                                        Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
                                 
