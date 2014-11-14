@@ -99,10 +99,10 @@
         }
 
         function del(tipoSolicitacao_json, page, totalRecords) {
-        	 totalRecords = totalRecords - 1;
+             totalRecords = totalRecords - 1;
              var manipulatedPage = Math.ceil(totalRecords/10);
              if(manipulatedPage < page){
-            	 current_page = manipulatedPage;
+                 current_page = manipulatedPage;
              }else{
             	 current_page = page;
              }
