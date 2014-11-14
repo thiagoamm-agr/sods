@@ -71,30 +71,32 @@
         }
 
         function edit(usuario_json, page) {
-        	current_page=page;
+            current_page=page;
             try {
-                if (usuario_json.status == 'A') {
-                    $('statusEdit').prop('checked', true);
-                } else {
-                $('statusEdit').prop('checked', false);
-                }
-                if (usuario_json.tipo_usuario == 'A') {
-                    $('tipo_usuario_a').prop('checked', true);
-                } else {
-                $('tipo_usuario_a').prop('checked', false);
-                }
                 if (usuario_json != null) {
                     action = 'edit';
                     form = $('#form-edit');
+                    usuario = new Usuario();
                     formValidator = new UsuarioFormValidator(form);
+                    usuario.id = usuario_json.id;
                     $('#nome', form).val(usuario_json.nome_sol);
                     $('#login', form).val(usuario_json.login);
                     $('#lotacao', form).val("" + usuario_json.lotacao_id);
                     $('#cargo', form).val(usuario_json.cargo);
                     $('#fone', form).val(usuario_json.telefone);
                     $('#email', form).val(usuario_json.email);
-                    usuario = new Usuario();
-                    usuario.id = usuario_json.id;
+                    if (usuario_json.status == 'A') {
+                        $('#statusEdit', form).prop('checked', true);
+                        $('#statusEdit', form).attr('disabled', true);
+                    }else {
+                        $('#statusEdit', form).prop('checked', false);
+                        $('#statusEdit', form).attr('disabled', false);
+                    }
+                    if (usuario_json.tipo_usuario == 'A') {
+                        $('#tipo_usuario_a', form).prop('checked', true);
+                    } else {
+                        $('#tipo_usuario_u', form).prop('checked', true);
+                    }
                 } else {
                     throw 'Não é possível editar uma alteração que não existe.';
                 }
@@ -221,42 +223,52 @@
                     case 'delete':
                         json = usuario.toJSON();
                         break;
-                }                
+                } 
+                formValidator = new UsuarioFormValidator(form);
+                if(formValidator.validate()){               
                 // Requisição AJAX
-                $.ajax({
-                    type: 'post',
-                    url: '/sods/admin/usuarios/',
-                    dataType: 'text',
-                    contentType: 'application/x-www-form-urlencoded',
-                    cache: false,
-                    timeout: 7000,
-                    async: false,
-                    data: {
-                        'action': action,
-                        'json': json
-                    },
-                    success: function(data, status, xhr) {
-                        if (data == 'ERRO') {
-                           //implementar modal caso haja erro
-                            alert('erro');
-                            console.log(data);
-                        }
-                        console.log(data);
-                        // Recarrega a grid.
-                        list(current_page);
-                    },
-                    error: function(xhr, status, error) {
-                        // console.log(error);
-                    },
-                    complete: function(xhr, status) {
-                        console.log('data');
-                    }
-                });
+	                $.ajax({
+	                    type: 'post',
+	                    url: '/sods/admin/usuarios/',
+	                    dataType: 'text',
+	                    contentType: 'application/x-www-form-urlencoded',
+	                    cache: false,
+	                    timeout: 7000,
+	                    async: false,
+	                    data: {
+	                        'action': action,
+	                        'json': json
+	                    },
+	                    success: function(data, status, xhr) {
+	                        modal=''
+	                        if (data == 'ERRO') {
+	                            console.log(data);
+	                        }else{
+	                            modal='#modal-success';
+	                            $(modal).modal('show');
+	                            list(current_page);
+	                        }
+	
+	                        window.setTimeout(function() {
+	                            $(modal).modal('hide');
+	                        }, 3000);
+	
+	                        console.log(data);
+	                    },
+	                    error: function(xhr, status, error) {
+	                        console.log(error);
+	                    },
+	                    complete: function(xhr, status) {
+	                        console.log('data');
+	                        clean();
+	                    }
+	                });
+                }
             }
             return false;
         }
         
-        function resetForm() {
+        function clean() {
             if (formValidator != null) {
                 formValidator.reset();
             }
@@ -392,18 +404,29 @@
                                     <input type="radio" name="tipo_usuario" value="U"/>Usuário &nbsp;&nbsp;
                                     <input type="radio" name="tipo_usuario" value="A"/>Administrador
                                 </div>
-                            </div>                    
+                            </div>
                             <div class="modal-footer">
-                                <button type="submit" 
-                                        class="btn btn-success">Salvar
-                                        &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
+                                 <button 
+                                    type="submit" 
+                                    class="btn btn-success">
+                                    Salvar
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
                                 </button>
-                                <button type="reset" 
-                                        class="btn btn-default" 
-                                        onclick="resetForm()">Limpar</button>
-                                <button type="button" 
-                                        class="btn btn-primary" 
-                                        data-dismiss="modal">Cancelar</button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-primary" 
+                                    onclick="clean()">
+                                    Limpar
+                                   <span class="glyphicon glyphicon-file"></span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal" 
+                                    onclick="clean()">
+                                    Cancelar
+                                    <span class="glyphicon glyphicon-floppy-remove"></span>
+                               </button>
                             </div>
                         </form>
                     </div>
@@ -481,18 +504,29 @@
                                     <input type="checkbox" 
                                            id="statusEdit" 
                                            name="statusEdit" 
-                                           value="A" />Ativar &nbsp;
+                                           value="A" 
+                                           checked="checked"/>Ativar &nbsp;
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" 
-                                        class="btn btn-success">Salvar</button>
-                                <button type="reset" 
-                                        class="btn btn-default" 
-                                        onclick="limpar()">Limpar</button>
-                                <button type="button" 
-                                        class="btn btn-primary" 
-                                        data-dismiss="modal">Cancelar</button>
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success" >Salvar
+                                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-primary" 
+                                    onclick="clean()">Limpar
+                                    <span class="glyphicon glyphicon-file"></span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal"
+                                    onclick="clean()">Cancelar
+                                    <span class="glyphicon glyphicon-floppy-remove"></span>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -517,19 +551,116 @@
                         </div>
                         <div class="modal-footer">
                             <button 
-                                type="submit"
+                                type="submit" 
                                 class="btn btn-danger">Sim
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
                             </button>
-                            <button
+                            <button 
                                 type="button" 
                                 class="btn btn-primary" 
                                 data-dismiss="modal">Não
+                                <span class="glyphicon glyphicon-floppy-remove"></span>
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
-        </div> <!-- Modais -->
+        </div> 
+        <!--  Pesquisar -->
+            <div 
+                id="modal-search"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog" 
+                aria-labelledby="modal-edit" 
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
+                            </button>
+                            <h3 class="modal-title">Pesquisar Tipo de Solicitação</h3>
+                        </div>
+                        <form id="form-search" role="form" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nome">Atributo:</label>
+                                    <select 
+                                        id="atributo" 
+                                        name="atributo"
+                                        class="form-control">
+                                        <option value="">SELECIONE UM ATRIBUTO</option>
+                                        <option value="nome">Nome</option>
+                                        <option value="lotacao">Lotação</option>
+                                        <option value="cargo">Cargo</option>
+                                        <option value="tipo">Tipo</option>
+                                        <option value="status">Status</option>
+                                        <option value="login">Login</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="criterio">Critério:</label>
+                                    <select
+                                        id="criterio"
+                                        name="criterio"
+                                        class="form-control">
+                                        <option value="">SELECIONE UM CRITÉRIO</option>
+                                        <option value="igual_a">Igual a</option>
+                                        <option value="diferente_de">Diferente de</option>
+                                        <option value="menor_que">Menor que</option>
+                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
+                                        <option value="maior_que">Maior que</option>
+                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
+                                        <option value="comecao_com">Começa com</option>
+                                        <option value="nao_comeca_com">Não começa com</option>
+                                        <option value="contem">Contém</option>
+                                        <option value="nao_contem">Não contém</option>
+                                        <option value="termina_com">Termina com</option>
+                                        <option value="nao_termina_com">Não termina com</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor:</label>
+                                    <input id="valor" name="valor" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success">Pesquisar
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-primary"
+                                    onclick="limparFormPesquisa()">Limpar
+                                    <span class="glyphicon glyphicon-file"></span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal">Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <!-- Modais -->
+        <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
+            aria-hidden="true">
+            <div class="alert alert-success fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>SUCESSO:</strong>
+                <span id="alert-msg">Dados atualizados</span>
+           </div>
+        </div>
     </div> <!-- Container -->
 <?php    
     @include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';

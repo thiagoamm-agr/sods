@@ -175,7 +175,7 @@
                     console.log(error);
                 },
                 complete: function(xhr, status) {
-                    //console.log('A requisição foi completada.');
+                    console.log('A requisição foi completada.');
                 }
             });
         }
@@ -443,7 +443,7 @@
                                         onclick="clean()">Cancelar
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
-                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -572,8 +572,8 @@
                 <strong>FALHA:</strong>
                 <span id="alert-msg">Não é possível excluir um registro com referências.</span>
             </div>
-        </div><!--  /Alertas  -->
-         <!-- Alertas -->
+        </div>
+        
         <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
             aria-hidden="true">
             <div class="alert alert-success fade in" role="alert">
