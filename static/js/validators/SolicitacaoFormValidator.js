@@ -29,14 +29,14 @@ function SolicitacaoFormValidator(form) {
                      }
                 },
                 observacoes: {
-
+                	group: '.col-sm-6'
                 },
                 info_adicionais: {
 
-                },                                  
+                },
                 tipo_solicitacao_id: {
-                    trigger: 'blur change',
                     group: '.col-sm-6',
+                    trigger: 'blur change',
                     validators: {
                         notEmpty: {
                             message: 'Tipo de Solicitação é um campo de preenchimento obrigatório.'
