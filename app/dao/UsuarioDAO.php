@@ -44,7 +44,11 @@
                         ($column != 'data_alteracao')) {
                             $columns .= "{$column}, ";
                         if (gettype($value) == "string"){
-                            $values .= "'{$value}', ";
+                        	if($column == 'senha'){
+                        		$values .= "md5('{$value}'), ";
+                        	}else{
+                        	    $values .= "'{$value}', ";
+                        	}
                         } else {
                             if (endsWith($value, '_id')){
                                 $value = (int) $value;
