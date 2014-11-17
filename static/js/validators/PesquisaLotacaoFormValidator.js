@@ -9,19 +9,11 @@ function PesquisaLotacaoFormValidator(form) {
             live: 'enabled',
             submitButtons: 'button[type="submit"]',
             fields: {
-                atributo: {
-                    trigger: 'blur',
+                filtro: {
+                    trigger: 'blur change',
                     validators: {
                         notEmpty: {
-                            message: 'Atributo é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                },
-                criterio: {
-                    trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Critério é um campo de preenchimento obrigatório.'
+                            message: 'Filtro é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -34,6 +26,15 @@ function PesquisaLotacaoFormValidator(form) {
                     }
                 }
             }
+        }).on('success.form.bv', function(event) {
+            // Validação bem sucedida
+            event.preventDefault();
+            // Obtem o formulário (o alvo da ação)
+            var f = $(event.target);
+            // Obtem o id da modal
+            var modal = $(f).attr('id').replace('form', '#modal');
+            // Esconde a modal
+            $(modal).modal('hide');
         });
         this.data = this.form.data('bootstrapValidator');
     }
