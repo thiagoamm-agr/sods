@@ -26,7 +26,7 @@
         }
         
         public function activeElements(){
-        	return $this->dao->getActiveElements();
+            return $this->dao->getActiveElements();
         }
 
         public function add($tipoSolicitacao) {
@@ -68,11 +68,11 @@
             $html .= "        </tr>\n";
             $html .= "    </thead>\n";
             $html .= "    <tbody>\n";
-            foreach ($this->getPage($page_number) as $tipo) {
+            foreach ($tiposSolicitacao as $tipo) {
                 $html .= "        <tr>\n";
                 $html .= "            <td width=\"5%\">{$tipo['id']}</td>\n";
                 $html .= "            <td>{$tipo['nome']}</td>\n";
-                 				      if ($tipo['status'] == "A") {
+                                       if ($tipo['status'] == "A") {
                 $html .= "                <td width=\"10%\">Ativo</td>\n";
                                       }else{
                 $html .= "                <td width=\"10%\">Inativo</td>\n";
@@ -103,6 +103,30 @@
             }
             $html .= "</table>\n";
             return $html;
+        }
+
+        public function search($filter, $value, $page=1) {
+            $lotacoes = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 'id':
+                        $criteria = "{$filter} = '%{$value}%'";
+                    case 'nome':
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                    case 'status':
+                        if(strcasecmp($value, "ativo") == 0){
+                            $value='A';
+                        }else if(strcasecmp($value, "inativo") == 0){
+                            $value='I';
+                        }
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                }
+                $tiposSolicitacao = $this->dao->filter($criteria);
+            } else {
+                $tiposSolicitacao = $this->dao->getAll();
+            }
+            return $this->getGrid($page, $tiposSolicitacao);
         }
     }
 ?>
