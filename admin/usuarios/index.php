@@ -220,8 +220,9 @@
                         usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
                         if (action == 'add') {
                             usuario.status = "";
-                            var psw = usuario.senha;
-                            usuario.senha = CryptoJS.MD5(psw);
+                            usuario.senha = ""; 
+                            //var psw = usuario.senha;
+                            //usuario.senha = CryptoJS.MD5(psw);
                         }
                         json = usuario.toJSON();
                         break;
@@ -391,8 +392,7 @@
                                 <input type="hidden" 
                                        class="form-control" 
                                        name="senha" 
-                                       id="senha" 
-                                       value="12345"/>
+                                       id="senha" />
                             </div>
                             <div class="form-group">
                                 <div>
