@@ -124,17 +124,29 @@
             return $html;
         }
 
-        public function search($attribute, $criteria, $value, $page=1) {
-            if (!empty($attribute) && !empty($criteria) || !empty($value)) {
-                switch ($criteria) {
-                    case 'igual_a':
-                        $criteria = '=';
+        public function search($filter, $value, $page=1) {
+            $lotacoes = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 'id':
+                    case 'gerencia_id':
+                        $criteria = "{$filter} = {$value}";
+                        break;
+                    case 'nome':
+                    case 'sigla':
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'gerencia_nome':
+                    case 'gerencia_sigla':
+                        $filter = str_replace('gerencia_', '', $filter);
+                        $criteria = "gerencia_id in (select id from lotacao as gerencia where {$filter} = '{$value}')";
                         break;
                 }
-                $criteria = "{$attribute}{$criteria}{$value}";
                 $lotacoes = $this->dao->filter($criteria);
-                return $this->getGrid($page, $lotacoes);
+            } else {
+                $lotacoes = $this->dao->getAll();
             }
+            return $this->getGrid($page, $lotacoes);
         }
     }
 ?>
