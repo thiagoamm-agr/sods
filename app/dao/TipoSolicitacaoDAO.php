@@ -155,19 +155,27 @@
         }
         
         public function getActiveElements() {
-        	$query = "select * from tipo_solicitacao where status != 'I' order by nome" ;
-        	$result = mysql_query($query, $this->connection);
-        	$all = array();
-        	while ($row = mysql_fetch_assoc($result)){
-        		array_push($all, $row);
-        	}
-        	return $all;
-        }        
-
-        public function filter($criteria) {
-            if (isset($criteria)) {
-                
+            $query = "select * from tipo_solicitacao where status != 'I' order by nome" ;
+            $result = mysql_query($query, $this->connection);
+            $all = array();
+            while ($row = mysql_fetch_assoc($result)){
+                array_push($all, $row);
             }
+            return $all;
+        }
+
+    public function filter($criteria) {
+            $rows = array();
+            if (empty($criteria)) {
+                $rows = $this->getAll(); 
+            } else {
+                $query = "select * from tipo_solicitacao where $criteria";
+                $result = mysql_query($query, $this->connection);
+                while ($row = mysql_fetch_assoc($result)) {
+                    array_push($rows, $row);
+                }
+            }
+            return $rows;
         }
 
         public function count($criteria=null) {
