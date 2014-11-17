@@ -67,8 +67,15 @@
         }
 
         public function getGrid($page_number=1, $lotacoes=null) {
+            if (is_null($lotacoes)) {
+                $amount = $this->dao->count();
+            } else if ($lotacoes == array()) {
+                $amount = 0;
+            } else {
+                $amount = count($lotacoes);
+            }
             $lotacoes = empty($lotacoes) ? $this->getPage($page_number) : $lotacoes;
-            if (count($lotacoes) > 0) {
+            if ($amount > 0) {
                 $html = "<table id=\"tablesorter\"\n";
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
                 $html .= "    <thead>\n";
@@ -110,7 +117,7 @@
                     $html .= "        </tr>\n";
                 }
                 $html .= "    </tbody>\n";
-                if ($this->count() > 10) {
+                if ($amount > 10) {
                     $html .= "<tfoot>\n";
                     $html .= "    <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
                     $html .= "</tfoot>\n";
