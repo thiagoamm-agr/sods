@@ -45,6 +45,12 @@
                 echo $controller->getGrid($page);
                 exit();
                 break;
+            case 'search':
+                $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
+                $value = isset($_POST['value']) ? $_POST['value'] : '';
+                echo $controller->search($filter, $value);
+                exit();
+                break;
     }
 }
 ?>
@@ -55,6 +61,7 @@
     <!--  Javascript -->
     <script type="text/javascript" src="/sods/static/js/models/TipoSolicitacao.js"></script>
     <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoFormValidator.js"></script>
+    <script type="text/javascript" src="/sods/static/js/validators/PesquisaTipoSolicitacaoFormValidator.js"></script>
 
     <script type="text/javascript">
         var tipoSolicitacao = null;
@@ -254,6 +261,54 @@
             return false;
         }
 
+        function initSearch() {
+            form = $('#form-search');
+            formValidator = new PesquisaTipoSolicitacaoFormValidator(form);
+        }
+
+        function search() {
+            if (formValidator.validate()) {
+                $.ajax({
+                    url: '/sods/admin/tiposSolicitacao/',
+                    type: 'post',
+                    cache: false,
+                    dataType: 'text',
+                    async: true,
+                    data: {
+                        action: 'search',
+                        filter: $('#filtro').val(),
+                        value: $('#valor').val()
+                    },
+                    success: function(data, status, xhr) {
+                        console.log(data);
+                        $('#grid').html(data);
+                        // Paginação AJAX na Grid.
+                        createAJAXPagination();
+                        // Ordenação dos resultados da Grid.
+                        $("table thead .nonSortable").data("sorter", false);
+                        $("#tablesorter").tablesorter({
+                            emptyTo: 'none',
+                            theme : 'default',
+                            headerTemplate : '{content}{icon}',
+                            widgetOptions : {
+                              columns : [ "primary", "secondary", "tertiary" ]
+                            }
+                        });
+                        // Tooltip.
+                        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error);
+                    },
+                    complete: function(xhr, status) {
+                        console.log('A requisição foi completada.');
+                        clean();
+                    }
+                });
+            }
+            return false;
+        }
+
         $(document).ready(function() {
             $('#form-add').submit(function(event) {
                 event.preventDefault();
@@ -268,6 +323,11 @@
             $('#form-del').submit(function(event) {
                 event.preventDefault();
                 save();
+            });
+
+            $('#form-search').submit(function(event) {
+                event.preventDefault();
+                search();
             });
 
             $('#status', '#form-edit').click(function(event) {
@@ -302,7 +362,8 @@
                     id="btn-search"
                     class="btn btn-info btn-sm pull-right" 
                     data-toggle="modal" 
-                    data-target="#modal-search">
+                    data-target="#modal-search"
+                    onclick="initSearch()">
                     <b>Pesquisar</b>
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
@@ -498,40 +559,20 @@
                                 data-dismiss="modal" 
                                 aria-hidden="true">&times;
                             </button>
-                            <h3 class="modal-title">Pesquisar Tipo de Solicitação</h3>
+                            <h3 class="modal-title">Pesquisar Lotação</h3>
                         </div>
                         <form id="form-search" role="form" method="post">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="nome">Atributo:</label>
+                                    <label for="nome">Filtro:</label>
                                     <select 
-                                        id="atributo" 
-                                        name="atributo"
+                                        id="filtro" 
+                                        name="filtro"
                                         class="form-control">
-                                        <option value="">SELECIONE UM ATRIBUTO</option>
+                                        <option value="">SELECIONE UM FILTRO</option>
+                                        <option value="id">ID</option>
                                         <option value="nome">Nome</option>
-                                        <option value="sigla">Status</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="criterio">Critério:</label>
-                                    <select
-                                        id="criterio"
-                                        name="criterio"
-                                        class="form-control">
-                                        <option value="">SELECIONE UM CRITÉRIO</option>
-                                        <option value="igual_a">Igual a</option>
-                                        <option value="diferente_de">Diferente de</option>
-                                        <option value="menor_que">Menor que</option>
-                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
-                                        <option value="maior_que">Maior que</option>
-                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
-                                        <option value="comecao_com">Começa com</option>
-                                        <option value="nao_comeca_com">Não começa com</option>
-                                        <option value="contem">Contém</option>
-                                        <option value="nao_contem">Não contém</option>
-                                        <option value="termina_com">Termina com</option>
-                                        <option value="nao_termina_com">Não termina com</option>
+                                        <option value="status">Status</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -548,20 +589,21 @@
                                 <button 
                                     type="reset" 
                                     class="btn btn-primary"
-                                    onclick="limparFormPesquisa()">Limpar
+                                    onclick="clean()">Limpar
                                     <span class="glyphicon glyphicon-file"></span>
                                 </button>
                                 <button 
                                     type="button" 
                                     class="btn btn-default" 
-                                    data-dismiss="modal">Cancelar
+                                    data-dismiss="modal"
+                                    onclick="clean()">Cancelar
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-        <!-- /Modais -->
+         <!-- /Modais -->
         <!-- Alertas -->
         <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
