@@ -61,9 +61,9 @@
             $mail->SMTPSecure = 'tls';
             $mail->SMTPAuth = true;
             // Usuário.
-            $mail->Username = "??????";
+            $mail->Username = '??????';
             // Senha.
-            $mail->Password = "??????";
+            $mail->Password = '??????';
             // Remetente.
             $mail->setFrom('??????', '??????');
             // Destinatários.
