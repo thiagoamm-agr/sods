@@ -252,9 +252,12 @@
                 return false;
             }
 
-            function search() {
+            function initSearch() {
                 form = $('#form-search');
                 formValidator = new PesquisaLotacaoFormValidator(form);
+            }
+
+            function search() {
                 if (formValidator.validate()) {
                     $.ajax({
                         url: '/sods/admin/lotacoes/',
@@ -270,6 +273,20 @@
                         success: function(data, status, xhr) {
                             console.log(data);
                             $('#grid').html(data);
+                            // Paginação AJAX na Grid.
+                            createAJAXPagination();
+                            // Ordenação dos resultados da Grid.
+                            $("table thead .nonSortable").data("sorter", false);
+                            $("#tablesorter").tablesorter({
+                                emptyTo: 'none',
+                                theme : 'default',
+                                headerTemplate : '{content}{icon}',
+                                widgetOptions : {
+                                  columns : [ "primary", "secondary", "tertiary" ]
+                                }
+                            });
+                            // Tooltip.
+                            $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
                         },
                         error: function(xhr, status, error) {
                             console.log(error);
@@ -334,7 +351,8 @@
                         id="btn-search"
                         class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
-                        data-target="#modal-search">
+                        data-target="#modal-search"
+                        onclick="initSearch()">
                         <b>Pesquisar</b>
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
@@ -347,20 +365,11 @@
             <!-- Grid -->
             <div id="grid" class="table-responsive">
 <?php
-/*
-                    Lista os registros sem usar AJAX.
-                    if (isset($_GET['p'])) {
-                        $page = (int) $_GET['p'];
-                    } else {
-                        $page = 1;
-                    }
-*/
                     echo $controller->getGrid(1);
 ?>
             </div><!-- /Grid -->
 
             <!--  Modais -->
-
             <!-- Modal de Adição de Lotação -->
             <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-add" aria-hidden="true">
