@@ -9,22 +9,8 @@ function PesquisaLotacaoFormValidator(form) {
             live: 'enabled',
             submitButtons: 'button[type="submit"]',
             fields: {
-                filtro: {
-                    trigger: 'blur change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Filtro é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                },
-                valor: {
-                    trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Valor é um campo de preenchimento obrigatório.'
-                        }
-                    }
-                }
+                filtro: {},
+                valor: {}
             }
         }).on('success.form.bv', function(event) {
             // Validação bem sucedida
