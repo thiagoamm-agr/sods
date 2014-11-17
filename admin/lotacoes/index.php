@@ -43,10 +43,9 @@
                 exit();
                 break;
             case 'search':
-                $attribute = isset($_POST['attribute']) ? $_POST['attribute'] : '';
-                $criteria = isset($_POST['criteria']) ? $_POST['criteria'] : '';
+                $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
-                echo $controller->search($attribute, $criteria, $value);
+                echo $controller->search($filter, $value);
                 exit();
                 break;
         }
@@ -65,10 +64,7 @@
             var lotacao = null;
             var action = null;
             var form = null;
-            var formPesquisa = null;
             var formValidator = null;
-            var formPesquisaValidator = null;
-            var resposta = null;
             var current_page = 1;
 
             function add() {
@@ -256,37 +252,41 @@
                 return false;
             }
 
+            function search() {
+                form = $('#form-search');
+                formValidator = new PesquisaLotacaoFormValidator(form);
+                if (formValidator.validate()) {
+                    $.ajax({
+                        url: '/sods/admin/lotacoes/',
+                        type: 'post',
+                        cache: false,
+                        dataType: 'text',
+                        async: true,
+                        data: {
+                            action: 'search',
+                            filter: $('#filtro').val(),
+                            value: $('#valor').val()
+                        },
+                        success: function(data, status, xhr) {
+                            console.log(data);
+                            $('#grid').html(data);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        },
+                        complete: function(xhr, status) {
+                            console.log('A requisição foi completada.');
+                            clean();
+                        }
+                    });
+                }
+                return false;
+            }
+
             function clean() {
                 if (formValidator != null) {
                     formValidator.reset();
                 }
-            }
-
-            function search() {
-                $.ajax({
-                    url: '/sods/admin/lotacoes/',
-                    type: 'post',
-                    cache: false,
-                    dataType: 'text',
-                    async: true,
-                    data: {
-                        action: 'search',
-                        attribute: $('#atributo').val(),
-                        criteria: $('#criterio').val(),
-                        value: $('#valor').val()
-                    },
-                    success: function(data, status, xhr) {
-                        console.log(data);
-                        $('#grid').html(data);
-                    }
-                });
-                return false;
-            }
-
-            function limparFormPesquisa() {
-                formPesquisa = $('#form-search');
-                formPesquisaValidator = new PesquisaLotacaoFormValidator(formPesquisa);
-                formPesquisaValidator.reset(); 
             }
 
             // Associando eventos após o carregamento da página.
@@ -552,37 +552,18 @@
                         <form id="form-search" role="form" method="post">
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="nome">Atributo:</label>
+                                    <label for="nome">Filtro:</label>
                                     <select 
-                                        id="atributo" 
-                                        name="atributo"
+                                        id="filtro" 
+                                        name="filtro"
                                         class="form-control">
-                                        <option value="">SELECIONE UM ATRIBUTO</option>
-                                        <option value="id">Id</option>
+                                        <option value="">SELECIONE UM FILTRO</option>
+                                        <option value="id">ID</option>
                                         <option value="nome">Nome</option>
                                         <option value="sigla">Sigla</option>
-                                        <option value="gerencia_id">Gerência</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="criterio">Critério:</label>
-                                    <select
-                                        id="criterio"
-                                        name="criterio"
-                                        class="form-control">
-                                        <option value="">SELECIONE UM CRITÉRIO</option>
-                                        <option value="igual_a">Igual a</option>
-                                        <option value="diferente_de">Diferente de</option>
-                                        <option value="menor_que">Menor que</option>
-                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
-                                        <option value="maior_que">Maior que</option>
-                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
-                                        <option value="comecao_com">Começa com</option>
-                                        <option value="nao_comeca_com">Não começa com</option>
-                                        <option value="contem">Contém</option>
-                                        <option value="nao_contem">Não contém</option>
-                                        <option value="termina_com">Termina com</option>
-                                        <option value="nao_termina_com">Não termina com</option>
+                                        <option value="gerencia_id">Gerência (ID)</option>
+                                        <option value="gerencia_nome">Gerência (Nome)</option>
+                                        <option value="gerencia_sigla">Gerência (Sigla)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -599,13 +580,14 @@
                                 <button 
                                     type="reset" 
                                     class="btn btn-primary"
-                                    onclick="limparFormPesquisa()">Limpar
+                                    onclick="clean()">Limpar
                                     <span class="glyphicon glyphicon-file"></span>
                                 </button>
                                 <button 
                                     type="button" 
                                     class="btn btn-default" 
-                                    data-dismiss="modal">Cancelar
+                                    data-dismiss="modal"
+                                    onclick="clean()">Cancelar
                                 </button>
                             </div>
                         </form>
