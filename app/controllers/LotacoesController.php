@@ -125,7 +125,7 @@
                 $html .= "</table>\n";
             } else {
                 $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
-                $html .= "    <center><b>Não há registros de solicitações.</b></center>\n";
+                $html .= "    <center><b>Não há registros de lotações.</b></center>\n";
                 $html .= "</div>\n";
             }
             return $html;
