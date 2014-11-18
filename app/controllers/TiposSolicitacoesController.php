@@ -55,53 +55,67 @@
         }
 
         public function getGrid($page_number=1, $tiposSolicitacao = null) {
-            $tiposSolicitacao = empty($tiposSolicitacao) ? $this->getPage($page_number) : $tiposSolicitacao;
-            $html = "<table\n";
-            $html .= "    id=\"tablesorter\"\n";
-            $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
-            $html .= "    <thead>\n";
-            $html .= "        <tr>\n";
-            $html .= "            <th>ID</th>\n";
-            $html .= "            <th>Nome do tipo de Solicitação</th>\n";
-            $html .= "            <th>Status</th>\n";
-            $html .= "            <th class=\"nonSortable\">Ação</th>\n";
-            $html .= "        </tr>\n";
-            $html .= "    </thead>\n";
-            $html .= "    <tbody>\n";
-            foreach ($tiposSolicitacao as $tipo) {
-                $html .= "        <tr>\n";
-                $html .= "            <td width=\"5%\">{$tipo['id']}</td>\n";
-                $html .= "            <td>{$tipo['nome']}</td>\n";
-                                       if ($tipo['status'] == "A") {
-                $html .= "                <td width=\"10%\">Ativo</td>\n";
-                                      }else{
-                $html .= "                <td width=\"10%\">Inativo</td>\n";
-                                      }
-                $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
-                $html .= "                <button\n"; 
-                $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
-                $html .= "                    data-toggle=\"modal\"\n"; 
-                $html .= "                    data-target=\"#modal-edit\"\n";
-                $html .= "                    onclick='edit(" . json_encode($tipo) .", ".$page_number .")'>\n";
-                $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
-                $html .= "                </button>&nbsp;&nbsp;\n";
-                $html .= "                <button\n";
-                $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
-                $html .= "                    data-toggle=\"modal\"\n"; 
-                $html .= "                    data-target=\"#modal-del\"\n";
-                $html .= "                    onclick='del(" . json_encode($tipo) . ", ". $page_number .", " . $this->count() .")'>\n";
-                $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
-                $html .= "                </button>\n";
-                $html .= "            </td>\n";
-                $html .= "        </tr>\n";
-                            }
-            $html .= "    </tbody>\n";
-            if ($this->paginator->totalrecords > 10) {
-                $html .= "    <tfoot>\n";
-                $html .= "        <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
-                $html .= "    </tfoot>\n";
+            $amount=null;
+            if (is_null($tiposSolicitacao)) {
+                $amount = $this->dao->count();
+            } else if ($tiposSolicitacao == array()) {
+                $amount = 0;
+            } else {
+                $amount = count($tiposSolicitacao);
             }
-            $html .= "</table>\n";
+            $tiposSolicitacao = empty($tiposSolicitacao) ? $this->getPage($page_number) : $tiposSolicitacao;
+            if ($amount > 0) {
+                $html = "<table\n";
+                $html .= "    id=\"tablesorter\"\n";
+                $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
+                $html .= "    <thead>\n";
+                $html .= "        <tr>\n";
+                $html .= "            <th>ID</th>\n";
+                $html .= "            <th>Nome do tipo de Solicitação</th>\n";
+                $html .= "            <th>Status</th>\n";
+                $html .= "            <th class=\"nonSortable\">Ação</th>\n";
+                $html .= "        </tr>\n";
+                $html .= "    </thead>\n";
+                $html .= "    <tbody>\n";
+                foreach ($tiposSolicitacao as $tipo) {
+                    $html .= "        <tr>\n";
+                    $html .= "            <td width=\"5%\">{$tipo['id']}</td>\n";
+                    $html .= "            <td>{$tipo['nome']}</td>\n";
+                                           if ($tipo['status'] == "A") {
+                    $html .= "                <td width=\"10%\">Ativo</td>\n";
+                                          }else{
+                    $html .= "                <td width=\"10%\">Inativo</td>\n";
+                                          }
+                    $html .= "            <td colspan=\"2\" style=\"width: 17%;\">\n";
+                    $html .= "                <button\n"; 
+                    $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
+                    $html .= "                    data-toggle=\"modal\"\n"; 
+                    $html .= "                    data-target=\"#modal-edit\"\n";
+                    $html .= "                    onclick='edit(" . json_encode($tipo) .", ".$page_number .")'>\n";
+                    $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
+                    $html .= "                </button>&nbsp;&nbsp;\n";
+                    $html .= "                <button\n";
+                    $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
+                    $html .= "                    data-toggle=\"modal\"\n"; 
+                    $html .= "                    data-target=\"#modal-del\"\n";
+                    $html .= "                    onclick='del(" . json_encode($tipo) . ", ". $page_number .", " . $this->count() .")'>\n";
+                    $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    $html .= "                </button>\n";
+                    $html .= "            </td>\n";
+                    $html .= "        </tr>\n";
+                                }
+                $html .= "    </tbody>\n";
+                if ($amount > 10) {
+                    $html .= "    <tfoot>\n";
+                    $html .= "        <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
+                    $html .= "    </tfoot>\n";
+                }
+                $html .= "</table>\n";
+            }else {
+                $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
+                $html .= "    <center><b>Nenhum registro encontrado</b></center>\n";
+                $html .= "</div>\n";
+            }
             return $html;
         }
 
