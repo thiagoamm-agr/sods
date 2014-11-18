@@ -1,4 +1,4 @@
-// Valida os dados informados no formulário de pesquisa de lotações.
+// Valida os dados informados no formulário de pesquisa de tipos de solicitação.
 
 function PesquisaTipoSolicitacaoFormValidator(form) {
     this.form = form;
