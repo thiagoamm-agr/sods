@@ -24,7 +24,10 @@
 
         switch ($action) {
             case 'add':
-                $controller->add($usuario);
+                $fail =$controller->add($usuario);
+                if ($fail) {
+                	echo 'LOGIN-EXISTENTE';
+                }                
                 exit();
                 break;
             case 'edit':
@@ -166,25 +169,22 @@
                     p:page
                 },
                 success: function (data, status, xhr) {
-                    if (data == 'ERRO') {
-                        //implementar uma modal de erro caso haja
-                    } else {
-                        // Carrega o HTML da Grid.
-                        $('#grid').html(data);
-                        // Paginação AJAX na Grid.
-                        //Ordenação dos registros da Grid
-                        $("table thead .nonSortable").data("sorter", false);
-                        $("#tablesorter").tablesorter({
-                            emptyTo: 'none',
-                            theme : 'default',
-                            headerTemplate : '{content}{icon}',
-                            widgetOptions : {
-                              columns : [ "primary", "secondary", "tertiary" ]
-                            }
-                        });
-                        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
-                        createAJAXPagination();
-                    }
+                    // Carrega o HTML da Grid.
+                    $('#grid').html(data);
+                    // Paginação AJAX na Grid.
+                    //Ordenação dos registros da Grid
+                    $("table thead .nonSortable").data("sorter", false);
+                    $("#tablesorter").tablesorter({
+                        emptyTo: 'none',
+                        theme : 'default',
+                        headerTemplate : '{content}{icon}',
+                        widgetOptions : {
+                          columns : [ "primary", "secondary", "tertiary" ]
+                        }
+                    });
+                    $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+                    createAJAXPagination();
+                    
                     // Mostra saída no console do Firebug.
                     console.log(data);
                 },
@@ -246,10 +246,13 @@
 	                    },
 	                    success: function(data, status, xhr) {
 	                        modal=''
-	                        if (data == 'ERRO') {
-	                            console.log(data);
+	                        if (data == 'LOGIN-EXISTENTE') {
+                                modal='#modal-danger';
+                                $('#alert-msg').text('Registro Existente !');
+                                $(modal).modal('show');
 	                        }else{
 	                            modal='#modal-success';
+	                            $('#alert-msg').text('Dados Atualizados !');
 	                            $(modal).modal('show');
 	                            list(current_page);
 	                        }
@@ -659,6 +662,17 @@
                 <span id="alert-msg">Dados atualizados</span>
            </div>
         </div>
+            <!-- Alerta -->
+        <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
+            aria-labelledby="modal-del" aria-hidden="true">
+            <div class="alert alert-danger fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>FALHA:</strong>
+                <span id="alert-msg">Login já existente.</span>
+            </div>
+        </div>      
     </div> <!-- Container -->
 <?php    
     @include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
