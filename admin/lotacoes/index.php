@@ -58,7 +58,7 @@
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Lotacao.js"></script>
         <script type="text/javascript" src="/sods/static/js/validators/LotacaoFormValidator.js"></script>
-        <script type="text/javascript" src="/sods/static/js/validators/PesquisaLotacaoFormValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
 
         <script type="text/javascript">
             var lotacao = null;
@@ -254,7 +254,7 @@
 
             function initSearch() {
                 form = $('#form-search');
-                formValidator = new PesquisaLotacaoFormValidator(form);
+                formValidator = new PesquisaFormValidator(form);
             }
 
             function search() {
