@@ -232,5 +232,29 @@
             $html .= "</div>";
             return $html;
         }
+        
+        public function search($filter, $value, $page=1) {
+            $usuarios = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 's.id':
+                        $criteria = "{$filter} = '%{$value}%'";
+                    case 'status':
+                        if(strcasecmp($value, "ativo") == 0){
+                            $value='A';
+                        }else if(strcasecmp($value, "inativo") == 0){
+                            $value='I';
+                        }
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                    default:
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                }
+                $usuarios = $this->dao->filter($criteria);
+            } else {
+                $usuarios = $this->dao->getAll();
+            }
+            return $this->getGrid($page, $usuarios);
+        }
     }
 ?>
