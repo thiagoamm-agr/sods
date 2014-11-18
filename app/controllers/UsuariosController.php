@@ -116,15 +116,15 @@
                 "tablesorter-default\" role=\"grid\"";
                 $html .= "id=\"tablesorter\">";
                 $html .= "<thead><tr>";
-                $html .= "<th>ID</th>";
-                $html .= "<th>Nome</th>";
-                $html .= "<th>Lotação</th>";
-                $html .= "<th>Cargo</th>";
-                $html .= "<th>Telefone/Ramal</th>";
-                $html .= "<th>Tipo de Usuário</th>";
-                $html .= "<th>Status</th>";
-                $html .= "<th>Login</th>";
-                $html .= "<th class=\"nonSortable\">Ação</th>";
+                $html .= "<th width=\"5%\">ID</th>";
+                $html .= "<th width=\"17%\">Nome</th>";
+                $html .= "<th width=\"17%\">Lotação</th>";
+                $html .= "<th width=\"10%\">Cargo</th>";
+                $html .= "<th width=\"10%\">Telefone/Ramal</th>";
+                $html .= "<th width=\"10%\">Tipo de Usuário</th>";
+                $html .= "<th width=\"5%\">Status</th>";
+                $html .= "<th width=\"10%\">Login</th>";
+                $html .= "<th width=\"16%\" class=\"nonSortable\">Ação</th>";
                 $html .= "</tr></thead>";
                 foreach ($usuarios as $usuario) {
                     $html .= "<tr>";
