@@ -1,6 +1,6 @@
 // Valida os dados informados no formulário de pesquisa de lotações.
 
-function PesquisaLotacaoFormValidator(form) {
+function PesquisaFormValidator(form) {
     this.form = form;
     this.data = null;
     this.valid = false;
@@ -26,7 +26,7 @@ function PesquisaLotacaoFormValidator(form) {
     }
 }
 
-PesquisaLotacaoFormValidator.prototype.validate = function() {
+PesquisaFormValidator.prototype.validate = function() {
     var valid = false;
     if (this.form != null) {
         this.data.validate();
@@ -36,7 +36,7 @@ PesquisaLotacaoFormValidator.prototype.validate = function() {
     return valid;
 };
 
-PesquisaLotacaoFormValidator.prototype.reset = function() {
+PesquisaFormValidator.prototype.reset = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
