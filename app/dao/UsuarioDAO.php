@@ -157,9 +157,24 @@
         }
         
         public function filter($criteria) {
-            if (isset($criteria)) {
-                
+            $rows = array();
+            if (empty($criteria)) {
+                $rows = $this->getAll(); 
+            } else {
+                $query = "select " .
+                         "s.id, s.nome, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
+                         "s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
+                     "from " .
+                         "solicitante as s " .
+                     "inner join lotacao as l " .
+                         "on s.lotacao_id = l.id " .
+                     "where = $criteria";
+                $result = mysql_query($query, $this->connection);
+                while ($row = mysql_fetch_assoc($result)) {
+                    array_push($rows, $row);
+                }
             }
+            return $rows;
         }
         
         public function count($criteria = null){
@@ -176,13 +191,13 @@
             $all = array();
             $where = $criteria == '' ? $criteria : "where $criteria";
             $query = "select " .
-                    "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
-                    "s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
-                    "s.data_criacao, s.data_alteracao " .
-                    "from " .
-                    "solicitante as s $where " .
-                    "inner join lotacao as l " .
-                    "on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
+                     "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
+                     "s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
+                     "s.data_criacao, s.data_alteracao " .
+                     "from " .
+                     "solicitante as s $where " .
+                     "inner join lotacao as l " .
+                     "on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 array_push($all, $row);
