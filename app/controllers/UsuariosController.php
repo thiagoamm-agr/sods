@@ -31,7 +31,7 @@
         public function add($usuario) {
             $usuario->senha = $this->generatePassword();
             //$this->sendPassword();
-            return !$this->dao->insert($usuario);
+            $this->dao->insert($usuario);
         }
         
         public function generatePassword(){
