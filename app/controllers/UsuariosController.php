@@ -30,8 +30,8 @@
 
         public function add($usuario) {
             $usuario->senha = $this->generatePassword();
-            $this->sendPassword();
-            $this->dao->insert($usuario);
+            //$this->sendPassword();
+            return !$this->dao->insert($usuario);
         }
         
         public function generatePassword(){
