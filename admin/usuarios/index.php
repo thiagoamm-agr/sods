@@ -43,9 +43,15 @@
             case 'check_login':
                 if (isset($_POST['login'])) {
                      $login = $_POST['login'];
-                     $exists = $controller->checkLogin($login);
+                     // Edição
+                     if (isset($_POST['login_antigo'])) {
+                         $login_antigo = $_POST['login_antigo'];
+                     } else{
+                         $login_antigo = null; 
+                     }
+                     $valid = $controller->checkLogin($login, $login_antigo);
                      echo json_encode(array(
-                         'valid' => !$exists
+                         'valid' => $valid
                      ));
                  }
                 exit();
@@ -91,6 +97,7 @@
                     usuario.id = usuario_json.id;
                     $('#nome', form).val(usuario_json.nome_sol);
                     $('#login', form).val(usuario_json.login);
+                    $('#login_antigo', form).val(usuario_json.login);
                     $('#lotacao', form).val("" + usuario_json.lotacao_id);
                     $('#cargo', form).val(usuario_json.cargo);
                     $('#fone', form).val(usuario_json.telefone);
@@ -414,7 +421,7 @@
                                     <label for="tipo_usuario">Tipo</label>
                                 </div>
                                 <div class="form-group">
-                                    <input type="radio" name="tipo_usuario" value="U"/>Usuário &nbsp;&nbsp;
+                                    <input type="radio" name="tipo_usuario" value="U" checked="checked"/>Usuário &nbsp;&nbsp;
                                     <input type="radio" name="tipo_usuario" value="A"/>Administrador
                                 </div>
                             </div>
@@ -467,10 +474,12 @@
                             <div class="form-group">
                                 <label for="login">Login</label>
                                 <input id="login" name="login" type="text" class="form-control" maxlength="50"/>
+                                <input id="login_antigo" name="login_antigo" type="hidden" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label for="lotacao">Lotação</label>
                                 <select id="lotacao" name="lotacao" class="form-control">
+                                <option value="">SELECIONE UMA LOTAÇÃO</option>
 <?php                                   
                                     foreach ($lotacoes as $lotacao){
 ?>
@@ -501,7 +510,7 @@
                                     <input type="radio" 
                                            id="tipo_usuario_u"
                                            name="tipo_usuario"
-                                           value="U"/>Usuário
+                                           value="U" checked="checked"/>Usuário
                                            &nbsp;&nbsp;
                                     <input type="radio"
                                            id="tipo_usuario_a"
