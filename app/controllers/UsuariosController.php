@@ -197,6 +197,12 @@
             $html .= "<div class=\"form-group\">";
             $html .= "<label for=\"senha\">Senha</label>";
             $html .= "<input type=\"password\" id=\"senha\" name=\"senha\" class=\"form-control\"";
+            $html .= "value=\"{$usuario['senha']}\"/>";
+            $html .= "</div>";
+            $html .= "<div class=\"form-group\">";
+            $html .= "<label for=\"confirmaSenha\">Repita a senha</label>";
+            $html .= "<input type=\"password\" id=\"confirmaSenha\" name=\"confirmaSenha\" class=\"form-control\"";
+            $html .= "value=\"{$usuario['senha']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
             $html .= "<input type=\"hidden\" id=\"id\"
