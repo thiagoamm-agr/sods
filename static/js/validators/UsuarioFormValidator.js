@@ -60,16 +60,17 @@ function UsuarioFormValidator(form) {
                     validators: {
                         notEmpty: {
                             message: 'Login é um campo de preenchimento obrigatório'
-                        },                    	
+                        },
                         remote: {
                             message: 'Esse login já está sendo utilizado!',
                             type: 'post',
                             url: '/sods/admin/usuarios/',
                             name: 'login',
                             data: function(validator) {
-                                return {
+                                return { 
                                     action: 'check_login',
-                                    login: validator.getFieldElements('login').val()
+                                    login: validator.getFieldElements('login').val(),
+                                    login_antigo: validator.getFieldElements('login_antigo').val()
                                 };
                             }
                         }
