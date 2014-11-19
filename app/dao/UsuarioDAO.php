@@ -26,7 +26,7 @@
         
         public function __set($field, $value) {
             $this->$field = $value;
-        }        
+        }
         
         public function insert($usuario) {
             if (isset($usuario)) {
@@ -75,7 +75,7 @@
                     $property->setAccessible(true);
                     $column = $property->getName();
                     $value = $property->getValue($usuario);
-                    if ($column != 'id') {
+                    if ($column != 'id' && $column != 'senha') {
                         if (!empty($value) && ($value != 'undefined')) {
                             if (gettype($value) == "string") {
                                 $pairs .= "$column = '{$value}', ";
@@ -86,6 +86,12 @@
                                 $pairs .= "$column = {$value}, ";
                             }
                         }
+                    }
+                    
+                    if($column == 'senha' && !empty($value)){
+                    	if(strlen($value)<32){
+                        	$pairs .= "$column = md5('{$value}'),";
+                    	}
                     }
                 }
                 $pairs = substr($pairs, 0, strrpos($pairs, ", "));
