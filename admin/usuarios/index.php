@@ -305,20 +305,9 @@
                 event.preventDefault();
                 save();
             });
-
-            /*
-            $('#login', '#form-add').blur(function(event) {
-                checkLogin($(this).val());
-            });
-            */
              // Máscara telefone.
-            var fone = $('#fone');
-            var mascara = "(99) 9999-9999?9";
-            if (fone.val().length > 10) {
-                fone.mask("(99) 99999-999?9");
-            }
-            fone.mask(mascara);
-
+			$('#fone', '#form-add').mask('(99) 9999-9999');
+			$('#fone', '#form-edit').mask('(99) 9999-9999');
             createAJAXPagination();
         });
     </script>
