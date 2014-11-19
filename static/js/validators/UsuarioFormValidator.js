@@ -40,7 +40,7 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Fone é um campo de preenchimento obrigatório'
+                            message: 'Telefone é um campo de preenchimento obrigatório'
                         }
                     }
                 },
@@ -48,7 +48,7 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'e-mail é um campo de preenchimento obrigatório'
+                            message: 'E-mail é um campo de preenchimento obrigatório'
                         },
                         emailAddress: {
                             message: 'Preencha um endereço de e-mail válido'
@@ -60,6 +60,18 @@ function UsuarioFormValidator(form) {
                     validators: {
                         notEmpty: {
                             message: 'Login é um campo de preenchimento obrigatório'
+                        },                    	
+                        remote: {
+                            message: 'Esse login já está sendo utilizado!',
+                            type: 'post',
+                            url: '/sods/admin/usuarios/',
+                            name: 'login',
+                            data: function(validator) {
+                                return {
+                                    action: 'check_login',
+                                    login: validator.getFieldElements('login').val()
+                                };
+                            }
                         }
                     }
                 },
