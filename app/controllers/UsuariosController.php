@@ -67,11 +67,24 @@
             return $this->dao->get($field, $value);
         }
         
-        public function checkLogin($login) {
-        	$exists = $this->dao->count("login = '$login'");
-        	$exists = (bool) $exists;
-        	return $exists;
-        }        
+        public function checkLogin($login, $login_antigo) {
+            $row = $this->dao->filter("login = '$login'");
+            if (count($row) == 0) {
+                $valid = true;
+            } else {
+                // Edição
+                if (!is_null($login_antigo)) {
+                    if ($login == $login_antigo) {
+                        $valid = true;
+                    } else {
+                        $valid = false;
+                    }
+                } else {
+                    $valid = false;
+                }
+            }
+            return $valid;
+        }
 
         public function getPage($page_number=1, $rows=10) {
             if (empty($page_number)) {
