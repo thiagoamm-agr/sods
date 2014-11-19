@@ -30,7 +30,6 @@
 
         public function add($usuario) {
             $usuario->senha = $this->generatePassword();
-            //$this->sendPassword();
             $this->dao->insert($usuario);
         }
         
@@ -52,38 +51,6 @@
             return $sequencia;
         }
         
-        public function sendPassword(){
-            $mail = new PHPMailer;
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->Port = 587;
-            // Criptografia - TLS ou SSL (depreciada).
-            $mail->SMTPSecure = 'tls';
-            $mail->SMTPAuth = true;
-            // Usuário.
-            $mail->Username = '??????';
-            // Senha.
-            $mail->Password = '??????';
-            // Remetente.
-            $mail->setFrom('??????', '??????');
-            // Destinatários.
-            $mail->addAddress('??????', '??????');
-            $mail->addAddress('??????', '??????');
-            // Assunto.
-            $mail->Subject = '??????';
-            // Corpo da mensagem.
-            $mail->isHTML(true);
-            // Mensagem em hipertexto.
-            $mail->Body = 'Este é o corpo da mensagem de teste, em <b>HTML</b>! <br>';
-            // Mensagem em texto puro.
-            $mail->AltBody = 'This is a plain-text message body';
-            if (!$mail->send()) {
-                echo "Mailer Error: " . $mail->ErrorInfo;
-            } else {
-                echo "Message sent!";
-            }
-        }
-
         public function delete($usuario) {
             return $this->dao->delete($usuario);
         }
@@ -99,6 +66,12 @@
         public function getUsuario($field, $value) {
             return $this->dao->get($field, $value);
         }
+        
+        public function checkLogin($login) {
+        	$exists = $this->dao->count("login = '$login'");
+        	$exists = (bool) $exists;
+        	return $exists;
+        }        
 
         public function getPage($page_number=1, $rows=10) {
             if (empty($page_number)) {
