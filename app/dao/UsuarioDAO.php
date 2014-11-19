@@ -149,7 +149,7 @@
             return $all;
         }
         
-            public function filter($criteria) {
+        public function filter($criteria) {
             $rows = array();
             if (empty($criteria)) {
                 $rows = $this->getAll(); 
@@ -161,7 +161,7 @@
                          "solicitante as s " .
                      "inner join lotacao as l " .
                          "on s.lotacao_id = l.id " .
-                     "where = $criteria";
+                     "where $criteria";
                 $result = mysql_query($query, $this->connection);
                 while ($row = mysql_fetch_assoc($result)) {
                     array_push($rows, $row);
