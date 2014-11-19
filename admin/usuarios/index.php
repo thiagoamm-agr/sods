@@ -102,6 +102,8 @@
                     $('#cargo', form).val(usuario_json.cargo);
                     $('#fone', form).val(usuario_json.telefone);
                     $('#email', form).val(usuario_json.email);
+                    $('#senha', form).val(usuario_json.senha);
+                    $('#confirmaSenha', form).val(usuario_json.senha);
                     if (usuario_json.status == 'A') {
                         $('#statusEdit', form).prop('checked', true);
                         $('#statusEdit', form).attr('disabled', true);
@@ -222,6 +224,8 @@
                 var json = null;
                 switch (action) {
                     case 'add':
+                        usuario.status = "";
+                        usuario.senha = ""; 
                     case 'edit':
                         usuario.nome = $('#nome', form).val();
                         usuario.lotacao_id = $('#form-' + action + ' select[name="lotacao"]').val();
@@ -232,12 +236,6 @@
                         usuario.senha = $('#senha', form).val();
                         usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
                         usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
-                        if (action == 'add') {
-                            usuario.status = "";
-                            usuario.senha = ""; 
-                            //var psw = usuario.senha;
-                            //usuario.senha = CryptoJS.MD5(psw);
-                        }
                         json = usuario.toJSON();
                         break;
                     case 'delete':
@@ -245,7 +243,9 @@
                         break;
                 } 
                 formValidator = new UsuarioFormValidator(form);
-                if (formValidator.validate()) {
+                var valid = formValidator.validate();
+                console.log(valid);
+                if (valid) {
                 // Requisição AJAX
                     $.ajax({
                         type: 'post',
@@ -490,6 +490,14 @@
                             <div class="form-group">
                                 <label for="email">E-mail</label>
                                 <input id="email" name="email" type="email" class="form-control" maxlength="100"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="senha">Senha</label>
+                                <input type="password" id="senha" name="senha" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmaSenha"> Repita a senha</label>
+                                <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <div>

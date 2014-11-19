@@ -76,8 +76,8 @@ function ContaFormValidator(form) {
                     }
                 },
                 confirmaSenha: {
-                	validators: {
-                		identical: {
+                    validators: {
+                        identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
                         }
