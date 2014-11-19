@@ -305,6 +305,11 @@
 
                 createAJAXPagination();
             });
+
+            function initSearch() {
+                form = $('#form-search');
+                formValidator = new PesquisaLotacaoFormValidator(form);
+            }            
         </script>
         
         <div class="container">
@@ -623,6 +628,70 @@
                 <span id="alert-msg">Dados atualizados</span>
            </div>
         </div><!-- Alertas -->
+            <!--  Pesquisar -->
+            <div 
+                id="modal-search"
+                class="modal fade"
+                tabindex="-1"
+                role="dialog" 
+                aria-labelledby="modal-edit" 
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
+                            </button>
+                            <h3 class="modal-title">Pesquisar Solicitação</h3>
+                        </div>
+                        <form id="form-search" role="form" method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="nome">Filtro:</label>
+                                    <select 
+                                        id="filtro" 
+                                        name="filtro"
+                                        class="form-control">
+                                        <option value="">SELECIONE UM FILTRO</option>
+                                        <option value="id">ID</option>
+                                        <option value="nome">Solicitante</option>
+                                        <option value="sigla">Título</option>
+                                        <option value="gerencia_id">Gerência (ID)</option>
+                                        <option value="gerencia_nome">Gerência (Nome)</option>
+                                        <option value="gerencia_sigla">Gerência (Sigla)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="valor">Valor:</label>
+                                    <input id="valor" name="valor" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success">Pesquisar
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                                <button 
+                                    type="reset" 
+                                    class="btn btn-primary"
+                                    onclick="clean()">Limpar
+                                    <span class="glyphicon glyphicon-file"></span>
+                                </button>
+                                <button 
+                                    type="button" 
+                                    class="btn btn-default" 
+                                    data-dismiss="modal"
+                                    onclick="clean()">Cancelar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>        
   </div> <!-- container -->
 <?php
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
