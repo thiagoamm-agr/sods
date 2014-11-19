@@ -12,7 +12,7 @@ function ContaFormValidator(form) {
             submitButtons: 'button[type="submit"]',
             fields: {
                 nome: {
-                	trigger: 'blur',
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Nome é um campo de preenchimento obrigatório.'
@@ -61,6 +61,27 @@ function ContaFormValidator(form) {
                             message: 'Login é um campo de preenchimento obrigatório'
                         }
                     }
+                },
+                senha: {
+                    trigger: 'blur',
+                    validators: {
+                        regexp: {
+                            regexp: /\w{8,}/i,
+                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
+                        },
+                        identical: {
+                            field: 'confirmaSenha',
+                            message: 'As senhas não correspondem'
+                        }
+                    }
+                },
+                confirmaSenha: {
+                	validators: {
+                		identical: {
+                            field: 'senha',
+                            message: 'As senhas não correspondem'
+                        }
+                	}
                 }
             }
         }).on('success.form.bv', function(event) {
