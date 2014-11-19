@@ -24,10 +24,7 @@
 
         switch ($action) {
             case 'add':
-                $fail =$controller->add($usuario);
-                if ($fail) {
-                	echo 'LOGIN-EXISTENTE';
-                }                
+                $controller->add($usuario);
                 exit();
                 break;
             case 'edit':
@@ -41,6 +38,16 @@
             case 'list':
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page);
+                exit();
+                break;
+            case 'check_login':
+                if (isset($_POST['login'])) {
+                     $login = $_POST['login'];
+                     $exists = $controller->checkLogin($login);
+                     echo json_encode(array(
+                         'valid' => !$exists
+                     ));
+                 }
                 exit();
                 break;
         }
@@ -74,7 +81,7 @@
         }
 
         function edit(usuario_json, page) {
-            current_page=page;
+            current_page = page;
             try {
                 if (usuario_json != null) {
                     action = 'edit';
@@ -112,9 +119,9 @@
             totalRecords = totalRecords - 1;
             var manipulatedPage = Math.ceil(totalRecords/10);
             if(manipulatedPage < page){
-           	 current_page = manipulatedPage;
+                current_page = manipulatedPage;
             }else{
-           	 current_page = page;
+                current_page = page;
             }
             try {
                 if (usuario_json != null) {
@@ -202,7 +209,7 @@
                 formValidator.reset();
             }
         }
-        
+
         function save() {
             if (usuario !=  null) {
                 var json = null;
@@ -231,46 +238,46 @@
                         break;
                 } 
                 formValidator = new UsuarioFormValidator(form);
-                if(formValidator.validate()){               
+                if (formValidator.validate()) {
                 // Requisição AJAX
-	                $.ajax({
-	                    type: 'post',
-	                    url: '/sods/admin/usuarios/',
-	                    dataType: 'text',
-	                    cache: false,
-	                    timeout: 70000,
-	                    async: true,
-	                    data: {
-	                        'action': action,
-	                        'json': json
-	                    },
-	                    success: function(data, status, xhr) {
-	                        modal=''
-	                        if (data == 'LOGIN-EXISTENTE') {
+                    $.ajax({
+                        type: 'post',
+                        url: '/sods/admin/usuarios/',
+                        dataType: 'text',
+                        cache: false,
+                        timeout: 70000,
+                        async: true,
+                        data: {
+                            'action': action,
+                            'json': json
+                        },
+                        success: function(data, status, xhr) {
+                            modal=''
+                            if (data == 'LOGIN-EXISTENTE') {
                                 modal='#modal-danger';
                                 $('#alert-msg').text('Registro Existente !');
                                 $(modal).modal('show');
-	                        }else{
-	                            modal='#modal-success';
-	                            $('#alert-msg').text('Dados Atualizados !');
-	                            $(modal).modal('show');
-	                            list(current_page);
-	                        }
-	
-	                        window.setTimeout(function() {
-	                            $(modal).modal('hide');
-	                        }, 3000);
-	
-	                        console.log(data);
-	                    },
-	                    error: function(xhr, status, error) {
-	                        console.log(error);
-	                    },
-	                    complete: function(xhr, status) {
-	                        console.log('data');
-	                        clean();
-	                    }
-	                });
+                            }else{
+                                modal='#modal-success';
+                                $('#alert-msg').text('Dados Atualizados !');
+                                $(modal).modal('show');
+                                list(current_page);
+                            }
+    
+                            window.setTimeout(function() {
+                                $(modal).modal('hide');
+                            }, 3000);
+    
+                            console.log(data);
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        },
+                        complete: function(xhr, status) {
+                            console.log('data');
+                            clean();
+                        }
+                    });
                 }
             }
             return false;
@@ -292,6 +299,11 @@
                 save();
             });
 
+            /*
+            $('#login', '#form-add').blur(function(event) {
+                checkLogin($(this).val());
+            });
+            */
              // Máscara telefone.
             var fone = $('#fone');
             var mascara = "(99) 9999-9999?9";
