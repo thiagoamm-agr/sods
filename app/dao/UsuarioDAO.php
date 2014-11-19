@@ -156,7 +156,7 @@
             return $all;
         }
         
-        public function filter($criteria) {
+            public function filter($criteria) {
             $rows = array();
             if (empty($criteria)) {
                 $rows = $this->getAll(); 
@@ -180,7 +180,7 @@
         public function count($criteria = null){
             $query = "select * from solicitante";
             if (isset($criteria)){
-                $query .= "where $criteria";
+                $query .= " where $criteria";
             }
             $result = mysql_query($query, $this->connection);
             $rows = mysql_num_rows($result);
