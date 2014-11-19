@@ -60,16 +60,9 @@
                 $columns = substr($columns, 0, strrpos($columns, ", "));
                 $values = substr($values, 0, strrpos($values, ", "));
                 if(!empty($columns) && !empty($values)){
-                	try {
-                		$query = "insert into solicitante ($columns) values ($values)";
-                		return mysql_query($query, $this->connection);
-                	} catch (Exception $e) {
-                        echo $e;
-                        return false;
-                    } 
+                	$query = "insert into solicitante ($columns) values ($values)";
+                	mysql_query($query, $this->connection);
                 }
-            }else{
-            	return false;
             }
         }
         
