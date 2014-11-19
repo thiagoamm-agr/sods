@@ -102,11 +102,6 @@
                 usuario.login = $('#login', form).val();
                 usuario.senha = $('#senha', form).val();
 
-                if (usuario.senha != "") {
-                    var psw = usuario.senha;
-                    usuario.senha = CryptoJS.MD5(psw);
-                }
-
                 json = usuario.toJSON();
                 // Requisição AJAX
                 $.ajax({
@@ -215,7 +210,13 @@
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-control"/>
+                    <input type="password" id="senha" name="senha" class="form-control"
+                           value="<?php echo $usuario['senha']?>" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmaSenha"> Repita a senha</label>
+                    <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-control"
+                           value="<?php echo $usuario['senha']?>"/>
                 </div>
                 <div class="form-group">
                     <input type="hidden" 
