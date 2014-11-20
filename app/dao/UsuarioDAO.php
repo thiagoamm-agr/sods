@@ -176,11 +176,17 @@
             return $rows;
         }
         
-        public function count($criteria = null){
-            $query = "select * from solicitante";
-            if (isset($criteria)){
-                $query .= " where $criteria";
-            }
+        public function count($criteria=null) {
+            $where = empty($criteria) ? "" : "\twhere $criteria\n";
+            $query = "select\n" .
+                         "\ts.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo,\n" .
+                         "\ts.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email,\n" .
+                         "\ts.data_criacao, s.data_alteracao\n" .
+                     "from\n" .
+                         "\tsolicitante as s\n" .
+                     "inner join lotacao as l\n" .
+                         "\ton s.lotacao_id = l.id\n" .
+                     "$where";
             $result = mysql_query($query, $this->connection);
             $rows = mysql_num_rows($result);
             return $rows;
@@ -188,15 +194,20 @@
         
         public function paginate($rows=10, $start=0, $criteria=null) {
             $all = array();
-            $where = $criteria == '' ? $criteria : "where $criteria";
-            $query = "select " .
-                     "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
-                     "s.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email, " .
-                     "s.data_criacao, s.data_alteracao " .
-                     "from " .
-                     "solicitante as s $where " .
-                     "inner join lotacao as l " .
-                     "on s.lotacao_id = l.id order by s.id desc limit $rows offset $start";
+            $where = empty($criteria) ? "" : "\twhere $criteria\n";
+            $query = "select\n" .
+                         "\ts.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo,\n" .
+                         "\ts.telefone, s.login, s.senha, s.tipo_usuario, s.status, s.email,\n" .
+                         "\ts.data_criacao, s.data_alteracao\n" .
+                     "from\n" .
+                         "\tsolicitante as s\n" .
+                     "inner join lotacao as l\n" .
+                         "\ton s.lotacao_id = l.id\n" .
+                     "$where" . 
+                     "order by\n" . 
+                         "\ts.id desc\n" . 
+                     "limit $rows \n" . 
+                     "offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
                 array_push($all, $row);
