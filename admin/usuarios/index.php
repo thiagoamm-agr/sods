@@ -257,7 +257,7 @@
                 } 
                 formValidator = new UsuarioFormValidator(form);
                 if (formValidator.validate()) {
-                // Requisição AJAX
+                // Requisição AJAX!
                     $.ajax({
                         type: 'post',
                         url: '/sods/admin/usuarios/',
