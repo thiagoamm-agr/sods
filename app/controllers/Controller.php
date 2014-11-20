@@ -40,6 +40,6 @@
 
         abstract public function count($criteria=null);
 
-        abstract public function getPage($page_number=1, $rows=10);
+        abstract public function getPage($page_number=1, $rows=10, $criteria=null);
     }
 ?>
