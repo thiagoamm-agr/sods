@@ -86,18 +86,37 @@
             return $valid;
         }
 
-        public function getPage($page_number=1, $rows=10) {
+        public function getPage($page_number=1, $rows=10, $criteria=null) {
             if (empty($page_number)) {
                 $page_number = 1;
             }
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
-            return $this->dao->paginate($rows, $page_number * $rows - $rows);
+            return $this->dao->paginate($rows, $page_number * $rows - $rows, $criteria);
         }
         
-        public function getGrid($page_number=1, $usuarios=null) {
-            $usuarios = empty($usuarios) ? $this->getPage($page_number) : $usuarios;
-            if (count($usuarios) > 0) {
+        public function getGrid($page_number=1, $filter=null, $value=null) {
+            $criteria = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 's.id':
+                        $criteria = "{$filter} = '%{$value}%'";
+                    case 'status':
+                        if(strcasecmp($value, "ativo") == 0){
+                            $value='A';
+                        }else if(strcasecmp($value, "inativo") == 0){
+                            $value='I';
+                        }
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                    default:
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                }
+            }
+            $usuarios = $this->getPage($page_number, 10, $criteria);
+            $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
+            $this->paginator->totalrecords = $total_records;
+            if ($total_records > 0) {
                 $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter " . 
                 "tablesorter-default\" role=\"grid\"";
                 $html .= "id=\"tablesorter\">";
@@ -143,13 +162,13 @@
                     $html .= "&nbsp;&nbsp;<button class=\"btn btn-danger btn-sm\"";
                     $html .= "data-toggle=\"modal\"";
                     $html .= "data-target=\"#modal-del\"";
-                    $html .= "onclick='del(" . json_encode($usuario) . ", ". $page_number .", " . $this->count() .")'>";
+                    $html .= "onclick='del(" . json_encode($usuario) . ", ". $page_number .", " . $total_records .")'>";
                     $html .= "<strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "</td>";
                     $html .= "</tr>";
                 }
                 $html .= "</tbody>";
-                if ($this->count() > 10) {
+                if ($total_records > 10) {
                     $html .= "<tfoot><tr><td colspan=\"10\">{$this->paginator}</td></tr></tfoot>";
                 }
                 $html .= "</table>";
@@ -223,30 +242,6 @@
             $html .= "&nbsp;<span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"</button>";
             $html .= "</div>";
             return $html;
-        }
-        
-        public function search($filter, $value, $page=1) {
-            $usuarios = null;
-            if (!empty($filter) && !empty($value)) {
-                switch ($filter) {
-                    case 's.id':
-                        $criteria = "{$filter} = '%{$value}%'";
-                    case 'status':
-                        if(strcasecmp($value, "ativo") == 0){
-                            $value='A';
-                        }else if(strcasecmp($value, "inativo") == 0){
-                            $value='I';
-                        }
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                    default:
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                        break;
-                }
-                $usuarios = $this->dao->filter($criteria);
-            } else {
-                $usuarios = $this->dao->getAll();
-            }
-            return $this->getGrid($page, $usuarios);
         }
     }
 ?>

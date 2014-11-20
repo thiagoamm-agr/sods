@@ -155,7 +155,7 @@
             return $all;
         }
         
-        public function filter($criteria) {
+        public function filter($criteria=null) {
             $rows = array();
             if (empty($criteria)) {
                 $rows = $this->getAll(); 
@@ -186,7 +186,7 @@
             return $rows;
         }
         
-        public function paginate($rows=10, $start=0, $criteria='') {
+        public function paginate($rows=10, $start=0, $criteria=null) {
             $all = array();
             $where = $criteria == '' ? $criteria : "where $criteria";
             $query = "select " .

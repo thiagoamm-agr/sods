@@ -47,8 +47,10 @@
                 exit();
                 break;
             case 'list':
+                $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
+                $value = isset($_POST['value']) ? $_POST['value'] : '';
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
-                echo $controller->getGrid($page);
+                echo $controller->getGrid($page, $filter, $value);
                 exit();
                 break;
         }
@@ -61,6 +63,7 @@
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Solicitacao.js"></script>
         <script type="text/javascript" src="/sods/static/js/validators/SolicitacaoFormValidator.js"></script>
+   		<script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
         <script type="text/javascript">
             var solicitacao = null;
             var action = null;
@@ -306,10 +309,10 @@
                 createAJAXPagination();
             });
 
-            function initSearch() {
+            function search() {
                 form = $('#form-search');
-                formValidator = new PesquisaLotacaoFormValidator(form);
-            }            
+                formValidator = new PesquisaFormValidator(form);
+            }           
         </script>
         
         <div class="container">
@@ -331,7 +334,8 @@
                         id="btn-search"
                         class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
-                        data-target="#modal-search">
+                        data-target="#modal-search"
+                        onclick="search()">
                         <b>Pesquisar</b>
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
@@ -657,11 +661,13 @@
                                         class="form-control">
                                         <option value="">SELECIONE UM FILTRO</option>
                                         <option value="id">ID</option>
-                                        <option value="nome">Solicitante</option>
-                                        <option value="sigla">Título</option>
-                                        <option value="gerencia_id">Gerência (ID)</option>
-                                        <option value="gerencia_nome">Gerência (Nome)</option>
-                                        <option value="gerencia_sigla">Gerência (Sigla)</option>
+                                        <option value="login">Solicitante</option>
+                                        <option value="titulo">Título</option>
+                                        <option value="status">Status</option>
+                                         <option value="obs_status">Obs Status</option>
+                                        <option value="tipo">Tipo</option>
+                                        <option value="abertura">Data de Abertura</option>
+                                        <option value="alteracao">Data de Alteração</option>
                                     </select>
                                 </div>
                                 <div class="form-group">

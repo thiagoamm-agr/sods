@@ -36,8 +36,10 @@
                 exit();
                 break;
             case 'list':
+                $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
+                $value = isset($_POST['value']) ? $_POST['value'] : '';
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
-                echo $controller->getGrid($page);
+                echo $controller->getGrid($page, $filter, $value);
                 exit();
                 break;
             case 'check_login':
@@ -73,8 +75,10 @@
         var action = null;
         var form = null;
         var formValidator = null;
-        var resposta = null;
-        var current_page = null;
+        var page = 1;
+        var current_page = 1;
+        var filter = null;
+        var value = null;
 
         function add() {
             action = 'add';
@@ -83,11 +87,9 @@
             usuario.status = null;
             form= $('#form-add');
             formValidator = new UsuarioFormValidator(form);
-            current_page=1;
         }
 
         function edit(usuario_json, page) {
-            current_page = page;
             try {
                 if (usuario_json != null) {
                     action = 'edit';
@@ -116,6 +118,7 @@
                     } else {
                         $('#tipo_usuario_u', form).prop('checked', true);
                     }
+                    current_page = page;
                 } else {
                     throw 'Não é possível editar uma alteração que não existe.';
                 }
@@ -125,13 +128,6 @@
         }
 
         function del(usuario_json, page, totalRecords) {
-            totalRecords = totalRecords - 1;
-            var manipulatedPage = Math.ceil(totalRecords/10);
-            if(manipulatedPage < page){
-                current_page = manipulatedPage;
-            }else{
-                current_page = page;
-            }
             try {
                 if (usuario_json != null) {
                     action = 'delete';
@@ -150,6 +146,13 @@
                     usuario.data_alteracao = usuario_json.data_alteracao;
                     form = $('#form-del');
                     formValidator = new UsuarioFormValidator(form);
+                    totalRecords = totalRecords - 1;
+                    var manipulatedPage = Math.ceil(totalRecords/10);
+                    if(manipulatedPage < page){
+                        current_page = manipulatedPage;
+                    }else{
+                        current_page = page;
+                    }
                 }
             } catch(e) {
                 alert(e);
@@ -173,6 +176,9 @@
         }
 
         function list(page) {
+            if ($(form).attr('id') == 'form-search') {
+                formValidator.validate();
+            }
             $.ajax({
                 type: 'post',
                 url: '/sods/admin/usuarios/',
@@ -181,13 +187,16 @@
                 timeout: 70000,
                 async: true,
                 data: {
-                    action: 'list',
-                    p:page
+                    'action': 'list',
+                    'p': page,
+                    'filter': filter,
+                    'value': value
                 },
                 success: function (data, status, xhr) {
                     // Carrega o HTML da Grid.
                     $('#grid').html(data);
                     // Paginação AJAX na Grid.
+                    createAJAXPagination();
                     //Ordenação dos registros da Grid
                     $("table thead .nonSortable").data("sorter", false);
                     $("#tablesorter").tablesorter({
@@ -199,8 +208,6 @@
                         }
                     });
                     $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
-                    createAJAXPagination();
-                    
                     // Mostra saída no console do Firebug.
                     console.log(data);
                 },
@@ -209,6 +216,9 @@
                 },
                 complete: function(xhr, status) {
                     console.log('A requisição foi completada.');
+                    if ($(form).attr('id') == 'form-search') {
+                        clean();
+                    }
                 }
             });
         }
@@ -304,6 +314,13 @@
             $('#form-del').submit(function(event) {
                 event.preventDefault();
                 save();
+            });
+            $('#form-search').submit(function(event) {
+                event.preventDefault();
+                filter = $('#filtro', this).val();
+                value = $('#valor', this).val();
+                page = 1;
+                list(page);
             });
              // Máscara telefone.
 			$('#fone', '#form-add').mask('(99) 9999-9999');

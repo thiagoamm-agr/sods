@@ -18,7 +18,7 @@
             $this->paginator->paginationUrl = "/sods/admin/solicitacoes/";
         }
         
-        public function getGrid($page_number=1, $solicitacoes=null) {
+        public function getGrid($page_number=1, $filter=null, $value=null) {
             $solicitacoes = empty($solicitacoes) ? $this->getPage($page_number) : $solicitacoes;
             if (count($solicitacoes) > 0) {
                 $html = "<table id=\"tablesorter\"\n";
@@ -122,13 +122,13 @@
             return $this->dao->allUser($login);
         }
 
-        public function getPage($page_number=1, $rows=10) {
+        public function getPage($page_number=1, $rows=10, $criteria=null) {
             if (empty($page_number)) {
-                $page_number = 1;
+            	$page_number = 1;
             }
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
-            return $this->dao->paginate($rows, $page_number * $rows - $rows);
+            return $this->dao->paginate($rows, $page_number * $rows - $rows, $criteria);
         }
     }
 ?>

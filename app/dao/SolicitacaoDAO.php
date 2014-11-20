@@ -142,7 +142,7 @@
             return $all;
         }
 
-        public function filter($criteria) {
+        public function filter($criteria=null) {
             if (isset($criteria)) {
                 
             }
@@ -158,9 +158,9 @@
             return $rows;
         }
 
-        public function paginate($rows=10, $start=0, $criteria='') {
+        public function paginate($rows=10, $start=0, $criteria=null) {
             $all = array();
-            $where = $criteria == '' ? $criteria : "where\n\t$criteria\n ";
+            $where = empty($criteria) ? "" : "where\n\t$criteria\n";
             $query = "select\n" . 
                         "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
                         "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
