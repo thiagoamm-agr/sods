@@ -11,7 +11,6 @@
             parent::__construct();
             $this->dao = new LotacaoDAO();
             $this->paginator->totalrecords = $this->dao->count();
-            // Com AJAX
             $this->paginator->defaultUrl="/sods/admin/lotacoes/";
             $this->paginator->paginationUrl="/sods/admin/lotacoes/";
         }
