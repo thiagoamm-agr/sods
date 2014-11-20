@@ -99,17 +99,20 @@
             $criteria = null;
             if (!empty($filter) && !empty($value)) {
                 switch ($filter) {
-                    case 's.id':
-                        $criteria = "{$filter} = '%{$value}%'";
-                    case 'status':
-                        if(strcasecmp($value, "ativo") == 0){
-                            $value='A';
-                        }else if(strcasecmp($value, "inativo") == 0){
-                            $value='I';
-                        }
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                    default:
-                        $criteria = "{$filter} LIKE '%{$value}%'";
+                    case 'id':
+                        $criteria = "s.{$filter} = {$value}";
+                        break;
+                    case 'nome':
+                        $criteria = "s.{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'nome_lotacao':
+                        $criteria = "l.nome LIKE '%{$value}%'";
+                        break;
+                    case 'cargo':
+                        $criteria = "s.{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'login':
+                        $criteria = "s.{$filter} LIKE '%{$value}%'";
                         break;
                 }
             }
@@ -172,6 +175,10 @@
                     $html .= "<tfoot><tr><td colspan=\"10\">{$this->paginator}</td></tr></tfoot>";
                 }
                 $html .= "</table>";
+            } else {
+                $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
+                $html .= "    <center><b>Nenhum registro encontrado.</b></center>\n";
+                $html .= "</div>\n";
             }
             return $html;
         }
@@ -241,6 +248,7 @@
             $html .= "<button type=\"reset\" class=\"btn btn-default\" onclick=\"limpar()\">Resetar";
             $html .= "&nbsp;<span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"</button>";
             $html .= "</div>";
+            
             return $html;
         }
     }
