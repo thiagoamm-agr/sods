@@ -123,8 +123,8 @@ function UsuarioFormValidator(form) {
             // Esconde a modal
             $(modal).modal('hide');
             // Limpa o formulário
-        }).on('keyup', '[name="login"]', function() {
-            $('#form-edit').bootstrapValidator('enableFieldValidators', 'login');
+        }).on('blur', '[name="login"]', function() {
+            $(form).bootstrapValidator('enableFieldValidators', 'login');
         });
         this.data = this.form.data('bootstrapValidator');
     }
