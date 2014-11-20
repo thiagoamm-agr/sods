@@ -276,7 +276,9 @@
                 }
             }
 
-            // Associando eventos após o carregamento da página.
+            /* Definindo a manipulação de alguns eventos após o 
+             * carregamento da página.
+             */
             $(document).ready(function() {
                 $('#form-add').submit(function(event) {
                     event.preventDefault();
@@ -341,10 +343,12 @@
 <?php
                     echo $controller->getGrid(1);
 ?>
-            </div><!-- /Grid -->
+            </div>
+            <!-- /Grid -->
 
             <!--  Modais -->
-            <!-- Modal de Adição de Lotação -->
+
+            <!-- Modal de adição -->
             <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-add" aria-hidden="true">
                 <div class="modal-dialog">
@@ -412,7 +416,7 @@
                 </div>
             </div>
 
-            <!-- Editar lotação -->
+            <!-- Modal de edição -->
             <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-edit" aria-hidden="true">
                 <div class="modal-dialog">
@@ -477,7 +481,7 @@
                 </div>
             </div>
 
-            <!-- Excluir Lotação -->
+            <!-- Modal de exclusão -->
             <div class="modal fade" id="modal-del" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
@@ -513,7 +517,7 @@
                 </div>
             </div>
 
-            <!--  Pesquisar -->
+            <!--  Modal de pesquisa -->
             <div 
                 id="modal-search"
                 class="modal fade"
@@ -576,7 +580,9 @@
                         </form>
                     </div>
                 </div>
-            </div><!-- /Modais -->
+            </div>
+            <!-- /Modais -->
+
             <!-- Alertas -->
             <div class="modal fade" id="modal-danger" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-del" aria-hidden="true">
@@ -599,7 +605,8 @@
                </div>
             </div>
             <!-- Alertas -->
-        </div><!-- Container -->
+        </div>
+        <!-- Container -->
 <?php
     // Rodapé
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
