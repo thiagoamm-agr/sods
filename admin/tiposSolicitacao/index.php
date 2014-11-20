@@ -77,6 +77,8 @@
             form = $('#form-add');
             formValidator = new TipoSolicitacaoFormValidator(form);
             current_page = 1;
+            filter = null;
+            value = null;
         }
 
         function edit(tipoSolicitacao_json, page) {
