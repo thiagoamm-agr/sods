@@ -57,25 +57,38 @@
             return $this->dao->filter('gerencia_id is null');
         }
 
-        public function getPage($page_number=1, $rows=10) {
+        public function getPage($page_number=1, $rows=10, $criteria=null) {
             if (empty($page_number)) {
                 $page_number = 1;
             }
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
-            return $this->dao->paginate($rows, $page_number * $rows - $rows);
+            return $this->dao->paginate($rows, $page_number * $rows - $rows, $criteria);
         }
 
-        public function getGrid($page_number=1, $lotacoes=null) {
-            if (is_null($lotacoes)) {
-                $amount = $this->dao->count();
-            } else if ($lotacoes == array()) {
-                $amount = 0;
-            } else {
-                $amount = count($lotacoes);
+        public function getGrid($page_number=1, $filter=null, $value=null) {
+            $criteria = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 'id':
+                    case 'gerencia_id':
+                        $criteria = "{$filter} = {$value}";
+                        break;
+                    case 'nome':
+                    case 'sigla':
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'gerencia_nome':
+                    case 'gerencia_sigla':
+                        $filter = str_replace('gerencia_', '', $filter);
+                        $criteria = "gerencia_id in (select id from lotacao as gerencia where {$filter} = '{$value}')";
+                        break;
+                }
             }
-            $lotacoes = empty($lotacoes) ? $this->getPage($page_number) : $lotacoes;
-            if ($amount > 0) {
+            $lotacoes = $this->getPage($page_number, 10, $criteria);
+            $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
+            $this->paginator->totalrecords = $total_records; 
+            if ($total_records > 0) {
                 $html = "<table id=\"tablesorter\"\n";
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
                 $html .= "    <thead>\n";
@@ -110,14 +123,14 @@
                     $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
                     $html .= "                    data-toggle=\"modal\"\n"; 
                     $html .= "                    data-target=\"#modal-del\"\n";
-                    $html .= "                    onclick='del(" . json_encode($lotacao) . ", $page_number)'>\n";
+                    $html .= "                    onclick='del(" . json_encode($lotacao) . ", $page_number, $total_records)'>\n";
                     $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
                     $html .= "        </tr>\n";
                 }
                 $html .= "    </tbody>\n";
-                if ($amount > 10) {
+                if ($total_records > 10) {
                     $html .= "<tfoot>\n";
                     $html .= "    <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
                     $html .= "</tfoot>\n";
@@ -131,8 +144,8 @@
             return $html;
         }
 
-        public function search($filter, $value, $page=1) {
-            $lotacoes = null;
+        public function search($filter, $value, $page) {
+            $criteria = '';
             if (!empty($filter) && !empty($value)) {
                 switch ($filter) {
                     case 'id':
@@ -149,11 +162,9 @@
                         $criteria = "gerencia_id in (select id from lotacao as gerencia where {$filter} = '{$value}')";
                         break;
                 }
-                $lotacoes = $this->dao->filter($criteria);
-            } else {
-                $lotacoes = $this->dao->getAll();
             }
-            return $this->getGrid($page, $lotacoes);
+            $lotacoes = $this->getGrid($page, $criteria);
+            return $lotacoes;
         }
     }
 ?>
