@@ -304,6 +304,7 @@
                 createAJAXPagination();
             });
         </script>
+
         <!--  Container -->
         <div class="container">
             <h2>Lotações</h2>
