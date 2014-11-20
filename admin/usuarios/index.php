@@ -89,6 +89,7 @@
             formValidator = new UsuarioFormValidator(form);
             filter = null;
             value = null;
+            current_page = 1;
         }
 
         function edit(usuario_json, page) {
