@@ -56,7 +56,7 @@ function UsuarioFormValidator(form) {
                     }
                 },
                 login: {
-                	enabled: false,
+                    enabled: false,
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
@@ -100,17 +100,17 @@ function UsuarioFormValidator(form) {
                     }
                 },
                 confirmaSenha: {
-                	trigger: 'blur',
-                	validators: {
-                		regexp: {
+                    trigger: 'blur',
+                    validators: {
+                        regexp: {
                             regexp: /\w{8,}/i,
                             message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
                         },
-                		identical: {
+                        identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
                         }
-                	}
+                    }
                 }
             }
         }).on('success.form.bv', function(event) {
