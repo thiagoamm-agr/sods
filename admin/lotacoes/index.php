@@ -72,6 +72,9 @@
                 lotacao.id = null;
                 form = $('#form-add');
                 formValidator = new LotacaoFormValidator(form);
+                current_page = 1;
+                filter = null;
+                value = null; 
             }
 
             function edit(lotacao_json, page) {
