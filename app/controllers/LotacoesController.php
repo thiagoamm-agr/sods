@@ -14,9 +14,6 @@
             // Com AJAX
             $this->paginator->defaultUrl="/sods/admin/lotacoes/";
             $this->paginator->paginationUrl="/sods/admin/lotacoes/";
-            // Sem AJAX
-            //$this->paginator->defaultUrl="/sods/admin/lotacoes/";
-            //$this->paginator->paginationUrl="/sods/admin/lotacoes/index.php?p=[p]";
         }
 
         public function __destruct() {
@@ -142,29 +139,6 @@
                 $html .= "</div>\n";
             }
             return $html;
-        }
-
-        public function search($filter, $value, $page) {
-            $criteria = '';
-            if (!empty($filter) && !empty($value)) {
-                switch ($filter) {
-                    case 'id':
-                    case 'gerencia_id':
-                        $criteria = "{$filter} = {$value}";
-                        break;
-                    case 'nome':
-                    case 'sigla':
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                        break;
-                    case 'gerencia_nome':
-                    case 'gerencia_sigla':
-                        $filter = str_replace('gerencia_', '', $filter);
-                        $criteria = "gerencia_id in (select id from lotacao as gerencia where {$filter} = '{$value}')";
-                        break;
-                }
-            }
-            $lotacoes = $this->getGrid($page, $criteria);
-            return $lotacoes;
         }
     }
 ?>
