@@ -1,5 +1,5 @@
 <?php
-    // CADASTRO DE TIPO DE SOLICITAÇÕES
+    // Cadastro de Tipos de Solicitação.
 
     // Model
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/TipoSolicitacao.php';
@@ -23,7 +23,7 @@
         // Identificando a ação desempenhada pelo usuário.
         switch ($action) {
             case 'add':
-                $fail=$controller->add($tipoSolicitacao);
+                $fail = $controller->add($tipoSolicitacao);
                 if($fail){
                     echo 'NAOADD';
                 }
@@ -41,14 +41,10 @@
                 exit();
                 break;
             case 'list':
-                $page = isset($_POST['p']) ? $_POST['p'] : 1;
-                echo $controller->getGrid($page);
-                exit();
-                break;
-            case 'search':
                 $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
-                echo $controller->search($filter, $value);
+                $page = isset($_POST['p']) ? $_POST['p'] : 1;
+                echo $controller->getGrid($page, $filter, $value);
                 exit();
                 break;
     }
@@ -61,7 +57,7 @@
     <!--  Javascript -->
     <script type="text/javascript" src="/sods/static/js/models/TipoSolicitacao.js"></script>
     <script type="text/javascript" src="/sods/static/js/validators/TipoSolicitacaoFormValidator.js"></script>
-    <script type="text/javascript" src="/sods/static/js/validators/PesquisaTipoSolicitacaoFormValidator.js"></script>
+    <script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
 
     <script type="text/javascript">
         var tipoSolicitacao = null;
@@ -69,7 +65,10 @@
         var form = null;
         var formValidator = null;
         var resposta = null;
+        var page = 1;
         var current_page = null;
+        var filter = null;
+        var value = null;
 
         function add() {
             action = "add";
@@ -77,11 +76,10 @@
             tipoSolicitacao.id = null;
             form = $('#form-add');
             formValidator = new TipoSolicitacaoFormValidator(form);
-            current_page=1;
+            current_page = 1;
         }
 
         function edit(tipoSolicitacao_json, page) {
-            current_page=page;
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'edit';
@@ -97,6 +95,7 @@
                         $('#status', form).prop('checked', false);
                         $('#status', form).val('I');
                     }
+                    current_page = page;
                 } else {
                     throw 'Não é possível editar um tipo de lotação inexistente!';
                 }
@@ -105,14 +104,7 @@
             }
         }
 
-        function del(tipoSolicitacao_json, page, totalRecords) {
-             totalRecords = totalRecords - 1;
-             var manipulatedPage = Math.ceil(totalRecords/10);
-             if(manipulatedPage < page){
-                 current_page = manipulatedPage;
-             }else{
-            	 current_page = page;
-             }
+        function del(tipoSolicitacao_json, page, total_records) {
             try {
                 if (tipoSolicitacao_json != null) {
                     action = 'delete';
@@ -122,6 +114,13 @@
                     tipoSolicitacao.status = tipoSolicitacao_json.status;
                     form = $('#form-del');
                     formValidator = new TipoSolicitacaoFormValidator(form);
+                    total_records = total_records - 1;
+                    var manipulated_page = Math.ceil(total_records / 10);
+                    if (manipulated_page < page) {
+                        current_page = manipulated_page;
+                    } else {
+                        current_page = page;
+                    }
                 }
             } catch(e) {
                 alert(e);
@@ -145,6 +144,9 @@
         }
 
         function list(page) {
+            if ($(form).attr('id') == 'form-search') {
+                formValidator.validate();
+            }
             $.ajax({
                 type: 'post',
                 url: '/sods/admin/tiposSolicitacao/',
@@ -153,8 +155,10 @@
                 timeout: 70000,
                 async: true,
                 data: {
-                    action: 'list',
-                    p:page
+                    'action': 'list',
+                    'p': page,
+                    'filter': filter,
+                    'value': value
                 },
                 success: function(data, status, xhr) {
                     if (data == 'ERRO') {
@@ -163,7 +167,11 @@
                             $('#modal-danger').modal('hide');
                         }, 3000);
                     } else {
+                        // Carrega o HTML da Grid.
                         $('#grid').html(data);
+                        // Paginação AJAX na Grid.
+                        createAJAXPagination();
+                        // Ordenação dos resultados da Grid.
                         $("table thead .nonSortable").data("sorter", false);
                         $("#tablesorter").tablesorter({
                             emptyTo: 'none',
@@ -173,9 +181,11 @@
                               columns : [ "primary", "secondary", "tertiary" ]
                             }
                         });
+                        // Tooltip.
                         $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
                         createAJAXPagination();
                     }
+                    // Mostra a saída no console do Firebug.
                     console.log(data);
                 },
                 error: function(xhr, status, error) {
@@ -183,14 +193,11 @@
                 },
                 complete: function(xhr, status) {
                     console.log('A requisição foi completada.');
+                    if ($(form).attr('id') == 'form-search') {
+                        clean();
+                    }
                 }
             });
-        }
-
-        function clean() {
-            if (formValidator != null) {
-                formValidator.reset();
-            }
         }
 
         function save() {
@@ -261,54 +268,20 @@
             return false;
         }
 
-        function initSearch() {
-            form = $('#form-search');
-            formValidator = new PesquisaTipoSolicitacaoFormValidator(form);
-        }
-
         function search() {
-            if (formValidator.validate()) {
-                $.ajax({
-                    url: '/sods/admin/tiposSolicitacao/',
-                    type: 'post',
-                    cache: false,
-                    dataType: 'text',
-                    async: true,
-                    data: {
-                        action: 'search',
-                        filter: $('#filtro').val(),
-                        value: $('#valor').val()
-                    },
-                    success: function(data, status, xhr) {
-                        console.log(data);
-                        $('#grid').html(data);
-                        // Paginação AJAX na Grid.
-                        createAJAXPagination();
-                        // Ordenação dos resultados da Grid.
-                        $("table thead .nonSortable").data("sorter", false);
-                        $("#tablesorter").tablesorter({
-                            emptyTo: 'none',
-                            theme : 'default',
-                            headerTemplate : '{content}{icon}',
-                            widgetOptions : {
-                              columns : [ "primary", "secondary", "tertiary" ]
-                            }
-                        });
-                        // Tooltip.
-                        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
-                    },
-                    error: function(xhr, status, error) {
-                        console.log(error);
-                    },
-                    complete: function(xhr, status) {
-                        console.log('A requisição foi completada.');
-                        clean();
-                    }
-                });
-            }
-            return false;
+            form = $('#form-search');
+            formValidator = new PesquisaFormValidator(form);
         }
 
+        function clean() {
+            if (formValidator != null) {
+                formValidator.reset();
+            }
+        }
+
+        /* Definindo a manipulação de alguns eventos após o 
+         * carregamento da página.
+         */
         $(document).ready(function() {
             $('#form-add').submit(function(event) {
                 event.preventDefault();
@@ -327,7 +300,10 @@
 
             $('#form-search').submit(function(event) {
                 event.preventDefault();
-                search();
+                filter = $('#filtro', this).val();
+                value = $('#valor', this).val();
+                page = 1;
+                list(page);
             });
 
             $('#status', '#form-edit').click(function(event) {
@@ -363,7 +339,7 @@
                     class="btn btn-info btn-sm pull-right" 
                     data-toggle="modal" 
                     data-target="#modal-search"
-                    onclick="initSearch()">
+                    onclick="search()">
                     <b>Pesquisar</b>
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
@@ -376,19 +352,14 @@
         <!-- Grid -->
         <div id="grid" class="table-responsive">
 <?php
- /*Lista os registros sem usar AJAX.
-                    if (isset($_GET['p'])) {
-                        $page = (int) $_GET['p'];
-                    } else {
-                        $page = 1;
-                    }
-*/
                     echo $controller->getGrid(1);
 ?>
-        </div><!-- /Grid -->
+        </div>
+        <!-- /Grid -->
 
         <!-- Modais -->
-        <!-- Adicionar Tipo de Solicitação -->
+
+        <!-- Modal de adição -->
         <div id="modal-add" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-add" aria-hidden="true">
             <div class="modal-dialog">
@@ -454,7 +425,7 @@
             </div>
         </div>
 
-        <!-- Editar Tipo de Solicitação-->
+        <!-- Modal de edição -->
         <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
             aria-labelledby="modal-edit" aria-hidden="true">
             <div class="modal-dialog">
@@ -511,7 +482,7 @@
             </div>
         </div>
 
-        <!-- Excluir Tipo de Solicitação -->
+        <!-- Modal de exclusão -->
         <div id="modal-del" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
             <div class="modal-dialog modal-sm">
@@ -541,69 +512,70 @@
                 </div>
             </div>
         </div>
-        
-        <!--  Pesquisar -->
-            <div 
-                id="modal-search"
-                class="modal fade"
-                tabindex="-1"
-                role="dialog" 
-                aria-labelledby="modal-edit" 
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
+
+        <!--  Modal de pesquisa -->
+        <div 
+            id="modal-search"
+            class="modal fade"
+            tabindex="-1"
+            role="dialog" 
+            aria-labelledby="modal-edit" 
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button 
+                            type="button" 
+                            class="close" 
+                            data-dismiss="modal" 
+                            aria-hidden="true">&times;
+                        </button>
+                        <h3 class="modal-title">Pesquisar Lotação</h3>
+                    </div>
+                    <form id="form-search" role="form" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nome">Filtro:</label>
+                                <select 
+                                    id="filtro" 
+                                    name="filtro"
+                                    class="form-control">
+                                    <option value="">SELECIONE UM FILTRO</option>
+                                    <option value="id">ID</option>
+                                    <option value="nome">Nome</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="valor">Valor:</label>
+                                <input id="valor" name="valor" type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button 
+                                type="submit" 
+                                class="btn btn-success">Pesquisar
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                            <button 
+                                type="reset" 
+                                class="btn btn-primary"
+                                onclick="clean()">Limpar
+                                <span class="glyphicon glyphicon-file"></span>
+                            </button>
                             <button 
                                 type="button" 
-                                class="close" 
-                                data-dismiss="modal" 
-                                aria-hidden="true">&times;
+                                class="btn btn-default" 
+                                data-dismiss="modal"
+                                onclick="clean()">Cancelar
                             </button>
-                            <h3 class="modal-title">Pesquisar Lotação</h3>
                         </div>
-                        <form id="form-search" role="form" method="post">
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="nome">Filtro:</label>
-                                    <select 
-                                        id="filtro" 
-                                        name="filtro"
-                                        class="form-control">
-                                        <option value="">SELECIONE UM FILTRO</option>
-                                        <option value="id">ID</option>
-                                        <option value="nome">Nome</option>
-                                        <option value="status">Status</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="valor">Valor:</label>
-                                    <input id="valor" name="valor" type="text" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button 
-                                    type="submit" 
-                                    class="btn btn-success">Pesquisar
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                                <button 
-                                    type="reset" 
-                                    class="btn btn-primary"
-                                    onclick="clean()">Limpar
-                                    <span class="glyphicon glyphicon-file"></span>
-                                </button>
-                                <button 
-                                    type="button" 
-                                    class="btn btn-default" 
-                                    data-dismiss="modal"
-                                    onclick="clean()">Cancelar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
-         <!-- /Modais -->
+        </div>
+        <!-- /Modais -->
+
         <!-- Alertas -->
         <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
             aria-labelledby="modal-del" aria-hidden="true">
@@ -625,8 +597,10 @@
                 <strong>SUCESSO:</strong>
                 <span id="alert-msg">Dados atualizados</span>
            </div>
-        </div><!-- Alertas -->
-    </div><!-- /Container -->
+        </div>
+        <!-- Alertas -->
+    </div>
+    <!-- /Container -->
 <?php
     // Rodapé
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
