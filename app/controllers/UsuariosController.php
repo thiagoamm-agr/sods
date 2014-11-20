@@ -126,10 +126,10 @@
                 $html .= "<thead><tr>";
                 $html .= "<th width=\"5%\">ID</th>";
                 $html .= "<th width=\"17%\">Nome</th>";
-                $html .= "<th width=\"17%\">Lotação</th>";
+                $html .= "<th width=\"12%\">Lotação</th>";
                 $html .= "<th width=\"10%\">Cargo</th>";
-                $html .= "<th width=\"10%\">Telefone/Ramal</th>";
-                $html .= "<th width=\"10%\">Tipo de Usuário</th>";
+                $html .= "<th width=\"12%\">Fone/Ramal</th>";
+                $html .= "<th width=\"10%\">Tipo</th>";
                 $html .= "<th width=\"5%\">Status</th>";
                 $html .= "<th width=\"10%\">Login</th>";
                 $html .= "<th width=\"16%\" class=\"nonSortable\">Ação</th>";
@@ -162,11 +162,11 @@
                     $html .= "data-target=\"#modal-edit\"";
                     $html .= "onclick='edit(" . json_encode($usuario) .", ".$page_number .")'>";
                     $html .= "<strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong></button>\n";
-                    $html .= "&nbsp;&nbsp;<button class=\"btn btn-danger btn-sm\"";
+                    $html .= "&nbsp;<button class=\"btn btn-danger btn-sm\"";
                     $html .= "data-toggle=\"modal\"";
                     $html .= "data-target=\"#modal-del\"";
                     $html .= "onclick='del(" . json_encode($usuario) . ", ". $page_number .", " . $total_records .")'>";
-                    $html .= "<strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    $html .= "<strong>Inativar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "</td>";
                     $html .= "</tr>";
                 }
