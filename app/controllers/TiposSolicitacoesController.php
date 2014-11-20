@@ -45,26 +45,38 @@
             return $this->dao->count($criteria);
         }
 
-        public function getPage($page_number=1, $rows=10) {
+        public function getPage($page_number=1, $rows=10, $criteria=null) {
             if (empty($page_number)) {
                 $page_number = 1;
             }
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
-            return $this->dao->paginate($rows, $page_number * $rows - $rows);
+            return $this->dao->paginate($rows, $page_number * $rows - $rows, $criteria);
         }
 
-        public function getGrid($page_number=1, $tiposSolicitacao = null) {
-            $amount=null;
-            if (is_null($tiposSolicitacao)) {
-                $amount = $this->dao->count();
-            } else if ($tiposSolicitacao == array()) {
-                $amount = 0;
-            } else {
-                $amount = count($tiposSolicitacao);
+        public function getGrid($page_number=1, $filter=null, $value=null) {
+            $criteria = null;
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 'id':
+                    case 'gerencia_id':
+                        $criteria = "{$filter} = {$value}";
+                        break;
+                    case 'nome':
+                    case 'sigla':
+                        $criteria = "{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'gerencia_nome':
+                    case 'gerencia_sigla':
+                        $filter = str_replace('gerencia_', '', $filter);
+                        $criteria = "gerencia_id in (select id from lotacao as gerencia where {$filter} = '{$value}')";
+                        break;
+                }
             }
-            $tiposSolicitacao = empty($tiposSolicitacao) ? $this->getPage($page_number) : $tiposSolicitacao;
-            if ($amount > 0) {
+            $tiposSolicitacao = $this->getPage($page_number, 10, $criteria);
+            $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
+            $this->paginator->totalrecords = $total_records;
+            if ($total_records > 0) {
                 $html = "<table\n";
                 $html .= "    id=\"tablesorter\"\n";
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
@@ -91,56 +103,38 @@
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n"; 
                     $html .= "                    data-toggle=\"modal\"\n"; 
                     $html .= "                    data-target=\"#modal-edit\"\n";
-                    $html .= "                    onclick='edit(" . json_encode($tipo) .", ".$page_number .")'>\n";
-                    $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
+                    $html .= "                    onclick='edit(" . json_encode($tipo) .", $page_number)'>\n";
+                    $html .= "                    <strong>\n";
+                    $html .= "                        Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span>";
+                    $html .= "                    </strong>\n";
                     $html .= "                </button>&nbsp;&nbsp;\n";
                     $html .= "                <button\n";
                     $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n"; 
                     $html .= "                    data-toggle=\"modal\"\n"; 
                     $html .= "                    data-target=\"#modal-del\"\n";
-                    $html .= "                    onclick='del(" . json_encode($tipo) . ", ". $page_number .", " . $this->count() .")'>\n";
-                    $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    $html .= "                    onclick='del(" . json_encode($tipo) . ", $page_number,\n";
+                    $html .= "                        $total_records)'>\n";
+                    $html .= "                    <strong>\n";
+                    $html .= "                        Excluir&nbsp;\n";
+                    $html .= "                        <span class=\"glyphicon glyphicon-remove\"></span>\n";
+                    $html .= "                    </strong>\n";
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
                     $html .= "        </tr>\n";
                                 }
                 $html .= "    </tbody>\n";
-                if ($amount > 10) {
+                if ($total_records > 10) {
                     $html .= "    <tfoot>\n";
                     $html .= "        <tr><td colspan=\"5\">{$this->paginator}</td></tr>\n";
                     $html .= "    </tfoot>\n";
                 }
                 $html .= "</table>\n";
-            }else {
+            } else {
                 $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
                 $html .= "    <center><b>Nenhum registro encontrado</b></center>\n";
                 $html .= "</div>\n";
             }
             return $html;
-        }
-
-        public function search($filter, $value, $page=1) {
-            $lotacoes = null;
-            if (!empty($filter) && !empty($value)) {
-                switch ($filter) {
-                    case 'id':
-                        $criteria = "{$filter} = '%{$value}%'";
-                    case 'nome':
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                    case 'status':
-                        if(strcasecmp($value, "ativo") == 0){
-                            $value='A';
-                        }else if(strcasecmp($value, "inativo") == 0){
-                            $value='I';
-                        }
-                        $criteria = "{$filter} LIKE '%{$value}%'";
-                        break;
-                }
-                $tiposSolicitacao = $this->dao->filter($criteria);
-            } else {
-                $tiposSolicitacao = $this->dao->getAll();
-            }
-            return $this->getGrid($page, $tiposSolicitacao);
         }
     }
 ?>
