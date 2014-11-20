@@ -38,22 +38,18 @@
                 exit();
                 break;
             case 'list':
-                $page = isset($_POST['p']) ? $_POST['p'] : 1;
-                echo $controller->getGrid($page);
-                exit();
-                break;
-            case 'search':
                 $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
-                echo $controller->search($filter, $value);
+                $page = isset($_POST['p']) ? $_POST['p'] : 1;
+                echo $controller->getGrid($page, $filter, $value);
                 exit();
                 break;
         }
     }
 ?>
 <?php
-    // Topo
-    @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php'; 
+        // Topo
+        @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/topo.php';
 ?>
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Lotacao.js"></script>
@@ -65,7 +61,10 @@
             var action = null;
             var form = null;
             var formValidator = null;
+            var page = 1;
             var current_page = 1;
+            var filter = null;
+            var value = null;
 
             function add() {
                 action = 'add';
@@ -113,7 +112,7 @@
                 }
             }
 
-            function del(lotacao_json, page) {
+            function del(lotacao_json, page, total_records) {
                 try {
                     if (lotacao_json != null) {
                         action = 'delete'; 
@@ -124,7 +123,13 @@
                         lotacao.gerencia_id = lotacao_json.gerencia_id;
                         form = $('#form-del');
                         formValidator = new LotacaoFormValidator(form);
-                        current_page = page;
+                        total_records = total_records - 1;
+                        var manipulated_page = Math.ceil(total_records / 10);
+                        if (manipulated_page < page) {
+                            current_page = manipulated_page;
+                        } else{
+                            current_page = page;
+                        }
                     }
                 } catch(e) {
                     alert(e);
@@ -134,7 +139,7 @@
             function createAJAXPagination() {
                 $('.pagination-css').on({
                     click: function(e) {
-                        var page = $(this).attr('id');
+                        page = $(this).attr('id');
                         page = page.replace('pg_', '');
                         page = page.replace('pn_', '');
                         page = page.replace('pl_', '');
@@ -148,6 +153,9 @@
             }
 
             function list(page) {
+                if ($(form).attr('id') == 'form-search') {
+                    formValidator.validate();
+                }
                 $.ajax({
                     type: 'post',
                     url: '/sods/admin/lotacoes/',
@@ -156,8 +164,10 @@
                     timeout: 70000,
                     async: true,
                     data: {
-                        action: 'list',
-                        p: page
+                        'action': 'list',
+                        'p': page,
+                        'filter': filter,
+                        'value': value
                     },
                     success: function(data, status, xhr) {
                         if (data == 'ERRO') {
@@ -191,6 +201,9 @@
                     },
                     complete: function(xhr, status) {
                         console.log('A requisição foi completada.');
+                        if ($(form).attr('id') == 'form-search') {
+                            clean();
+                        }
                     }
                 });
                 return false;
@@ -252,52 +265,9 @@
                 return false;
             }
 
-            function initSearch() {
+            function search() {
                 form = $('#form-search');
                 formValidator = new PesquisaFormValidator(form);
-            }
-
-            function search() {
-                if (formValidator.validate()) {
-                    $.ajax({
-                        url: '/sods/admin/lotacoes/',
-                        type: 'post',
-                        cache: false,
-                        dataType: 'text',
-                        async: true,
-                        data: {
-                            action: 'search',
-                            filter: $('#filtro').val(),
-                            value: $('#valor').val()
-                        },
-                        success: function(data, status, xhr) {
-                            console.log(data);
-                            $('#grid').html(data);
-                            // Paginação AJAX na Grid.
-                            createAJAXPagination();
-                            // Ordenação dos resultados da Grid.
-                            $("table thead .nonSortable").data("sorter", false);
-                            $("#tablesorter").tablesorter({
-                                emptyTo: 'none',
-                                theme : 'default',
-                                headerTemplate : '{content}{icon}',
-                                widgetOptions : {
-                                  columns : [ "primary", "secondary", "tertiary" ]
-                                }
-                            });
-                            // Tooltip.
-                            $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(error);
-                        },
-                        complete: function(xhr, status) {
-                            console.log('A requisição foi completada.');
-                            clean();
-                        }
-                    });
-                }
-                return false;
             }
 
             function clean() {
@@ -325,7 +295,10 @@
 
                 $('#form-search').submit(function(event) {
                     event.preventDefault();
-                    search();
+                    filter = $('#filtro', this).val();
+                    value = $('#valor', this).val();
+                    page = 1;
+                    list(page);
                 });
 
                 createAJAXPagination();
@@ -352,7 +325,7 @@
                         class="btn btn-info btn-sm pull-right" 
                         data-toggle="modal" 
                         data-target="#modal-search"
-                        onclick="initSearch()">
+                        onclick="search()">
                         <b>Pesquisar</b>
                         <span class="glyphicon glyphicon-search"></span>
                     </button>
