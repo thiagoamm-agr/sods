@@ -164,7 +164,7 @@
             return $all;
         }
 
-    public function filter($criteria) {
+    public function filter($criteria=null) {
             $rows = array();
             if (empty($criteria)) {
                 $rows = $this->getAll(); 
@@ -188,9 +188,9 @@
             return $rows;
         }
 
-        public function paginate($rows=10, $start=0, $criteria='') {
+        public function paginate($rows=10, $start=0, $criteria=null) {
             $all = array();
-            $where = $criteria == '' ? $criteria : "where $criteria";
+            $where = empty($criteria) ? "" : "where $criteria";
             $query = "select * from tipo_solicitacao $where order by id desc limit $rows offset $start";
             $result = mysql_query($query, $this->connection);
             while ($row = mysql_fetch_array($result)) {
