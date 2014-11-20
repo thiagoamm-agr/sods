@@ -67,8 +67,8 @@
     <!-- Javascript -->
     <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
     <script type="text/javascript" src="/sods/static/js/validators/UsuarioFormValidator.js"></script>
+    <script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
-    <script type="text/javascript" src="/sods/static/js/md5.js"></script>
 
     <script type="text/javascript">
         var usuario = null;
@@ -87,6 +87,8 @@
             usuario.status = null;
             form= $('#form-add');
             formValidator = new UsuarioFormValidator(form);
+            filter = null;
+            value = null;
         }
 
         function edit(usuario_json, page) {
@@ -148,9 +150,9 @@
                     formValidator = new UsuarioFormValidator(form);
                     totalRecords = totalRecords - 1;
                     var manipulatedPage = Math.ceil(totalRecords/10);
-                    if(manipulatedPage < page){
+                    if (manipulatedPage < page) {
                         current_page = manipulatedPage;
-                    }else{
+                    } else {
                         current_page = page;
                     }
                 }
@@ -253,9 +255,7 @@
                         break;
                 } 
                 formValidator = new UsuarioFormValidator(form);
-                var valid = formValidator.validate();
-                console.log(valid);
-                if (valid) {
+                if (formValidator.validate()) {
                 // Requisição AJAX
                     $.ajax({
                         type: 'post',
@@ -274,7 +274,7 @@
                                 modal='#modal-danger';
                                 $('#alert-msg').text('Registro Existente !');
                                 $(modal).modal('show');
-                            }else{
+                            } else {
                                 modal='#modal-success';
                                 $('#alert-msg').text('Dados Atualizados !');
                                 $(modal).modal('show');
@@ -315,6 +315,7 @@
                 event.preventDefault();
                 save();
             });
+
             $('#form-search').submit(function(event) {
                 event.preventDefault();
                 filter = $('#filtro', this).val();
@@ -323,10 +324,15 @@
                 list(page);
             });
              // Máscara telefone.
-			$('#fone', '#form-add').mask('(99) 9999-9999');
-			$('#fone', '#form-edit').mask('(99) 9999-9999');
+            $('#fone', '#form-add').mask('(99) 9999-9999');
+            $('#fone', '#form-edit').mask('(99) 9999-9999');
             createAJAXPagination();
         });
+        
+        function search() {
+            form = $('#form-search');
+            formValidator = new PesquisaFormValidator(form);
+        }
     </script>
         
     <div class="container">
@@ -344,14 +350,15 @@
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                 </div>
-                <button
-                    id="btn-search"
-                    class="btn btn-info btn-sm pull-right" 
-                    data-toggle="modal" 
-                    data-target="#modal-search">
-                    <b>Pesquisar</b>
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
+                    <button
+                        id="btn-search"
+                        class="btn btn-info btn-sm pull-right" 
+                        data-toggle="modal" 
+                        data-target="#modal-search"
+                        onclick="search()">
+                        <b>Pesquisar</b>
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
             </div>
         </div>
         <div class="row">
@@ -619,44 +626,22 @@
                                 data-dismiss="modal" 
                                 aria-hidden="true">&times;
                             </button>
-                            <h3 class="modal-title">Pesquisar Tipo de Solicitação</h3>
+                            <h3 class="modal-title">Pesquisar Usuário</h3>
                         </div>
                         <form id="form-search" role="form" method="post">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="nome">Atributo:</label>
                                     <select 
-                                        id="atributo" 
-                                        name="atributo"
+                                        id="filtro" 
+                                        name="filtro"
                                         class="form-control">
                                         <option value="">SELECIONE UM ATRIBUTO</option>
+                                        <option value="id">ID</option>
                                         <option value="nome">Nome</option>
-                                        <option value="lotacao">Lotação</option>
+                                        <option value="nome_lotacao">Lotação</option>
                                         <option value="cargo">Cargo</option>
-                                        <option value="tipo">Tipo</option>
-                                        <option value="status">Status</option>
                                         <option value="login">Login</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="criterio">Critério:</label>
-                                    <select
-                                        id="criterio"
-                                        name="criterio"
-                                        class="form-control">
-                                        <option value="">SELECIONE UM CRITÉRIO</option>
-                                        <option value="igual_a">Igual a</option>
-                                        <option value="diferente_de">Diferente de</option>
-                                        <option value="menor_que">Menor que</option>
-                                        <option value="menor_que_ou_igual_a">Menor que ou igual a</option>
-                                        <option value="maior_que">Maior que</option>
-                                        <option value="maior_que_ou_igual_a">Maior que ou igual a</option>
-                                        <option value="comecao_com">Começa com</option>
-                                        <option value="nao_comeca_com">Não começa com</option>
-                                        <option value="contem">Contém</option>
-                                        <option value="nao_contem">Não contém</option>
-                                        <option value="termina_com">Termina com</option>
-                                        <option value="nao_termina_com">Não termina com</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -673,7 +658,7 @@
                                 <button 
                                     type="reset" 
                                     class="btn btn-primary"
-                                    onclick="limparFormPesquisa()">Limpar
+                                    onclick="clean()">Limpar
                                     <span class="glyphicon glyphicon-file"></span>
                                 </button>
                                 <button 
