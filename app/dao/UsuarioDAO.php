@@ -131,22 +131,29 @@
                 if (gettype($value) == 'string' && $field != 's.id') {
                     $value = "'$value'";
                 }
-                $query = "select s.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao, s.cargo, s.telefone, s.email,
-                          s.login, s.senha, s.tipo_usuario, s.status, s.data_criacao, s.data_alteracao from
-                          solicitante as s inner join lotacao as l on s.lotacao_id = l.id and $field = $value";
+                $query = "" . 
+                    "select\n" .
+                        "\ts.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao,\n" . 
+                        "\ts.cargo, s.telefone, s.email, s.login, s.senha, s.tipo_usuario,\n" . 
+                        "\ts.status, s.data_criacao, s.data_alteracao\n" . 
+                    "from\n" .
+                        "\tsolicitante as s\n" . 
+                    "inner join lotacao as l\n" . 
+                        "\ton s.lotacao_id = l.id and $field = $value";
                 $result = mysql_query($query, $this->connection);
                 return mysql_fetch_assoc($result);
             }
         }
         
         public function getAll() {
-            $query = "select " .
-                         "s.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao, s.cargo, " .
-                         "s.telefone, s.login, s.tipo_usuario, s.status, s.email " .
-                     "from " .
-                         "solicitante as s " .
-                     "inner join lotacao as l " .
-                         "on s.lotacao_id = l.id order by s.id desc";
+            $query = "" . 
+                "select\n" .
+                    "\ts.id, s.nome as nome_sol, l.id as lotacao_id, l.nome as lotacao,\n" .
+                    "\ts.cargo, s.telefone, s.login, s.tipo_usuario, s.status, s.email\n" .
+                "from\n" .
+                    "\tsolicitante as s\n" .
+                "inner join lotacao as l\n" .
+                    "\ton s.lotacao_id = l.id order by s.id desc";
             $result = mysql_query($query, $this->connection);
             $all = array();
             while ($row = mysql_fetch_assoc($result)) {
