@@ -56,6 +56,7 @@ function UsuarioFormValidator(form) {
                     }
                 },
                 login: {
+                	enabled: false,
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
@@ -67,6 +68,7 @@ function UsuarioFormValidator(form) {
                             url: '/sods/admin/usuarios/',
                             name: 'login',
                             data: function(validator) {
+                                console.log(validator);
                                 return { 
                                     action: 'check_login',
                                     login: validator.getFieldElements('login').val(),
@@ -121,6 +123,8 @@ function UsuarioFormValidator(form) {
             // Esconde a modal
             $(modal).modal('hide');
             // Limpa o formulário
+        }).on('keyup', '[name="login"]', function() {
+            $('#form-edit').bootstrapValidator('enableFieldValidators', 'login');
         });
         this.data = this.form.data('bootstrapValidator');
     }
