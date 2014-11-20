@@ -66,7 +66,7 @@
          * 
          * @param string $criteria critérios de filtragem
          */
-        public function filter($criteria);
+        public function filter($criteria=null);
 
         /**
          * Conta os registros armazenados em uma tabela.
@@ -74,7 +74,7 @@
          *
          * @param string $criteria critérios de filtragem
          */
-        public function count($criteria);
+        public function count($criteria=null);
 
         /**
          * Método que realiza a paginação de registros de uma tabela.
@@ -83,6 +83,6 @@
          * @param number $start registro inicial da paginação
          * @param string $criteria critério de escolha ou filtragem de registros
          */
-        public function paginate($rows=10, $start=0, $criteria='');
+        public function paginate($rows=10, $start=0, $criteria=null);
     }
 ?>
