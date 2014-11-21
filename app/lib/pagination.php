@@ -8,7 +8,7 @@
     class Pagination {
 
         function __construct() {}
-        
+
         function __destruct() {}
 
         // Simple pagination logic
