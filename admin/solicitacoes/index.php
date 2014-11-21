@@ -585,7 +585,24 @@
                                     
                                     </div>
 <?php 
-                                    }
+                                    } else {
+?>
+                                    <div class="row">
+                                        
+                                        <div class="col-sm-6">
+                                            <label for="status">Status</label>
+                                            <input id="status" name="status" class="form-control" readonly="readonly">
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <label for="observacoes_status">Obs. Status</label>
+                                            <input type="text" class="form-control" name="observacoes_status"
+                                                id="observacoes_status" readonly="readonly"/>
+                                        </div>
+                                    
+                                    </div>
+<?php
+                                    } 
 ?>
                                   </div>
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
