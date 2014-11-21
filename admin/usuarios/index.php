@@ -150,6 +150,11 @@
                     form = $('#form-del');
                     formValidator = new UsuarioFormValidator(form);
                     totalRecords = totalRecords - 1;
+                    if (total_records == 0) {
+                        filter = null;
+                        value = null;
+                        current_page = 1;
+                    }
                     var manipulatedPage = Math.ceil(totalRecords/10);
                     if (manipulatedPage < page) {
                         current_page = manipulatedPage;
@@ -247,8 +252,12 @@
                         usuario.email = $('#email', form).val();
                         usuario.login = $('#login', form).val();
                         usuario.senha = $('#senha', form).val();
-                        usuario.tipo_usuario = $('#form-' + action  + ' input:radio[name="tipo_usuario"]:checked').val();
-                        usuario.status = $('#form-' + action  + ' input:checkbox[name="statusEdit"]:checked').val();
+                        usuario.tipo_usuario = $(
+                            '#form-' + action  + ' input:radio[name="tipo_usuario"]:checked'
+                        ).val();
+                        usuario.status = $(
+                            '#form-' + action  + ' input:checkbox[name="statusEdit"]:checked'
+                        ).val();
                         json = usuario.toJSON();
                         break;
                     case 'delete':
@@ -435,8 +444,9 @@
                                     <label for="tipo_usuario">Tipo</label>
                                 </div>
                                 <div class="form-group">
-                                    <input type="radio" name="tipo_usuario" value="U" checked="checked"/>Usuário &nbsp;&nbsp;
-                                    <input type="radio" name="tipo_usuario" value="A"/>Administrador
+                                    <input type="radio" name="tipo_usuario" value="U" checked="checked"/>&nbsp;
+                                    Usuário&nbsp;&nbsp;
+                                    <input type="radio" name="tipo_usuario" value="A"/>&nbsp;Administrador
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -532,12 +542,12 @@
                                     <input type="radio" 
                                            id="tipo_usuario_u"
                                            name="tipo_usuario"
-                                           value="U" checked="checked"/>Usuário
+                                           value="U" checked="checked"/>&nbsp;Usuário
                                            &nbsp;&nbsp;
                                     <input type="radio"
                                            id="tipo_usuario_a"
                                            name="tipo_usuario" 
-                                           value="A"/>Administrador
+                                           value="A"/>&nbsp;Administrador
                                 </div>
                             </div>
                             <div class="form-group">
@@ -549,7 +559,7 @@
                                            id="statusEdit" 
                                            name="statusEdit" 
                                            value="A" 
-                                           checked="checked"/>Ativar &nbsp;
+                                           checked="checked"/>&nbsp;Ativar
                                 </div>
                             </div>
                             <div class="modal-footer">
