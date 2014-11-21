@@ -130,7 +130,7 @@
                     }
 ?>
                         <li class="dropdown">
-                            <a class="dropdown-toggle" href="#">
+                            <a class="dropdown-toggle" href="/sods/admin/sobre.php">
                                 <span class="glyphicon glyphicon-info-sign" style="color:white;" ></span>&nbsp;
                                 <b>Sobre</b>
                             </a>
