@@ -94,3 +94,5 @@ insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, 
     values('Thiago', 1, 'Programador', '(62) 4545-4554', 'thiago.amm.agr@gmail.com', 'thiago', md5('thiago'), 'A');
 insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, tipo_usuario) 
     values('Neto', 1, 'Programador', '(62) 4545-4554', 'edward-arn@agr.go.gov.br', 'neto', md5('neto'), 'A');
+insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, tipo_usuario) 
+    values('Guthierrez', 1, 'Estágiario', '(62) 4545-4554', 'guthierrez.gs.agr@gmail.com', 'guthierrez', md5('guthi123'), 'A');
