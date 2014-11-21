@@ -1,4 +1,10 @@
 <?php
+
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/lib/util.php';
+
+    // Protege o script de acesso direito.
+    script_guard();
+
     class Model {
 
         // Atributos.
@@ -34,6 +40,7 @@
             }
             $cls = new ReflectionClass(get_class($obj));
             $properties = $cls->getProperties();
+            $array = array();
             foreach ($properties as $property) {
                 $property->setAccessible(true);
                 if (is_object($property->getValue($obj))) {
@@ -60,10 +67,6 @@
             if (isset($json)) {
                 // Converte de JSON para objeto stdClass.
                 $obj = json_decode($json);
-                // Obtém o nome da subclasse.
-                $className = get_class($this);
-                // Cria o objeto para reflexão.
-                $class = new ReflectionClass($className);
                 // Obtém os atributos do objeto. 
                 $args = get_object_vars($obj);
                 // Configura o estado do objeto.
