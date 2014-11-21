@@ -100,6 +100,7 @@
             if (!empty($filter) && !empty($value)) {
                 switch ($filter) {
                     case 'id':
+                    	$value = intval($value);
                         $criteria = "s.{$filter} = {$value}";
                         break;
                     case 'nome':
