@@ -47,3 +47,10 @@ body {
     word-wrap: break-word;
     word-break: break-all;
 }
+
+.footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position:fixed;
+    bottom:0;
+}
