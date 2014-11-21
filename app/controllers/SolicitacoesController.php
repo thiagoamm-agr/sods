@@ -72,6 +72,13 @@
                         break;
                 }
             }
+            if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+                if (empty($criteria)) {
+                    $criteria = "s.login = '".$_SESSION['usuario']['login']."'";
+                } else {
+                    $criteria .= " and s.login = '".$_SESSION['usuario']['login']."'";
+                }
+            }
             $solicitacoes = $this->getPage($page_number, 10, $criteria);
             $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
             $this->paginator->totalrecords = $total_records;
