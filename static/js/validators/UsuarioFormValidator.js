@@ -56,13 +56,13 @@ function UsuarioFormValidator(form) {
                     }
                 },
                 login: {
-                    enabled: false,
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Login é um campo de preenchimento obrigatório'
                         },
                         remote: {
+                            enabled: false,
                             message: 'Esse login já está sendo utilizado!',
                             type: 'post',
                             url: '/sods/admin/usuarios/',
@@ -96,6 +96,10 @@ function UsuarioFormValidator(form) {
                         identical: {
                             field: 'confirmaSenha',
                             message: 'As senhas não correspondem'
+                        },
+                        different: {
+                            field: 'login',
+                            message: 'A senha não pode ser igual ao login'
                         }
                     }
                 },
@@ -109,6 +113,10 @@ function UsuarioFormValidator(form) {
                         identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
+                        },
+                        different: {
+                            field: 'login',
+                            message: 'A senha não pode ser igual ao login'
                         }
                     }
                 }
@@ -124,7 +132,7 @@ function UsuarioFormValidator(form) {
             $(modal).modal('hide');
             // Limpa o formulário
         }).on('blur', '[name="login"]', function() {
-            $(form).bootstrapValidator('enableFieldValidators', 'login');
+            $(form).bootstrapValidator('enableFieldValidators', 'login', true, 'remote');
         });
         this.data = this.form.data('bootstrapValidator');
     }

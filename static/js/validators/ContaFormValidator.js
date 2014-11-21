@@ -55,7 +55,7 @@ function ContaFormValidator(form) {
                     }
                 },
                 login: {
-                	trigger: 'blur',
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Login é um campo de preenchimento obrigatório'
@@ -72,6 +72,10 @@ function ContaFormValidator(form) {
                         identical: {
                             field: 'confirmaSenha',
                             message: 'As senhas não correspondem'
+                        },
+                        different: {
+                            field: 'login',
+                            message: 'A senha não pode ser igual ao login'
                         }
                     }
                 },
@@ -80,6 +84,10 @@ function ContaFormValidator(form) {
                         identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
+                        },
+                        different: {
+                            field: 'login',
+                            message: 'A senha não pode ser igual ao login'
                         }
                 	}
                 }
