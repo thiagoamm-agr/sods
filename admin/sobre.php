@@ -28,7 +28,7 @@
              <footer class="footer">
                 <div class="container">
                     <p class="text-muted" style="text-align:center">
-                        <strong><a href="http://www.agr.go.gov.br/" target="blank" style="color:blue">AGR</a></strong> 
+                        <strong><a href="http://www.agr.go.gov.br/" target="blank" style="color:black">AGR</a></strong> 
                         - Agência Goiana de Reulação,Controle e Fiscalização de Serviços Públicos - 2014
                     </p>
                 </div>
