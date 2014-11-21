@@ -125,7 +125,12 @@
                     } else {
                         // Menu do Usuário do Sistema.
 ?>
-                        <li><a href="/sods/admin/solicitacoes/">Solicitações</a></li>
+                        <li>
+                            <a href="/sods/admin/solicitacoes/">
+                                <span class="glyphicon glyphicon-file" style="color:white"></span>
+                                <b>Solicitações</b>
+                            </a>
+                        </li>
 <?php 
                     }
 ?>
@@ -141,11 +146,11 @@
                         <li>
                             <a href="/sods/admin/account.php" title="Informações pessoais" data-toggle="tooltip" 
                                 data-placement="bottom">
-                                Bem-vindo(a), 
+                                <strong>Bem-vindo(a),  &nbsp;</strong> 
                                 <font color="white">
-                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span class="glyphicon glyphicon-user"></span>
                                     <b><span id="usuario_nome"><?php echo $_SESSION['usuario']['login'] ?></span></b>
-                                </font>.
+                                </font>
                             </a>
                         </li>
                           <li>

@@ -190,7 +190,7 @@
             $html .= "<div class=\"form-group\">";
             $html .= "<label for=\"nome\">Nome</label>";
             $html .= "<input type=\"text\" id=\"nome\" name=\"nome\" class=\"form-control\"";
-            $html .= "value=\"{$usuario['nome']}\"/>";
+            $html .= "value=\"{$usuario['login']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
             $html .= "<label for=\"lotacao\">Lotação</label>";
