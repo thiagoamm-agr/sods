@@ -19,8 +19,29 @@
         }
         
         public function getGrid($page_number=1, $filter=null, $value=null) {
-            $solicitacoes = empty($solicitacoes) ? $this->getPage($page_number) : $solicitacoes;
-            if (count($solicitacoes) > 0) {
+            $criteria = null;
+            //if (gettype($value) == 'string'
+            if (!empty($filter) && !empty($value)) {
+                switch ($filter) {
+                    case 'id':
+                    	$value = intval($value);
+                        $criteria = "so.{$filter} = {$value}";
+                        break;
+                    case 'nome':
+                        $criteria = "s.{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'titulo':
+                        $criteria = "so.{$filter} LIKE '%{$value}%'";
+                        break;
+                    case 'tipo':
+                        $criteria = "t.nome LIKE '%{$value}%'";
+                        break;
+                }
+            }            
+            $solicitacoes = $this->getPage($page_number, 10, $criteria);
+            $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
+            $this->paginator->totalrecords = $total_records;
+            if ($total_records > 0) {
                 $html = "<table id=\"tablesorter\"\n";
                 $html .= "    class=\"table table-striped table-bordered table-condensed tablesorter\">\n";
                 $html .= "    <thead>\n";
@@ -71,14 +92,14 @@
                     $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n";
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
-                    $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$this->count() .")'>\n"; 
+                    $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$total_records .")'>\n"; 
                     $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
                     $html .= "        </tr>\n";
                 }
                 $html .= "    </tbody>\n";
-                if ($this->count() > 10) {
+                if ($total_records > 10) {
                     $html .= "<tfoot>\n";
                     $html .= "    <tr><td colspan=\"8\">{$this->paginator}</td></tr>\n";
                     $html .= "</tfoot>\n";
@@ -124,7 +145,7 @@
 
         public function getPage($page_number=1, $rows=10, $criteria=null) {
             if (empty($page_number)) {
-            	$page_number = 1;
+                $page_number = 1;
             }
             $this->paginator->pagesize = $rows;
             $this->paginator->pagenumber = $page_number;
