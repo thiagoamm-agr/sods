@@ -60,6 +60,7 @@
                 switch ($filter) {
                     case 'id':
                     case 'gerencia_id':
+                        $value = intval($value);
                         $criteria = "{$filter} = {$value}";
                         break;
                     case 'nome':
