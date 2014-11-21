@@ -37,7 +37,7 @@ create table solicitante(
     email varchar(100),
     login varchar(50) not null unique,
     senha varchar(255) not null,
-    tipo_usuario char not null default 'U' comment 'U - Usuário ou A - Administrador',  
+    tipo_usuario char not null default 'U' comment 'U - Usuário ou A - Administrador',
     status char not null default 'A' comment 'A - Ativo ou I - Inativo',
     data_criacao timestamp not null default current_timestamp,
     data_alteracao timestamp,
@@ -95,4 +95,5 @@ insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, 
 insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, tipo_usuario) 
     values('Neto', 1, 'Programador', '(62) 4545-4554', 'edward-arn@agr.go.gov.br', 'neto', md5('neto'), 'A');
 insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, tipo_usuario) 
-    values('Guthierrez', 1, 'Estágiario', '(62) 4545-4554', 'guthierrez.gs.agr@gmail.com', 'guthierrez', md5('guthi123'), 'A');
+    values('Guthierrez', 1, 'Estágiario', '(62) 4545-4554', 'guthierrez.gs.agr@gmail.com', 'guthierrez', 
+    md5('guthi123'), 'A');
