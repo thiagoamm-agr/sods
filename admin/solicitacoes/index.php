@@ -69,7 +69,9 @@
             var action = null;
             var form = null;
             var formValidator = null;
-            var current_page = null;
+            var current_page = 1;
+            var filter = null;
+            var value = null;
 
             function clean() {
                 if (formValidator != null) {
@@ -82,11 +84,12 @@
                 solicitacao = new Solicitacao();
                 form = $('#form-add');
                 formValidator = new SolicitacaoFormValidator(form);
+                filter = null;
+                value = null;
                 current_page = 1;
             }
 
             function edit(solicitacao_json, page) {
-                current_page = page;
                 try {
                     if (solicitacao_json != null) {
                         action = 'edit';
@@ -104,6 +107,7 @@
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
                         formValidator = new SolicitacaoFormValidator(form);
+                        current_page = page;
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
@@ -112,14 +116,7 @@
                 }
             }
 
-            function del(solicitacao_json, page, totalRecords) {
-                 totalRecords = totalRecords - 1;
-                 var manipulatedPage = Math.ceil(totalRecords / 10);
-                 if(manipulatedPage < page) {
-                	 current_page = manipulatedPage;
-                 }else{
-                	 current_page = page;
-                 }
+            function del(solicitacao_json, page, total_records) {
                  try {
                         if (solicitacao_json != null) {
                             action = 'delete';
@@ -135,7 +132,20 @@
                             solicitacao.tipo_solicitacao_id = solicitacao_json.tipo_solicitacao_id;
                             solicitacao.data_abertura = solicitacao_json.data_abertura;
                             solicitacao.data_alteracao = solicitacao_json.data_alteracao;
+                            form = $('#form-del');
                             formValidator = new SolicitacaoFormValidator(form);
+                            total_records = total_records - 1;
+                            if (total_records == 0) {
+                                filter = null;
+                                value = null;
+                                current_page = 1;
+                            }
+                            var manipulated_page = Math.ceil(total_records / 10);
+                            if (manipulated_page < page) {
+                                current_page = manipulated_page;
+                            } else {
+                                current_page = page;
+                            }
                         }
                     } catch(e) {
                         alert(e);
@@ -159,6 +169,9 @@
             } 
 
             function list(page) {
+                if ($(form).attr('id') == 'form-search') {
+                    formValidator.validate();
+                }
                 $.ajax({
                     type: 'post',
                     url: '/sods/admin/solicitacoes/',
@@ -167,8 +180,10 @@
                     timeout: 70000,
                     async: true,
                     data: {
-                        action: 'list',
-                        p: page
+                        'action': 'list',
+                        'p': page,
+                        'filter': filter,
+                        'value': value
                     },
                     success: function(data, status, xhr) {
                         if (data == 'ERRO') {
@@ -199,6 +214,9 @@
                     },
                     complete: function(xhr, status) {
                         console.log('A requisição list foi completada.');
+                        if ($(form).attr('id') == 'form-search') {
+                            clean();
+                        }
                     }
                 });
                 return false;
@@ -305,7 +323,15 @@
                     event.preventDefault();
                     save();
                 });
-
+                
+                $('#form-search').submit(function(event) {
+                    event.preventDefault();
+                    filter = $('#filtro', this).val();
+                    value = $('#valor', this).val();
+                    page = 1;
+                    list(page);
+                });
+                
                 createAJAXPagination();
             });
 
@@ -661,13 +687,9 @@
                                         class="form-control">
                                         <option value="">SELECIONE UM FILTRO</option>
                                         <option value="id">ID</option>
-                                        <option value="login">Solicitante</option>
+                                        <option value="nome">Solicitante</option>
                                         <option value="titulo">Título</option>
-                                        <option value="status">Status</option>
-                                         <option value="obs_status">Obs Status</option>
                                         <option value="tipo">Tipo</option>
-                                        <option value="abertura">Data de Abertura</option>
-                                        <option value="alteracao">Data de Alteração</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
