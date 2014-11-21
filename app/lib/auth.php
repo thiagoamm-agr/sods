@@ -7,10 +7,19 @@
         $senha = isset($senha) ? trim($senha) : '';
         if ($login !== '' && $senha !== '') {
             $conexao = get_db_connection("10.243.1.14", "sods", "dev123");
-            $query = "select s.id, s.nome, l.nome as nome_lotacao, l.id as id_lotacao, s.cargo, s.telefone, s.email, 
-                      s.login, s.senha, s.tipo_usuario,	s.status, s.data_criacao, s.data_alteracao 
-                      from solicitante as s inner join lotacao as l on s.lotacao_id = l.id and 
-            		  s.login = '$login' and s.senha = md5('$senha') and s.status <> 'I';";
+            $query = "" . 
+                "select\n" .
+                    "\ts.id, s.nome, l.nome as nome_lotacao,\n" . 
+                    "\tl.id as id_lotacao, s.cargo, s.telefone, s.email,\n" . 
+                    "\ts.login, s.senha, s.tipo_usuario, s.status,\n" . 
+                    "\ts.data_criacao, s.data_alteracao\n" . 
+                "from\n" .
+                    "\tsolicitante as s\n" . 
+                "inner join lotacao as l\n" . 
+                    "\ton s.lotacao_id = l.id and\n" . 
+                    "\ts.login = '$login' and\n" . 
+                    "\ts.senha = md5('$senha') and \n" . 
+                    "\ts.status <> 'I';";
             $result = mysql_query($query);
             if (mysql_num_rows($result) > 0) {
                 $_SESSION['usuario'] = mysql_fetch_array($result);
