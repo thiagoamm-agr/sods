@@ -127,6 +127,11 @@
                         form = $('#form-del');
                         formValidator = new LotacaoFormValidator(form);
                         total_records = total_records - 1;
+                        if (total_records == 0) {
+                            filter = null;
+                            value = null;
+                            current_page = 1;
+                        }
                         var manipulated_page = Math.ceil(total_records / 10);
                         if (manipulated_page < page) {
                             current_page = manipulated_page;
