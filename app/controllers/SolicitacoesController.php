@@ -29,7 +29,16 @@
         }
 
         public function delete($solicitacao) {
-            return !$this->dao->delete($solicitacao);
+            if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+                if ($solicitacao->status == 'CRIADA') {
+                	$solicitacao->status='CANCELADA';
+                } else {
+                	return true;
+                }
+            } else {
+                $solicitacao->status='INDEFERIDA';
+            }
+            return $this->dao->update($solicitacao);
         }
 
         public function edit($solicitacao) {
@@ -124,8 +133,15 @@
                     $html .= "            <td colspan=\"2\">\n";
                     $html .= "                <button\n";
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n";
-                    $html .= "                    data-toggle=\"modal\"\n";
-                    $html .= "                    data-target=\"#modal-edit\"\n";
+                    $status = $solicitacao['status'];
+                    if ($status == 'CRIADA' && $_SESSION['usuario']['tipo_usuario'] == 'U') {
+                        $html .= "                    data-toggle=\"modal\"\n";
+                        $html .= "                    data-target=\"#modal-edit\"\n";
+                    }
+                    if ($_SESSION['usuario']['tipo_usuario'] == 'A') {
+                    	$html .= "                    data-toggle=\"modal\"\n";
+                    	$html .= "                    data-target=\"#modal-edit\"\n";
+                    }                
                     $html .= "                    onclick='edit(" . json_encode($solicitacao) ."," . $page_number .")'>\n"; 
                     $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
                     $html .= "                </button>&nbsp;&nbsp;\n";
@@ -134,7 +150,11 @@
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
                     $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$total_records .")'>\n"; 
-                    $html .= "                    <strong>Excluir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+                        $html .= "                    <strong>Cancelar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    } else {
+                        $html .= "                    <strong>Indeferir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                    } 
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
                     $html .= "        </tr>\n";
