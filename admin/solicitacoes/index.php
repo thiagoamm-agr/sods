@@ -18,6 +18,7 @@
     $lotacoes = $lotacoesController->_list();
     $tiposSolicitacoesController = new TiposSolicitacoesController();
     $tiposSolicitacoes = $tiposSolicitacoesController->activeElements();
+    $tipo_usuario = $_SESSION['usuario']['tipo_usuario'];
 
     //Indentificando ações e parâmetros do post
     if (isset($_POST['action'])) {
@@ -92,6 +93,15 @@
             function edit(solicitacao_json, page) {
                 try {
                     if (solicitacao_json != null) {
+                        if(solicitacao_json.status != 'CRIADA' && '<?php echo $tipo_usuario ?>' == 'U') {
+                            modal='#modal-danger';
+                            $('#alert-msg').text('Não é possivel editar uma solicitação: ' +solicitacao_json.status);
+                            $(modal).modal('show');
+                            window.setTimeout(function() {
+                                $(modal).modal('hide');
+                            }, 3000);
+                            return false;
+                        }
                         action = 'edit';
                         form = $('#form-edit');
                         $('#solicitante_id', form).val(solicitacao_json.solicitante_id);
@@ -260,8 +270,11 @@
                                'json': json
                             },
                             success: function(data, status, xhr) {
+                            modal=''
                                 if (data == 'ERRO') {
-                                    $('#alert-del').modal('show');
+                                    modal='#modal-danger';
+                                    $('#alert-msg').text('Não é possivel excluir uma solicitação: ' +solicitacao.status);
+                                    $(modal).modal('show');
                                 } else {
                                     modal='#modal-success';
                                     $(modal).modal('show');
@@ -393,7 +406,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modal-add">Adicionar Solicitação</h4>
+                            <h3 class="modal-title" id="modal-add">Adicionar Solicitação</h3>
                         </div>
                         <div class="modal-body">
                             <form id="form-add" action="" method="post" role="form">
@@ -405,7 +418,7 @@
                                     value="<?php echo $_SESSION['usuario']['id'] ?>"/>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="nome">Nome do Solicitante</label>
+                                            <label for="nome">Solicitante</label>
                                             <input type="text" 
                                                    class="form-control" 
                                                    name="nome" 
@@ -425,17 +438,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="titulo">Titulo da Solicitação</label>
+                                    <label for="titulo">Titulo</label>
                                     <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="detalhamento">Descrição da Solicitação</label>
+                                    <label for="detalhamento">Descrição</label>
                                     <textarea class="form-control" id="detalhamento" name="detalhamento" 
                                         rows="6" style="width: 100%;"></textarea>
                                 
                                 </div>
                                 <div class="form-group">
-                                    <label for="info_adicionais">Inf. Adicionais</label>
+                                    <label for="info_adicionais">Informações Adicionais</label>
                                     <textarea class="form-control" id="info_adicionais" name="info_adicionais" 
                                         rows="4" style="width: 100%;"></textarea>
                                 </div>
@@ -449,7 +462,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="tipo_solicitacao_id">Tipo de Solicitação</label>
+                                                <label for="tipo_solicitacao_id">Tipo</label>
                                                 <select id="tipo_solicitacao_id" 
                                                         name="tipo_solicitacao_id" 
                                                         class="form-control">
@@ -512,13 +525,13 @@
                                       <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
                                   </div>
                                   <div class="form-group">
-                                    <label for="detalhamento">Descrição da Solicitação</label>
+                                    <label for="detalhamento">Descrição</label>
                                     <textarea class="form-control" id="detalhamento" name="detalhamento" 
                                         rows="6" style="width: 100%;"></textarea>
                                 
                                 </div>
                                 <div class="form-group">
-                                    <label for="info_adicionais">Inf. Adicionais</label>
+                                    <label for="info_adicionais">Informações Adicionais</label>
                                     <textarea class="form-control" id="info_adicionais" name="info_adicionais"
                                         rows="2" style="width: 100%;"></textarea>
                                 </div>
@@ -532,7 +545,7 @@
                                         </div>
                                       
                                           <div class="col-sm-6">
-                                            <label for="tipo_solicitacao_id">Tipo de Solicitação</label>
+                                            <label for="tipo_solicitacao_id">Tipo</label>
                                               <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
                                                       class="form-control">
                                                 <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
@@ -561,7 +574,7 @@
                                         </div>
                                     </div>
 <?php 
-                                    if ($_SESSION['usuario']['tipo_usuario'] == "A") {
+                                    if ($tipo_usuario == "A") {
 ?>
                                     <div class="row">
                                         
@@ -636,15 +649,33 @@
                 aria-labelledby="modal-del" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
+<?php
+                        if($tipo_usuario == 'U'){
+?>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                                 &times;
                             </button>
-                            <h4 class="modal-title" id="modal-del">Exclusão de Solicitação</h4>
+                            <h4 class="modal-title" id="modal-del">Cancelar Solicitação</h4>
                         </div>
                         <div class="modal-body">
-                            <h5>Confirma exclusão de solicitação?</h5>
+                            <h5>Confirma cancelamento da solicitação?</h5>
                         </div>
+<?php                         
+                        } else {
+?>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="modal-del">Indeferir Solicitação</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Confirma indeferimento da solicitação?</h5>
+                        </div>
+<?php 
+                        }
+?>
                         <form id="form-del" action="" role="form" method="post">
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-danger">Sim</button>
@@ -665,6 +696,16 @@
                </div>
             </div>
          <!-- Alertas -->
+        <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
+            aria-labelledby="modal-del" aria-hidden="true">
+            <div class="alert alert-danger fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>FALHA:</strong>
+                <span id="alert-msg"></span>
+            </div>
+        </div>
         <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
             aria-hidden="true">
             <div class="alert alert-success fade in" role="alert">
@@ -674,7 +715,7 @@
                 <strong>SUCESSO:</strong>
                 <span id="alert-msg">Dados atualizados</span>
            </div>
-        </div><!-- Alertas -->
+        </div>         
             <!--  Pesquisar -->
             <div 
                 id="modal-search"
