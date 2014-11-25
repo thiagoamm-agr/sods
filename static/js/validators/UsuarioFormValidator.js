@@ -24,15 +24,15 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Lotação é um campo de preenchimento obrigatório'
+                            message: 'Lotação é um campo de preenchimento obrigatório.'
                         }
                      }
                 },
-                cargo: {
+                funcao: {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Cargo é um campo de preenchimento obrigatório'
+                            message: 'Função é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -40,7 +40,7 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Telefone é um campo de preenchimento obrigatório'
+                            message: 'Telefone é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -48,10 +48,10 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'E-mail é um campo de preenchimento obrigatório'
+                            message: 'E-mail é um campo de preenchimento obrigatório.'
                         },
                         emailAddress: {
-                            message: 'Preencha um endereço de e-mail válido'
+                            message: 'Preencha um endereço de e-mail válido.'
                         }
                     }
                 },
@@ -59,7 +59,7 @@ function UsuarioFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Login é um campo de preenchimento obrigatório'
+                            message: 'Login é um campo de preenchimento obrigatório.'
                         },
                         remote: {
                             enabled: false,
@@ -78,47 +78,45 @@ function UsuarioFormValidator(form) {
                         }
                     }
                 },
-                tipoUsuario: {
-                    trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Tipo de Usuario é um campo de preenchimento obrigatório'
-                        }
-                    }
-                },
                 senha: {
                     trigger: 'blur',
                     validators: {
                         regexp: {
                             regexp: /\w{8,}/i,
-                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
+                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
                         },
                         identical: {
-                            field: 'confirmaSenha',
-                            message: 'As senhas não correspondem'
+                            field: 'confirma_senha',
+                            message: 'As senhas não correspondem.'
                         },
                         different: {
                             field: 'login',
-                            message: 'A senha não pode ser igual ao login'
+                            message: 'A senha não pode ser igual ao login.'
                         }
                     }
                 },
-                confirmaSenha: {
+                confirma_senha: {
                     trigger: 'blur',
                     validators: {
                         regexp: {
                             regexp: /\w{8,}/i,
-                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
+                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
                         },
                         identical: {
                             field: 'senha',
-                            message: 'As senhas não correspondem'
+                            message: 'As senhas não correspondem.'
                         },
                         different: {
                             field: 'login',
-                            message: 'A senha não pode ser igual ao login'
+                            message: 'A senha não pode ser igual ao login.'
                         }
                     }
+                },
+                perfil: {
+                    
+                },
+                status: {
+                    
                 }
             }
         }).on('success.form.bv', function(event) {
