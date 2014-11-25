@@ -40,7 +40,7 @@ create table solicitante (
     perfil char not null default 'P' comment 'A - Admin ou P - Padrão',
     status char not null default 'A' comment 'A - Ativo ou I - Inativo',
     data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default timestamp on update current_timestamp,
+    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
     check (perfil in ('A', 'P')),
     check (status in ('A', 'I'))
 ) character set utf8 collate utf8_general_ci;
@@ -62,7 +62,7 @@ create table solicitacao (
     status varchar(15) not null default 'CRIADA',
     observacoes_status text,
     data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default timestamp on update current_timestamp,
+    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
     tipo_solicitacao_id int not null,
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
 ) character set utf8 collate utf8_general_ci;
@@ -78,7 +78,7 @@ create table historico_solicitacao (
     status varchar(15) not null default 'CRIADA',
     observacoes_status text,
     data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default timestamp on update current_timestamp,
+    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
     tipo_solicitacao_id int not null,
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
 ) character set utf8 collate utf8_general_ci;
@@ -121,8 +121,8 @@ insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha)
     values('Bruno', 1, 'Gerente', '(62) 4545-4554', 'bruno@agr.go.gov.br', 'bruno', md5('bruno'));
 insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
     values('Thiago', 1, 'Programador', '(62) 4545-4554', 'thiago.amm.agr@gmail.com', 'thiago', md5('thiago'), 'A');
-insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, perfil) 
+insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
     values('Neto', 1, 'Programador', '(62) 4545-4554', 'edward-arn@agr.go.gov.br', 'neto', md5('neto'), 'A');
-insert into solicitante(nome, lotacao_id, cargo, telefone, email, login, senha, perfil) 
+insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
     values('Guthierrez', 1, 'Estágiario', '(62) 4545-4554', 'guthierrez.gs.agr@gmail.com', 
     'guthierrez', md5('guthi123'), 'A');
