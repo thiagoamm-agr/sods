@@ -50,7 +50,7 @@ function ContaFormValidator(form) {
                             message: 'e-mail é um campo de preenchimento obrigatório'
                         },
                         emailAddress: {
-                        	message: 'Preencha um endereço de e-mail válido'
+                            message: 'Preencha um endereço de e-mail válido'
                         }
                     }
                 },
@@ -89,7 +89,7 @@ function ContaFormValidator(form) {
                             field: 'login',
                             message: 'A senha não pode ser igual ao login'
                         }
-                	}
+                    }
                 }
             }
         }).on('success.form.bv', function(event) {
