@@ -39,7 +39,7 @@
                     if (($column != 'id') && 
                         ($column != 'status') &&
                         ($column != 'observacoes_status') &&
-                        ($column != 'data_abertura') && 
+                        ($column != 'data_criacao') && 
                         ($column != 'data_alteracao')) {
                             $columns .= "{$column}, ";
                         if (gettype($value) == "string"){
@@ -124,7 +124,7 @@
             $query= "select " . 
                         "so.id, s.nome, s.id as solicitante_id, so.titulo, " . 
                         "so.detalhamento, so.info_adicionais, so.observacoes, " . 
-                        "so.status, so.observacoes_status, so.data_abertura, so.data_alteracao, " .
+                        "so.status, so.observacoes_status, so.data_criacao, so.data_alteracao, " .
                         "t.nome as tipo_solicitacao, t.id as tipo_solicitacao_id " .
                     "from " . 
                         "solicitante as s " . 
@@ -150,7 +150,7 @@
             $query = "select\n" . 
                         "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
                         "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_abertura, so.data_alteracao,\n " .
+                        "\tso.data_criacao, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 
@@ -172,7 +172,7 @@
             $query = "select\n" . 
                         "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
                         "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_abertura, so.data_alteracao,\n " .
+                        "\tso.data_criacao, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 
@@ -194,7 +194,7 @@
             $query = "select\n" . 
                         "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
                         "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_abertura, so.data_alteracao,\n " .
+                        "\tso.data_criacao, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 

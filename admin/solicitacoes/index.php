@@ -14,11 +14,13 @@
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/TiposSolicitacoesController.php';
 
     $controller = new SolicitacoesController();
-    $lotacoesController = new LotacoesController();
-    $lotacoes = $lotacoesController->_list();
-    $tiposSolicitacoesController = new TiposSolicitacoesController();
-    $tiposSolicitacoes = $tiposSolicitacoesController->activeElements();
-    $tipo_usuario = $_SESSION['usuario']['tipo_usuario'];
+    $lotacoes_controller = new LotacoesController();
+    $tipos_solicitacoes_controller = new TiposSolicitacoesController();
+
+    $tipos_solicitacoes = $tipos_solicitacoes_controller->activeElements();
+    $tipos_solicitacao_json = json_encode($tipos_solicitacoes_controller->_list());
+    $lotacoes = $lotacoes_controller->_list();
+    $perfil_usuario = $_SESSION['usuario']['perfil'];
 
     //Indentificando ações e parâmetros do post
     if (isset($_POST['action'])) {
@@ -73,6 +75,7 @@
             var current_page = 1;
             var filter = null;
             var value = null;
+            var tipos_solicitacao_json = null;
 
             function clean() {
                 if (formValidator != null) {
@@ -93,9 +96,11 @@
             function edit(solicitacao_json, page) {
                 try {
                     if (solicitacao_json != null) {
-                        if(solicitacao_json.status != 'CRIADA' && '<?php echo $tipo_usuario ?>' == 'U') {
+                        if ((solicitacao_json.status == 'CANCELADA' && '<?php echo $perfil_usuario ?>' == 'P') || 
+                            (solicitacao_json.status == 'INDEFERIDA' && '<?php echo $perfil_usuario ?>' == 'P') || 
+                            (solicitacao_json.status == 'ATENDIDA' && '<?php echo $perfil_usuario ?>' == 'P')) {
                             modal='#modal-danger';
-                            $('#alert-msg').text('Não é possivel editar uma solicitação: ' +solicitacao_json.status);
+                            $('#alert-msg').text('Não é possivel editar uma solicitação: ' + solicitacao_json.status);
                             $(modal).modal('show');
                             window.setTimeout(function() {
                                 $(modal).modal('hide');
@@ -112,12 +117,33 @@
                         $('#status', form).val(solicitacao_json.status);
                         $('#observacoes_status', form).val(solicitacao_json.observacoes_status);
                         $('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
-                        $('#data_abertura', form).val(formataData(solicitacao_json.data_abertura));
+                        $('#data_criacao', form).val(formataData(solicitacao_json.data_criacao));
                         $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
                         formValidator = new SolicitacaoFormValidator(form);
                         current_page = page;
+                        // Desabilita os campos.
+                        if ('<?php echo $perfil_usuario ?>' == 'P') {
+                            if (solicitacao_json.status != 'CRIADA') {
+                                $('#titulo', form).prop('readonly', true);
+                                $('#detalhamento', form).prop('readonly', true);
+                                $('#info_adicionais', form).prop('readonly', true);
+                                $('#observacoes', form).prop('readonly', true);
+                            }
+                        }
+                        // Retorna a lista de tipos de solicitação.
+                        tipos_solicitacao_json = <?php echo json_encode($tipos_solicitacoes_controller->_list()) ?>;
+                        // Popula a combobox de tipos de solicitação.
+                        $(tipos_solicitacao_json).each(function(i, e) {
+                            $('#tipo_solicitacao').append(new Option(e.nome, e.id));
+                        });
+                        // Seleciona o tipo de solicitação do registro a ser editado.
+                        $("#tipo_solicitacao option[value=\"" + solicitacao_json.tipo_solicitacao_id + "\"]", form)
+                            .prop('selected', true);
+                        if (solicitacao_json.status != 'CRIADA') {
+                            $('#tipo_solicitacao', form).prop('disabled', true);
+                        } 
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
@@ -140,7 +166,7 @@
                             solicitacao.observacoes = solicitacao_json.observacoes;
                             solicitacao.status = solicitacao_json.status;
                             solicitacao.tipo_solicitacao_id = solicitacao_json.tipo_solicitacao_id;
-                            solicitacao.data_abertura = solicitacao_json.data_abertura;
+                            solicitacao.data_criacao = solicitacao_json.data_criacao;
                             solicitacao.data_alteracao = solicitacao_json.data_alteracao;
                             form = $('#form-del');
                             formValidator = new SolicitacaoFormValidator(form);
@@ -336,7 +362,7 @@
                     event.preventDefault();
                     save();
                 });
-                
+
                 $('#form-search').submit(function(event) {
                     event.preventDefault();
                     filter = $('#filtro', this).val();
@@ -344,14 +370,14 @@
                     page = 1;
                     list(page);
                 });
-                
+
                 createAJAXPagination();
             });
 
             function search() {
                 form = $('#form-search');
                 formValidator = new PesquisaFormValidator(form);
-            }           
+            }
         </script>
         
         <div class="container">
@@ -385,14 +411,6 @@
             </div>
             <div id="grid" class="table-responsive">
 <?php
-/*
-                    Lista os registros sem usar AJAX.
-                    if (isset($_GET['p'])) {
-                        $page = (int) $_GET['p'];
-                    } else {
-                        $page = 1;
-                    }
-*/
                     echo $controller->getGrid(1);
 ?>
             </div>
@@ -462,13 +480,13 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="tipo_solicitacao_id">Tipo</label>
+                                                <label for="tipo_solicitacao_id">Tipo Solicitação</label>
                                                 <select id="tipo_solicitacao_id" 
                                                         name="tipo_solicitacao_id" 
                                                         class="form-control">
                                                         <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
 <?php 
-                                                        foreach ($tiposSolicitacoes as $tipos){
+                                                        foreach ($tipos_solicitacoes as $tipos) {
 ?>
                                                             <option value="<?php echo $tipos['id'] ?>">
                                                                            <?php echo $tipos['nome']?>
@@ -523,58 +541,49 @@
                                   <div class="form-group">
                                       <label for="titulo">Título</label>
                                       <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
+                                       <div class="form-group">
+                                        <label for="detalhamento">Descrição</label>
+                                          <textarea class="form-control" id="detalhamento" name="detalhamento" 
+                                             rows="6" style="width: 100%;" ></textarea>
+                                
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="info_adicionais">Informações Adicionais</label>
+                                         <textarea class="form-control" id="info_adicionais" name="info_adicionais"
+                                           rows="2" style="width: 100%;"></textarea>
+                                      </div>
                                   </div>
                                   <div class="form-group">
-                                    <label for="detalhamento">Descrição</label>
-                                    <textarea class="form-control" id="detalhamento" name="detalhamento" 
-                                        rows="6" style="width: 100%;"></textarea>
-                                
-                                </div>
-                                <div class="form-group">
-                                    <label for="info_adicionais">Informações Adicionais</label>
-                                    <textarea class="form-control" id="info_adicionais" name="info_adicionais"
-                                        rows="2" style="width: 100%;"></textarea>
-                                </div>
-                                  <div class="form-group">
                                       <div class="row">
-                                      
-                                          <div class="col-sm-6">
+                                        <div class="col-sm-6">
                                             <label for="observacoes">Observações</label>
                                             <textarea class="form-control" id="observacoes" name="observacoes"
                                                 rows="6" style="width: 100%"></textarea>
                                         </div>
-                                      
-                                          <div class="col-sm-6">
-                                            <label for="tipo_solicitacao_id">Tipo</label>
-                                              <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
-                                                      class="form-control">
+                                        <div class="col-sm-6">
+                                            <label for="tipo_solicitacao_id">Tipo Solicitação</label>
+                                            <select 
+                                                id="tipo_solicitacao" 
+                                                name="tipo_solicitacao" 
+                                                class="form-control">
                                                 <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
-<?php 
-                                                foreach ($tiposSolicitacoes as $tipos){
-?>
-                                                <option value="<?php echo $tipos['id'] ?>">
-                                                               <?php echo $tipos['nome']?>
-                                                </option>
-<?php
-                                                }
-?>
                                             </select>
                                         </div>
-                                    
+
                                         <div class="col-sm-6">
-                                            <label for="data_abertura">Data de Criação</label>
-                                            <input type="text" class="form-control" name="data_abertura" 
-                                                id="data_abertura" readonly>
+                                            <label for="data_criacao">Data de Criação</label>
+                                            <input type="text" class="form-control" name="data_criacao" 
+                                                id="data_criacao" readonly>
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="data_alteracao">Ultima Alteração</label>
+                                            <label for="data_alteracao">Última Alteração</label>
                                             <input type="text" class="form-control" name="data_alteracao" 
                                                 id="data_alteracao" readonly/>
                                         </div>
                                     </div>
 <?php 
-                                    if ($tipo_usuario == "A") {
+                                    if ($perfil_usuario == "A") {
 ?>
                                     <div class="row">
                                         
@@ -591,7 +600,7 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="observacoes_status">Obs. Status</label>
+                                            <label for="observacoes_status">Observação Status</label>
                                             <input type="text" class="form-control" name="observacoes_status"
                                                 id="observacoes_status"/>
                                         </div>
@@ -619,6 +628,9 @@
 ?>
                                   </div>
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
+<?php 
+                                    if ($perfil_usuario == "A") {
+?>
                                 <div class="modal-footer">
                                     <button type="submit" 
                                             class="btn btn-success" >Salvar
@@ -637,6 +649,30 @@
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
+<?php 
+                                    } else {
+?>
+                                <div class="modal-footer">
+                                    <button type="button" 
+                                            class="btn btn-success" disabled="disabled">Salvar
+                                      <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-primary" disabled="disabled"">Limpar
+                                         <span class="glyphicon glyphicon-file"></span>
+                                     </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-default" 
+                                        data-dismiss="modal" 
+                                        onclick="clean()">
+                                        Cancelar
+                                        <span class="glyphicon glyphicon-floppy-remove"></span>
+                                    </button>
+                                </div>
+<?php
+                                 } 
+?>
                                 
                             </form>
                         </div>
@@ -650,7 +686,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
 <?php
-                        if($tipo_usuario == 'U'){
+                        if ($perfil_usuario == 'U') {
 ?>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">

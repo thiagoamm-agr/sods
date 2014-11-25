@@ -29,7 +29,7 @@
         }
 
         public function delete($solicitacao) {
-            if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+            if ($_SESSION['usuario']['perfil'] == 'U') {
                 if ($solicitacao->status == 'CRIADA') {
                 	$solicitacao->status='CANCELADA';
                 } else {
@@ -81,7 +81,7 @@
                         break;
                 }
             }
-            if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+            if ($_SESSION['usuario']['perfil'] == 'U') {
                 if (empty($criteria)) {
                     $criteria = "s.login = '".$_SESSION['usuario']['login']."'";
                 } else {
@@ -114,11 +114,11 @@
                     $html .= "            <td>{$solicitacao['titulo']}</td>\n";
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
-                    if ($solicitacao['data_abertura'] != null){
-                        $data_abertura_simples = date('d/m/Y', strtotime ($solicitacao['data_abertura']));
-                        $data_abertura_hora = date('H:i:s', strtotime ($solicitacao['data_abertura']));
-                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_abertura_simples 
-                        Hora: $data_abertura_hora \">$data_abertura_simples</span></td>\n";
+                    if ($solicitacao['data_criacao'] != null){
+                        $data_criacao = date('d/m/Y', strtotime ($solicitacao['data_criacao']));
+                        $hora_criacao = date('H:i:s', strtotime ($solicitacao['data_criacao']));
+                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_criacao 
+                        Hora: $hora_criacao \">$data_criacao</span></td>\n";
                     }else{
                         $html .= "            <td></td>\n";
                     }
@@ -134,11 +134,14 @@
                     $html .= "                <button\n";
                     $html .= "                    class=\"btn btn-warning btn-sm\"\n";
                     $status = $solicitacao['status'];
-                    if ($status == 'CRIADA' && $_SESSION['usuario']['tipo_usuario'] == 'U') {
-                        $html .= "                    data-toggle=\"modal\"\n";
-                        $html .= "                    data-target=\"#modal-edit\"\n";
+                    $perfil = $_SESSION['usuario']['perfil'];
+                    if (($status == 'CRIADA' && $perfil == 'P') ||
+                        ($status == 'EM ANÁLISE' && $perfil == 'P') || 
+                            ($status == 'DEFERIDA' && $perfil == 'P')) {
+                                $html .= "                    data-toggle=\"modal\"\n";
+                                $html .= "                    data-target=\"#modal-edit\"\n";
                     }
-                    if ($_SESSION['usuario']['tipo_usuario'] == 'A') {
+                    if ($perfil == 'A') {
                     	$html .= "                    data-toggle=\"modal\"\n";
                     	$html .= "                    data-target=\"#modal-edit\"\n";
                     }                
@@ -150,7 +153,7 @@
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
                     $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$total_records .")'>\n"; 
-                    if ($_SESSION['usuario']['tipo_usuario'] == 'U') {
+                    if ($perfil == 'U') {
                         $html .= "                    <strong>Cancelar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     } else {
                         $html .= "                    <strong>Indeferir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";

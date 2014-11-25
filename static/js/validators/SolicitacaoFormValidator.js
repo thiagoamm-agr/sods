@@ -13,15 +13,15 @@ function SolicitacaoFormValidator(form) {
             excluded: [':disabled', ':hidden'],
             fields: {
                 titulo: {
-                	trigger: 'blur',
-                	validators: {
-                		notEmpty: {
-                			message: 'Título é um campo de preenchimento obrigatório.'
-                		}
-                	}
+                    trigger: 'blur',
+                    validators: {
+                        notEmpty: {
+                            message: 'Título é um campo de preenchimento obrigatório.'
+                        }
+                    }
                 },
                 detalhamento: {
-                	trigger: 'blur',
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Descrição da Solicitação é um campo de preenchimento obrigatório'
@@ -29,12 +29,12 @@ function SolicitacaoFormValidator(form) {
                      }
                 },
                 observacoes: {
-                	group: '.col-sm-6'
+                    group: '.col-sm-6'
                 },
                 info_adicionais: {
 
                 },
-                tipo_solicitacao_id: {
+                tipo_solicitacao: {
                     group: '.col-sm-6',
                     trigger: 'blur change',
                     validators: {
