@@ -20,23 +20,23 @@ function ContaFormValidator(form) {
                     }
                 },
                 lotacao: {
-                	trigger: 'blur',
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Lotação é um campo de preenchimento obrigatório'
                         }
                      }
                 },
-                cargo: {
-                	trigger: 'blur',
+                funcao: {
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Cargo é um campo de preenchimento obrigatório'
                         }
                     }
                 },
-                fone: {
-                	trigger: 'blur',
+                telefone: {
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'Fone é um campo de preenchimento obrigatório'
@@ -44,7 +44,7 @@ function ContaFormValidator(form) {
                     }
                 },
                 email: {
-                	trigger: 'blur',
+                    trigger: 'blur',
                     validators: {
                         notEmpty: {
                             message: 'e-mail é um campo de preenchimento obrigatório'
@@ -70,7 +70,7 @@ function ContaFormValidator(form) {
                             message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
                         },
                         identical: {
-                            field: 'confirmaSenha',
+                            field: 'confirma_senha',
                             message: 'As senhas não correspondem'
                         },
                         different: {
@@ -79,7 +79,7 @@ function ContaFormValidator(form) {
                         }
                     }
                 },
-                confirmaSenha: {
+                confirma_senha: {
                     validators: {
                         identical: {
                             field: 'senha',
