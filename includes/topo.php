@@ -10,33 +10,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
     <head>
-        <!-- Meta -->
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-         <!-- Favicon -->
         <link rel="icon" href="/sods/favicon.ico" />
 
-         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrapValidator.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/sods.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/theme.default.css" />
 
-        <!--  Javascript -->
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
               <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
               <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        
         <script src="/sods/static/js/jquery.min.js"></script>
-        <script src="/sods/static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="/sods/static/bootstrap/js/bootstrapValidator.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
+        
+        <script src="/sods/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/sods/static/bootstrap/js/bootstrapValidator.min.js"></script>
+
         <script>
             $(document).ready(function() {
                 // Table sorter.
@@ -65,18 +64,19 @@
                         class="navbar-toggle" 
                         data-toggle="collapse" 
                         data-target=".navbar-collapse">
-                          <span class="sr-only">Toggle navigation</span>
-                          <span class="icon-bar"></span>
-                          <span class="icon-bar"></span>
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" 
-                       style="font-size: 40px; color: white;" 
-                       href="/sods/admin/" 
-                       title="SISTEMA PARA SOLICITAÇÃO DE DESENVOLVIMENTO DE SOFTWARE"
-                       data-toggle="tooltip" 
-                       data-placement="bottom">SODS</a>
-                  </div>
+                        style="font-size: 40px; color: white;" 
+                        href="/sods/admin/" 
+                        title="SISTEMA PARA SOLICITAÇÃO DE DESENVOLVIMENTO DE SOFTWARE"
+                        data-toggle="tooltip" 
+                        data-placement="bottom">SODS
+                   </a>
+                </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
@@ -86,7 +86,7 @@
                             </a>
                         </li>
 <?php 
-                    if ($_SESSION['usuario']['tipo_usuario'] == 'A') {
+                    if ($_SESSION['usuario']['perfil'] == 'A') {
                         // Menu do Administrador do Sistema.
 ?>
                         <li class="dropdown">
@@ -167,6 +167,9 @@
                             </form>
                         </li>
                     </ul>
-                </div> <!--/.nav-collapse -->
-            </div> <!--/.container-fluid -->
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+            <!--/.container-fluid -->
         </div>
+
