@@ -273,7 +273,7 @@
                             modal=''
                                 if (data == 'ERRO') {
                                     modal='#modal-danger';
-                                    $('#alert-msg').text('Não é possivel excluir uma solicitação: ' +solicitacao.status);
+                                    $('#alert-msg').text('Não é possivel cancelar uma solicitação: ' +solicitacao.status);
                                     $(modal).modal('show');
                                 } else {
                                     modal='#modal-success';
