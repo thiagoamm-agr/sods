@@ -1,4 +1,5 @@
 <?php
+
     // Models
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Usuario.php';
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Lotacao.php';
@@ -26,8 +27,8 @@
                 $_SESSION['usuario'] = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
                 exit();
                 break;
-            case 'list':
-                echo $controller->getForm($_SESSION['usuario']['id']);
+            case 'show':
+                echo $controller->getInformacoesPessoais($_SESSION['usuario']['id']);
                 exit();
                 break;
         }
@@ -39,15 +40,15 @@
     <!-- Javascript -->
     <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
     <script type="text/javascript" src="/sods/static/js/validators/ContaFormValidator.js"></script>
-    <script type="text/javascript" src="/sods/static/js/md5.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
+
     <script type="text/javascript">
         var form = null;
         var formValidator = null;
         var resposta = null;
         var action = null;
 
-        function list() {
+        function show() {
             $.ajax({
                 type: 'post',
                 url: '/sods/admin/account.php',
@@ -56,7 +57,7 @@
                 timeout: 70000,
                 async: true,
                 data: {
-                    action: 'list'
+                    action: 'show'
                 },
                 success: function(data, status, xhr) {
                     console.log(data);
@@ -67,15 +68,13 @@
                         }, 3000);
                     } else {
                         $('#grid').html(data);
-                        var usuario_nome = $(data).find('#nome').val();
-                        $('#usuario_nome').text(usuario_nome);
                     }
                 },
                 error: function(xhr, status, error) {
                     console.log(error);
                 },
                 complete: function(xhr, status) {
-                    //console.log('A requisição foi completada.');
+                    console.log('A requisição foi completada.');
                 }
             });
             return false;
@@ -123,20 +122,22 @@
                             $('#alert-upd').modal('hide');
                         }, 3000);
                         // Recarrega a grid.
-                        list();
+                        show();
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
                     },
                     complete: function(xhr, status) {
-                        //console.log('A requisição foi completada.');
+                        console.log('A requisição foi completada.');
+                        form = $('#form-edit');
+                        formValidator = new ContaFormValidator(form);
                     }
                 });
             }
             return false;
         }
 
-        function resetForm() {
+        function reset() {
             if (formValidator != null) {
                 formValidator.reset();
             }
@@ -161,94 +162,11 @@
     </script>
         
     <div class="container">
-        <form role="form" id="form-edit" method="post">
-            <div id="grid" class="table-responsive">
-                <div>
-                    <h2>Informações Pessoais</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">&nbsp;</div>
-                </div>
-<?php 
-                $usuario = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
-?>
-                <div class="form-group">
-                    <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" 
-                           value="<?php echo $usuario['nome'] ?>" />
-                </div>
-                <div class="form-group">
-                    <label for="lotacao">Lotação</label>
-                    <select id="lotacao_id" name="lotacao_id" class="form-control">
+        <!-- Formulário -->
 <?php
-                        $lotacoesController = new LotacoesController();
-                        $lotacoes = $lotacoesController->_list();
-                        foreach ($lotacoes as $lotacao){
+    echo $controller->getInformacoesPessoais($_SESSION['usuario']['id']);
 ?>
-                            <option value="<?php echo $lotacao['id'] ?>"><?php echo trim($lotacao['nome']) ?></option>
-<?php
-                        } 
-?>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="funcao">Função</label>
-                    <input type="text" id="funcao" name="funcao" class="form-control" 
-                           value="<?php echo $usuario['funcao']?>" />
-                </div>
-                <div class="form-group">
-                       <label for="telefone">Telefone</label>
-                       <input type="text" id="telefone" name="telefone" class="form-control" 
-                              value="<?php echo $usuario['telefone']?>"/>
-                </div>
-                <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" class="form-control" 
-                           value="<?php echo $usuario['email']?>"/>
-                </div>
-                <div class="form-group">
-                    <label for="login">Login</label>
-                    <input type="text" id="login" name="login" class="form-control" 
-                           value="<?php echo $usuario['login']?>" readonly />
-                </div>
-                <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-control"
-                           value="<?php echo $usuario['senha']?>" />
-                </div>
-                <div class="form-group">
-                    <label for="confirma_senha"> Confirme a senha</label>
-                    <input type="password" id="confirma_senha" name="confirma_senha" class="form-control"
-                           value="<?php echo $usuario['senha']?>"/>
-                </div>
-                <div class="form-group">
-                    <input type="hidden" 
-                           id="id" 
-                           name="id" value="<?php echo $usuario['id']?>"/>
-                    <input type="hidden" 
-                           id="status" 
-                           name="status" value="<?php echo $usuario['status']?>"/>
-                    <input type="hidden" 
-                           id="data_criacao" 
-                           name="data_criacao" value="<?php echo $usuario['data_criacao']?>"/>
-                    <input type="hidden" 
-                           id="data_alteracao" 
-                           name="data_alteracao" value="<?php echo $usuario['data_alteracao']?>"/>
-                    <input type="hidden" 
-                           id="perfil" 
-                           name="perfil" value="<?php echo $usuario['perfil']?>"/>
-                </div>
-                <div class="btn-toolbar pull-right form-footer">
-                    <button type="submit" class="btn btn-success">
-                        Salvar &nbsp;<span class="glyphicon glyphicon-floppy-save"></span>
-                    </button>
-                    <button type="reset" class="btn btn-default" onclick="resetForm()">
-                        Resetar &nbsp;<span class="glyphicon glyphicon-refresh" style="color:black">
-                    </button>
-                </div>
-                
-            </div>
-        </form>
+        <!-- /Formulário -->
         <!-- Alertas -->
         <div class="modal fade" id="alert-upd" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
             aria-hidden="true">
