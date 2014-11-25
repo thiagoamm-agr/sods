@@ -242,7 +242,7 @@
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
             $html .= "<label for=\"fone\">Telefone</label>";
-            $html .= "<input type=\"text\" id=\"fone\" name=\"fone\" class=\"form-control\"";
+            $html .= "<input type=\"text\" id=\"telefone\" name=\"telefone\" class=\"form-control\"";
             $html .= "value=\"{$usuario['telefone']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
@@ -262,7 +262,7 @@
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
             $html .= "<label for=\"confirmaSenha\">Confirme a senha</label>";
-            $html .= "<input type=\"password\" id=\"confirmaSenha\" name=\"confirmaSenha\" class=\"form-control\"";
+            $html .= "<input type=\"password\" id=\"confirma_senha\" name=\"confirma_senha\" class=\"form-control\"";
             $html .= "value=\"{$usuario['senha']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
