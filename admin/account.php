@@ -92,12 +92,12 @@
                 usuario.status = $('#status', form).val();
                 usuario.data_criacao = $('#data_criacao', form).val();
                 usuario.data_alteracao = $('#data_alteracao', form).val();
-                usuario.tipo_usuario = $('#tipo_usuario', form).val();
+                usuario.perfil = $('#perfil', form).val();
                 // Variáveis visíveis no formulário
                 usuario.nome = $('#nome', form).val();
                 usuario.lotacao_id = $('#lotacao_id', form).val();
-                usuario.cargo = $('#cargo', form).val();
-                usuario.telefone = $('#fone', form).val();
+                usuario.funcao = $('#funcao', form).val();
+                usuario.telefone = $('#telefone', form).val();
                 usuario.email = $('#email', form).val();
                 usuario.login = $('#login', form).val();
                 usuario.senha = $('#senha', form).val();
@@ -151,12 +151,12 @@
                 save();
             });
             // Máscara telefone.
-            var fone = $('#fone');
+            var telefone = $('#telefone');
             var mascara = "(99) 9999-9999?9";
-            if (fone.val().length > 10) {
-                fone.mask("(99) 99999-999?9");
+            if (telefone.val().length > 10) {
+                telefone.mask("(99) 99999-999?9");
             }
-            fone.mask(mascara);
+            telefone.mask(mascara);
         });
     </script>
         
@@ -192,13 +192,13 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="cargo">Função</label>
-                    <input type="text" id="cargo" name="cargo" class="form-control" 
-                           value="<?php echo $usuario['cargo']?>" />
+                    <label for="funcao">Função</label>
+                    <input type="text" id="funcao" name="funcao" class="form-control" 
+                           value="<?php echo $usuario['funcao']?>" />
                 </div>
                 <div class="form-group">
-                       <label for="fone">Telefone</label>
-                       <input type="text" id="fone" name="fone" class="form-control" 
+                       <label for="telefone">Telefone</label>
+                       <input type="text" id="telefone" name="telefone" class="form-control" 
                               value="<?php echo $usuario['telefone']?>"/>
                 </div>
                 <div class="form-group">
@@ -217,8 +217,8 @@
                            value="<?php echo $usuario['senha']?>" />
                 </div>
                 <div class="form-group">
-                    <label for="confirmaSenha"> Confirme a senha</label>
-                    <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-control"
+                    <label for="confirma_senha"> Confirme a senha</label>
+                    <input type="password" id="confirma_senha" name="confirma_senha" class="form-control"
                            value="<?php echo $usuario['senha']?>"/>
                 </div>
                 <div class="form-group">
@@ -235,8 +235,8 @@
                            id="data_alteracao" 
                            name="data_alteracao" value="<?php echo $usuario['data_alteracao']?>"/>
                     <input type="hidden" 
-                           id="tipo_usuario" 
-                           name="tipo_usuario" value="<?php echo $usuario['tipo_usuario']?>"/>
+                           id="perfil" 
+                           name="perfil" value="<?php echo $usuario['perfil']?>"/>
                 </div>
                 <div class="btn-toolbar pull-right form-footer">
                     <button type="submit" class="btn btn-success">
