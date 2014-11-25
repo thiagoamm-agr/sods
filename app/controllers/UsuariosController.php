@@ -10,7 +10,6 @@
     class UsuariosController extends Controller {
 
         public function __construct() {
-            //faz a chamada do construtor da superclasse
             parent::__construct();
             $this->dao = new UsuarioDAO();
             $this->paginator->totalrecords = $this->dao->count();
@@ -20,7 +19,6 @@
 
         public function __destruct() {
             unset($this->dao);
-            //faz a chamada do destrutor da superclasse
             parent::__destruct();
         }
 
@@ -32,8 +30,8 @@
             $usuario->senha = $this->generatePassword();
             $this->dao->insert($usuario);
         }
-        
-        public function generatePassword(){
+
+        public function generatePassword() {
             $tamanho = 8;
             $alfabeto = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
             $minimo = 0;
@@ -50,7 +48,7 @@
             }
             return $sequencia;
         }
-        
+
         public function delete($usuario) {
             return $this->dao->delete($usuario);
         }
@@ -66,7 +64,7 @@
         public function getUsuario($field, $value) {
             return $this->dao->get($field, $value);
         }
-        
+
         public function checkLogin($login, $login_antigo) {
             $row = $this->dao->filter("login = '$login'");
             if (count($row) == 0) {
@@ -94,22 +92,26 @@
             $this->paginator->pagenumber = $page_number;
             return $this->dao->paginate($rows, $page_number * $rows - $rows, $criteria);
         }
-        
+
         public function getGrid($page_number=1, $filter=null, $value=null) {
             $criteria = null;
             if (!empty($filter) && !empty($value)) {
                 switch ($filter) {
                     case 'id':
-                    	$value = intval($value);
+                        $value = intval($value);
                         $criteria = "s.{$filter} = {$value}";
                         break;
+                    case 'status':
+                    case 'perfil':
+                        $value = strtoupper($value);
+                        $criteria = "s.{$filter} = '{$value}'";
                     case 'nome':
                         $criteria = "s.{$filter} LIKE '%{$value}%'";
                         break;
                     case 'nome_lotacao':
                         $criteria = "l.nome LIKE '%{$value}%'";
                         break;
-                    case 'cargo':
+                    case 'funcao':
                         $criteria = "s.{$filter} LIKE '%{$value}%'";
                         break;
                     case 'login':
@@ -121,61 +123,93 @@
             $total_records = empty($criteria) ? $this->dao->count() : $this->dao->count($criteria);
             $this->paginator->totalrecords = $total_records;
             if ($total_records > 0) {
-                $html = "<table class=\"table table-striped table-bordered table-condensed tablesorter " . 
-                "tablesorter-default\" role=\"grid\"";
-                $html .= "id=\"tablesorter\">";
-                $html .= "<thead><tr>";
-                $html .= "<th width=\"5%\">ID</th>";
-                $html .= "<th width=\"17%\">Nome</th>";
-                $html .= "<th width=\"12%\">Lotação</th>";
-                $html .= "<th width=\"10%\">Cargo</th>";
-                $html .= "<th width=\"12%\">Fone/Ramal</th>";
-                $html .= "<th width=\"10%\">Tipo</th>";
-                $html .= "<th width=\"5%\">Status</th>";
-                $html .= "<th width=\"10%\">Login</th>";
-                $html .= "<th width=\"16%\" class=\"nonSortable\">Ação</th>";
-                $html .= "</tr></thead>";
+                $html =  "<table\n";
+                $html .= "    id=\"tablesorter\"\n";
+                $html .= "    role=\"grid\"\n";
+                $html .= "    class=\"table table-striped table-bordered\n" . 
+                         "           table-condensed tablesorter tablesorter-default\">\n";
+                $html .= "    <thead>\n";
+                $html .= "        <tr>\n";
+                $html .= "            <th width=\"5%\">ID</th>\n";
+                $html .= "            <th width=\"15%\">Login</th>\n";
+//                 $html .= "            <th width=\"17%\">Nome</th>\n";
+                $html .= "            <th width=\"20%\">Função</th>\n";
+//                 $html .= "            <th width=\"12%\">Fone / Ramal</th>\n";
+//                 $html .= "            <th width=\"10%\">Fone</th>\n";
+//                 $html .= "            <th width=\"1%\">Tipo</th>\n";
+                $html .= "            <th width=\"3%\">Perfil</th>\n";
+                $html .= "            <th width=\"3%\">Status</th>\n";
+                $html .= "            <th width=\"15%\">Lotação</th>\n";
+                $html .= "            <th width=\"13%\" class=\"nonSortable\">Ação</th>\n";
+                $html .= "        </tr>\n";
+                $html .= "    </thead>\n";
+                $html .= "    <tbody>\n";
                 foreach ($usuarios as $usuario) {
-                    $html .= "<tr>";
-                    $html .= "<td>{$usuario['id']}</td>";
-                    $html .= "<td>{$usuario['nome_sol']}</td>";
-                    $html .= "<td>{$usuario['lotacao']}</td>";
-                    $html .= "<td>{$usuario['cargo']}</td>";
-                    $html .= "<td>{$usuario['telefone']}</td>";
-                    $html .= "<td>";
-                    if($usuario['tipo_usuario'] == "A") {
-                        $html .= "Administrador";
+                    $html .= "        <tr>\n";
+                    $html .= "            <td>{$usuario['id']}</td>\n";
+                    $tooltip =  "<span data-toggle=\"tooltip\" data-placement=\"bottom\" " . 
+                        "title=\"{$usuario['nome_sol']}\">{$usuario['login']}</span>";
+                    $html .= "            <td>$tooltip</td>\n";
+//                     $html .= "            <td>{$usuario['nome_sol']}</td>\n";
+//                     Função
+                    $html .= "            <td>{$usuario['funcao']}</td>\n";
+//                     $html .= "            <td>{$usuario['telefone']}</td>\n";
+                    $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\"";
+                    if ($usuario['perfil'] == "A") {
+                        $tooltip .= "title=\"Administrador do sistema\">Admin</span>";
                     } else {
-                        $html .= "Usuário";
+                        $tooltip .= "title=\"Usuário padrão\">Padrão</span>";
                     }
-                    $html .= "</td>";
-                    $html .= "<td>";
+                    $html .= "            <td>$tooltip</td>\n";
+                    $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\"";
                     if ($usuario['status'] == "A") {
-                        $html .= "Ativo";
+//                         $tooltip .= "title=\"Ativo\">{$usuario['status']}</span>";
+                        $html .= "            <td>Ativo</td>\n";
                     } else {
-                        $html .= "<font color='#FF0000'>Inativo</font>";
+//                         $tooltip .= "title=\"Inativo\">{$usuario['status']}</span>";
+                        $html .= "            <td>Inativo</td>\n";
                     }
-                    $html .= "</td>";
-                    $html .= "<td>{$usuario['login']}</td>";
-                    $html .= "<td colspan=\"2\">";
-                    $html .= "<button class=\"btn btn-warning btn-sm\" ";
-                    $html .= "data-toggle=\"modal\"";
-                    $html .= "data-target=\"#modal-edit\"";
-                    $html .= "onclick='edit(" . json_encode($usuario) .", ".$page_number .")'>";
-                    $html .= "<strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong></button>\n";
-                    $html .= "&nbsp;<button class=\"btn btn-danger btn-sm\"";
-                    $html .= "data-toggle=\"modal\"";
-                    $html .= "data-target=\"#modal-del\"";
-                    $html .= "onclick='del(" . json_encode($usuario) . ", ". $page_number .", " . $total_records .")'>";
-                    $html .= "<strong>Inativar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
-                    $html .= "</td>";
-                    $html .= "</tr>";
+//                     $html .= "            <td>$tooltip</td>\n";
+                    $tooltip =  "<span data-toggle=\"tooltip\" data-placement=\"bottom\" " .
+                        "title=\"{$usuario['lotacao']}\">{$usuario['sigla_lotacao']}</span>";
+                    $html .= "            <td>$tooltip</td>\n";
+                    $html .= "            <td colspan=\"2\">\n";
+                    $html .= "                <button\n";
+                    $html .= "                    class=\"btn btn-warning btn-sm\"\n";
+                    $html .= "                    data-toggle=\"modal\"\n";
+                    $html .= "                    data-target=\"#modal-edit\"\n";
+                    $json = json_encode($usuario);
+                    $indentation = str_repeat(' ', 20);
+                    $json = jsonpp($json, $indentation);
+                    $html .= "                    onclick='edit(\n$json, $page_number)'>\n";
+                    $html .= "                    <strong>\n";
+                    $html .= "                        Editar&nbsp;\n";
+                    $html .= "                        <span class=\"glyphicon glyphicon-edit\"></span>\n";
+                    $html .= "                    </strong>\n";
+                    $html .= "                </button>\n";
+                    $html .= "                &nbsp;\n";
+                    $html .= "                <button\n";
+                    $html .= "                    class=\"btn btn-danger btn-sm\"\n";
+                    $html .= "                    data-toggle=\"modal\"\n";
+                    $html .= "                    data-target=\"#modal-del\"\n";
+                    $html .= "                    onclick='del($json, $page_number, $total_records)'>\n";
+                    $html .= "                    <strong>\n";
+                    $html .= "                        Excluir&nbsp;\n";
+                    $html .= "                        <span class=\"glyphicon glyphicon-remove\"></span>\n";
+                    $html .= "                    </strong>\n";
+                    $html .= "                </button>\n";
+                    $html .= "            </td>\n";
+                    $html .= "        </tr>\n";
                 }
-                $html .= "</tbody>";
+                $html .= "    </tbody>\n";
                 if ($total_records > 10) {
-                    $html .= "<tfoot><tr><td colspan=\"10\">{$this->paginator}</td></tr></tfoot>";
+                    $html .= "    <tfoot>\n";
+                    $html .= "        <tr>\n";
+                    $html .= "            <td colspan=\"10\">{$this->paginator}</td>\n";
+                    $html .= "        </tr>\n";
+                    $html .= "    </tfoot>\n";
                 }
-                $html .= "</table>";
+                $html .= "</table>\n";
             } else {
                 $html = "<div class=\"alert alert-danger\" role=\"alert\">\n";
                 $html .= "    <center><b>Nenhum registro encontrado.</b></center>\n";
@@ -202,12 +236,12 @@
             }
             $html .= "</select></div>";
             $html .= "<div class=\"form-group\">";
-            $html .= "<label for=\"cargo\">Cargo</label>";
-            $html .= "<input type=\"text\" id=\"cargo\" name=\"cargo\" class=\"form-control\"";
-            $html .= "value=\"{$usuario['cargo']}\"/>";
+            $html .= "<label for=\"funcao\">Função</label>";
+            $html .= "<input type=\"text\" id=\"funcao\" name=\"funcao\" class=\"form-control\"";
+            $html .= "value=\"{$usuario['funcao']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
-            $html .= "<label for=\"fone\">Telefone / Ramal</label>";
+            $html .= "<label for=\"fone\">Telefone</label>";
             $html .= "<input type=\"text\" id=\"fone\" name=\"fone\" class=\"form-control\"";
             $html .= "value=\"{$usuario['telefone']}\"/>";
             $html .= "</div>";
@@ -227,7 +261,7 @@
             $html .= "value=\"{$usuario['senha']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"form-group\">";
-            $html .= "<label for=\"confirmaSenha\">Repita a senha</label>";
+            $html .= "<label for=\"confirmaSenha\">Confirme a senha</label>";
             $html .= "<input type=\"password\" id=\"confirmaSenha\" name=\"confirmaSenha\" class=\"form-control\"";
             $html .= "value=\"{$usuario['senha']}\"/>";
             $html .= "</div>";
@@ -240,8 +274,8 @@
                 name=\"data_criacao\" value=\"{$usuario['data_criacao']}\"/>";
             $html .= "<input type=\"hidden\" id=\"data_alteracao\"
                 name=\"data_alteracao\" value=\"{$usuario['data_alteracao']}\"/>";
-            $html .= "<input type=\"hidden\" id=\"tipo_usuario\"
-                name=\"tipo_usuario\" value=\"{$usuario['tipo_usuario']}\"/>";
+            $html .= "<input type=\"hidden\" id=\"perfil\"
+                name=\"perfil\" value=\"{$usuario['perfil']}\"/>";
             $html .= "</div>";
             $html .= "<div class=\"btn-toolbar pull-right form-footer\">";
             $html .= "<button type=\"submit\" class=\"btn btn-success\">Salvar";
@@ -249,7 +283,6 @@
             $html .= "<button type=\"reset\" class=\"btn btn-default\" onclick=\"limpar()\">Resetar";
             $html .= "&nbsp;<span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"</button>";
             $html .= "</div>";
-            
             return $html;
         }
     }
