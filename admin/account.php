@@ -166,6 +166,9 @@
                 <div>
                     <h2>Informações Pessoais</h2>
                 </div>
+                <div class="row">
+                    <div class="col-md-12">&nbsp;</div>
+                </div>
 <?php 
                 $usuario = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
 ?>
@@ -189,12 +192,12 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="cargo">Cargo</label>
+                    <label for="cargo">Função</label>
                     <input type="text" id="cargo" name="cargo" class="form-control" 
                            value="<?php echo $usuario['cargo']?>" />
                 </div>
                 <div class="form-group">
-                       <label for="fone">Telefone / Ramal</label>
+                       <label for="fone">Telefone</label>
                        <input type="text" id="fone" name="fone" class="form-control" 
                               value="<?php echo $usuario['telefone']?>"/>
                 </div>
@@ -214,7 +217,7 @@
                            value="<?php echo $usuario['senha']?>" />
                 </div>
                 <div class="form-group">
-                    <label for="confirmaSenha"> Repita a senha</label>
+                    <label for="confirmaSenha"> Confirme a senha</label>
                     <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-control"
                            value="<?php echo $usuario['senha']?>"/>
                 </div>
