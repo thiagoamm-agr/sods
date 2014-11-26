@@ -77,6 +77,9 @@ function InformacoesPessoaisFormValidator(form) {
                         different: {
                             field: 'login',
                             message: 'O login não pode ser igual a senha.'
+                        },
+                        notEmpty: {
+                            message: 'Senha é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -90,6 +93,9 @@ function InformacoesPessoaisFormValidator(form) {
                         different: {
                             field: 'login',
                             message: 'A senha não pode ser igual ao login'
+                        },
+                        notEmpty: {
+                            message: 'A confirmação da senha é um campo de preenchimento obrigatório.'
                         }
                     }
                 }
