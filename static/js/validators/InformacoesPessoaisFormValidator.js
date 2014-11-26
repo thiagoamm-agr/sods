@@ -1,8 +1,9 @@
 /**
- * Validador dos formulários de adição e edição de lotação.
+ * Validador do formulário de informações pessoais 
+ * do usuário logado no sistema.
  */
 
-function ContaFormValidator(form) {
+function InformacoesPessoaisFormValidator(form) {
 	this.form = form;
     this.data = null;
     this.valid = false;
@@ -31,7 +32,7 @@ function ContaFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Cargo é um campo de preenchimento obrigatório'
+                            message: 'Função é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -39,7 +40,7 @@ function ContaFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Fone é um campo de preenchimento obrigatório'
+                            message: 'Telefone é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -47,10 +48,10 @@ function ContaFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'e-mail é um campo de preenchimento obrigatório'
+                            message: 'E-mail é um campo de preenchimento obrigatório.'
                         },
                         emailAddress: {
-                            message: 'Preencha um endereço de e-mail válido'
+                            message: 'Informe um endereço de e-mail válido,'
                         }
                     }
                 },
@@ -58,7 +59,7 @@ function ContaFormValidator(form) {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
-                            message: 'Login é um campo de preenchimento obrigatório'
+                            message: 'Login é um campo de preenchimento obrigatório.'
                         }
                     }
                 },
@@ -67,19 +68,20 @@ function ContaFormValidator(form) {
                     validators: {
                         regexp: {
                             regexp: /\w{8,}/i,
-                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números'
+                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
                         },
                         identical: {
                             field: 'confirma_senha',
-                            message: 'As senhas não correspondem'
+                            message: 'As senhas não correspondem.'
                         },
                         different: {
                             field: 'login',
-                            message: 'A senha não pode ser igual ao login'
+                            message: 'O login não pode ser igual a senha.'
                         }
                     }
                 },
                 confirma_senha: {
+                    trigger: 'blur',
                     validators: {
                         identical: {
                             field: 'senha',
@@ -104,7 +106,7 @@ function ContaFormValidator(form) {
     }
 }
 
-ContaFormValidator.prototype.validate = function() {
+InformacoesPessoaisFormValidator.prototype.validate = function() {
     var valid = false;
     if (this.form != null) {
         this.data.validate();
@@ -114,7 +116,7 @@ ContaFormValidator.prototype.validate = function() {
     return valid;
 };
 
-ContaFormValidator.prototype.reset = function() {
+InformacoesPessoaisFormValidator.prototype.reset = function() {
     if (this.data != null) {
         this.data.resetForm(true);
     }
