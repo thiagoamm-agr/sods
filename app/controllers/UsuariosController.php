@@ -211,7 +211,7 @@
         public function getInformacoesPessoais($id) {
             $usuario = $this->getUsuario('s.id', $id);
             $html = "";
-            $html .= "<form role=\"form\" id=\"form-edit\" method=\"post\">\n";
+            $html .= "<form id=\"form\" method=\"post\" role=\"form\">\n";
             $html .= "    <div id=\"grid\" class=\"table-responsive\">\n";
             $html .= "        <div><h2>Informações Pessoais</h2></div>\n";
             $html .= "        <div class=\"row\">\n";
@@ -221,14 +221,14 @@
             $html .= "            <label for=\"nome\">Nome</label>\n";
             $html .= "            <input type=\"text\" id=\"nome\" name=\"nome\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['login']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"lotacao\">Lotação</label>\n";
             $html .= "            <select id=\"lotacao_id\" name=\"lotacao_id\" class=\"form-control\">\n";
             $lotacoes_controller = new LotacoesController();
             $lotacoes = $lotacoes_controller->_list();
             foreach ($lotacoes as $lotacao) {
-                $html .= "            <option value=\"{$lotacao['id']}\">{$lotacao['nome']}</option>\n";
+                $html .= "                <option value=\"{$lotacao['id']}\">{$lotacao['nome']}</option>\n";
             }
             $html .= "            </select>\n";
             $html .= "        </div>\n";
@@ -236,32 +236,32 @@
             $html .= "            <label for=\"funcao\">Função</label>\n";
             $html .= "            <input type=\"text\" id=\"funcao\" name=\"funcao\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['funcao']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"fone\">Telefone</label>\n";
             $html .= "            <input type=\"text\" id=\"telefone\" name=\"telefone\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['telefone']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"email\">E-mail</label>\n";
             $html .= "            <input type=\"text\" id=\"email\" name=\"email\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['email']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"login\">Login</label>\n";
             $html .= "            <input type=\"text\" id=\"login\" name=\"login\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['login']}\" readonly/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"senha\">Senha</label>\n";
             $html .= "            <input type=\"password\" id=\"senha\" name=\"senha\" class=\"form-control\"\n";
             $html .= "                value=\"{$usuario['senha']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"confirmaSenha\">Confirme a senha</label>\n";
             $html .= "            <input type=\"password\" id=\"confirma_senha\" name=\"confirma_senha\"\n";
             $html .= "                class=\"form-control\" value=\"{$usuario['senha']}\"/>\n";
-            $html .= "        </div>";
+            $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <input type=\"hidden\" id=\"id\" name=\"id\" value=\"{$usuario['id']}\"/>\n";
             $html .= "            <input type=\"hidden\" id=\"status\" name=\"status\"\n";
@@ -277,7 +277,8 @@
             $html .= "            <button type=\"submit\" class=\"btn btn-success\">Salvar&nbsp;\n";
             $html .= "                <span class=\"glyphicon glyphicon-floppy-save\"></span>\n";
             $html .= "            </button>\n";
-            $html .= "            <button type=\"reset\" class=\"btn btn-default\" onclick=\"reset()\">Resetar&nbsp;\n";
+            $html .= "            <button type=\"reset\" class=\"btn btn-default\"\n"; 
+            $html .= "                onclick=\"reload()\">Recarregar&nbsp;\n";
             $html .= "                <span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"></span>\n";
             $html .= "            </button>\n";
             $html .= "        </div>\n";
