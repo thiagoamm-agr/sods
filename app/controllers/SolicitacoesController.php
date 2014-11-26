@@ -79,6 +79,9 @@
                     case 'tipo':
                         $criteria = "t.nome LIKE '%{$value}%'";
                         break;
+                    case 'status':
+                        $criteria = "so.status = '{$value}'";
+                        break;
                 }
             }
             if ($_SESSION['usuario']['perfil'] == 'P') {
@@ -101,7 +104,7 @@
                 $html .= "            <th width=\"22%\">Titulo</th>\n";
                 $html .= "            <th width=\"10%\">Status</th>\n";
                 $html .= "            <th width=\"18%\">Tipo</th>\n";
-                $html .= "            <th width=\"9%\">Abertura</th>\n";
+                $html .= "            <th width=\"9%\">Criação</th>\n";
                 $html .= "            <th width=\"9%\">Alteração</th>\n";
                 $html .= "            <th width=\"17%\" class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";

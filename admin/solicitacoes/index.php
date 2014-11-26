@@ -77,6 +77,10 @@
             function clean() {
                 if (formValidator != null) {
                     formValidator.reset();
+                    if ($(form).attr('id') == 'form-search') {
+                        html = '<input id="valor" name="valor" type="text" class="form-control" />';
+                        $('#valor_filtro').html(html);
+                    }
                 }
             }
     
@@ -380,7 +384,25 @@
                     page = 1;
                     list(page);
                 });
-
+                
+                // Mudança do filtro de pesquisa.
+                $('#filtro', '#form-search').change(function(e) {
+                    var filtro = $(this).val();
+                    if (filtro == 'status') {
+                        var html = '' +
+                            '<select id="valor" class="form-control">' +
+                            '    <option value="CRIADA" selected="selected">Criada</option>' +
+                            '    <option value="EM ANÁLISE" selected="selected">Em Análise</option>' +
+                            '    <option value="DEFERIDA" selected="selected">Deferida</option>' +
+                            '    <option value="INDEFERIDA" selected="selected">Indeferida</option>' +
+                            '    <option value="ATENDIDA" selected="selected">Atendida</option>' +
+                            '    <option value="CANCELADA" selected="selected">Cancelada</option>' +
+                            '</select>';
+                    } else {
+                        html = '<input id="valor" name="valor" type="text" class="form-control" />';
+                    }
+                    $('#valor_filtro').html(html);
+                });
                 createAJAXPagination();
             });
 
@@ -765,12 +787,19 @@
                                         <option value="id">ID</option>
                                         <option value="nome">Solicitante</option>
                                         <option value="titulo">Título</option>
-                                        <option value="tipo">Tipo</option>
+                                        <option value="tipo">Tipo Solicitação</option>
+                                        <option value="status">Status</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="valor">Valor:</label>
-                                    <input id="valor" name="valor" type="text" class="form-control" />
+                                    <div id="valor_filtro">
+                                        <input 
+                                            id="valor" 
+                                            name="valor" 
+                                            type="text" 
+                                            class="form-control" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
