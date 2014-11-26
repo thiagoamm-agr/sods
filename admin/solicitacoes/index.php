@@ -681,7 +681,7 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
 <?php
-                        if ($perfil_usuario == 'U') {
+                        if ($perfil_usuario == 'P') {
 ?>
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
