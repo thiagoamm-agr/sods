@@ -104,7 +104,9 @@
                     $html .= "            <td>{$lotacao['nome']}</td>\n";
                     $html .= "            <td>{$lotacao['sigla']}</td>\n";
                     if (isset($lotacao['gerencia'])) {
-                        $html .= "        <td>{$lotacao['gerencia']->sigla}</td>\n";
+                        $tooltip =  "<span data-toggle=\"tooltip\" data-placement=\"bottom\"\n" .
+                            "title=\"{$lotacao['gerencia']->nome}\">{$lotacao['gerencia']->sigla}</span>";
+                        $html .= "        <td>$tooltip</td>\n";
                     } else {
                         $html .= "        <td></td>\n";
                     }
