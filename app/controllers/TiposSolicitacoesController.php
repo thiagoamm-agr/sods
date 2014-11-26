@@ -84,7 +84,7 @@
                 $html .= "    <thead>\n";
                 $html .= "        <tr>\n";
                 $html .= "            <th>ID</th>\n";
-                $html .= "            <th>Nome do tipo de Solicitação</th>\n";
+                $html .= "            <th>Nome</th>\n";
                 $html .= "            <th>Status</th>\n";
                 $html .= "            <th class=\"nonSortable\">Ação</th>\n";
                 $html .= "        </tr>\n";
