@@ -29,7 +29,7 @@
                 <div class="container">
                     <p class="text-muted" style="text-align:center">
                         <strong><a href="http://www.agr.go.gov.br/" target="blank" style="color:black">AGR</a></strong> 
-                        - Agência Goiana de Regulação, Controle e Fiscalização de Serviços Públicos - 2014
+                        - Agência Goiana de Regulação, Controle e Fiscalização de Serviços Públicos &copy 2014
                     </p>
                 </div>
              </footer>
