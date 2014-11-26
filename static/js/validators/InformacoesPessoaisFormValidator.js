@@ -9,8 +9,9 @@ function InformacoesPessoaisFormValidator(form) {
     this.valid = false;
     if (form != null) {
         form.bootstrapValidator({
-            live: 'enabled',
             submitButtons: 'button[type="submit"]',
+            excluded: [':disabled', ':hidden'],
+            live: 'enabled',
             fields: {
                 nome: {
                     trigger: 'blur',
@@ -20,7 +21,7 @@ function InformacoesPessoaisFormValidator(form) {
                         }
                     }
                 },
-                lotacao: {
+                lotacao_id: {
                     trigger: 'blur',
                     validators: {
                         notEmpty: {
@@ -56,12 +57,7 @@ function InformacoesPessoaisFormValidator(form) {
                     }
                 },
                 login: {
-                    trigger: 'blur',
-                    validators: {
-                        notEmpty: {
-                            message: 'Login é um campo de preenchimento obrigatório.'
-                        }
-                    }
+                    excluded: 'true',
                 },
                 senha: {
                     trigger: 'blur',
@@ -86,6 +82,10 @@ function InformacoesPessoaisFormValidator(form) {
                 confirma_senha: {
                     trigger: 'blur',
                     validators: {
+                    	regexp: {
+                            regexp: /\w{8,}/i,
+                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
+                        },
                         identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
@@ -106,7 +106,7 @@ function InformacoesPessoaisFormValidator(form) {
             // Obtem o formulário (o alvo da ação)
             var f = $(event.target);
             // Limpa o formulário
-            $(f).data('bootstrapValidator').resetForm(false);
+            //$(f).data('bootstrapValidator').resetForm(false);
         })
         this.data = this.form.data('bootstrapValidator');
     }
