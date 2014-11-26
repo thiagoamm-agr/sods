@@ -132,11 +132,7 @@
                 $html .= "        <tr>\n";
                 $html .= "            <th width=\"5%\">ID</th>\n";
                 $html .= "            <th width=\"15%\">Login</th>\n";
-//                 $html .= "            <th width=\"17%\">Nome</th>\n";
                 $html .= "            <th width=\"20%\">Função</th>\n";
-//                 $html .= "            <th width=\"12%\">Fone / Ramal</th>\n";
-//                 $html .= "            <th width=\"10%\">Fone</th>\n";
-//                 $html .= "            <th width=\"1%\">Tipo</th>\n";
                 $html .= "            <th width=\"3%\">Perfil</th>\n";
                 $html .= "            <th width=\"3%\">Status</th>\n";
                 $html .= "            <th width=\"15%\">Lotação</th>\n";
@@ -150,10 +146,7 @@
                     $tooltip =  "<span data-toggle=\"tooltip\" data-placement=\"bottom\" " . 
                         "title=\"{$usuario['nome_sol']}\">{$usuario['login']}</span>";
                     $html .= "            <td>$tooltip</td>\n";
-//                     $html .= "            <td>{$usuario['nome_sol']}</td>\n";
-//                     Função
                     $html .= "            <td>{$usuario['funcao']}</td>\n";
-//                     $html .= "            <td>{$usuario['telefone']}</td>\n";
                     $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\"";
                     if ($usuario['perfil'] == "A") {
                         $tooltip .= "title=\"Administrador do sistema\">Admin</span>";
@@ -163,13 +156,10 @@
                     $html .= "            <td>$tooltip</td>\n";
                     $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\"";
                     if ($usuario['status'] == "A") {
-//                         $tooltip .= "title=\"Ativo\">{$usuario['status']}</span>";
                         $html .= "            <td>Ativo</td>\n";
                     } else {
-//                         $tooltip .= "title=\"Inativo\">{$usuario['status']}</span>";
                         $html .= "            <td>Inativo</td>\n";
                     }
-//                     $html .= "            <td>$tooltip</td>\n";
                     $tooltip =  "<span data-toggle=\"tooltip\" data-placement=\"bottom\" " .
                         "title=\"{$usuario['lotacao']}\">{$usuario['sigla_lotacao']}</span>";
                     $html .= "            <td>$tooltip</td>\n";
@@ -290,6 +280,9 @@
             $html .= "            <button type=\"reset\" class=\"btn btn-default\" onclick=\"reset()\">Resetar&nbsp;\n";
             $html .= "                <span class=\"glyphicon glyphicon-refresh\" style=\"color:black\"></span>\n";
             $html .= "            </button>\n";
+            $html .= "        </div>\n";
+            $html .= "        <div class=\"row\">\n";
+            $html .= "            <div class=\"col-md-12\">&nbsp;</div>\n";
             $html .= "        </div>\n";
             $html .= "    </div>\n";
             $html .= "</form>";
