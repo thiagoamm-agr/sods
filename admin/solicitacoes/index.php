@@ -554,35 +554,44 @@
                                   <div class="form-group">
                                       <label for="titulo">Título</label>
                                       <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
-                                       <div class="form-group">
-                                        <label for="detalhamento">Descrição</label>
-                                          <textarea class="form-control" id="detalhamento" name="detalhamento" 
-                                             rows="6" style="width: 100%;" ></textarea>
-                                
-                                      </div>
-                                      <div class="form-group">
-                                        <label for="info_adicionais">Informações Adicionais</label>
-                                         <textarea class="form-control" id="info_adicionais" name="info_adicionais"
-                                           rows="2" style="width: 100%;"></textarea>
-                                      </div>
                                   </div>
                                   <div class="form-group">
+                                    <label for="detalhamento">Descrição</label>
+                                    <textarea class="form-control" id="detalhamento" name="detalhamento" 
+                                        rows="6" style="width: 100%;"></textarea>
+                                
+                                </div>
+                                <div class="form-group">
+                                    <label for="info_adicionais">Informações Adicionais</label>
+                                    <textarea class="form-control" id="info_adicionais" name="info_adicionais"
+                                        rows="2" style="width: 100%;"></textarea>
+                                </div>
+                                  <div class="form-group">
                                       <div class="row">
-                                        <div class="col-sm-6">
+                                      
+                                          <div class="col-sm-6">
                                             <label for="observacoes">Observações</label>
                                             <textarea class="form-control" id="observacoes" name="observacoes"
                                                 rows="6" style="width: 100%"></textarea>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label for="tipo_solicitacao_id">Tipo Solicitação</label>
-                                            <select 
-                                                id="tipo_solicitacao_id" 
-                                                name="tipo_solicitacao_id" 
-                                                class="form-control">
+                                      
+                                          <div class="col-sm-6">
+                                            <label for="tipo_solicitacao_id">Tipo</label>
+                                              <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
+                                                      class="form-control">
                                                 <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
+<?php 
+                                                foreach ($tiposSolicitacoes as $tipos){
+?>
+                                                <option value="<?php echo $tipos['id'] ?>">
+                                                               <?php echo $tipos['nome']?>
+                                                </option>
+<?php
+                                                }
+?>
                                             </select>
                                         </div>
-
+                                    
                                         <div class="col-sm-6">
                                             <label for="data_criacao">Data de Criação</label>
                                             <input type="text" class="form-control" name="data_criacao" 
@@ -590,7 +599,7 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="data_alteracao">Última Alteração</label>
+                                            <label for="data_alteracao">Ultima Alteração</label>
                                             <input type="text" class="form-control" name="data_alteracao" 
                                                 id="data_alteracao" readonly/>
                                         </div>
@@ -613,7 +622,7 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="observacoes_status">Observação Status</label>
+                                            <label for="observacoes_status">Obs. Status</label>
                                             <input type="text" class="form-control" name="observacoes_status"
                                                 id="observacoes_status"/>
                                         </div>
@@ -643,11 +652,11 @@
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
                                 <div class="modal-footer">
                                     <button type="submit" 
-                                            class="btn btn-success" name="salvar" id="salvar"/>Salvar
+                                            class="btn btn-success" name="salvar" id="salvar">Salvar
                                       <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
                                     <button type="reset"
-                                            class="btn btn-primary" onclick="clean();" name="limpar" id="limpar"/>Limpar
+                                            class="btn btn-primary" onclick="clean();" id="limpar" name="limpar">Limpar
                                          <span class="glyphicon glyphicon-file"></span>
                                      </button>
                                     <button 
@@ -658,7 +667,8 @@
                                         Cancelar
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
-                                </div>                                
+                                </div>
+                                
                             </form>
                         </div>
                     </div>
