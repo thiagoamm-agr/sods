@@ -211,8 +211,8 @@
         public function getInformacoesPessoais($id) {
             $usuario = $this->getUsuario('s.id', $id);
             $html = "";
-            $html .= "<form id=\"form\" method=\"post\" role=\"form\">\n";
             $html .= "    <div id=\"grid\" class=\"table-responsive\">\n";
+            $html .= "        <form id=\"form\" method=\"post\" role=\"form\">\n";
             $html .= "        <div><h2>Informações Pessoais</h2></div>\n";
             $html .= "        <div class=\"row\">\n";
             $html .= "            <div class=\"col-md-12\">&nbsp;</div>\n";
@@ -220,11 +220,12 @@
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"nome\">Nome</label>\n";
             $html .= "            <input type=\"text\" id=\"nome\" name=\"nome\" class=\"form-control\"\n";
-            $html .= "                value=\"{$usuario['login']}\"/>\n";
+            $html .= "                value=\"{$usuario['nome']}\"/>\n";
             $html .= "        </div>\n";
             $html .= "        <div class=\"form-group\">\n";
             $html .= "            <label for=\"lotacao\">Lotação</label>\n";
-            $html .= "            <select id=\"lotacao_id\" name=\"lotacao_id\" class=\"form-control\">\n";
+            $html .= "            <select id=\"lotacao_id\" name=\"lotacao_id\" class=\"form-control\" >\n";
+            $html .= "                <option value=\"{$usuario['id_lotacao']}\">{$usuario['nome_lotacao']}</option>\n";
             $lotacoes_controller = new LotacoesController();
             $lotacoes = $lotacoes_controller->_list();
             foreach ($lotacoes as $lotacao) {
@@ -285,8 +286,8 @@
             $html .= "        <div class=\"row\">\n";
             $html .= "            <div class=\"col-md-12\">&nbsp;</div>\n";
             $html .= "        </div>\n";
-            $html .= "    </div>\n";
-            $html .= "</form>";
+            $html .= "    </form>";
+            $html .= "</div>\n";
             return $html;
         }
     }
