@@ -144,7 +144,7 @@
                     <span style="width: 100px"></span>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="/sods/admin/account.php" title="Informações pessoais" data-toggle="tooltip" 
+                            <a href="/sods/admin/informacoes_pessoais.php" title="Informações pessoais" data-toggle="tooltip" 
                                 data-placement="bottom">
                                 <strong>Bem-vindo(a),  &nbsp;</strong> 
                                 <font color="white">
