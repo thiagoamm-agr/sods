@@ -22,12 +22,12 @@
             }
         }
         switch ($action) {
-            case 'edit':
+            case 'save':
                 $controller->edit($usuario);
                 $_SESSION['usuario'] = $controller->getUsuario('s.id', $_SESSION['usuario']['id']);
                 exit();
                 break;
-            case 'show':
+            case 'load':
                 echo $controller->getInformacoesPessoais($_SESSION['usuario']['id']);
                 exit();
                 break;
@@ -39,25 +39,24 @@
 ?>
     <!-- Javascript -->
     <script type="text/javascript" src="/sods/static/js/models/Usuario.js"></script>
-    <script type="text/javascript" src="/sods/static/js/validators/ContaFormValidator.js"></script>
+    <script type="text/javascript" src="/sods/static/js/validators/InformacoesPessoaisFormValidator.js"></script>
     <script type="text/javascript" src="/sods/static/js/maskedInput.js"></script>
 
     <script type="text/javascript">
         var form = null;
         var formValidator = null;
-        var resposta = null;
         var action = null;
 
-        function show() {
+        function load() {
             $.ajax({
                 type: 'post',
-                url: '/sods/admin/account.php',
+                url: '/sods/admin/informacoes_pessoais.php',
                 dataType: 'text',
                 cache: false,
                 timeout: 70000,
                 async: true,
                 data: {
-                    action: 'show'
+                    action: 'load'
                 },
                 success: function(data, status, xhr) {
                     console.log(data);
@@ -75,6 +74,7 @@
                 },
                 complete: function(xhr, status) {
                     console.log('A requisição foi completada.');
+                    config();
                 }
             });
             return false;
@@ -105,13 +105,13 @@
                 // Requisição AJAX
                 $.ajax({
                     type: 'post',
-                    url: '/sods/admin/account.php',
+                    url: '/sods/admin/informacoes_pessoais.php',
                     dataType: 'text',
                     cache: false,
                     timeout: 70000,
                     async: true,
                     data: {
-                        'action': 'edit',
+                        'action': 'save',
                         'json': json
                     },
                     success: function(data, status, xhr) {
@@ -121,33 +121,32 @@
                         window.setTimeout(function() {
                             $('#alert-upd').modal('hide');
                         }, 3000);
-                        // Recarrega a grid.
-                        show();
+                        // Carrega o formulário.
+                        load();
                     },
                     error: function(xhr, status, error) {
                         console.log(error);
                     },
                     complete: function(xhr, status) {
                         console.log('A requisição foi completada.');
-                        form = $('#form-edit');
-                        formValidator = new ContaFormValidator(form);
                     }
                 });
             }
             return false;
         }
 
-        function reset() {
+        function reload() {
             if (formValidator != null) {
                 formValidator.reset();
             }
         }
 
-        $(document).ready(function() {
+        // Configura o formulário.
+        function config() {
             // Associando um validador ao formulário.
-            form = $('#form-edit');
-            formValidator = new ContaFormValidator(form);
-            $('#form-edit').submit(function(event) {
+            form = $('#form');
+            formValidator = new InformacoesPessoaisFormValidator(form);
+            $('#form').submit(function(event) {
                 event.preventDefault();
                 save();
             });
@@ -158,15 +157,21 @@
                 telefone.mask("(99) 99999-999?9");
             }
             telefone.mask(mascara);
+        }
+
+        $(document).ready(function() {
+            config();
         });
     </script>
-        
+
+    <!-- Container -->
     <div class="container">
         <!-- Formulário -->
 <?php
     echo $controller->getInformacoesPessoais($_SESSION['usuario']['id']);
 ?>
         <!-- /Formulário -->
+
         <!-- Alertas -->
         <div class="modal fade" id="alert-upd" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
             aria-hidden="true">
@@ -175,8 +180,11 @@
                     <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
                 </button><span id="alert-msg">Dados atualizados com sucesso.</span>
            </div>
-        </div><!-- Alertas -->
-    </div> <!-- Container -->
+        </div>
+        <!-- /Alertas -->
+
+    </div>
+    <!-- /Container -->
 <?php
     @include $_SERVER ['DOCUMENT_ROOT'] . '/sods/includes/rodape.php';
 ?>
