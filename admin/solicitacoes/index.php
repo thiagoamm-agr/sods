@@ -14,12 +14,9 @@
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/app/controllers/TiposSolicitacoesController.php';
 
     $controller = new SolicitacoesController();
-    $lotacoes_controller = new LotacoesController();
     $tipos_solicitacoes_controller = new TiposSolicitacoesController();
 
     $tipos_solicitacoes = $tipos_solicitacoes_controller->activeElements();
-    $tipos_solicitacao_json = json_encode($tipos_solicitacoes_controller->_list());
-    $lotacoes = $lotacoes_controller->_list();
     $perfil_usuario = $_SESSION['usuario']['perfil'];
 
     //Indentificando ações e parâmetros do post
@@ -66,7 +63,7 @@
         <!--  Javascript -->
         <script type="text/javascript" src="/sods/static/js/models/Solicitacao.js"></script>
         <script type="text/javascript" src="/sods/static/js/validators/SolicitacaoFormValidator.js"></script>
-   		<script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
+        <script type="text/javascript" src="/sods/static/js/validators/PesquisaFormValidator.js"></script>
         <script type="text/javascript">
             var solicitacao = null;
             var action = null;
@@ -359,7 +356,7 @@
                     return " ";
                 }
             }
-            
+
             $(document).ready(function() {
                 $('#form-add').submit(function(event) {
                     event.preventDefault();
@@ -392,7 +389,7 @@
                 formValidator = new PesquisaFormValidator(form);
             }
         </script>
-        
+
         <div class="container">
             <h2>Solicitações</h2>
             <div class="row">
@@ -427,6 +424,8 @@
                     echo $controller->getGrid(1);
 ?>
             </div>
+
+            <!-- Modais -->
 
             <!-- Adicionar Solicitação -->
             <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
@@ -530,14 +529,14 @@
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
-                            </form>    
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
              <!--  Modais -->
-            
+
             <!-- Editar Solicitação -->
             <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
                 aria-labelledby="modal-edit" aria-hidden="true">
@@ -578,18 +577,9 @@
                                           <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo</label>
                                               <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
-                                                      class="form-control">
-                                                <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
-<?php 
-                                                foreach ($tiposSolicitacoes as $tipos){
-?>
-                                                <option value="<?php echo $tipos['id'] ?>">
-                                                               <?php echo $tipos['nome']?>
-                                                </option>
-<?php
-                                                }
-?>
-                                            </select>
+                                                  class="form-control">
+                                                  <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
+                                              </select>
                                         </div>
                                     
                                         <div class="col-sm-6">
@@ -626,24 +616,20 @@
                                             <input type="text" class="form-control" name="observacoes_status"
                                                 id="observacoes_status"/>
                                         </div>
-                                    
                                     </div>
 <?php 
                                     } else {
 ?>
                                     <div class="row">
-                                        
                                         <div class="col-sm-6">
                                             <label for="status">Status</label>
                                             <input id="status" name="status" class="form-control" readonly="readonly">
                                         </div>
-                                        
                                         <div class="col-sm-6">
                                             <label for="observacoes_status">Obs. Status</label>
                                             <input type="text" class="form-control" name="observacoes_status"
                                                 id="observacoes_status" readonly="readonly"/>
                                         </div>
-                                    
                                     </div>
 <?php
                                     } 
@@ -715,7 +701,8 @@
                         </form>
                     </div>
                 </div>
-            </div> <!--  modais -->
+            </div> 
+            <!-- /Modais -->
             <!-- Alerta -->
             <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
                 aria-hidden="true">
@@ -808,7 +795,7 @@
                         </form>
                     </div>
                 </div>
-            </div>        
+            </div>
   </div> <!-- container -->
 <?php
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
