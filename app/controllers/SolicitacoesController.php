@@ -153,7 +153,7 @@
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
                     $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$total_records .")'>\n"; 
-                    if ($perfil == 'U') {
+                    if ($perfil == 'P') {
                         $html .= "                    <strong>Cancelar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
                     } else {
                         $html .= "                    <strong>Indeferir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";

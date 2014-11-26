@@ -121,6 +121,7 @@
                         $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
+                        // Validador
                         formValidator = new SolicitacaoFormValidator(form);
                         current_page = page;
                         // Desabilita os campos.
@@ -130,19 +131,30 @@
                                 $('#detalhamento', form).prop('readonly', true);
                                 $('#info_adicionais', form).prop('readonly', true);
                                 $('#observacoes', form).prop('readonly', true);
+                                $('#salvar', form).prop('disabled', true);
+                                $('#limpar', form).prop('disabled', true);
+                            } else {
+                                $('#titulo', form).prop('readonly', false);
+                                $('#detalhamento', form).prop('readonly', false);
+                                $('#info_adicionais', form).prop('readonly', false);
+                                $('#observacoes', form).prop('readonly', false);
+                                $('#salvar', form).prop('disabled', false);
+                                $('#limpar', form).prop('disabled', false);
                             }
                         }
                         // Retorna a lista de tipos de solicitação.
                         tipos_solicitacao_json = <?php echo json_encode($tipos_solicitacoes_controller->_list()) ?>;
                         // Popula a combobox de tipos de solicitação.
                         $(tipos_solicitacao_json).each(function(i, e) {
-                            $('#tipo_solicitacao').append(new Option(e.nome, e.id));
+                            $('#tipo_solicitacao_id', form).append(new Option(e.nome, e.id));
                         });
                         // Seleciona o tipo de solicitação do registro a ser editado.
-                        $("#tipo_solicitacao option[value=\"" + solicitacao_json.tipo_solicitacao_id + "\"]", form)
+                        $("#tipo_solicitacao_id option[value=\"" + solicitacao_json.tipo_solicitacao_id + "\"]", form)
                             .prop('selected', true);
-                        if (solicitacao_json.status != 'CRIADA') {
-                            $('#tipo_solicitacao', form).prop('disabled', true);
+                        if (solicitacao_json.status != 'CRIADA' && '<?php echo $perfil_usuario ?>' == 'P') {
+                            $('#tipo_solicitacao_id', form).prop('disabled', true);
+                        } else {
+                        	$('#tipo_solicitacao_id', form).prop('disabled', false);
                         } 
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
@@ -299,7 +311,8 @@
                             modal=''
                                 if (data == 'ERRO') {
                                     modal='#modal-danger';
-                                    $('#alert-msg').text('Não é possivel cancelar uma solicitação: ' +solicitacao.status);
+                                    $('#alert-msg').text('Não é possivel cancelar uma solicitação: ' 
+                                        + solicitacao.status);
                                     $(modal).modal('show');
                                 } else {
                                     modal='#modal-success';
@@ -563,8 +576,8 @@
                                         <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo Solicitação</label>
                                             <select 
-                                                id="tipo_solicitacao" 
-                                                name="tipo_solicitacao" 
+                                                id="tipo_solicitacao_id" 
+                                                name="tipo_solicitacao_id" 
                                                 class="form-control">
                                                 <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
                                             </select>
@@ -628,16 +641,13 @@
 ?>
                                   </div>
                                 <input type="hidden" id="solicitante_id" name="solicitante_id">
-<?php 
-                                    if ($perfil_usuario == "A") {
-?>
                                 <div class="modal-footer">
                                     <button type="submit" 
-                                            class="btn btn-success" >Salvar
+                                            class="btn btn-success" name="salvar" id="salvar"/>Salvar
                                       <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
                                     <button type="reset"
-                                            class="btn btn-primary" onclick="clean();">Limpar
+                                            class="btn btn-primary" onclick="clean();" name="limpar" id="limpar"/>Limpar
                                          <span class="glyphicon glyphicon-file"></span>
                                      </button>
                                     <button 
@@ -648,32 +658,7 @@
                                         Cancelar
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
-                                </div>
-<?php 
-                                    } else {
-?>
-                                <div class="modal-footer">
-                                    <button type="button" 
-                                            class="btn btn-success" disabled="disabled">Salvar
-                                      <span class="glyphicon glyphicon-floppy-disk"></span>
-                                    </button>
-                                    <button type="button"
-                                            class="btn btn-primary" disabled="disabled"">Limpar
-                                         <span class="glyphicon glyphicon-file"></span>
-                                     </button>
-                                    <button 
-                                        type="button" 
-                                        class="btn btn-default" 
-                                        data-dismiss="modal" 
-                                        onclick="clean()">
-                                        Cancelar
-                                        <span class="glyphicon glyphicon-floppy-remove"></span>
-                                    </button>
-                                </div>
-<?php
-                                 } 
-?>
-                                
+                                </div>                                
                             </form>
                         </div>
                     </div>

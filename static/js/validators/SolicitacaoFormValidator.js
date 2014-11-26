@@ -34,7 +34,7 @@ function SolicitacaoFormValidator(form) {
                 info_adicionais: {
 
                 },
-                tipo_solicitacao: {
+                tipo_solicitacao_id: {
                     group: '.col-sm-6',
                     trigger: 'blur change',
                     validators: {
