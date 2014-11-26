@@ -81,7 +81,7 @@
                         break;
                 }
             }
-            if ($_SESSION['usuario']['perfil'] == 'U') {
+            if ($_SESSION['usuario']['perfil'] == 'P') {
                 if (empty($criteria)) {
                     $criteria = "s.login = '".$_SESSION['usuario']['login']."'";
                 } else {
