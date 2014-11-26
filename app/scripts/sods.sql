@@ -39,8 +39,8 @@ create table solicitante (
     senha varchar(255) not null,
     perfil char not null default 'P' comment 'A - Admin ou P - Padrão',
     status char not null default 'A' comment 'A - Ativo ou I - Inativo',
-    data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
+    data_criacao timestamp default current_timestamp,
+    data_alteracao timestamp null,
     check (perfil in ('A', 'P')),
     check (status in ('A', 'I'))
 ) character set utf8 collate utf8_general_ci;
@@ -61,8 +61,8 @@ create table solicitacao (
     observacoes text,
     status varchar(15) not null default 'CRIADA',
     observacoes_status text,
-    data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
+    data_criacao timestamp default current_timestamp,
+    data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
 ) character set utf8 collate utf8_general_ci;
@@ -77,8 +77,8 @@ create table historico_solicitacao (
     observacoes text,
     status varchar(15) not null default 'CRIADA',
     observacoes_status text,
-    data_criacao timestamp not null default current_timestamp,
-    data_alteracao timestamp not null default current_timestamp on update current_timestamp,
+    data_criacao timestamp default current_timestamp,
+    data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
 ) character set utf8 collate utf8_general_ci;
@@ -101,13 +101,13 @@ alter table solicitacao add constraint fk_tipo_solicitacao_id
     foreign key(tipo_solicitacao_id) references tipo_solicitacao(id);
 
 -- historico_solicitacao
-alter table historico_solicitacao add constraint fk_solicitacao_id
+alter table historico_solicitacao add constraint fk_historico_solicitacao_id
     foreign key(solicitacao_id) references solicitacao(id);
 
-alter table historico_solicitacao add constraint fk_solicitante_id
+alter table historico_solicitacao add constraint fk_historico_solicitante_id
     foreign key(solicitante_id) references solicitante(id);
 
-alter table historico_solicitacao add constraint fk_tipo_solicitacao_id
+alter table historico_solicitacao add constraint fk_historico_tipo_solicitacao_id
     foreign key(tipo_solicitacao_id) references tipo_solicitacao(id);
 
 -- Inserção de dados
