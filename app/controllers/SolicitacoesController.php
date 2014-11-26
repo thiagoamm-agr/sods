@@ -29,7 +29,7 @@
         }
 
         public function delete($solicitacao) {
-            if ($_SESSION['usuario']['perfil'] == 'U') {
+            if ($_SESSION['usuario']['perfil'] == 'P') {
                 if ($solicitacao->status == 'CRIADA') {
                 	$solicitacao->status='CANCELADA';
                 } else {
