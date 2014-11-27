@@ -50,6 +50,11 @@
             case 'list':
                 $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
+                $data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : '';
+                $data_inicio = strrev($data_inicio);
+                $data_inicio = str_replace('/', '-', $data_inicio);
+                $data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : '';
+                $value = isset($_POST['value']) ? $_POST['value'] : '';
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page, $filter, $value);
                 exit();
@@ -382,6 +387,8 @@
                     event.preventDefault();
                     filter = $('#filtro', this).val();
                     value = $('#valor', this).val();
+                    //start_date = $('#data_inicio', this).val();
+                    //start_end = $('#data_fim', this).val();
                     page = 1;
                     list(page);
                 });
@@ -410,9 +417,9 @@
                         html = '' + 
                             '<div class="input-daterange input-group" id="datepicker">' + 
                             '    <span class="input-group-addon">de</span>' + 
-                            '    <input type="text" class="input-sm form-control" name="start" />' +
+                            '    <input type="text" class="input-sm form-control" name="data_inicio" id="data_inicio" />' +
                             '    <span class="input-group-addon">até</span>' +
-                            '    <input type="text" class="input-sm form-control" name="end" />' +
+                            '    <input type="text" class="input-sm form-control" name="data_fim" id="data_fim" />' +
                             '</div>';
                     } else {
                         html = '<input id="valor" name="valor" type="text" class="form-control" />';
