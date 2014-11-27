@@ -17,6 +17,7 @@
     $tipos_solicitacoes_controller = new TiposSolicitacoesController();
 
     $tipos_solicitacoes = $tipos_solicitacoes_controller->activeElements();
+    $tipos_solicitacao_json = json_encode($tipos_solicitacoes_controller->_list());
     $perfil_usuario = $_SESSION['usuario']['perfil'];
 
     //Indentificando ações e parâmetros do post
@@ -144,7 +145,7 @@
                             }
                         }
                         // Retorna a lista de tipos de solicitação.
-                        tipos_solicitacao_json = <?php echo json_encode($tipos_solicitacoes_controller->_list()) ?>;
+                        tipos_solicitacao_json = <?php echo $tipos_solicitacao_json ?>;
                         // Popula a combobox de tipos de solicitação.
                         $(tipos_solicitacao_json).each(function(i, e) {
                             $('#tipo_solicitacao_id', form).append(new Option(e.nome, e.id));
@@ -384,10 +385,11 @@
                     page = 1;
                     list(page);
                 });
-                
+
                 // Mudança do filtro de pesquisa.
                 $('#filtro', '#form-search').change(function(e) {
                     var filtro = $(this).val();
+                    var html = '';
                     if (filtro == 'status') {
                         var html = '' +
                             '<select id="valor" class="form-control">' +
@@ -398,11 +400,38 @@
                             '    <option value="ATENDIDA" selected="selected">Atendida</option>' +
                             '    <option value="CANCELADA" selected="selected">Cancelada</option>' +
                             '</select>';
+                    } else if (filtro == 'tipo') {
+                        // Cria a caixa de seleção.
+                        html = '' +
+                            '<select id="valor" name="valor" class="form-control">' +  
+                            '    <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>' +
+                            '</select>';
+                    } else if (filtro == 'data_criacao' || filtro == 'data_alteracao') {
+                        html = '' + 
+                            '<div class="input-daterange input-group" id="datepicker">' + 
+                            '    <span class="input-group-addon">de</span>' + 
+                            '    <input type="text" class="input-sm form-control" name="start" />' +
+                            '    <span class="input-group-addon">até</span>' +
+                            '    <input type="text" class="input-sm form-control" name="end" />' +
+                            '</div>';
                     } else {
                         html = '<input id="valor" name="valor" type="text" class="form-control" />';
                     }
                     $('#valor_filtro').html(html);
+                    // Cria as opções da caixa de seleção.
+                    if (filtro == 'tipo') {
+                        tipos_solicitacao_json = <?php echo $tipos_solicitacao_json ?>;
+                        $(tipos_solicitacao_json).each(function(i, e) {
+                            $('#valor', form).append(new Option(e.nome, e.id));
+                        });
+                    } else if (filtro == 'data_criacao' || filtro == 'data_alteracao') {
+                        $('#form-search .input-daterange').datepicker({
+                            language: 'pt-BR'
+                        });
+                    } else {
+                    }
                 });
+                // Cria paginação AJAX na Grid.
                 createAJAXPagination();
             });
 
@@ -789,6 +818,8 @@
                                         <option value="titulo">Título</option>
                                         <option value="tipo">Tipo Solicitação</option>
                                         <option value="status">Status</option>
+                                        <option value="data_criacao">Data de Criação</option>
+                                        <option value="data_alteracao">Data de Alteração</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
