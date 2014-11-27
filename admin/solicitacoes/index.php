@@ -51,6 +51,7 @@
                 $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
+                date_default_timezone_set("Brazil/East");
                 echo $controller->getGrid($page, $filter, $value);
                 exit();
                 break;
