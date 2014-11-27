@@ -20,6 +20,7 @@
 
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/bootstrapValidator.min.css" />
+        <link rel="stylesheet" type="text/css" href="/sods/static/bootstrap/css/datepicker3.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/sods.css" />
         <link rel="stylesheet" type="text/css" href="/sods/static/css/theme.default.css" />
 
@@ -32,9 +33,11 @@
         <script src="/sods/static/js/jquery.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.min.js"></script>
         <script src="/sods/static/js/jquery.tablesorter.widgets.min.js"></script>
-        
+
         <script src="/sods/static/bootstrap/js/bootstrap.min.js"></script>
         <script src="/sods/static/bootstrap/js/bootstrapValidator.min.js"></script>
+        <script src="/sods/static/bootstrap/js/bootstrap-datepicker.js"></script>
+        <script src="/sods/static/bootstrap/js/locales/bootstrap-datepicker.pt-BR.js"></script>
 
         <script>
             $(document).ready(function() {
