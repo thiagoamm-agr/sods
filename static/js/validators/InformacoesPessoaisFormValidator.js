@@ -66,36 +66,28 @@ function InformacoesPessoaisFormValidator(form) {
                             regexp: /\w{8,}/i,
                             message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
                         },
-                        identical: {
-                            field: 'confirma_senha',
-                            message: 'As senhas não correspondem.'
-                        },
                         different: {
                             field: 'login',
                             message: 'O login não pode ser igual a senha.'
                         },
                         notEmpty: {
                             message: 'Senha é um campo de preenchimento obrigatório.'
+                        },
+                        identical: {
+                            field: 'confirma_senha',
+                            message: 'As senhas não correspondem.'
                         }
                     }
                 },
                 confirma_senha: {
                     trigger: 'blur',
                     validators: {
-                    	regexp: {
-                            regexp: /\w{8,}/i,
-                            message: 'A senha deve conter no mínimo 8 caracteres entre letras e números.'
-                        },
                         identical: {
                             field: 'senha',
                             message: 'As senhas não correspondem'
                         },
-                        different: {
-                            field: 'login',
-                            message: 'A senha não pode ser igual ao login'
-                        },
                         notEmpty: {
-                            message: 'A confirmação da senha é um campo de preenchimento obrigatório.'
+                            message: 'Confirme a senha é um campo de preenchimento obrigatório.'
                         }
                     }
                 }
