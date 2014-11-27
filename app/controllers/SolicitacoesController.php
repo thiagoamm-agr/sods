@@ -31,9 +31,9 @@
         public function delete($solicitacao) {
             if ($_SESSION['usuario']['perfil'] == 'P') {
                 if ($solicitacao->status == 'CRIADA') {
-                	$solicitacao->status='CANCELADA';
+                    $solicitacao->status='CANCELADA';
                 } else {
-                	return true;
+                    return true;
                 }
             } else {
                 $solicitacao->status='INDEFERIDA';
@@ -81,6 +81,18 @@
                         break;
                     case 'status':
                         $criteria = "so.status = '{$value}'";
+                        break;
+                    case 'data_criacao':
+                        $value = explode('/', $value);
+                        $data_inicio = "{$value[2]}-{$value[1]}-{$value[0]}";
+                        $data_fim = "{$value[5]}-{$value[4]}-{$value[3]}";
+                        $criteria = "so.data_criacao >= '$data_inicio' and so.data_criacao <= '$data_fim'";
+                        break;
+                    case 'data_alteracao':
+                        $value = explode('/', $value);
+                        $data_inicio = "{$value[2]}-{$value[1]}-{$value[0]}";
+                        $data_fim = "{$value[5]}-{$value[4]}-{$value[3]}";
+                        $criteria = "so.data_alteracao >= '$data_inicio' and so.data_alteracao <= '$data_fim'";
                         break;
                 }
             }
@@ -145,8 +157,8 @@
                                 $html .= "                    data-target=\"#modal-edit\"\n";
                     }
                     if ($perfil == 'A') {
-                    	$html .= "                    data-toggle=\"modal\"\n";
-                    	$html .= "                    data-target=\"#modal-edit\"\n";
+                        $html .= "                    data-toggle=\"modal\"\n";
+                        $html .= "                    data-target=\"#modal-edit\"\n";
                     }                
                     $html .= "                    onclick='edit(" . json_encode($solicitacao) ."," . $page_number .")'>\n"; 
                     $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";

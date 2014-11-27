@@ -50,11 +50,6 @@
             case 'list':
                 $filter = isset($_POST['filter']) ? $_POST['filter'] : '';
                 $value = isset($_POST['value']) ? $_POST['value'] : '';
-                $data_inicio = isset($_POST['data_inicio']) ? $_POST['data_inicio'] : '';
-                $data_inicio = strrev($data_inicio);
-                $data_inicio = str_replace('/', '-', $data_inicio);
-                $data_fim = isset($_POST['data_fim']) ? $_POST['data_fim'] : '';
-                $value = isset($_POST['value']) ? $_POST['value'] : '';
                 $page = isset($_POST['p']) ? $_POST['p'] : 1;
                 echo $controller->getGrid($page, $filter, $value);
                 exit();
@@ -161,7 +156,7 @@
                         if (solicitacao_json.status != 'CRIADA' && '<?php echo $perfil_usuario ?>' == 'P') {
                             $('#tipo_solicitacao_id', form).prop('disabled', true);
                         } else {
-                        	$('#tipo_solicitacao_id', form).prop('disabled', false);
+                            $('#tipo_solicitacao_id', form).prop('disabled', false);
                         } 
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
@@ -387,8 +382,21 @@
                     event.preventDefault();
                     filter = $('#filtro', this).val();
                     value = $('#valor', this).val();
-                    //start_date = $('#data_inicio', this).val();
-                    //start_end = $('#data_fim', this).val();
+                    var data_inicio = $('#data_inicio', this).val(); 
+                    var data_fim =  $('#data_fim', this).val();
+                    if (data_inicio != '') {
+                        value = data_inicio;
+                    } else {
+                        value = '';
+                    }
+                    if (data_fim != '') {
+                        value = data_fim;
+                    } else {
+                        value = '';
+                    }
+                    if (data_inicio != '' && data_fim != '')  {
+                        value = data_inicio + '/' + data_fim;
+                    }
                     page = 1;
                     list(page);
                 });
@@ -433,7 +441,8 @@
                         });
                     } else if (filtro == 'data_criacao' || filtro == 'data_alteracao') {
                         $('#form-search .input-daterange').datepicker({
-                            language: 'pt-BR'
+                            language: 'pt-BR', 
+                            format: 'dd/mm/yyyy'
                         });
                     } else {
                     }
