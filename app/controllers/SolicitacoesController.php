@@ -77,7 +77,7 @@
                         $criteria = "so.{$filter} LIKE '%{$value}%'";
                         break;
                     case 'tipo':
-                        $criteria = "t.nome LIKE '%{$value}%'";
+                        $criteria = "t.id = '{$value}'";
                         break;
                     case 'status':
                         $criteria = "so.status = '{$value}'";
