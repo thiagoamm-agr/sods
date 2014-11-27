@@ -130,16 +130,16 @@
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
                     if ($solicitacao['data_criacao'] != null){
-                        $data_criacao = date('d/m/Y', @strtotime ($solicitacao['data_criacao']));
-                        $hora_criacao = date('H:i:s', @strtotime ($solicitacao['data_criacao']));
+                        $data_criacao = date('d/m/Y', @strtotime($solicitacao['data_criacao']));
+                        $hora_criacao = date('H:i:s', @strtotime($solicitacao['data_criacao']));
                         $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_criacao 
                         Hora: $hora_criacao \">$data_criacao</span></td>\n";
                     }else{
                         $html .= "            <td></td>\n";
                     }
                     if ($solicitacao['data_alteracao'] != null) {
-                        $data_alteracao_hora = date('H:i:s', @strtotime ($solicitacao['data_alteracao']));
-                        $data_alteracao_simples = date('d/m/Y', @strtotime ($solicitacao['data_alteracao']));
+                        $data_alteracao_hora = date('H:i:s', @strtotime($solicitacao['data_alteracao']));
+                        $data_alteracao_simples = date('d/m/Y', @strtotime($solicitacao['data_alteracao']));
                         $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_alteracao_simples 
                         Hora: $data_alteracao_hora \">$data_alteracao_simples</span></td>\n";
                     } else {
