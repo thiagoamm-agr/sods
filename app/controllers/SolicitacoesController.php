@@ -83,16 +83,22 @@
                         $criteria = "so.status = '{$value}'";
                         break;
                     case 'data_criacao':
-                        $value = explode('/', $value);
-                        $data_inicio = "{$value[2]}-{$value[1]}-{$value[0]}";
-                        $data_fim = "{$value[5]}-{$value[4]}-{$value[3]}";
-                        $criteria = "so.data_criacao >= '$data_inicio' and so.data_criacao <= '$data_fim'";
-                        break;
                     case 'data_alteracao':
-                        $value = explode('/', $value);
-                        $data_inicio = "{$value[2]}-{$value[1]}-{$value[0]}";
-                        $data_fim = "{$value[5]}-{$value[4]}-{$value[3]}";
-                        $criteria = "so.data_alteracao >= '$data_inicio' and so.data_alteracao <= '$data_fim'";
+                        $data_inicio = $value['data_inicio'];
+                        $data_fim = $value['data_fim'];
+                        if (!empty($data_inicio)) {
+                            // Divide a data pelo separador /
+                            $data_inicio = explode('/', $data_inicio);
+                            // Formata a data no padrão do SQL.
+                            $data_inicio = "'{$data_inicio[2]}-{$data_inicio[1]}-{$data_inicio[0]}'";
+                            $criteria = "so.$filter >= $data_inicio";
+                        }
+                        if (!empty($data_fim)) {
+                            $data_fim = explode('/', $data_fim);
+                            $data_fim = "'{$data_fim[2]}-{$data_fim[1]}-{$data_fim[0]}'";
+                            $criteria = empty($criteria) ? '' : "$criteria and ";
+                            $criteria .= "so.$filter <= $data_fim";
+                        }
                         break;
                 }
             }
