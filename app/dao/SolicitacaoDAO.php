@@ -148,9 +148,9 @@
                 $rows = $this->getAll(); 
             } else {
             $query = "select\n" . 
-                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
-                        "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_criacao, so.data_alteracao,\n " .
+                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
+                        "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n" .
+                        "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 
@@ -170,9 +170,9 @@
         public function count($criteria = null){
         	$where = empty($criteria) ? "" : "\twhere $criteria\n";
             $query = "select\n" . 
-                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
-                        "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_criacao, so.data_alteracao,\n " .
+                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
+                        "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n " .
+                        "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 
@@ -192,9 +192,9 @@
             $all = array();
             $where = empty($criteria) ? "" : "where\n\t$criteria\n";
             $query = "select\n" . 
-                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo, so.detalhamento,\n" .
-                        "\tso.info_adicionais, so.observacoes, so.status, so.observacoes_status,\n " .
-                        "\tso.data_criacao, so.data_alteracao,\n " .
+                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
+                        "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n " .
+                        "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n " .
                         "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                     "from\n" . 
                         "\tsolicitante as s\n" . 
