@@ -363,40 +363,45 @@
                 }
             }
 
+            // Tratamento de eventos no carregamento da página.
             $(document).ready(function() {
+                // Adição
                 $('#form-add').submit(function(event) {
                     event.preventDefault();
                     save();
                 });
 
+                // Edição
                 $('#form-edit').submit(function(event) {
                     event.preventDefault();
                     save();
                 });
 
+                // Exclusão
                 $('#form-del').submit(function(event) {
                     event.preventDefault();
                     save();
                 });
 
+                // Pesquisa
                 $('#form-search').submit(function(event) {
                     event.preventDefault();
                     filter = $('#filtro', this).val();
-                    value = $('#valor', this).val();
-                    var data_inicio = $('#data_inicio', this).val(); 
-                    var data_fim =  $('#data_fim', this).val();
-                    if (data_inicio != '') {
-                        value = data_inicio;
+                    if (filter == 'data_criacao' || filter == 'data_alteracao') {
+                        var data_inicio = $('#data_inicio', this).val(); 
+                        var data_fim =  $('#data_fim', this).val();
+                        value = {
+                            data_inicio: '',
+                            data_fim: ''
+                        };
+                        if (data_inicio != '') {
+                            value.data_inicio = data_inicio;
+                        }
+                        if (data_fim != '') {
+                            value.data_fim = data_fim;
+                        }
                     } else {
-                        value = '';
-                    }
-                    if (data_fim != '') {
-                        value = data_fim;
-                    } else {
-                        value = '';
-                    }
-                    if (data_inicio != '' && data_fim != '')  {
-                        value = data_inicio + '/' + data_fim;
+                        value = $('#valor', this).val();
                     }
                     page = 1;
                     list(page);
