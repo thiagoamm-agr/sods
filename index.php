@@ -19,13 +19,15 @@
                 <div class="container">
                   <form class="form-signin" role="form" method="post" id="formlogin" name="formlogin">
                     <h3 class="form-signin-heading">Login</h3>
-                    <input type="login" id="login" name="login" class="form-control" placeholder="Login" 
-                        required autofocus />
-                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" 
-                        required />
+                    <input type="text" name="login" 
+                        onblur="if(this.value == '<?php echo isset($_COOKIE['login'])? $_COOKIE['login']:"" ?>')
+                        senha.value = '<?php echo isset($_COOKIE['senha'])? $_COOKIE['senha']:"" ?>'"  
+                        class="form-control" placeholder="Login" required autofocus />  
+                    <input type="password" id="senha" name="senha" class="form-control" 
+                        placeholder="Senha" required />
                     <div class="checkbox">
                       <label>
-                        <input type="checkbox" value="remember-me"> Lembre-me
+                        <input type="checkbox" id="lembrar" name="lembrar"> Lembrar por 1 semana
                       </label>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">
@@ -38,14 +40,21 @@
     @$login = $_POST['login'];
     @$senha = $_POST['senha'];
 
-    if (autenticar_usuario($login, $senha)) {
+    if (isset($_COOKIE['login']) && isset($_COOKIE['senha'])) {
         header('location: /sods/admin');
-    } else if (isset($_POST['login']) && isset($_POST['senha'])) {
+        @$login = $_COOKIE['login'];
+        @$senha = $_COOKIE['senha'];
+        autenticar_usuario($login, $senha);
+    } else {
+        if (autenticar_usuario($login, $senha)) {
+            header('location: /sods/admin');
+        } else if (isset($_POST['login']) && isset($_POST['senha'])) {
 ?>
             <div class='alert alert-danger' role='alert'>
                 <center><b>Login inválido&nbsp;<span class="glyphicon glyphicon-remove"></span></b></center>
             </div>
-<?php 
+<?php
+        }
     }
 ?>
     </body>
