@@ -128,26 +128,31 @@
                 $html .= "        </tr>\n";
                 $html .= "    </thead>\n";
                 $html .= "    <tbody>\n";
+                $tooltip = '';
                 foreach ($solicitacoes as $solicitacao) {
                     $html .= "        <tr>\n";
                     $html .= "            <td>{$solicitacao['id']}</td>\n";
-                    $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"{$solicitacao['nome']} \">{$solicitacao['solicitante']}</span></td>\n";
+                    $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\" \n";
+                    $tooltip .= "title=\"{$solicitacao['nome']} \">{$solicitacao['solicitante']}</span>";
+                    $html .= "            <td>$tooltip</td>\n";
                     $html .= "            <td>{$solicitacao['titulo']}</td>\n";
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
-                    if ($solicitacao['data_criacao'] != null){
+                    if ($solicitacao['data_criacao'] != null) {
                         $data_criacao = date('d/m/Y', @strtotime($solicitacao['data_criacao']));
                         $hora_criacao = date('H:i:s', @strtotime($solicitacao['data_criacao']));
-                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_criacao 
-                        Hora: $hora_criacao \">$data_criacao</span></td>\n";
-                    }else{
+                        $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\" \n";
+                        $tooltip .= "title=\"Data: $data_criacao Hora: $hora_criacao \">$data_criacao</span>";
+                        $html .= "            <td>$tooltip</td>\n";
+                    } else {
                         $html .= "            <td></td>\n";
                     }
                     if ($solicitacao['data_alteracao'] != null) {
-                        $data_alteracao_hora = date('H:i:s', @strtotime($solicitacao['data_alteracao']));
-                        $data_alteracao_simples = date('d/m/Y', @strtotime($solicitacao['data_alteracao']));
-                        $html .= "            <td><span data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"Data: $data_alteracao_simples 
-                        Hora: $data_alteracao_hora \">$data_alteracao_simples</span></td>\n";
+                        $hora_alteracao = date('H:i:s', @strtotime($solicitacao['data_alteracao']));
+                        $data_alteracao = date('d/m/Y', @strtotime($solicitacao['data_alteracao']));
+                        $tooltip = "<span data-toggle=\"tooltip\" data-placement=\"bottom\" \n";
+                        $tooltip .= "title=\"Data: $data_alteracao Hora: $hora_alteracao \">$data_alteracao</span>";
+                        $html .= "            <td>$tooltip</td>\n";
                     } else {
                         $html .= "            <td></td>\n";
                     }
@@ -158,26 +163,36 @@
                     $perfil = $_SESSION['usuario']['perfil'];
                     if (($status == 'CRIADA' && $perfil == 'P') ||
                         ($status == 'EM ANÁLISE' && $perfil == 'P') || 
-                            ($status == 'DEFERIDA' && $perfil == 'P')) {
-                                $html .= "                    data-toggle=\"modal\"\n";
-                                $html .= "                    data-target=\"#modal-edit\"\n";
+                        ($status == 'DEFERIDA' && $perfil == 'P')) {
+                        $html .= "                    data-toggle=\"modal\"\n";
+                        $html .= "                    data-target=\"#modal-edit\"\n";
                     }
                     if ($perfil == 'A') {
                         $html .= "                    data-toggle=\"modal\"\n";
                         $html .= "                    data-target=\"#modal-edit\"\n";
-                    }                
-                    $html .= "                    onclick='edit(" . json_encode($solicitacao) ."," . $page_number .")'>\n"; 
-                    $html .= "                    <strong>Editar&nbsp;<span class=\"glyphicon glyphicon-edit\"></span></strong>\n";
+                    }
+                    $html .= "                    onclick='edit(".json_encode($solicitacao).",".$page_number.")'>\n";
+                    $html .= "                    <strong>\n";
+                    $html .= "                        Editar&nbsp;\n";
+                    $html .= "                        <span class=\"glyphicon glyphicon-edit\"></span>\n";
+                    $html .= "                    </strong>\n";
                     $html .= "                </button>&nbsp;&nbsp;\n";
                     $html .= "                <button\n";
                     $html .= "                    class=\"delete-type btn btn-danger btn-sm\"\n";
                     $html .= "                    data-toggle=\"modal\"\n";
                     $html .= "                    data-target=\"#modal-del\"\n";
-                    $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number . "," .$total_records .")'>\n"; 
+                    $html .= "                    onclick='del(" . json_encode($solicitacao) . "," . $page_number;
+                    $html .=  "," . $total_records .")'>\n"; 
                     if ($perfil == 'P') {
-                        $html .= "                    <strong>Cancelar&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                        $html .= "                    <strong>\n";
+                        $html .= "                        Cancelar&nbsp;\n";
+                        $html .= "                        <span class=\"glyphicon glyphicon-remove\"></span>\n";
+                        $html .= "                    </strong>\n";
                     } else {
-                        $html .= "                    <strong>Indeferir&nbsp;<span class=\"glyphicon glyphicon-remove\"></span></strong>\n";
+                        $html .= "                    <strong>\n";
+                        $html .= "                        Indeferir&nbsp;\n";
+                        $html .= "                        <span class=\"glyphicon glyphicon-remove\"></span>\n";
+                        $html .= "                    </strong>\n";
                     } 
                     $html .= "                </button>\n";
                     $html .= "            </td>\n";
