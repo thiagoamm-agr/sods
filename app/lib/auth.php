@@ -24,16 +24,14 @@
             if (mysql_num_rows($result) > 0) {
                 $_SESSION['usuario'] = mysql_fetch_array($result);
                 $_SESSION['conexao'] = $conexao;
-                $_SESSION['start_time'] = time();
-                // 900 segundos ou 15 minutos.
-                $_SESSION['timeout'] = 900; 
-                $_SESSION['end_time'] = $_SESSION['start_time'] + $_SESSION['timeout'];
-                if (isset($_POST['lembrar'])) {
-                	// tempo que ficará guardada essa informação (1 semana)
-                    $tempo = time() + 3600 * 24 * 7; 
-                    // seta os valores para o COOKIE
-                    setcookie("login",$_POST['login'], $tempo);
-                    setcookie("senha",$_POST['senha'], $tempo);
+                $_SESSION['timeout'] = 60;
+                if ($_SESSION['remember_me']) {
+                    $_SESSION['end_time'] = $_SESSION['duracao_cookie'];
+                } else {
+                    $_SESSION['start_time'] = time();
+                    // 900 segundos ou 15 minutos.
+                    $_SESSION['timeout'] = 900;
+                    $_SESSION['end_time'] = $_SESSION['start_time'] + $_SESSION['timeout'];
                 }
                 return true;
             }
