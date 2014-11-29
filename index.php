@@ -51,7 +51,7 @@
                             </label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">
-                            Entrar&nbsp;   <span class="glyphicon glyphicon-log-in"></span>
+                            Entrar&nbsp;<span class="glyphicon glyphicon-log-in"></span>
                         </button>
                     </form>
                 </div> 
