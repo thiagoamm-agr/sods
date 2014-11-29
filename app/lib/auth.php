@@ -6,7 +6,7 @@
         $login = isset($login) ? trim($login) : '';
         $senha = isset($senha) ? trim($senha) : '';
         if ($login !== '' && $senha !== '') {
-            $conexao = get_db_connection("10.243.1.14", "sods", "dev123");
+            $conexao = get_db_connection("localhost", "sods", "dev123");
             $query = "" . 
                 "select\n" .
                     "\ts.id, s.nome, l.nome as nome_lotacao,\n" .
@@ -24,13 +24,14 @@
             if (mysql_num_rows($result) > 0) {
                 $_SESSION['usuario'] = mysql_fetch_array($result);
                 $_SESSION['conexao'] = $conexao;
-                $_SESSION['timeout'] = 60;
-                if ($_SESSION['remember_me']) {
-                    $_SESSION['end_time'] = $_SESSION['duracao_cookie'];
+                $lembrar = isset($_COOKIE['lembrar']) ? $_COOKIE['lembrar'] : false;
+                if ($lembrar) {
+                    $_SESSION['end_time'] = $_COOKIE['duracao'];
                 } else {
                     $_SESSION['start_time'] = time();
-                    // 900 segundos ou 15 minutos.
-                    $_SESSION['timeout'] = 900;
+                    // Define o tempo de duração padrão da sessão como 15 minutos.
+                    $_SESSION['timeout'] = 60 * 15;
+                    // Define que a sessão irá expirar em 15 minutos a partir de agora.
                     $_SESSION['end_time'] = $_SESSION['start_time'] + $_SESSION['timeout'];
                 }
                 return true;
