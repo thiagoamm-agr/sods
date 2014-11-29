@@ -13,14 +13,11 @@
         }
         // Validação da duração da sessão.
         if (!isset($_SESSION['end_time']) || time() >= $_SESSION['end_time']) {
-            if ($_SESSION['remember_me']) {
-                setcookie('login', '', $_SESSION['end_time']);
-                setcookie('senha', '', $_SESSION['end_time']);
-            }
+            // Destrói a sessão.
             session_destroy();
             header('location: /sods');
         } else {
-            if (!$_SESSION['remember_me']) {
+            if (!isset($_COOKIE['lembrar'])) {
                 $_SESSION['end_time'] = time() + $_SESSION['timeout'];
             }
         }
