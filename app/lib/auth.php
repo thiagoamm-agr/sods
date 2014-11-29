@@ -6,7 +6,7 @@
         $login = isset($login) ? trim($login) : '';
         $senha = isset($senha) ? trim($senha) : '';
         if ($login !== '' && $senha !== '') {
-            $conexao = get_db_connection("localhost", "sods", "dev123");
+            $conexao = get_db_connection("10.243.1.14", "sods", "dev123");
             $query = "" . 
                 "select\n" .
                     "\ts.id, s.nome, l.nome as nome_lotacao,\n" .
