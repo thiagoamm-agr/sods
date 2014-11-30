@@ -1,2 +1,4 @@
+Options -Indexes
+
 ErrorDocument 403 /sods/404.html
 ErrorDocument 404 /sods/404.html
