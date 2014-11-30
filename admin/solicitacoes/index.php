@@ -89,6 +89,7 @@
             function add() {
                 action = "add";
                 solicitacao = new Solicitacao();
+                solicitacao.id = null;
                 form = $('#form-add');
                 formValidator = new SolicitacaoFormValidator(form);
                 filter = null;
@@ -541,7 +542,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="titulo">Titulo</label>
+                                    <label for="titulo">Título</label>
                                     <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100" />
                                 </div>
                                 <div class="form-group">
@@ -565,7 +566,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="tipo_solicitacao_id">Tipo Solicitação</label>
+                                                <label for="tipo_solicitacao_id">Tipo</label>
                                                 <select id="tipo_solicitacao_id" 
                                                         name="tipo_solicitacao_id" 
                                                         class="form-control">
@@ -662,7 +663,7 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="data_alteracao">Ultima Alteração</label>
+                                            <label for="data_alteracao">Última Alteração</label>
                                             <input type="text" class="form-control" name="data_alteracao" 
                                                 id="data_alteracao" readonly/>
                                         </div>
@@ -685,7 +686,7 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="observacoes_status">Obs. Status</label>
+                                            <label for="observacoes_status">Observações do Status</label>
                                             <input type="text" class="form-control" name="observacoes_status"
                                                 id="observacoes_status"/>
                                         </div>
