@@ -33,12 +33,10 @@
                 <div class="container">
                     <form class="form-signin" role="form" method="post" id="form-signin" name="form-signin">
                         <h3 class="form-signin-heading">Login</h3>
-                        <input type="text" id="login" name="login" 
-                            onblur="if(this.value == '<?php echo isset($_COOKIE['login'])? $_COOKIE['login']: '' ?>')
-                            senha.value = '<?php echo isset($_COOKIE['senha'])? $_COOKIE['senha']: '' ?>'"  
-                            class="form-control" placeholder="Usuário" required autofocus />
-                        <input type="password" id="senha" name="senha" class="form-control" 
-                            placeholder="Senha" required />
+                        <input type="text" id="login" name="login" class="form-control" 
+                            placeholder="Usuário" required autofocus />
+                        <input type="password" id="senha" name="senha" 
+                            class="form-control" placeholder="Senha" required />
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" id="lembrar" name="lembrar">
