@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" type="text/css" media="screen" href="/sods/static/bootstrap/css/bootstrap.min.css" />
-        <link href="/sods/static/bootstrap/css/signin.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/sods/static/bootstrap/css/signin.css" />
 
         <style type="text/css">
             div.tooltip-inner {
