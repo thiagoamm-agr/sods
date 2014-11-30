@@ -13,20 +13,20 @@
 
         <style type="text/css">
             div.tooltip-inner {
-                max-width: 500px;
+                max-width: 400px;
             }
         </style>
 
-        <script src="/sods/static/js/jquery.min.js"></script>
+        <script type="text/javascript" src="/sods/static/js/jquery.min.js"></script>
         <script type="text/javascript" src="/sods/static/bootstrap/js/bootstrap.min.js"></script>
-        
-        <title>Login</title>
 
         <script type="text/javascript">
             $(document).ready(function() {
                 $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
             });
         </script>
+
+        <title>Login</title>
     </head>
         <body>
             <center><h2><b>SODS</b> - Sistema de Solicitação de Desenvolvimento de Software</h2></center>
