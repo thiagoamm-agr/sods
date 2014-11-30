@@ -54,7 +54,7 @@
                 }
                 $columns = substr($columns, 0, strrpos($columns, ", "));
                 $values = substr($values, 0, strrpos($values, ", "));
-                if(!empty($columns) && !empty($values)){
+                if (!empty($columns) && !empty($values)) {
                     $query = "insert into solicitacao ($columns) values ($values)";
                     mysql_query($query, $this->connection);
                 }
@@ -62,7 +62,7 @@
         }
 
         public function update($solicitacao) {
-            if(isset($solicitacao)){
+            if (isset($solicitacao)) {
                 $class = new ReflectionClass('Solicitacao');
                 $properties = $class->getProperties();
                 $columns = "";
@@ -101,7 +101,7 @@
         }
 
         public function delete($solicitacao) {
-            if (isset($solicitacao)){
+            if (isset($solicitacao)) {
                 try {
                     $query = "delete from solicitacao where id = {$solicitacao->id}";
                     return mysql_query($query, $this->connection);
@@ -109,7 +109,7 @@
                     echo $e;
                     return false;
                 }   
-            }else{
+            } else{
                 return false;
             }
         }
@@ -167,8 +167,8 @@
             return $rows;
         }
 
-        public function count($criteria = null){
-        	$where = empty($criteria) ? "" : "\twhere $criteria\n";
+        public function count($criteria = null) {
+            $where = empty($criteria) ? "" : "\twhere $criteria\n";
             $query = "select\n" . 
                         "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
                         "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n " .
