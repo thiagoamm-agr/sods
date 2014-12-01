@@ -200,18 +200,21 @@
             if (empty($criteria)) {
                 $rows = $this->getAll(); 
             } else {
-            $query = "select\n" . 
-                        "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
-                        "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n" .
-                        "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
-                        "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
-                    "from\n" . 
-                        "\tsolicitante as s\n" . 
-                    "inner join\n" . 
-                        "\tsolicitacao as so on s.id = so.solicitante_id\n" . 
-                    "inner join\n" . 
-                        "\ttipo_solicitacao as t on t.id = so.tipo_solicitacao_id\n" .
-                     "where $criteria";
+            $query = "". 
+                "select\n" . 
+                    "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
+                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n" .
+                    "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
+                    "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
+                "from\n" . 
+                    "\tsolicitante as s\n" . 
+                "inner join\n" . 
+                    "\tsolicitacao as so\n" . 
+                        "\t\ton s.id = so.solicitante_id\n" . 
+                "inner join\n" . 
+                    "\ttipo_solicitacao as t\n" .
+                        "\t\ton t.id = so.tipo_solicitacao_id\n" .
+                "where $criteria";
                 $result = mysql_query($query, $this->connection);
                 while ($row = mysql_fetch_assoc($result)) {
                     array_push($rows, $row);
