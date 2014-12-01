@@ -173,19 +173,20 @@
         }
 
         public function getAll() {
-            $query= "select " . 
-                        "so.id, s.nome, s.id as solicitante_id, so.titulo, " . 
-                        "so.detalhamento, so.info_adicionais, so.observacoes, " . 
-                        "so.status, so.observacoes_status, so.data_criacao, so.data_alteracao, " .
-                        "t.nome as tipo_solicitacao, t.id as tipo_solicitacao_id " .
-                    "from " . 
-                        "solicitante as s " . 
-                    "inner join " . 
-                        "solicitacao as so " .
-                        "on s.id = so.solicitante_id " . 
-                    "inner join " . 
-                        "tipo_solicitacao as t " .
-                        "on t.id = so.tipo_solicitacao_id";
+            $query= "" . 
+                "select\n" . 
+                    "\tso.id, s.nome, s.id as solicitante_id, so.titulo,\n" . 
+                    "\tso.detalhamento, so.info_adicionais, so.observacoes,\n" . 
+                    "\tso.status, so.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
+                    "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
+                "from\n" . 
+                    "\tsolicitante as s\n" . 
+                "inner join\n" . 
+                    "\tsolicitacao as so\n" .
+                        "\t\ton s.id = so.solicitante_id\n" . 
+                "inner join\n" . 
+                    "\ttipo_solicitacao as t\n" .
+                        "\t\ton t.id = so.tipo_solicitacao_id";
             $result = mysql_query($query, $this->connection);
             $all = array();
             while ($row = mysql_fetch_assoc($result)) {
