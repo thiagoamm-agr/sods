@@ -73,7 +73,9 @@
                     $historico_solicitacao->data_alteracao = $solicitacao->data_alteracao;
                     $historico_solicitacao->tipo_solicitacao_id = $solicitacao->tipo_solicitacao_id;
                     $data_criacao = date('Y-m-d G:i:s');
-                    $query = "insert into historico_solicitacao (solicitacao_id, data_criacao, $columns) " . 
+                    $query = "" . 
+                        "insert into historico_solicitacao " . 
+                        "(solicitacao_id, data_criacao, $columns) " . 
                         "values ({$historico_solicitacao->solicitacao_id}, '$data_criacao', $values)";
                     mysql_query($query, $this->connection);
                 }
