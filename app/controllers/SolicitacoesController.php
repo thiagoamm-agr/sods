@@ -89,7 +89,7 @@
                         $data_inicio = $value['data_inicio'];
                         $data_fim = $value['data_fim'];
                         if (!empty($data_inicio)) {
-                            // Divide a data pelo separador /
+                            // Divide a data pelo separador.
                             $data_inicio = explode('/', $data_inicio);
                             // Formata a data no padrão do SQL.
                             $data_inicio = "'{$data_inicio[2]}-{$data_inicio[1]}-{$data_inicio[0]}'";
