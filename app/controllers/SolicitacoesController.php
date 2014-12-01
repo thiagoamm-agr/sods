@@ -30,7 +30,8 @@
 
         public function delete($solicitacao) {
             if ($_SESSION['usuario']['perfil'] == 'P') {
-                if ($solicitacao->status == 'CRIADA' || $solicitacao->status == 'EM ANÁLISE' || 
+                if ($solicitacao->status == 'CRIADA' || 
+                    $solicitacao->status == 'EM ANÁLISE' || 
                     $solicitacao->status == 'DEFERIDA') {
                     $solicitacao->status='CANCELADA';
                 } else {
