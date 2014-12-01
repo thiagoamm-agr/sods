@@ -4,6 +4,7 @@
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/dao/DAO.php';
 
     @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/Solicitacao.php';
+    @require_once $_SERVER['DOCUMENT_ROOT'] . '/sods/app/models/HistoricoSolicitacao.php';
 
     class SolicitacaoDAO implements DAO {
 
@@ -57,6 +58,24 @@
                 if (!empty($columns) && !empty($values)) {
                     $query = "insert into solicitacao ($columns) values ($values)";
                     mysql_query($query, $this->connection);
+                    $solicitacao->id = mysql_insert_id($this->connection);
+                    $solicitacao = $this->get('id', $solicitacao->id);
+                    $historico_solicitacao = new HistoricoSolicitacao();
+                    $historico_solicitacao->solicitacao_id = $solicitacao->id;
+                    $historico_solicitacao->solicitante_id = $solicitacao->solicitante_id;
+                    $historico_solicitacao->titulo = $solicitacao->titulo;
+                    $historico_solicitacao->detalhamento = $solicitacao->detalhamento;
+                    $historico_solicitacao->info_adicionais = $solicitacao->info_adicionais;
+                    $historico_solicitacao->observacoes = $solicitacao->observacoes;
+                    $historico_solicitacao->status = $solicitacao->status;
+                    $historico_solicitacao->observacoes_status = $solicitacao->observacoes_status;
+                    $historico_solicitacao->data_cricacao = $solicitacao->data_criacao;
+                    $historico_solicitacao->data_alteracao = $solicitacao->data_alteracao;
+                    $historico_solicitacao->tipo_solicitacao_id = $solicitacao->tipo_solicitacao_id;
+                    $data_criacao = date('Y-m-d G:i:s');
+                    $query = "insert into historico_solicitacao (solicitacao_id, data_criacao, $columns) " . 
+                        "values ({$historico_solicitacao->solicitacao_id}, '$data_criacao', $values)";
+                    mysql_query($query, $this->connection);
                 }
             }
         }
@@ -76,12 +95,15 @@
                         if (!empty($value)) {
                             if (gettype($value) == "string") {
                                 $pairs .= "$column = '{$value}', ";
+                                $values .= "'{$value}', ";
                             } else {
                                 if (endsWith($value, '_id')) {
                                     $value = (int) $value;
                                 }
                                 $pairs .= "$column = {$value}, ";
+                                $values .= "{$value}, ";
                             }
+                            $columns .= "{$column}, ";
                         }
                     }
                 }
@@ -89,6 +111,28 @@
                 $pairs = substr($pairs, 0, strrpos($pairs, ", "));
                 if (!empty($pairs)) {
                     $query = "update solicitacao set $pairs where id = {$solicitacao->id}";
+                    mysql_query($query, $this->connection);
+                    $solicitacao = $this->get('id', $solicitacao->id);
+                    $historico_solicitacao = new HistoricoSolicitacao();
+                    $historico_solicitacao->solicitacao_id = $solicitacao->id;
+                    $historico_solicitacao->solicitante_id = $solicitacao->solicitante_id;
+                    $historico_solicitacao->titulo = $solicitacao->titulo;
+                    $historico_solicitacao->detalhamento = $solicitacao->detalhamento;
+                    $historico_solicitacao->info_adicionais = $solicitacao->info_adicionais;
+                    $historico_solicitacao->observacoes = $solicitacao->observacoes;
+                    $historico_solicitacao->status = $solicitacao->status;
+                    $historico_solicitacao->observacoes_status = $solicitacao->observacoes_status;
+                    $historico_solicitacao->data_criacao = $solicitacao->data_criacao;
+                    $historico_solicitacao->data_alteracao = $solicitacao->data_alteracao; 
+                    $historico_solicitacao->tipo_solicitacao_id = $solicitacao->tipo_solicitacao_id;
+                    $columns = substr($columns, 0, strrpos($columns, ", "));
+                    $values = substr($values, 0, strrpos($values, ", "));
+                    $query = "insert into historico_solicitacao " .
+                        "(solicitacao_id, data_criacao, data_alteracao, $columns) " .
+                        "values ({$historico_solicitacao->solicitacao_id}, " .
+                        "'{$historico_solicitacao->data_criacao}', " .
+                        "'{$historico_solicitacao->data_alteracao}', " .
+                        "$values)";
                     mysql_query($query, $this->connection);
                 } 
             }
@@ -104,19 +148,25 @@
             if (isset($solicitacao)) {
                 try {
                     $query = "delete from solicitacao where id = {$solicitacao->id}";
-                    return mysql_query($query, $this->connection);
+                    $return = mysql_query($query, $this->connection);
+                    return $return;
                 } catch (Exception $e) {
                     echo $e;
                     return false;
-                }   
+                }
             } else{
                 return false;
             }
         }
 
         public function get($field, $value) {
-            if (isset($usuario)) {
-                
+            if (isset($field) && isset($value)) {
+                if (gettype($value) == 'string') {
+                    $value = "'$value'";
+                }
+                $query = "select * from solicitacao where $field = $value";
+                $result = mysql_query($query, $this->connection);
+                return mysql_fetch_object($result);
             }
         }
 
@@ -213,6 +263,5 @@
             }
             return $all;
         }
-        
     }
 ?>
