@@ -341,27 +341,15 @@
                 return false;
             }
 
-            function formataData(data_antiga) {
-                if(data_antiga != null) {
-                    var data = data_antiga.split("-");
-                    var jsDate = new Date(
-                        data[0], 
-                        data[1] - 1, 
-                        data[2].substr(0,2),
-                        data[2].substr(3,2),
-                        data[2].substr(6,2),
-                        data[2].substr(9,2)
-                    );
-                    var dia = jsDate.getUTCDate();
-                    var mes = jsDate.getUTCMonth() + 1;
-                    var ano = jsDate.getUTCFullYear();
-                    var hora = jsDate.getHours();
-                    var min = jsDate.getMinutes();
-                    var seg = jsDate.getSeconds();
-                    return (dia + "/" + mes + "/" + ano + " " + hora + ":" + min + ":" + seg);
+            function formataData(data) {
+                if (data == null) {
+                	data =  '';
                 } else {
-                    return " ";
+                    data = data.replace(' ', 'T');
+                    data = new Date(data);
+                    data = data.toLocaleFormat("%d/%m/%Y %H:%M:%S");
                 }
+                return data;
             }
 
             // Tratamento de eventos no carregamento da página.
