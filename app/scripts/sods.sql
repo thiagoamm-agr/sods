@@ -117,12 +117,38 @@ insert into lotacao(nome, sigla, gerencia_id) values ('Gerência de Gestão e Pl
 insert into lotacao(nome, sigla, gerencia_id) values('Coordenação de Informática', 'CI', 1);
 
 -- solicitante
-insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha) 
-    values('Bruno', 1, 'Gerente', '(62) 4545-4554', 'bruno@agr.go.gov.br', 'bruno', md5('bruno'));
-insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
-    values('Thiago', 1, 'Programador', '(62) 4545-4554', 'thiago.amm.agr@gmail.com', 'thiago', md5('thiago'), 'A');
-insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
-    values('Neto', 1, 'Programador', '(62) 4545-4554', 'edward-arn@agr.go.gov.br', 'neto', md5('neto'), 'A');
-insert into solicitante(nome, lotacao_id, funcao, telefone, email, login, senha, perfil) 
-    values('Guthierrez', 1, 'Estágiario', '(62) 4545-4554', 'guthierrez.gs.agr@gmail.com', 
-    'guthierrez', md5('guthi123'), 'A');
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Guthierrez", 1, "Colaborador AGR", "(62) 3226-6400", "guthierrez-gs-agr@gmail.com" , "guthierrez-gs", md5("agr2014"), "A", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Thiago", 1, "Colaborador AGR", "(62) 3226-6400", "thiago-amm-agr@gmail.com" , "thiago-amm", md5("agr2014"), "A", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Manoel", 1, "Colaborador AGR", "(62) 3226-6400", "manoelanagr@gmail.com" , "manoel-an", md5("agr2014"), "A", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Antonio", 1, "Colaborador AGR", "(62) 3226-6400", "antonio-evn@gmail.com" , "antonio-evn", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("EDWARD", 1, "Colaborador AGR", "(62) 3226-6400", "edward-arn@gmail.com" , "edward-arn", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Francisco", 1, "Colaborador AGR", "(62) 3226-6400", "francisco-mg@gmail.com" , "francisco-mg", md5("agr2014"), "A", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Gabriel", 1, "Colaborador AGR", "(62) 3226-6400", "gabriel-ba@gmail.com" , "gabriel-ba", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Luciana", 1, "Colaborador AGR", "(62) 3226-6400", "luciana-dm@gmail.com" , "luciana-dm", md5("agr2014"), "A", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Natan", 1, "Colaborador AGR", "(62) 3226-6400", "natan-mn@gmail.com" , "natan-mn", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Renato", 1, "Colaborador AGR", "(62) 3226-6400", "renato-ps@gmail.com" , "renato-ps", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Wander", 1, "Colaborador AGR", "(62) 3226-6400", "wander-co@gmail.com" , "wander-co", md5("agr2014"), "P", "A", "2014-12-01", null );
+
+insert into solicitante (nome, lotacao_id, funcao, telefone, email, login, senha, perfil, status, data_criacao, data_alteracao) values
+("Willian", 1, "Colaborador AGR", "(62) 3226-6400", "willian-ad@gmail.com" , "willian-ad", md5("agr2014"), "P", "A", "2014-12-01", null );
