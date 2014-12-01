@@ -59,5 +59,13 @@ body {
 div.tooltip-inner {
     max-width: 400px;
 }
+
 /* Visualização componenete calendário no CHROME. */
-.datepicker {z-index: 1151 !important;}
+.datepicker {
+    z-index: 1151 !important;
+}
+
+#modal-edit .modal-content {
+    height: 50%;
+    overflow-y: scroll;
+}
