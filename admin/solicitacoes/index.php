@@ -566,8 +566,7 @@
                                         name="detalhamento" 
                                         class="form-control" 
                                         rows="6" 
-                                        style="width: 100%;">
-                                    </textarea>
+                                        style="width: 100%;"></textarea>
                                 
                                 </div>
                                 <div class="form-group">
@@ -577,8 +576,7 @@
                                         name="info_adicionais" 
                                         class="form-control" 
                                         rows="4" 
-                                        style="width: 100%;">
-                                    </textarea>
+                                        style="width: 100%;"></textarea>
                                 </div>
                                 
                                 <div class="form-group">
@@ -590,8 +588,7 @@
                                                 name="observacoes" 
                                                 class="form-control" 
                                                 rows="4" 
-                                                style="width: 100%">
-                                            </textarea>
+                                                style="width: 100%"></textarea>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -679,8 +676,7 @@
                                         name="detalhamento" 
                                         class="form-control" 
                                         rows="6" 
-                                        style="width: 100%;">
-                                    </textarea>
+                                        style="width: 100%;"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="info_adicionais">Informações adicionais</label>
@@ -689,8 +685,7 @@
                                         name="info_adicionais" 
                                         class="form-control" 
                                         rows="2" 
-                                        style="width: 100%;">
-                                    </textarea>
+                                        style="width: 100%;"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -701,8 +696,7 @@
                                                 name="observacoes"
                                                 class="form-control" 
                                                 rows="6" 
-                                                style="width: 100%">
-                                            </textarea>
+                                                style="width: 100%"></textarea>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo</label>
@@ -751,11 +745,12 @@
                                         
                                         <div class="col-sm-6">
                                             <label for="observacoes_status">Observações do status</label>
-                                            <input 
-                                                type="text" 
+                                            <textarea 
                                                 id="observacoes_status" 
-                                                name="observacoes_status" 
-                                                class="form-control" />
+                                                name="observacoes_status"
+                                                class="form-control" 
+                                                rows="6" 
+                                                style="width: 100%"></textarea>
                                         </div>
                                     </div>
 <?php 
