@@ -77,7 +77,7 @@ create table historico_solicitacao (
     observacoes text,
     status varchar(15) not null default 'CRIADA',
     observacoes_status text,
-    data_criacao timestamp default current_timestamp,
+    data_criacao timestamp null,
     data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
