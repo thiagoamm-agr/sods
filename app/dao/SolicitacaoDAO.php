@@ -114,6 +114,10 @@
                 if (!empty($pairs)) {
                     $query = "update solicitacao set $pairs where id = {$solicitacao->id}";
                     mysql_query($query, $this->connection);
+                    $columns = str_replace('data_criacao, ', '', $columns);
+                    $columns = str_replace('data_alteracao, ', '', $columns);
+                    $values = str_replace("'$solicitacao->data_criacao', ", '', $values);
+                    $values = str_replace("'$solicitacao->data_alteracao', ", '', $values);
                     $solicitacao = $this->get('id', $solicitacao->id);
                     $historico_solicitacao = new HistoricoSolicitacao();
                     $historico_solicitacao->solicitacao_id = $solicitacao->id;
