@@ -60,11 +60,12 @@ div.tooltip-inner {
     max-width: 400px;
 }
 
-/* Visualização componenete calendário no CHROME. */
+/* Visualização componenete calendário no Google Chrome. */
 .datepicker {
     z-index: 1151 !important;
 }
 
+/* Barra de rolagem para a modal edição. */
 #modal-edit .modal-content {
     height: 50%;
     overflow-y: scroll;
