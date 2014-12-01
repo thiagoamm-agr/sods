@@ -347,7 +347,21 @@
                 } else {
                     data = data.replace(' ', 'T');
                     data = new Date(data);
-                    data = data.toLocaleFormat("%d/%m/%Y %H:%M:%S");
+                    var browser = window.navigator.userAgent.toLocaleLowerCase();
+                    if (browser.indexOf('firefox') >= 0) {
+                        data = data.toLocaleFormat('%d/%m/%Y %H:%M:%S');
+                    } else {
+                        var options = {
+                            timeZone: 'America/Sao_Paulo',
+                            year: '2-digit', 
+                            month: '2-digit', 
+                            day: '2-digit',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            second: 'numeric'
+                        };
+                        data = data.toLocaleString('pt-BR', options);
+                    }
                 }
                 return data;
             }
@@ -636,7 +650,7 @@
                 aria-labelledby="modal-edit" 
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+                    <div class="modal-content modal-scrollbar">
                         <div class="modal-header">
                             <button 
                                 type="button" 
