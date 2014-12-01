@@ -25,12 +25,15 @@
             case 'add':
                 $fail = $controller->add($tipoSolicitacao);
                 if($fail){
-                    echo 'NAOADD';
+                    echo 'NOUPDATE';
                 }
                 exit();
                 break;
             case 'edit':
-                $controller->edit($tipoSolicitacao);
+                $fail = $controller->edit($tipoSolicitacao);
+                if($fail){
+                    echo 'NOUPDATE';
+                }
                 exit();
                 break;
             case 'delete':
@@ -248,9 +251,9 @@
                                 $('#alert-msg').text('Não é possivel excluir um tipo de solicitação referenciado');
                                 $(modal).modal('show');
                             }
-                            else if (data == 'NAOADD'){
+                            else if (data == 'NOUPDATE'){
                                 modal='#modal-danger';
-                                $('#alert-msg').text('Não é possivel adicionar um tipo de solicitação repetido.');
+                                $('#alert-msg').text('Não é possivel inserir ou editar um tipo de solicitação repetido.');
                                 $(modal).modal('show');
                             }
                             else {
@@ -260,7 +263,7 @@
                             }
                             window.setTimeout(function() {
                                 $(modal).modal('hide');
-                            }, 3000);
+                            }, 4000);
                             console.log(data);
                         },
                         error: function(xhr, status, error) {

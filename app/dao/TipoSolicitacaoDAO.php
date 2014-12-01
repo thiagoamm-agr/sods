@@ -94,7 +94,9 @@
                 $pairs = substr($pairs, 0, strrpos($pairs, ", "));
                 if (!empty($pairs)) {
                     $query = "update tipo_solicitacao set $pairs where id = {$tipoSolicitacao->id}";
-                    mysql_query($query, $this->connection);
+                    return mysql_query($query, $this->connection);
+                }else{
+                    return false;
                 }
             }
         }

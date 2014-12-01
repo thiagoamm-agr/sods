@@ -34,7 +34,7 @@
         }
 
         public function edit($tipoSolicitacao) {
-            return $this->dao->update($tipoSolicitacao);
+            return !$this->dao->update($tipoSolicitacao);
         }
 
         public function delete($tipoSolicitacao) {
