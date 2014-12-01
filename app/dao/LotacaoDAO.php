@@ -58,7 +58,9 @@
                 $values = substr($values, 0, strrpos($values, ", "));
                 if (!empty($columns) && !empty($values)) {
                     $query = "insert into lotacao ($columns) values ($values)";
-                    mysql_query($query, $this->connection);
+                    return mysql_query($query, $this->connection);
+                }else{
+                    return false;
                 }
             }
         }
@@ -96,7 +98,9 @@
                 $pairs = substr($pairs, 0, strrpos($pairs, ", "));
                 if (!empty($pairs)) {
                     $query = "update lotacao set $pairs where id = {$lotacao->id}";
-                    mysql_query($query, $this->connection);
+                    return mysql_query($query, $this->connection);
+                }else{
+                    return false;
                 }
             }
         }

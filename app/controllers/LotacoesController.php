@@ -26,11 +26,11 @@
         }
 
         public function add($lotacao) {
-            $this->dao->insert($lotacao);
+            return !$this->dao->insert($lotacao);
         }
 
         public function edit($lotacao) {
-            $this->dao->update($lotacao);
+            return !$this->dao->update($lotacao);
         }
 
         public function delete($id) {

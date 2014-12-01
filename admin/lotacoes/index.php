@@ -23,11 +23,17 @@
         // Identificando a ação desempenhada pelo usuário.
         switch ($action) {
             case 'add':
-                $controller->add($lotacao);
+                $fail=$controller->add($lotacao);
+                if($fail){
+                    echo 'NOUPDATE';
+                }
                 exit(); // finaliza a stream (a resposta termina aqui).
                 break;
             case 'edit':
-                $controller->edit($lotacao);
+                $fail=$controller->edit($lotacao);
+                if($fail){
+                    echo 'NOUPDATE';
+                }
                 exit();
                 break;
             case 'delete':
@@ -249,15 +255,21 @@
                                 var modal = null;
                                 if (data == 'ERRO') {
                                     modal = $('#modal-danger');
+                                    $('#danger-msg').text('Não é possível excluir um registro com referências.');
                                     $(modal).modal('show');
-                                } else {
+                                } else if (data == 'NOUPDATE'){
+                                    modal = $('#modal-danger');
+                                    $('#danger-msg').text('Não é possível inserir ou editar uma lotação com nome ou sigla repetidos.');
+                                    $(modal).modal('show');
+                                } 
+                                else {
                                     modal = $('#modal-success');
                                     $(modal).modal('show');
                                     list(current_page);
                                 }
                                 window.setTimeout(function() {
                                     $(modal).modal('hide');
-                                }, 3000);
+                                }, 4000);
                                 console.log(data);
                             },
                             error: function(xhr, status, error) {
