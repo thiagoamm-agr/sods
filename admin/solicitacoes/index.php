@@ -432,9 +432,9 @@
                         html = '' + 
                             '<div class="input-daterange input-group" id="datepicker">' + 
                             '    <span class="input-group-addon">de</span>' + 
-                            '    <input type="text" class="input-sm form-control" name="data_inicio" id="data_inicio" />' +
+                            '    <input type="text" id="data_inicio" name="data_inicio" class="input-sm form-control" />' +
                             '    <span class="input-group-addon">até</span>' +
-                            '    <input type="text" class="input-sm form-control" name="data_fim" id="data_fim" />' +
+                            '    <input type="text" id="data_fim" name="data_fim" class="input-sm form-control" />' +
                             '</div>';
                     } else {
                         html = '<input id="valor" name="valor" type="text" class="form-control" />';
@@ -452,6 +452,7 @@
                             format: 'dd/mm/yyyy'
                         });
                     } else {
+                        
                     }
                 });
                 // Cria paginação AJAX na Grid.
@@ -501,14 +502,22 @@
 
             <!-- Modais -->
 
-            <!-- Adicionar Solicitação -->
-            <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" 
-                aria-labelledby="modal-add" aria-hidden="true">
+            <!-- Adicionar -->
+            <div 
+                id="modal-add" 
+                class="modal fade" 
+                tabindex="-1" 
+                role="dialog" 
+                aria-labelledby="modal-add" 
+                aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
                             </button>
                             <h3 class="modal-title" id="modal-add">Adicionar Solicitação</h3>
                         </div>
@@ -543,63 +552,86 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="titulo">Título</label>
-                                    <input type="text" class="form-control" name="titulo" id="titulo" maxlength="100" />
+                                    <input 
+                                        type="text" 
+                                        id="titulo" 
+                                        name="titulo" 
+                                        class="form-control" 
+                                        maxlength="100" />
                                 </div>
                                 <div class="form-group">
                                     <label for="detalhamento">Descrição</label>
-                                    <textarea class="form-control" id="detalhamento" name="detalhamento" 
-                                        rows="6" style="width: 100%;"></textarea>
+                                    <textarea 
+                                        id="detalhamento" 
+                                        name="detalhamento" 
+                                        class="form-control" 
+                                        rows="6" 
+                                        style="width: 100%;">
+                                    </textarea>
                                 
                                 </div>
                                 <div class="form-group">
-                                    <label for="info_adicionais">Informações Adicionais</label>
-                                    <textarea class="form-control" id="info_adicionais" name="info_adicionais" 
-                                        rows="4" style="width: 100%;"></textarea>
+                                    <label for="info_adicionais">Informações adicionais</label>
+                                    <textarea 
+                                        id="info_adicionais" 
+                                        name="info_adicionais" 
+                                        class="form-control" 
+                                        rows="4" 
+                                        style="width: 100%;">
+                                    </textarea>
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="observacoes">Observações</label>
-                                            <textarea class="form-control" id="observacoes" name="observacoes"
-                                                rows="4" style="width: 100%"></textarea>
+                                            <textarea
+                                                id="observacoes" 
+                                                name="observacoes" 
+                                                class="form-control" 
+                                                rows="4" 
+                                                style="width: 100%">
+                                            </textarea>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="tipo_solicitacao_id">Tipo</label>
-                                                <select id="tipo_solicitacao_id" 
-                                                        name="tipo_solicitacao_id" 
-                                                        class="form-control">
-                                                        <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
+                                                <select 
+                                                    id="tipo_solicitacao_id" 
+                                                    name="tipo_solicitacao_id" 
+                                                    class="form-control">
+                                                    <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
 <?php 
-                                                        foreach ($tipos_solicitacoes as $tipos) {
+                                                foreach ($tipos_solicitacoes as $tipos) {
 ?>
-                                                            <option value="<?php echo $tipos['id'] ?>">
-                                                                           <?php echo $tipos['nome']?>
-                                                            </option>
+                                                    <option value="<?php echo $tipos['id'] ?>">
+                                                        <?php echo $tipos['nome']?>
+                                                    </option>
 <?php
-                                                        }
+                                                }
 ?>
-                                            </select>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" 
-                                            class="btn btn-success" >Salvar
-                                      <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-success">Salvar
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
-                                    <button type="reset"
-                                            class="btn btn-primary" onclick="clean();">Limpar
-                                         <span class="glyphicon glyphicon-file"></span>
-                                     </button>
+                                    <button 
+                                        type="reset"
+                                        class="btn btn-primary" 
+                                        onclick="clean();">Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
+                                    </button>
                                     <button 
                                         type="button" 
                                         class="btn btn-default" 
                                         data-dismiss="modal" 
-                                        onclick="clean()">
-                                        Cancelar
+                                        onclick="clean()">Cancelar
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
@@ -608,64 +640,96 @@
                     </div>
                 </div>
             </div>
+            <!-- /Adicionar -->
 
-             <!--  Modais -->
-
-            <!-- Editar Solicitação -->
-            <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" 
-                aria-labelledby="modal-edit" aria-hidden="true">
+            <!-- Editar -->
+            <div 
+                id="modal-edit" 
+                class="modal fade" 
+                tabindex="-1" 
+                role="dialog" 
+                aria-labelledby="modal-edit" 
+                aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
                             </button>
                             <h3 class="modal-title" id="modal-edit">Editar Solicitação</h3>
                         </div>
                         <div class="modal-body">
                             <form id="form-edit" action="" role="form" method="post">
-                                  <div class="form-group">
-                                      <label for="titulo">Título</label>
-                                      <input type="text" class="form-control" id="titulo" name="titulo" maxlength="100">
-                                  </div>
-                                  <div class="form-group">
-                                    <label for="detalhamento">Descrição</label>
-                                    <textarea class="form-control" id="detalhamento" name="detalhamento" 
-                                        rows="6" style="width: 100%;"></textarea>
-                                
+                                <div class="form-group">
+                                    <label for="titulo">Título</label>
+                                    <input 
+                                        type="text" 
+                                        id="titulo" 
+                                        name="titulo" 
+                                        class="form-control" 
+                                        maxlength="100" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="info_adicionais">Informações Adicionais</label>
-                                    <textarea class="form-control" id="info_adicionais" name="info_adicionais"
-                                        rows="2" style="width: 100%;"></textarea>
+                                    <label for="detalhamento">Descrição</label>
+                                    <textarea 
+                                        id="detalhamento" 
+                                        name="detalhamento" 
+                                        class="form-control" 
+                                        rows="6" 
+                                        style="width: 100%;">
+                                    </textarea>
                                 </div>
-                                  <div class="form-group">
-                                      <div class="row">
-                                      
-                                          <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="info_adicionais">Informações adicionais</label>
+                                    <textarea
+                                        id="info_adicionais" 
+                                        name="info_adicionais" 
+                                        class="form-control" 
+                                        rows="2" 
+                                        style="width: 100%;">
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6">
                                             <label for="observacoes">Observações</label>
-                                            <textarea class="form-control" id="observacoes" name="observacoes"
-                                                rows="6" style="width: 100%"></textarea>
+                                            <textarea 
+                                                id="observacoes" 
+                                                name="observacoes"
+                                                class="form-control" 
+                                                rows="6" 
+                                                style="width: 100%">
+                                            </textarea>
                                         </div>
-                                      
-                                          <div class="col-sm-6">
+                                        <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo</label>
-                                              <select id="tipo_solicitacao_id" name="tipo_solicitacao_id" 
-                                                  class="form-control">
-                                                  <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
-                                              </select>
+                                            <select 
+                                                id="tipo_solicitacao_id" 
+                                                name="tipo_solicitacao_id" 
+                                                class="form-control">
+                                                <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
+                                            </select>
                                         </div>
-                                    
                                         <div class="col-sm-6">
-                                            <label for="data_criacao">Data de Criação</label>
-                                            <input type="text" class="form-control" name="data_criacao" 
-                                                id="data_criacao" readonly>
+                                            <label for="data_criacao">Criação</label>
+                                            <input 
+                                                type="text" 
+                                                id="data_criacao" 
+                                                name="data_criacao" 
+                                                class="form-control" 
+                                                readonly />
                                         </div>
-                                        
                                         <div class="col-sm-6">
-                                            <label for="data_alteracao">Última Alteração</label>
-                                            <input type="text" class="form-control" name="data_alteracao" 
-                                                id="data_alteracao" readonly/>
+                                            <label for="data_alteracao">Alteração</label>
+                                            <input 
+                                                type="text" 
+                                                id="data_alteracao" 
+                                                name="data_alteracao" 
+                                                class="form-control" 
+                                                readonly />
                                         </div>
                                     </div>
 <?php 
@@ -686,9 +750,12 @@
                                         </div>
                                         
                                         <div class="col-sm-6">
-                                            <label for="observacoes_status">Observações do Status</label>
-                                            <input type="text" class="form-control" name="observacoes_status"
-                                                id="observacoes_status"/>
+                                            <label for="observacoes_status">Observações do status</label>
+                                            <input 
+                                                type="text" 
+                                                id="observacoes_status" 
+                                                name="observacoes_status" 
+                                                class="form-control" />
                                         </div>
                                     </div>
 <?php 
@@ -697,27 +764,42 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="status">Status</label>
-                                            <input id="status" name="status" class="form-control" readonly="readonly">
+                                            <input 
+                                                id="status" 
+                                                name="status" 
+                                                class="form-control" 
+                                                readonly="readonly" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="observacoes_status">Obs. Status</label>
-                                            <input type="text" class="form-control" name="observacoes_status"
-                                                id="observacoes_status" readonly="readonly"/>
+                                            <label for="observacoes_status">Observações do status</label>
+                                            <input 
+                                                type="text" 
+                                                id="observacoes_status" 
+                                                name="observacoes_status" 
+                                                class="form-control" 
+                                                readonly="readonly" />
                                         </div>
                                     </div>
 <?php
                                     } 
 ?>
                                   </div>
-                                <input type="hidden" id="solicitante_id" name="solicitante_id">
+                                <input type="hidden" id="solicitante_id" name="solicitante_id" />
                                 <div class="modal-footer">
-                                    <button type="submit" 
-                                            class="btn btn-success" name="salvar" id="salvar">Salvar
-                                      <span class="glyphicon glyphicon-floppy-disk"></span>
+                                    <button 
+                                        id="salvar"
+                                        type="submit" 
+                                        name="salvar"
+                                        class="btn btn-success">Salvar
+                                        <span class="glyphicon glyphicon-floppy-disk"></span>
                                     </button>
-                                    <button type="reset"
-                                            class="btn btn-primary" onclick="clean();" id="limpar" name="limpar">Limpar
-                                         <span class="glyphicon glyphicon-file"></span>
+                                    <button
+                                        id="limpar" 
+                                        name="limpar" 
+                                        type="reset"
+                                        class="btn btn-primary" 
+                                        onclick="clean();">Limpar
+                                        <span class="glyphicon glyphicon-file"></span>
                                      </button>
                                     <button 
                                         type="button" 
@@ -728,24 +810,32 @@
                                         <span class="glyphicon glyphicon-floppy-remove"></span>
                                     </button>
                                 </div>
-                                
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Excluir solicitação -->
-            <div class="modal fade .bs-example-modal-sm" id="modal-del" tabindex="-1" role="dialog" 
-                aria-labelledby="modal-del" aria-hidden="true">
+            <!-- /Editar -->
+
+            <!-- Excluir -->
+            <div 
+                id="modal-del" 
+                class="modal fade .bs-example-modal-sm" 
+                tabindex="-1" 
+                role="dialog" 
+                aria-labelledby="modal-del" 
+                aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
 <?php
                         if ($perfil_usuario == 'P') {
 ?>
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
                             </button>
                             <h4 class="modal-title" id="modal-del">Cancelar Solicitação</h4>
                         </div>
@@ -756,8 +846,11 @@
                         } else {
 ?>
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                &times;
+                            <button 
+                                type="button" 
+                                class="close" 
+                                data-dismiss="modal" 
+                                aria-hidden="true">&times;
                             </button>
                             <h4 class="modal-title" id="modal-del">Indeferir Solicitação</h4>
                         </div>
@@ -775,39 +868,9 @@
                         </form>
                     </div>
                 </div>
-            </div> 
-            <!-- /Modais -->
-            <!-- Alerta -->
-            <div class="modal fade" id="alert-del" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
-                aria-hidden="true">
-                <div class="alert alert-danger fade in" role="alert">
-                    <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
-                        <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
-                    </button>
-                    <strong>ERRO:</strong> Não é possível excluir um registro com referências.
-               </div>
             </div>
-         <!-- Alertas -->
-        <div id="modal-danger" class="modal fade" tabindex="-1" role="dialog" 
-            aria-labelledby="modal-del" aria-hidden="true">
-            <div class="alert alert-danger fade in" role="alert">
-                <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
-                </button>
-                <strong>FALHA:</strong>
-                <span id="alert-msg"></span>
-            </div>
-        </div>
-        <div class="modal fade" id="modal-success" tabindex="-1" role="dialog" aria-labelledby="modal-del" 
-            aria-hidden="true">
-            <div class="alert alert-success fade in" role="alert">
-                <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
-                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
-                </button>
-                <strong>SUCESSO:</strong>
-                <span id="alert-msg">Dados atualizados</span>
-           </div>
-        </div>         
+            <!-- /Excluir -->
+
             <!--  Pesquisar -->
             <div 
                 id="modal-search"
@@ -879,7 +942,60 @@
                     </div>
                 </div>
             </div>
-  </div> <!-- container -->
+            <!-- /Pesquisar -->
+
+            <!-- /Modais -->
+
+            <!-- Alertas -->
+            <div 
+                id="alert-del" 
+                class="modal fade" 
+                tabindex="-1" 
+                role="dialog" 
+                aria-labelledby="modal-del" 
+                aria-hidden="true">
+                <div class="alert alert-danger fade in" role="alert">
+                    <button type="button" class="close" onclick="$('#alert-del').modal('toggle');">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                    </button>
+                    <strong>ERRO:</strong> Não é possível excluir um registro com referências.
+               </div>
+            </div>
+
+            <div 
+                id="modal-danger" 
+                class="modal fade" 
+                tabindex="-1" 
+                role="dialog" 
+                aria-labelledby="modal-del" 
+                aria-hidden="true">
+                <div class="alert alert-danger fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-danger').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>FALHA:</strong>
+                <span id="alert-msg"></span>
+            </div>
+        </div>
+
+        <div 
+            id="modal-success" 
+            class="modal fade" 
+            tabindex="-1" 
+            role="dialog" 
+            aria-labelledby="modal-del" 
+            aria-hidden="true">
+            <div class="alert alert-success fade in" role="alert">
+                <button type="button" class="close" onclick="$('#modal-success').modal('toggle');">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span>
+                </button>
+                <strong>SUCESSO:</strong>
+                <span id="alert-msg">Dados atualizados</span>
+           </div>
+        </div>
+        <!-- /Alertas -->
+  </div>
+  <!-- /Container -->
 <?php
     @include $_SERVER['DOCUMENT_ROOT'] . '/sods/includes/rodape.php'; 
 ?>
