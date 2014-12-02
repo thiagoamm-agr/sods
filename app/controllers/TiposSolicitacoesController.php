@@ -11,8 +11,8 @@
             parent::__construct();
             $this->dao = new TipoSolicitacaoDAO();
             $this->paginator->totalrecords = $this->dao->count();
-            $this->paginator->defaultUrl = "/sods/admin/tiposSolicitacao/";
-            $this->paginator->paginationUrl = "/sods/admin/tiposSolicitacao/";
+            $this->paginator->defaultUrl = "/sods/admin/tipos_solicitacao/";
+            $this->paginator->paginationUrl = "/sods/admin/tipos_solicitacao/";
         }
 
         public function __destruct() {
