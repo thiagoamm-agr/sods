@@ -153,7 +153,7 @@ insert into solicitante (
     nome, lotacao_id, funcao, telefone, email, login, 
     senha, perfil, status, data_criacao, data_alteracao
 ) values (
-    'EDWARD', 2, 'Colaborador AGR', '(62) 3226-6400', 'edward-arn@gmail.com' , 'edward-arn', 
+    'Edward', 2, 'Colaborador AGR', '(62) 3226-6400', 'edward-arn@gmail.com' , 'edward-arn', 
     md5('agr2014'), 'P', 'A', '2014-12-01', null
 );
 
