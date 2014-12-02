@@ -25,8 +25,8 @@
                 case '/sods/admin/lotacoes/index.php':
                 case '/sods/admin/usuarios/':
                 case '/sods/admin/usuarios/index.php':
-                case '/sods/admin/tiposSolicitacao/':
-                case '/sods/admin/tiposSolicitacao/index.php':
+                case '/sods/admin/tipos_solicitacao/':
+                case '/sods/admin/tipos_solicitacao/index.php':
                     header('location: /sods/404.html');
                     break;
             }
