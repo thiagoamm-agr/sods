@@ -117,7 +117,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/sods/admin/tiposSolicitacao/">
+                                    <a href="/sods/admin/tipos_solicitacao/">
                                         <span class="glyphicon glyphicon-file" style="color:black"></span>
                                         Cadastro de Tipos de Solicitação
                                     </a>
