@@ -259,13 +259,15 @@
                     "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
                     "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n " .
                     "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n " .
-                    "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
+                    "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id, l.nome as lotacao\n" .
                 "from\n" . 
                     "\tsolicitante as s\n" . 
                 "inner join\n" . 
                     "\tsolicitacao as so on s.id = so.solicitante_id\n" . 
                 "inner join\n" . 
                     "\ttipo_solicitacao as t on t.id = so.tipo_solicitacao_id\n" .
+                 "inner join\n". 
+                 	"\tlotacao as l on s.lotacao_id = l.id\n" .
                 "$where" . 
                 "order by\n" . 
                     "\tso.id desc\n" . 
