@@ -148,6 +148,8 @@
                         }
                         // Retorna a lista de tipos de solicitação.
                         tipos_solicitacao_json = <?php echo $tipos_solicitacao_json ?>;
+                        $('#tipo_solicitacao_id option', form).remove();
+                        $('#tipo_solicitacao_id', form).append(new Option('SELECIONE UM TIPO DE SOLICITAÇÃO', ''));
                         // Popula a combobox de tipos de solicitação.
                         $(tipos_solicitacao_json).each(function(i, e) {
                             $('#tipo_solicitacao_id', form).append(new Option(e.nome, e.id));
