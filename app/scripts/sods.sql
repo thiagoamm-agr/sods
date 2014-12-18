@@ -64,9 +64,9 @@ create table solicitacao (
     data_criacao timestamp default current_timestamp,
     data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
-    prioridade_atendimento varchar(7) not null default 'NORMAL',
+    prioridade varchar(7) not null default 'NORMAL' comment 'Prioridade de atendimento',
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA')),
-    check(prioridade_atendimento in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
+    check(prioridade in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
 ) character set utf8 collate utf8_general_ci;
 
 create table historico_solicitacao (
@@ -82,9 +82,9 @@ create table historico_solicitacao (
     data_criacao timestamp null,
     data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
-    prioridade_atendimento varchar(7) not null default 'NORMAL',
+    prioridade varchar(7) not null default 'NORMAL' comment 'Prioridade de atendimento',
     check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA')),
-    check(prioridade_atendimento in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
+    check(prioridade in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
 ) character set utf8 collate utf8_general_ci;
 
 -- Chaves estrangeiras
