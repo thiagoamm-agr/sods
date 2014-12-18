@@ -114,6 +114,8 @@
                         action = 'edit';
                         form = $('#form-edit');
                         $('#solicitante_id', form).val(solicitacao_json.solicitante_id);
+                      	$('#nome', form).val(solicitacao_json.nome);
+                      	$('#lotacao', form).val(solicitacao_json.lotacao);
                         $('#titulo', form).val(solicitacao_json.titulo);
                         $('#detalhamento', form).val(solicitacao_json.detalhamento);
                         $('#info_adicionais', form).val(solicitacao_json.info_adicionais);
@@ -664,6 +666,33 @@
                         </div>
                         <div class="modal-body">
                             <form id="form-edit" action="" role="form" method="post">
+                                <div class="form-group">
+                                 <input type="hidden" 
+                                    class="form-control"
+                                    name="solicitante_id" 
+                                    id="solicitante_id" 
+                                    value="<?php echo $_SESSION['usuario']['id'] ?>"/>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="nome">Solicitante</label>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   name="nome" 
+                                                   id="nome"
+                                                   value= ""
+                                                   disabled />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="lotacao">Lotação</label>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   name="lotacao" 
+                                                   id="lotacao"
+                                                   value= ""
+                                                   disabled />
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="titulo">Título</label>
                                     <input 
