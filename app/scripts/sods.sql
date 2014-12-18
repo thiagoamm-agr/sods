@@ -64,7 +64,9 @@ create table solicitacao (
     data_criacao timestamp default current_timestamp,
     data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
-    check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
+    prioridade_atendimento varchar(7) not null default 'NORMAL',
+    check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA')),
+    check(prioridade_atendimento in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
 ) character set utf8 collate utf8_general_ci;
 
 create table historico_solicitacao (
@@ -80,7 +82,9 @@ create table historico_solicitacao (
     data_criacao timestamp null,
     data_alteracao timestamp null,
     tipo_solicitacao_id int not null,
-    check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA'))
+    prioridade_atendimento varchar(7) not null default 'NORMAL',
+    check(status in ('CRIADA', 'EM ANÁLISE', 'DEFERIDA', 'INDEFERIDA', 'ATENDIDA', 'CANCELADA')),
+    check(prioridade_atendimento in ('MÍNIMA', 'BAIXA', 'NORMAL', 'ALTA', 'URGENTE'))
 ) character set utf8 collate utf8_general_ci;
 
 -- Chaves estrangeiras
@@ -212,3 +216,8 @@ insert into solicitante (
     'Willian', 2, 'Colaborador AGR', '(62) 3226-6400', 'willian-ad@gmail.com' , 'willian-ad', 
     md5('agr2014'), 'P', 'A', '2014-12-01', null
 );
+
+-- tipo de solicitacao
+insert into tipo_solicitacao (nome) values ('Desenvolvimento');
+insert into tipo_solicitacao (nome) values ('Manutenção');
+insert into tipo_solicitacao (nome) values ('Teste');
