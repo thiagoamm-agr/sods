@@ -15,5 +15,6 @@
         protected $data_criacao;
         protected $data_alteracao;
         protected $tipo_solicitacao_id;
+        protected $prioridade;
     }
 ?>

@@ -72,11 +72,11 @@
                     $historico_solicitacao->data_cricacao = $solicitacao->data_criacao;
                     $historico_solicitacao->data_alteracao = $solicitacao->data_alteracao;
                     $historico_solicitacao->tipo_solicitacao_id = $solicitacao->tipo_solicitacao_id;
-                    $data_criacao = date('Y-m-d G:i:s');
+                    $historico_solicitacao->prioridade = $solicitacao->prioridade;
                     $query = "" . 
                         "insert into historico_solicitacao " . 
                         "(solicitacao_id, data_criacao, $columns) " . 
-                        "values ({$historico_solicitacao->solicitacao_id}, '$data_criacao', $values)";
+                        "values ({$historico_solicitacao->solicitacao_id}, '{$solicitacao->data_criacao}', $values)";
                     mysql_query($query, $this->connection);
                 }
             }
@@ -131,14 +131,19 @@
                     $historico_solicitacao->data_criacao = $solicitacao->data_criacao;
                     $historico_solicitacao->data_alteracao = $solicitacao->data_alteracao; 
                     $historico_solicitacao->tipo_solicitacao_id = $solicitacao->tipo_solicitacao_id;
+                    $historico_solicitacao->prioridade = $solicitacao->prioridade;
                     $columns = substr($columns, 0, strrpos($columns, ", "));
                     $values = substr($values, 0, strrpos($values, ", "));
-                    $query = "insert into historico_solicitacao " .
-                        "(solicitacao_id, data_criacao, data_alteracao, $columns) " .
-                        "values ({$historico_solicitacao->solicitacao_id}, " .
-                        "'{$historico_solicitacao->data_criacao}', " .
-                        "'{$historico_solicitacao->data_alteracao}', " .
-                        "$values)";
+                    //$data_historico = date('Y-m-d G:i:s');
+                    $query = "insert into historico_solicitacao (\n" .
+                        "\tsolicitacao_id, data_criacao, data_alteracao, $columns\n" .
+                        ")\n" .
+                        "values (". 
+                        "\t{$historico_solicitacao->solicitacao_id}, " .
+                        "\t'{$solicitacao->data_criacao}', " .
+                        "\t'{$solicitacao->data_alteracao}', " .
+                        "\t$values\n" . 
+                        ")";
                     mysql_query($query, $this->connection);
                 } 
             }
@@ -179,7 +184,7 @@
         public function getAll() {
             $query= "" . 
                 "select\n" . 
-                    "\tso.id, s.nome, s.id as solicitante_id, so.titulo,\n" . 
+                    "\tso.id, s.nome, s.id as solicitante_id, so.titulo, so.prioridade,\n" . 
                     "\tso.detalhamento, so.info_adicionais, so.observacoes,\n" . 
                     "\tso.status, so.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
                     "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
@@ -207,7 +212,7 @@
             $query = "". 
                 "select\n" . 
                     "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
-                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n" .
+                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status, so.prioridade,\n" .
                     "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
                     "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                 "from\n" . 
@@ -232,7 +237,7 @@
             $query = "" . 
                 "select\n" . 
                     "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
-                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n" .
+                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status, so.prioridade,\n" .
                     "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n" .
                     "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id\n" .
                 "from\n" . 
@@ -257,7 +262,7 @@
             $query = "". 
                 "select\n" . 
                     "\tso.id, s.login as solicitante, s.nome, s.id as solicitante_id, so.titulo,\n" .
-                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status,\n " .
+                    "\tso.detalhamento, so.info_adicionais, so.observacoes, so.status, so.prioridade,\n " .
                     "\tso.observacoes_status, so.data_criacao, so.data_alteracao,\n " .
                     "\tt.nome as tipo_solicitacao, t.id as tipo_solicitacao_id, l.nome as lotacao\n" .
                 "from\n" . 

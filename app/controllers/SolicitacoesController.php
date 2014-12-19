@@ -84,6 +84,9 @@
                     case 'status':
                         $criteria = "so.status = '{$value}'";
                         break;
+                    case 'prioridade':
+                        $criteria = "so.prioridade = '{$value}'";
+                        break;
                     case 'data_criacao':
                     case 'data_alteracao':
                         $data_inicio = $value['data_inicio'];
@@ -120,10 +123,11 @@
                 $html .= "    <thead>\n";
                 $html .= "        <tr>\n";
                 $html .= "            <th width=\"5%\">ID</th>\n";
-                $html .= "            <th width=\"10%\">Solicitante</th>\n";
-                $html .= "            <th width=\"22%\">Título</th>\n";
-                $html .= "            <th width=\"10%\">Status</th>\n";
-                $html .= "            <th width=\"18%\">Tipo</th>\n";
+                $html .= "            <th width=\"11%\">Solicitante</th>\n";
+                $html .= "            <th width=\"17%\">Título</th>\n";
+                $html .= "            <th width=\"9%\">Status</th>\n";
+                $html .= "            <th width=\"9%\">Prioridade</th>\n";
+                $html .= "            <th width=\"13%\">Tipo</th>\n";
                 $html .= "            <th width=\"9%\">Criação</th>\n";
                 $html .= "            <th width=\"9%\">Alteração</th>\n";
                 $html .= "            <th width=\"17%\" class=\"nonSortable\">Ação</th>\n";
@@ -139,6 +143,7 @@
                     $html .= "            <td>$tooltip</td>\n";
                     $html .= "            <td>{$solicitacao['titulo']}</td>\n";
                     $html .= "            <td>{$solicitacao['status']}</td>\n";
+                    $html .= "            <td>{$solicitacao['prioridade']}</td>\n";
                     $html .= "            <td>{$solicitacao['tipo_solicitacao']}</td>\n";
                     if ($solicitacao['data_criacao'] != null) {
                         $data_criacao = date('d/m/Y', @strtotime($solicitacao['data_criacao']));

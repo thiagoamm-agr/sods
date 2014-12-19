@@ -114,8 +114,8 @@
                         action = 'edit';
                         form = $('#form-edit');
                         $('#solicitante_id', form).val(solicitacao_json.solicitante_id);
-                      	$('#nome', form).val(solicitacao_json.nome);
-                      	$('#lotacao', form).val(solicitacao_json.lotacao);
+                        $('#nome', form).val(solicitacao_json.nome);
+                        $('#lotacao', form).val(solicitacao_json.lotacao);
                         $('#titulo', form).val(solicitacao_json.titulo);
                         $('#detalhamento', form).val(solicitacao_json.detalhamento);
                         $('#info_adicionais', form).val(solicitacao_json.info_adicionais);
@@ -125,6 +125,7 @@
                         $('#tipo_solicitacao_id', form).val(solicitacao_json.tipo_solicitacao_id);
                         $('#data_criacao', form).val(formataData(solicitacao_json.data_criacao));
                         $('#data_alteracao', form).val(formataData(solicitacao_json.data_alteracao));
+                        $('#prioridade', form).val(solicitacao_json.prioridade);
                         solicitacao = new Solicitacao();
                         solicitacao.id = solicitacao_json.id;
                         // Validador
@@ -161,9 +162,11 @@
                             .prop('selected', true);
                         if (solicitacao_json.status != 'CRIADA' && '<?php echo $perfil_usuario ?>' == 'P') {
                             $('#tipo_solicitacao_id', form).prop('disabled', true);
+                            $('#prioridade', form).prop('disabled', true);
                         } else {
                             $('#tipo_solicitacao_id', form).prop('disabled', false);
-                        } 
+                            $('#prioridade', form).prop('disabled', false);
+                        }
                     } else {
                         throw 'Não é possível editar uma alteração que não existe.';
                     }
@@ -188,6 +191,7 @@
                             solicitacao.tipo_solicitacao_id = solicitacao_json.tipo_solicitacao_id;
                             solicitacao.data_criacao = solicitacao_json.data_criacao;
                             solicitacao.data_alteracao = solicitacao_json.data_alteracao;
+                            solicitacao.prioridade = solicitacao_json.prioridade;
                             form = $('#form-del');
                             formValidator = new SolicitacaoFormValidator(form);
                             total_records = total_records - 1;
@@ -290,6 +294,7 @@
                             solicitacao.info_adicionais = $('#info_adicionais', form).val();
                             solicitacao.observacoes = $('#observacoes', form).val();
                             solicitacao.tipo_solicitacao_id = $('#tipo_solicitacao_id', form).val();
+                            solicitacao.prioridade = $('#prioridade', form).val();
                             // Se a ação for adição, os campos de status não devem ser setados.
                             if (action == 'edit') {
                                solicitacao.status = $('#status', form).val();
@@ -419,19 +424,20 @@
                     var filtro = $(this).val();
                     var html = '';
                     if (filtro == 'status') {
-                        var html = '' +
-                            '<select id="valor" class="form-control">' +
-                            '    <option value="CRIADA" selected="selected">Criada</option>' +
-                            '    <option value="EM ANÁLISE" selected="selected">Em Análise</option>' +
-                            '    <option value="DEFERIDA" selected="selected">Deferida</option>' +
-                            '    <option value="INDEFERIDA" selected="selected">Indeferida</option>' +
-                            '    <option value="ATENDIDA" selected="selected">Atendida</option>' +
-                            '    <option value="CANCELADA" selected="selected">Cancelada</option>' +
-                            '</select>';
+                        html = '' +
+                        '<select id="valor" class="form-control">' +
+                        '    <option value="" selected="selected">SELECIONE UM STATUS</option>' +
+                        '    <option value="CRIADA">Criada</option>' +
+                        '    <option value="EM ANÁLISE">Em Análise</option>' +
+                        '    <option value="DEFERIDA">Deferida</option>' +
+                        '    <option value="INDEFERIDA">Indeferida</option>' +
+                        '    <option value="ATENDIDA">Atendida</option>' +
+                        '    <option value="CANCELADA">Cancelada</option>' +
+                        '</select>';
                     } else if (filtro == 'tipo') {
                         // Cria a caixa de seleção.
                         html = '' +
-                            '<select id="valor" name="valor" class="form-control">' +  
+                            '<select id="valor" name="valor" class="form-control">' + 
                             '    <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>' +
                             '</select>';
                     } else if (filtro == 'data_criacao' || filtro == 'data_alteracao') {
@@ -442,6 +448,16 @@
                             '    <span class="input-group-addon">até</span>' +
                             '    <input type="text" id="data_fim" name="data_fim" class="input-sm form-control" />' +
                             '</div>';
+                    } else if (filtro == 'prioridade') {
+                        html = '' +
+                        '<select id="valor" name="valor" class="form-control">' +
+                        '    <option value="">SELECIONE UMA PRIORIDADE DE ATENDIMENTO</option>' +
+                        '    <option value="MÍNIMA">Mínima</option>' +
+                        '    <option value="BAIXA">Baixa</option>' +
+                        '    <option value="NORMAL">Normal</option>' +
+                        '    <option value="ALTA">Alta</option>' +
+                        '    <option value="URGENTE">Urgente</option>' +
+                        '</select>';
                     } else {
                         html = '<input id="valor" name="valor" type="text" class="form-control" />';
                     }
@@ -573,29 +589,9 @@
                                         class="form-control" 
                                         rows="6" 
                                         style="width: 100%;"></textarea>
-                                
                                 </div>
-                                <div class="form-group">
-                                    <label for="info_adicionais">Informações adicionais</label>
-                                    <textarea 
-                                        id="info_adicionais" 
-                                        name="info_adicionais" 
-                                        class="form-control" 
-                                        rows="4" 
-                                        style="width: 100%;"></textarea>
-                                </div>
-                                
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="observacoes">Observações</label>
-                                            <textarea
-                                                id="observacoes" 
-                                                name="observacoes" 
-                                                class="form-control" 
-                                                rows="4" 
-                                                style="width: 100%"></textarea>
-                                        </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="tipo_solicitacao_id">Tipo</label>
@@ -616,7 +612,44 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label 
+                                                    for="prioridade">Prioridade</label>
+                                                <select
+                                                    id="prioridade"
+                                                    name="prioridade"
+                                                    class="form-control">
+                                                    <option value="">
+                                                        SELECIONE UMA PRIORIDADE DE ATENDIMENTO
+                                                    </option>
+                                                    <option value="MÍNIMA">Mínima</option>
+                                                    <option value="BAIXA">Baixa</option>
+                                                    <option value="NORMAL">Normal</option>
+                                                    <option value="ALTA">Alta</option>
+                                                    <option value="URGENTE">Urgente</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="info_adicionais">Informações adicionais</label>
+                                    <textarea 
+                                        id="info_adicionais" 
+                                        name="info_adicionais" 
+                                        class="form-control" 
+                                        rows="4" 
+                                        style="width: 100%;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="observacoes">Observações</label>
+                                    <textarea
+                                        id="observacoes" 
+                                        name="observacoes" 
+                                        class="form-control" 
+                                        rows="4" 
+                                        style="width: 100%"></textarea>
                                 </div>
                                 <div class="modal-footer">
                                     <button 
@@ -721,16 +754,17 @@
                                         style="width: 100%;"></textarea>
                                 </div>
                                 <div class="form-group">
+                                    <label for="observacoes">Observações</label>
+                                    <textarea 
+                                        id="observacoes" 
+                                        name="observacoes"
+                                        class="form-control" 
+                                        rows="6" 
+                                        style="width: 100%">
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <label for="observacoes">Observações</label>
-                                            <textarea 
-                                                id="observacoes" 
-                                                name="observacoes"
-                                                class="form-control" 
-                                                rows="6" 
-                                                style="width: 100%"></textarea>
-                                        </div>
                                         <div class="col-sm-6">
                                             <label for="tipo_solicitacao_id">Tipo</label>
                                             <select 
@@ -740,6 +774,21 @@
                                                 <option value="">SELECIONE UM TIPO DE SOLICITAÇÃO</option>
                                             </select>
                                         </div>
+                                        <div class="col-sm-6">
+                                            <label for="prioridade">Prioridade</label>
+                                            <select id="prioridade" name="prioridade" class="form-control">
+                                                <option value="">SELECIONE UMA PRIORIDADE DE ATENDIMENTO</option>
+                                                <option value="MÍNIMA">Mínima</option>
+                                                <option value="BAIXA">Baixa</option>
+                                                <option value="NORMAL">Normal</option>
+                                                <option value="ALTA">Alta</option>
+                                                <option value="URGENTE">Urgente</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
                                         <div class="col-sm-6">
                                             <label for="data_criacao">Criação</label>
                                             <input 
@@ -930,8 +979,9 @@
                                         <option value="id">ID</option>
                                         <option value="nome">Solicitante</option>
                                         <option value="titulo">Título</option>
-                                        <option value="tipo">Tipo Solicitação</option>
+                                        <option value="tipo">Tipo de Solicitação</option>
                                         <option value="status">Status</option>
+                                        <option value="prioridade">Prioridade</option>
                                         <option value="data_criacao">Data de Criação</option>
                                         <option value="data_alteracao">Data de Alteração</option>
                                     </select>

@@ -29,7 +29,7 @@ function SolicitacaoFormValidator(form) {
                      }
                 },
                 observacoes: {
-                    group: '.col-sm-6'
+                    
                 },
                 info_adicionais: {
 
@@ -42,8 +42,17 @@ function SolicitacaoFormValidator(form) {
                             message: 'Tipo de Solicitação é um campo de preenchimento obrigatório.'
                         }
                     }
+                },
+                prioridade: {
+                    group: '.col-sm-6',
+                    trigger: 'blur change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Prioridade de atendimento é um campo de preenchimento obrigatório.'
+                        }
+                    }
                 }
-            }           
+            }
         }).on('success.form.bv', function(event) {
             // Evita a submissão padrão do formulário.
             event.preventDefault();
